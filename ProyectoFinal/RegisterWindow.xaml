@@ -1,0 +1,112 @@
+<Window x:Class="ProyectoFinal.RegisterWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="HandUp — Crear cuenta"
+        Height="660" Width="940"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource BrushBackground}"
+        FontFamily="Segoe UI"
+        PreviewKeyDown="Window_PreviewKeyDown">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="340"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Panel de marca -->
+        <Border Grid.Column="0" Background="#14332B">
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Image Source="Assets/logo.jpg" Width="240" Height="240"
+                       RenderOptions.BitmapScalingMode="HighQuality"/>
+                <TextBlock Text="HandUp" FontFamily="{StaticResource FontHeading}" FontSize="36"
+                           FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" Margin="0,4,0,0"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Panel de formulario -->
+        <Grid Grid.Column="1" Margin="56,40,56,32">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="22"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Text="Crear cuenta" FontFamily="{StaticResource FontHeading}" FontSize="26"
+                       FontWeight="Bold" Foreground="{StaticResource BrushInk}"/>
+            <TextBlock Grid.Row="1" Text="Completá tus datos para empezar a aprender Lengua de Señas."
+                       FontSize="13" Foreground="{StaticResource BrushMuted}" Margin="0,6,0,0" TextWrapping="Wrap"/>
+
+            <TextBlock Grid.Row="3" Text="Nombre completo" Style="{StaticResource FieldLabel}"/>
+            <TextBox Grid.Row="4" x:Name="txtNombre" Style="{StaticResource RoundedTextBox}" Margin="0,0,0,12"/>
+
+            <TextBlock Grid.Row="5" Text="Usuario" Style="{StaticResource FieldLabel}"/>
+            <TextBox Grid.Row="6" x:Name="txtUsuario" Style="{StaticResource RoundedTextBox}" Margin="0,0,0,12"/>
+
+            <TextBlock Grid.Row="7" Text="Contraseña" Style="{StaticResource FieldLabel}"/>
+            <StackPanel Grid.Row="8" Margin="0,0,0,12">
+                <PasswordBox x:Name="txtPassword" Style="{StaticResource RoundedPasswordBox}"
+                             PasswordChanged="TxtPassword_PasswordChanged"
+                             AutomationProperties.Name="Contraseña: 8 caracteres o más, al menos una mayúscula y sin espacios"/>
+
+                <!-- Checklist en vivo de las reglas de PoliticaPassword. No depende solo del color:
+                     cada regla cambia de "○" a "✓" cuando se cumple. -->
+                <ItemsControl x:Name="lstReglas" Margin="2,6,0,0" Focusable="False">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock x:Name="regla" FontSize="11.5" Margin="0,0,16,0"
+                                       Foreground="{StaticResource BrushMuted}">
+                                <Run x:Name="icono" Text="○"/><Run Text=" "/><Run Text="{Binding Descripcion, Mode=OneWay}"/>
+                            </TextBlock>
+                            <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding Cumplida}" Value="True">
+                                    <Setter TargetName="regla" Property="Foreground" Value="{StaticResource BrushSuccess}"/>
+                                    <Setter TargetName="regla" Property="FontWeight" Value="SemiBold"/>
+                                    <Setter TargetName="icono" Property="Text" Value="✓"/>
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+
+            <TextBlock Grid.Row="9" Text="Nivel inicial" Style="{StaticResource FieldLabel}"/>
+            <ComboBox Grid.Row="10" x:Name="cmbNivel" SelectedIndex="0" Height="40" FontSize="13" Margin="0,0,0,14">
+                <ComboBoxItem Content="Principiante"/>
+                <ComboBoxItem Content="Básico"/>
+                <ComboBoxItem Content="Intermedio"/>
+            </ComboBox>
+
+            <Border Grid.Row="11" x:Name="pnlFeedback" Visibility="Collapsed" CornerRadius="10" BorderThickness="1" Padding="12,10" Margin="0,0,0,14">
+                <StackPanel>
+                    <TextBlock x:Name="lblFeedbackMensaje" TextWrapping="Wrap" FontSize="13" FontWeight="SemiBold"/>
+                    <TextBlock x:Name="lblCountdown" FontSize="12" Margin="0,4,0,0" Visibility="Collapsed"/>
+                </StackPanel>
+            </Border>
+
+            <Button Grid.Row="12" x:Name="btnRegistrar" Content="Crear mi cuenta" Style="{StaticResource PrimaryButton}" Click="BtnCrearPerfil_Click"/>
+
+            <StackPanel Grid.Row="14" Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBlock Text="¿Ya tenés cuenta?" FontSize="13" Foreground="{StaticResource BrushMuted}" VerticalAlignment="Center"/>
+                <Button Content="Iniciar sesión" Style="{StaticResource LinkButton}" Margin="6,0,0,0" Click="BtnVolverLogin_Click"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

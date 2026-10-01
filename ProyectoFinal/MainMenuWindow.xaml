@@ -1,0 +1,171 @@
+<Window x:Class="ProyectoFinal.MainMenuWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="HandUp — Menú principal"
+        Height="650" Width="1000"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource BrushBackground}"
+        FontFamily="Segoe UI"
+        Loaded="Window_Loaded">
+    <Grid Margin="48,32,48,32">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="22"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="22"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="18"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Encabezado: logo + racha + nivel -->
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0" x:Name="lblSaludo" Text="HandUp" FontFamily="{StaticResource FontHeading}"
+                       FontSize="24" FontWeight="Bold" Foreground="{StaticResource BrushInk}" VerticalAlignment="Center"/>
+
+            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                <Border Background="White" BorderBrush="{StaticResource BrushBorder}" BorderThickness="1" CornerRadius="20" Padding="14,8" Margin="0,0,10,0">
+                    <StackPanel Orientation="Horizontal">
+                        <Ellipse Width="10" Height="10" Fill="{StaticResource BrushAccent}" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="lblRacha" Text="0" FontWeight="Bold" FontSize="14"
+                                   Foreground="{StaticResource BrushInk}" Margin="8,0,0,0" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Border>
+                <Border Background="{StaticResource BrushAccent}" CornerRadius="20" Padding="14,8">
+                    <TextBlock x:Name="lblNivel" Text="Nivel" Foreground="White" FontWeight="Bold" FontSize="13"/>
+                </Border>
+            </StackPanel>
+        </Grid>
+
+        <!-- Barra de progreso -->
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="6"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="Señas dominadas" FontSize="12" FontWeight="Bold" Foreground="{StaticResource BrushMuted}"/>
+                <TextBlock Grid.Column="1" x:Name="lblSenas" Text="0" FontSize="12" FontWeight="Bold" Foreground="{StaticResource BrushMuted}"/>
+            </Grid>
+            <Border Grid.Row="2" x:Name="XpTrack" Height="14" CornerRadius="7" Background="{StaticResource BrushBorder}">
+                <Border x:Name="XpFill" Height="14" CornerRadius="7" Background="{StaticResource BrushAccent}"
+                        HorizontalAlignment="Left" Width="0"/>
+            </Border>
+        </Grid>
+
+        <!-- Grilla de módulos -->
+        <Grid Grid.Row="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="18"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="18"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="18"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Aprender -->
+            <Border Grid.Column="0" Background="White" BorderBrush="{StaticResource BrushBorder}" BorderThickness="1"
+                    CornerRadius="20" Padding="22" Cursor="Hand" MouseLeftButtonUp="TileAprender_Click">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Border Grid.Row="0" Width="44" Height="44" CornerRadius="10" Background="{StaticResource BrushAccentSoft}" HorizontalAlignment="Left">
+                        <TextBlock Text="A" FontSize="18" FontWeight="Bold" Foreground="{StaticResource BrushAccent}"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <TextBlock Grid.Row="1" Text="Aprender" FontFamily="{StaticResource FontHeading}" FontSize="18"
+                               FontWeight="Bold" Foreground="{StaticResource BrushInk}" Margin="0,14,0,0"/>
+                    <TextBlock Grid.Row="2" Text="Elegí categoría y nivel, y practicá seña por seña."
+                               FontSize="12.5" Foreground="{StaticResource BrushMuted}" TextWrapping="Wrap" Margin="0,6,0,0"/>
+                    <TextBlock Grid.Row="3" Text="Abrir →" FontSize="13" FontWeight="Bold" Foreground="{StaticResource BrushAccent}"/>
+                </Grid>
+            </Border>
+
+            <!-- Desafío -->
+            <Border Grid.Column="2" Background="White" BorderBrush="{StaticResource BrushBorder}" BorderThickness="1"
+                    CornerRadius="20" Padding="22" Cursor="Hand" MouseLeftButtonUp="TileDesafio_Click">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Border Grid.Row="0" Width="44" Height="44" CornerRadius="10" Background="{StaticResource BrushAccentSoft}" HorizontalAlignment="Left">
+                        <TextBlock Text="D" FontSize="18" FontWeight="Bold" Foreground="{StaticResource BrushAccent}"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <TextBlock Grid.Row="1" Text="Desafío" FontFamily="{StaticResource FontHeading}" FontSize="18"
+                               FontWeight="Bold" Foreground="{StaticResource BrushInk}" Margin="0,14,0,0"/>
+                    <TextBlock Grid.Row="2" Text="Partida contrarreloj con vidas y racha de aciertos."
+                               FontSize="12.5" Foreground="{StaticResource BrushMuted}" TextWrapping="Wrap" Margin="0,6,0,0"/>
+                    <TextBlock Grid.Row="3" Text="Abrir →" FontSize="13" FontWeight="Bold" Foreground="{StaticResource BrushAccent}"/>
+                </Grid>
+            </Border>
+
+            <!-- Traductor -->
+            <Border Grid.Column="4" Background="White" BorderBrush="{StaticResource BrushBorder}" BorderThickness="1"
+                    CornerRadius="20" Padding="22" Cursor="Hand" MouseLeftButtonUp="TileTraductor_Click">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Border Grid.Row="0" Width="44" Height="44" CornerRadius="10" Background="{StaticResource BrushAccentSoft}" HorizontalAlignment="Left">
+                        <TextBlock Text="T" FontSize="18" FontWeight="Bold" Foreground="{StaticResource BrushAccent}"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <TextBlock Grid.Row="1" Text="Traductor" FontFamily="{StaticResource FontHeading}" FontSize="18"
+                               FontWeight="Bold" Foreground="{StaticResource BrushInk}" Margin="0,14,0,0"/>
+                    <TextBlock Grid.Row="2" Text="Escribí una palabra y mirá cómo se firma."
+                               FontSize="12.5" Foreground="{StaticResource BrushMuted}" TextWrapping="Wrap" Margin="0,6,0,0"/>
+                    <TextBlock Grid.Row="3" Text="Abrir →" FontSize="13" FontWeight="Bold" Foreground="{StaticResource BrushAccent}"/>
+                </Grid>
+            </Border>
+
+            <!-- Diccionario -->
+            <Border Grid.Column="6" Background="White" BorderBrush="{StaticResource BrushBorder}" BorderThickness="1"
+                    CornerRadius="20" Padding="22" Cursor="Hand" MouseLeftButtonUp="TileDiccionario_Click">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Border Grid.Row="0" Width="44" Height="44" CornerRadius="10" Background="{StaticResource BrushAccentSoft}" HorizontalAlignment="Left">
+                        <TextBlock Text="Dc" FontSize="15" FontWeight="Bold" Foreground="{StaticResource BrushAccent}"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <TextBlock Grid.Row="1" Text="Diccionario" FontFamily="{StaticResource FontHeading}" FontSize="18"
+                               FontWeight="Bold" Foreground="{StaticResource BrushInk}" Margin="0,14,0,0"/>
+                    <TextBlock Grid.Row="2" Text="Buscá cualquier seña y su descripción de movimiento."
+                               FontSize="12.5" Foreground="{StaticResource BrushMuted}" TextWrapping="Wrap" Margin="0,6,0,0"/>
+                    <TextBlock Grid.Row="3" Text="Abrir →" FontSize="13" FontWeight="Bold" Foreground="{StaticResource BrushAccent}"/>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <TextBlock Grid.Row="6" Text="Ganás señas dominadas y racha practicando todos los días."
+                   FontSize="13" Foreground="{StaticResource BrushMuted}" HorizontalAlignment="Center"/>
+    </Grid>
+</Window>

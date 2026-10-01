@@ -1,0 +1,115 @@
+<Window x:Class="ProyectoFinal.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="HandUp — Iniciar sesión"
+        Height="600" Width="940"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource BrushBackground}"
+        FontFamily="Segoe UI"
+        PreviewKeyDown="Window_PreviewKeyDown">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="340"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Panel de marca -->
+        <Border Grid.Column="0" Background="#14332B">
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Image Source="Assets/logo.jpg" Width="240" Height="240"
+                       RenderOptions.BitmapScalingMode="HighQuality"/>
+                <TextBlock Text="HandUp" FontFamily="{StaticResource FontHeading}" FontSize="36"
+                           FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" Margin="0,4,0,0"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Panel de formulario -->
+        <Grid Grid.Column="1" Margin="56,44,56,36">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="26"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Text="Iniciá sesión" FontFamily="{StaticResource FontHeading}" FontSize="26"
+                       FontWeight="Bold" Foreground="{StaticResource BrushInk}"/>
+            <TextBlock Grid.Row="1" Text="Elegí tu perfil o completá tus datos para continuar."
+                       FontSize="13" Foreground="{StaticResource BrushMuted}" Margin="0,6,0,0" TextWrapping="Wrap"/>
+
+            <TextBlock Grid.Row="3" Text="PERFILES EXISTENTES" FontSize="11" FontWeight="Bold"
+                       Foreground="{StaticResource BrushMuted}" Margin="0,0,0,8"/>
+
+            <!-- Perfiles guardados: una sola fila con hasta 3 chips + "Ver más", para que el formulario
+                 no se desplace hacia abajo a medida que se registran más perfiles -->
+            <Grid Grid.Row="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <ListBox Grid.Column="0" x:Name="lstPerfiles" Background="Transparent" BorderThickness="0"
+                         ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                         ItemContainerStyle="{StaticResource ProfileChipItem}"
+                         AutomationProperties.Name="Perfiles existentes"
+                         SelectionChanged="LstPerfiles_SelectionChanged">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Rows="1" Columns="3"/>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <!-- Si el nombre no entra, se corta con "..." y el nombre completo queda en el tooltip -->
+                            <StackPanel ToolTip="{Binding Nombre}">
+                                <TextBlock Text="{Binding Nombre}" FontWeight="Bold" FontSize="14" TextTrimming="CharacterEllipsis"/>
+                                <TextBlock Text="{Binding Nivel}" FontSize="11" Opacity="0.85" Margin="0,2,0,0" TextTrimming="CharacterEllipsis"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <Button Grid.Column="1" x:Name="btnVerMas" Style="{StaticResource MoreChipButton}"
+                        Click="BtnVerMas_Click" Visibility="Collapsed"
+                        AutomationProperties.Name="Ver todos los perfiles">
+                    <StackPanel>
+                        <TextBlock Text="Ver más" FontWeight="Bold" FontSize="14"/>
+                        <TextBlock x:Name="lblCantidadOcultos" FontSize="11" Opacity="0.85" Margin="0,2,0,0"/>
+                    </StackPanel>
+                </Button>
+            </Grid>
+
+            <TextBlock Grid.Row="5" Text="o ingresá tus datos manualmente" FontSize="11.5" FontStyle="Italic"
+                       Foreground="{StaticResource BrushMuted}" HorizontalAlignment="Center" Margin="0,12,0,14"/>
+
+            <TextBlock Grid.Row="6" Text="Usuario" Style="{StaticResource FieldLabel}"/>
+            <TextBox Grid.Row="7" x:Name="txtUsuario" Style="{StaticResource RoundedTextBox}" Margin="0,0,0,12"/>
+
+            <TextBlock Grid.Row="8" Text="Contraseña" Style="{StaticResource FieldLabel}"/>
+            <PasswordBox Grid.Row="9" x:Name="txtPassword" Style="{StaticResource RoundedPasswordBox}" Margin="0,0,0,8"/>
+
+            <TextBlock Grid.Row="10" x:Name="lblInfo" Foreground="{StaticResource BrushSuccess}" FontSize="12"
+                       FontWeight="SemiBold" TextWrapping="Wrap" Margin="0,0,0,4" Visibility="Collapsed"/>
+            <TextBlock Grid.Row="10" x:Name="lblError" Foreground="{StaticResource BrushError}" FontSize="12"
+                       TextWrapping="Wrap" Margin="0,0,0,8"/>
+
+            <Button Grid.Row="11" Content="Iniciar sesión" Style="{StaticResource PrimaryButton}" Click="BtnIniciarSesion_Click"/>
+
+            <StackPanel Grid.Row="13" Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBlock Text="¿No tenés una cuenta?" FontSize="13" Foreground="{StaticResource BrushMuted}" VerticalAlignment="Center"/>
+                <Button Content="Creala acá" Style="{StaticResource LinkButton}" Margin="6,0,0,0" Click="BtnCrearPerfil_Click"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

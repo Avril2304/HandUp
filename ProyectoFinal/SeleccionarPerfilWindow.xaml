@@ -1,0 +1,86 @@
+<Window x:Class="ProyectoFinal.SeleccionarPerfilWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="HandUp — Perfiles existentes"
+        Height="540" Width="460"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner"
+        ShowInTaskbar="False"
+        Background="{StaticResource BrushBackground}"
+        FontFamily="Segoe UI"
+        PreviewKeyDown="Window_PreviewKeyDown">
+    <Grid Margin="28,24,28,24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Elegí tu perfil" FontFamily="{StaticResource FontHeading}" FontSize="22"
+                   FontWeight="Bold" Foreground="{StaticResource BrushInk}"/>
+        <TextBlock Grid.Row="1" x:Name="lblSubtitulo" FontSize="13" Foreground="{StaticResource BrushMuted}"
+                   Margin="0,4,0,14" TextWrapping="Wrap"/>
+
+        <!-- Buscador: filtra la lista mientras se escribe (por nombre o usuario) -->
+        <StackPanel Grid.Row="2" Margin="0,0,0,12">
+            <TextBlock Text="Buscar" Style="{StaticResource FieldLabel}"/>
+            <TextBox x:Name="txtBuscar" Style="{StaticResource RoundedTextBox}"
+                     AutomationProperties.Name="Buscar perfil por nombre o usuario"
+                     TextChanged="TxtBuscar_TextChanged" PreviewKeyDown="TxtBuscar_PreviewKeyDown"/>
+        </StackPanel>
+
+        <Grid Grid.Row="3">
+            <ListBox x:Name="lstTodos" Background="Transparent" BorderThickness="0"
+                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                     ItemContainerStyle="{StaticResource ProfileRowItem}"
+                     AutomationProperties.Name="Todos los perfiles"
+                     SelectionChanged="LstTodos_SelectionChanged"
+                     MouseDoubleClick="LstTodos_MouseDoubleClick">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Avatar con la inicial del nombre -->
+                            <Border Grid.Column="0" Width="36" Height="36" CornerRadius="18"
+                                    Background="{StaticResource BrushAccentSoft}" BorderBrush="{StaticResource BrushBorderAccent}"
+                                    BorderThickness="1" Margin="0,0,12,0">
+                                <TextBlock Text="{Binding Inicial}" FontWeight="Bold" FontSize="15"
+                                           Foreground="{StaticResource BrushAccent}"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <TextBlock Text="{Binding Nombre}" FontWeight="Bold" FontSize="14" TextTrimming="CharacterEllipsis"/>
+                                <TextBlock FontSize="11.5" Foreground="{StaticResource BrushMuted}" Margin="0,2,0,0" TextTrimming="CharacterEllipsis">
+                                    <Run Text="@"/><Run Text="{Binding Usuario, Mode=OneWay}"/><Run Text="  ·  "/><Run Text="{Binding Nivel, Mode=OneWay}"/>
+                                </TextBlock>
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <TextBlock x:Name="lblSinResultados" FontSize="13" FontStyle="Italic" Foreground="{StaticResource BrushMuted}"
+                       HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,24,0,0"
+                       TextWrapping="Wrap" TextAlignment="Center" Visibility="Collapsed"/>
+        </Grid>
+
+        <Grid Grid.Row="4" Margin="0,14,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="12"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Content="Cancelar" Style="{StaticResource SecondaryButton}" IsCancel="True"/>
+            <!-- Deshabilitado hasta que haya un perfil elegido -->
+            <Button Grid.Column="2" x:Name="btnSeleccionar" Content="Seleccionar" Style="{StaticResource PrimaryButton}"
+                    IsEnabled="False" Click="BtnSeleccionar_Click"/>
+        </Grid>
+    </Grid>
+</Window>
