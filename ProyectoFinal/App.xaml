@@ -268,7 +268,7 @@
             <Style x:Key="MenuTileHero" TargetType="Button" BasedOn="{StaticResource MenuTile}">
                 <Setter Property="Background" Value="{DynamicResource BrushSidebar}"/>
                 <Setter Property="Foreground" Value="{DynamicResource BrushOnSidebar}"/>
-                <Setter Property="BorderBrush" Value="{DynamicResource BrushSidebar}"/>
+                <Setter Property="BorderBrush" Value="{DynamicResource BrushHeroBorder}"/>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="Button">
@@ -284,6 +284,40 @@
                                 <Trigger Property="IsKeyboardFocused" Value="True">
                                     <Setter TargetName="bg" Property="BorderBrush" Value="{DynamicResource BrushSidebarHighlight}"/>
                                     <Setter TargetName="bg" Property="BorderThickness" Value="3"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- Interruptor (CheckBox con forma de switch): la pista a la izquierda y el texto a la derecha.
+                 Se activa con clic o con Espacio; con el foco de teclado aparece un borde alrededor de la pista. -->
+            <Style x:Key="SwitchToggle" TargetType="CheckBox">
+                <Setter Property="Foreground" Value="{DynamicResource BrushInk}"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="CheckBox">
+                            <StackPanel Orientation="Horizontal" Background="Transparent">
+                                <Border x:Name="foco" BorderBrush="Transparent" BorderThickness="2" CornerRadius="15" Padding="2"
+                                        VerticalAlignment="Center">
+                                    <Border x:Name="pista" Width="44" Height="24" CornerRadius="12" Background="{DynamicResource BrushMuted}">
+                                        <Ellipse x:Name="perilla" Width="18" Height="18" Margin="3,0" HorizontalAlignment="Left"
+                                                 Fill="{DynamicResource BrushCard}"/>
+                                    </Border>
+                                </Border>
+                                <ContentPresenter Margin="10,0,0,0" VerticalAlignment="Center"/>
+                            </StackPanel>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsChecked" Value="True">
+                                    <Setter TargetName="pista" Property="Background" Value="{DynamicResource BrushAccent}"/>
+                                    <Setter TargetName="perilla" Property="HorizontalAlignment" Value="Right"/>
+                                    <Setter TargetName="perilla" Property="Fill" Value="{DynamicResource BrushOnAccent}"/>
+                                </Trigger>
+                                <Trigger Property="IsKeyboardFocused" Value="True">
+                                    <Setter TargetName="foco" Property="BorderBrush" Value="{DynamicResource BrushAccent}"/>
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>

@@ -20,7 +20,7 @@
     <SolidColorBrush x:Key="BrushSuccess" Color="#44FF44"/>
     <SolidColorBrush x:Key="BrushSuccessBg" Color="#003300"/>
 
-    <SolidColorBrush x:Key="BrushSidebar" Color="#1A1A1A"/>
+    <SolidColorBrush x:Key="BrushSidebar" Color="#000000"/>
     <SolidColorBrush x:Key="BrushOnSidebar" Color="#FFFFFF"/>
     <SolidColorBrush x:Key="BrushSidebarMuted" Color="#CCCCCC"/>
     <SolidColorBrush x:Key="BrushSidebarSubtle" Color="#FFFFFF"/>
@@ -31,5 +31,9 @@
     <SolidColorBrush x:Key="BrushSidebarDanger" Color="#FF8888"/>
     <SolidColorBrush x:Key="BrushNavActive" Color="#4D4100"/>
     <SolidColorBrush x:Key="BrushHeroHover" Color="#333333"/>
+    <SolidColorBrush x:Key="BrushHeroBorder" Color="#FFFFFF"/>
+
+    <!-- Logo de la app (login, registro y barra lateral) -->
+    <BitmapImage x:Key="ImagenLogo" UriSource="pack://application:,,,/ProyectoFinal;component/Assets/logo_alto_contraste.jpg"/>
 
 </ResourceDictionary>

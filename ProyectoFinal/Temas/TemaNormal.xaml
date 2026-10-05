@@ -34,5 +34,10 @@
     <SolidColorBrush x:Key="BrushSidebarDanger" Color="#F7C1C1"/>
     <SolidColorBrush x:Key="BrushNavActive" Color="#1F7A6C"/>
     <SolidColorBrush x:Key="BrushHeroHover" Color="#175C52"/>
+    <!-- Borde del tile destacado: en el tema normal se funde con el fondo del tile -->
+    <SolidColorBrush x:Key="BrushHeroBorder" Color="#14332B"/>
+
+    <!-- Logo de la app (login, registro y barra lateral) -->
+    <BitmapImage x:Key="ImagenLogo" UriSource="pack://application:,,,/ProyectoFinal;component/Assets/logo.jpg"/>
 
 </ResourceDictionary>

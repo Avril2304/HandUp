@@ -10,7 +10,8 @@ namespace ProyectoFinal
         Desafio,
         Traductor,
         Diccionario,
-        MiPerfil
+        MiPerfil,
+        Configuracion
     }
 
     // Datos de presentación de cada sección: título, ícono (glifo de Segoe Fluent Icons) y descripción
@@ -31,6 +32,8 @@ namespace ProyectoFinal
                 "Un buscador de todas las señas, con filtros y la descripción del movimiento de manos."),
             [Seccion.MiPerfil] = new("Mi perfil", "",
                 "Tus datos, tus estadísticas y tus preferencias."),
+            [Seccion.Configuracion] = new("Configuración", "",
+                "Accesibilidad (alto contraste) y atajos de teclado para responder."),
         };
     }
 }

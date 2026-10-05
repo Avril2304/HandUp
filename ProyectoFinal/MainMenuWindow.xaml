@@ -33,7 +33,7 @@
                 <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="6,0,0,0">
                     <Border Width="34" Height="34" CornerRadius="9" ClipToBounds="True">
                         <Border.Background>
-                            <ImageBrush ImageSource="Assets/logo.jpg" Stretch="UniformToFill"/>
+                            <ImageBrush ImageSource="{DynamicResource ImagenLogo}" Stretch="UniformToFill"/>
                         </Border.Background>
                     </Border>
                     <TextBlock Text="HandUp" FontFamily="{StaticResource FontHeading}" FontSize="20" FontWeight="Bold"
@@ -119,6 +119,17 @@
                             <TextBlock Text="&#xE77B;" FontFamily="{StaticResource FontIconos}" FontSize="16" VerticalAlignment="Center"/>
                             <TextBlock Grid.Column="1" Text="Mi perfil" VerticalAlignment="Center"/>
                             <TextBlock Grid.Column="2" Text="Ctrl+5" FontSize="11" Foreground="{DynamicResource BrushSidebarMuted}" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Button>
+                    <Button x:Name="navConfiguracion" Style="{StaticResource NavItem}" Click="Nav_Click"
+                            CommandParameter="{x:Static local:Seccion.Configuracion}" AutomationProperties.Name="Configuración">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="28"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="&#xE713;" FontFamily="{StaticResource FontIconos}" FontSize="16" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="1" Text="Configuración" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="2" Text="Ctrl+6" FontSize="11" Foreground="{DynamicResource BrushSidebarMuted}" VerticalAlignment="Center"/>
                         </Grid>
                     </Button>
                     <Button x:Name="navSalir" Style="{StaticResource NavItem}" Click="Salir_Click" AutomationProperties.Name="Salir de HandUp">
@@ -291,10 +302,10 @@
                         </Grid>
                     </Button>
 
-                    <!-- 5. Mi perfil y Salir, más chicos -->
+                    <!-- 5. Mi perfil, Configuración y Salir, más chicos -->
                     <Grid Grid.Column="4" Grid.Row="2">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/><RowDefinition Height="12"/><RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/><RowDefinition Height="10"/><RowDefinition Height="*"/><RowDefinition Height="10"/><RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <Button Grid.Row="0" x:Name="tilePerfil" Style="{StaticResource MenuTile}" Padding="18,0"
                                 Click="Nav_Click" CommandParameter="{x:Static local:Seccion.MiPerfil}"
@@ -310,7 +321,21 @@
                                 </Border>
                             </Grid>
                         </Button>
-                        <Button Grid.Row="2" x:Name="tileSalir" Style="{StaticResource MenuTile}" Padding="18,0"
+                        <Button Grid.Row="2" x:Name="tileConfiguracion" Style="{StaticResource MenuTile}" Padding="18,0"
+                                Click="Nav_Click" CommandParameter="{x:Static local:Seccion.Configuracion}"
+                                AutomationProperties.Name="Configuración. Atajo: tecla 6">
+                            <Grid VerticalAlignment="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="&#xE713;" FontFamily="{StaticResource FontIconos}" FontSize="22" Foreground="{DynamicResource BrushAccent}" VerticalAlignment="Center"/>
+                                <TextBlock Grid.Column="1" Text="Configuración" FontSize="15" FontWeight="Bold" Margin="12,0,0,0" VerticalAlignment="Center"/>
+                                <Border Grid.Column="2" Style="{StaticResource AtajoBadge}" VerticalAlignment="Center">
+                                    <TextBlock Text="6" FontSize="12" FontWeight="Bold" Foreground="{DynamicResource BrushAccentDark}"/>
+                                </Border>
+                            </Grid>
+                        </Button>
+                        <Button Grid.Row="4" x:Name="tileSalir" Style="{StaticResource MenuTile}" Padding="18,0"
                                 Click="Salir_Click" AutomationProperties.Name="Salir de HandUp. Atajo: Escape">
                             <Grid VerticalAlignment="Center">
                                 <Grid.ColumnDefinitions>
@@ -326,7 +351,7 @@
                     </Grid>
                 </Grid>
 
-                <TextBlock Grid.Row="4" Text="Usá Tab y Enter para moverte, o las teclas 1 a 5 para entrar directo."
+                <TextBlock Grid.Row="4" Text="Usá Tab y Enter para moverte, o las teclas 1 a 6 para entrar directo."
                            FontSize="12.5" Foreground="{DynamicResource BrushMuted}" HorizontalAlignment="Center"/>
             </Grid>
 

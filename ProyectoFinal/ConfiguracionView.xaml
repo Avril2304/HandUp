@@ -1,0 +1,87 @@
+<UserControl x:Class="ProyectoFinal.ConfiguracionView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             PreviewKeyDown="Vista_PreviewKeyDown">
+    <!-- Preferencias del usuario. Cada cambio se aplica al instante y se guarda solo. -->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="Configuración" FontFamily="{StaticResource FontHeading}" FontSize="26"
+                       FontWeight="Bold" Foreground="{DynamicResource BrushInk}" VerticalAlignment="Center"/>
+            <Button Grid.Column="1" Style="{StaticResource SecondaryButton}" Padding="16,0"
+                    Click="BtnVolver_Click" AutomationProperties.Name="Volver al inicio" ToolTip="Volver al inicio (Esc)">
+                <StackPanel Orientation="Horizontal" Margin="16,0">
+                    <TextBlock Text="&#xE72B;" FontFamily="{StaticResource FontIconos}" FontSize="14" VerticalAlignment="Center"/>
+                    <TextBlock Text="Volver al inicio" Margin="8,0,0,0" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+        </Grid>
+
+        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" Focusable="False" Padding="0,0,6,0">
+            <StackPanel>
+
+                <!-- Tarjeta: Accesibilidad -->
+                <Border Background="{DynamicResource BrushCard}" BorderBrush="{DynamicResource BrushBorder}" BorderThickness="1.5"
+                        CornerRadius="18" Padding="32,26">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="&#xE776;" FontFamily="{StaticResource FontIconos}" FontSize="16"
+                                       Foreground="{DynamicResource BrushAccent}" VerticalAlignment="Center"/>
+                            <TextBlock Text="ACCESIBILIDAD" FontSize="12" FontWeight="Bold" Foreground="{DynamicResource BrushMuted}"
+                                       Margin="8,0,0,0" VerticalAlignment="Center"/>
+                        </StackPanel>
+
+                        <CheckBox x:Name="chkAltoContraste" Style="{StaticResource SwitchToggle}" Margin="0,18,0,0"
+                                  AutomationProperties.Name="Alto contraste"
+                                  Click="ChkAltoContraste_Click">
+                            <StackPanel Margin="6,0,0,0">
+                                <TextBlock Text="Alto contraste" FontSize="16" FontWeight="Bold"/>
+                                <TextBlock Text="Fondo negro, letras blancas y detalles en amarillo para que todo se distinga mejor."
+                                           FontSize="13" Foreground="{DynamicResource BrushMuted}" TextWrapping="Wrap" Margin="0,3,0,0"/>
+                            </StackPanel>
+                        </CheckBox>
+
+                        <TextBlock x:Name="lblError" FontSize="12.5" Foreground="{DynamicResource BrushError}" TextWrapping="Wrap"
+                                   Margin="0,12,0,0" Visibility="Collapsed"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Tarjeta: Atajos de teclado -->
+                <Border Background="{DynamicResource BrushCard}" BorderBrush="{DynamicResource BrushBorder}" BorderThickness="1.5"
+                        CornerRadius="18" Padding="32,26" Margin="0,16,0,0">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="&#xE765;" FontFamily="{StaticResource FontIconos}" FontSize="16"
+                                       Foreground="{DynamicResource BrushAccent}" VerticalAlignment="Center"/>
+                            <TextBlock Text="ATAJOS DE TECLADO" FontSize="12" FontWeight="Bold" Foreground="{DynamicResource BrushMuted}"
+                                       Margin="8,0,0,0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <TextBlock Text="Elegí las teclas que te resulten más cómodas para responder en Aprender y Desafío."
+                                   FontSize="13" Foreground="{DynamicResource BrushMuted}" TextWrapping="Wrap" Margin="0,8,0,6"/>
+
+                        <!-- Una fila por acción; se arman desde el código -->
+                        <StackPanel x:Name="pnlAtajos"/>
+
+                        <!-- Mensajes: "presioná una tecla", errores y confirmaciones. Se anuncian en lectores de pantalla. -->
+                        <TextBlock x:Name="lblEstadoAtajos" FontSize="13" FontWeight="SemiBold" TextWrapping="Wrap"
+                                   Margin="0,14,0,0" Visibility="Collapsed" AutomationProperties.LiveSetting="Assertive"/>
+
+                        <Button x:Name="btnRestaurar" Content="Restaurar teclas originales" Style="{StaticResource SecondaryButton}"
+                                Height="38" Width="240" HorizontalAlignment="Left" Margin="0,16,0,0"
+                                Click="BtnRestaurar_Click"/>
+                    </StackPanel>
+                </Border>
+
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>
