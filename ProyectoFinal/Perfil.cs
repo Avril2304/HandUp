@@ -14,9 +14,17 @@ namespace ProyectoFinal
 
         public string Nivel { get; set; } = "Principiante";
         public int Racha { get; set; } = 0;
+        public int MejorRacha { get; set; } = 0;
         public int SenasDominadas { get; set; } = 0;
         public int Puntos { get; set; } = 0;
+        public int AciertosTotales { get; set; } = 0;
+        public int FallosTotales { get; set; } = 0;
         public DateTime FechaRegistro { get; set; } = DateTime.Now;
+
+        // Propiedad calculada para mostrar en UI
+        public double Precision => (AciertosTotales + FallosTotales) == 0 
+            ? 0 
+            : (double)AciertosTotales / (AciertosTotales + FallosTotales);
 
         // Primera letra del nombre, para el avatar del listado de perfiles (no se guarda en la base)
         public string Inicial => string.IsNullOrWhiteSpace(Nombre) ? "?" : Nombre.Trim()[0].ToString().ToUpper();

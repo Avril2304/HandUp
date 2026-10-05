@@ -10,7 +10,7 @@ namespace ProyectoFinal
     public class RepositorioPerfiles : IRepositorio<Perfil>
     {
         private const string ColumnasPerfil =
-            "Id, Nombre, Usuario, PasswordHash, PasswordSalt, Nivel, Racha, SenasDominadas, Puntos, FechaRegistro";
+            "Id, Nombre, Usuario, PasswordHash, PasswordSalt, Nivel, Racha, MejorRacha, SenasDominadas, Puntos, AciertosTotales, FallosTotales, FechaRegistro";
 
         public IReadOnlyList<Perfil> ObtenerTodos()
         {
@@ -61,15 +61,19 @@ namespace ProyectoFinal
                 comando.CommandText = @"
                     UPDATE Perfiles SET
                         Nombre = $nombre, PasswordHash = $hash, PasswordSalt = $sal, Nivel = $nivel,
-                        Racha = $racha, SenasDominadas = $senas, Puntos = $puntos
+                        Racha = $racha, MejorRacha = $mejor, SenasDominadas = $senas, Puntos = $puntos,
+                        AciertosTotales = $aciertos, FallosTotales = $fallos
                     WHERE Id = $id;";
                 comando.Parameters.AddWithValue("$nombre", perfil.Nombre);
                 comando.Parameters.AddWithValue("$hash", perfil.PasswordHash);
                 comando.Parameters.AddWithValue("$sal", perfil.PasswordSalt);
                 comando.Parameters.AddWithValue("$nivel", perfil.Nivel);
                 comando.Parameters.AddWithValue("$racha", perfil.Racha);
+                comando.Parameters.AddWithValue("$mejor", perfil.MejorRacha);
                 comando.Parameters.AddWithValue("$senas", perfil.SenasDominadas);
                 comando.Parameters.AddWithValue("$puntos", perfil.Puntos);
+                comando.Parameters.AddWithValue("$aciertos", perfil.AciertosTotales);
+                comando.Parameters.AddWithValue("$fallos", perfil.FallosTotales);
                 comando.Parameters.AddWithValue("$id", perfil.Id);
                 return comando.ExecuteNonQuery();
             });
@@ -148,8 +152,8 @@ namespace ProyectoFinal
             using var comando = conexion.CreateCommand();
             comando.Transaction = transaccion;
             comando.CommandText = @"
-                INSERT INTO Perfiles (Nombre, Usuario, PasswordHash, PasswordSalt, Nivel, Racha, SenasDominadas, Puntos, FechaRegistro)
-                VALUES ($nombre, $usuario, $hash, $sal, $nivel, $racha, $senas, $puntos, $fecha);
+                INSERT INTO Perfiles (Nombre, Usuario, PasswordHash, PasswordSalt, Nivel, Racha, MejorRacha, SenasDominadas, Puntos, AciertosTotales, FallosTotales, FechaRegistro)
+                VALUES ($nombre, $usuario, $hash, $sal, $nivel, $racha, $mejor, $senas, $puntos, $aciertos, $fallos, $fecha);
                 SELECT last_insert_rowid();";
             comando.Parameters.AddWithValue("$nombre", perfil.Nombre);
             comando.Parameters.AddWithValue("$usuario", perfil.Usuario);
@@ -157,8 +161,11 @@ namespace ProyectoFinal
             comando.Parameters.AddWithValue("$sal", perfil.PasswordSalt);
             comando.Parameters.AddWithValue("$nivel", perfil.Nivel);
             comando.Parameters.AddWithValue("$racha", perfil.Racha);
+            comando.Parameters.AddWithValue("$mejor", perfil.MejorRacha);
             comando.Parameters.AddWithValue("$senas", perfil.SenasDominadas);
             comando.Parameters.AddWithValue("$puntos", perfil.Puntos);
+            comando.Parameters.AddWithValue("$aciertos", perfil.AciertosTotales);
+            comando.Parameters.AddWithValue("$fallos", perfil.FallosTotales);
             // Guardamos la fecha como texto ISO 8601 para que se lea igual en cualquier configuración regional
             comando.Parameters.AddWithValue("$fecha", perfil.FechaRegistro.ToString("o", CultureInfo.InvariantCulture));
 
@@ -167,7 +174,7 @@ namespace ProyectoFinal
 
         private static Perfil LeerPerfil(SqliteDataReader lector)
         {
-            string fechaTexto = lector.GetString(9);
+            string fechaTexto = lector.GetString(12);
             bool fechaValida = DateTime.TryParse(fechaTexto, CultureInfo.InvariantCulture,
                 DateTimeStyles.RoundtripKind, out DateTime fecha);
 
@@ -180,8 +187,11 @@ namespace ProyectoFinal
                 PasswordSalt = lector.GetString(4),
                 Nivel = lector.GetString(5),
                 Racha = lector.GetInt32(6),
-                SenasDominadas = lector.GetInt32(7),
-                Puntos = lector.GetInt32(8),
+                MejorRacha = lector.GetInt32(7),
+                SenasDominadas = lector.GetInt32(8),
+                Puntos = lector.GetInt32(9),
+                AciertosTotales = lector.GetInt32(10),
+                FallosTotales = lector.GetInt32(11),
                 // Si alguien editó la fecha a mano y quedó inválida, no rompemos la carga del perfil
                 FechaRegistro = fechaValida ? fecha : DateTime.Now
             };

@@ -30,7 +30,7 @@
                        FontSize="24" FontWeight="Bold" Foreground="{StaticResource BrushInk}" VerticalAlignment="Center"/>
 
             <StackPanel Grid.Column="1" Orientation="Horizontal">
-                <Border Background="White" BorderBrush="{StaticResource BrushBorder}" BorderThickness="1" CornerRadius="20" Padding="14,8" Margin="0,0,10,0">
+                <Border x:Name="borderRacha" ToolTip="Mejor racha: 0" Background="White" BorderBrush="{StaticResource BrushBorder}" BorderThickness="1" CornerRadius="20" Padding="14,8" Margin="0,0,10,0">
                     <StackPanel Orientation="Horizontal">
                         <Ellipse Width="10" Height="10" Fill="{StaticResource BrushAccent}" VerticalAlignment="Center"/>
                         <TextBlock x:Name="lblRacha" Text="0" FontWeight="Bold" FontSize="14"

@@ -100,9 +100,21 @@ namespace ProyectoFinal
                     PasswordSalt   TEXT    NOT NULL,
                     Nivel          TEXT    NOT NULL DEFAULT 'Principiante',
                     Racha          INTEGER NOT NULL DEFAULT 0,
+                    MejorRacha     INTEGER NOT NULL DEFAULT 0,
                     SenasDominadas INTEGER NOT NULL DEFAULT 0,
                     Puntos         INTEGER NOT NULL DEFAULT 0,
+                    AciertosTotales INTEGER NOT NULL DEFAULT 0,
+                    FallosTotales  INTEGER NOT NULL DEFAULT 0,
                     FechaRegistro  TEXT    NOT NULL
+                );
+
+                CREATE TABLE IF NOT EXISTS ProgresoSenas (
+                    PerfilId   INTEGER NOT NULL REFERENCES Perfiles(Id),
+                    SenaId     INTEGER NOT NULL REFERENCES Senas(Id),
+                    Dominada   INTEGER NOT NULL DEFAULT 0,
+                    Aciertos   INTEGER NOT NULL DEFAULT 0,
+                    Fallos     INTEGER NOT NULL DEFAULT 0,
+                    PRIMARY KEY (PerfilId, SenaId)
                 );
 
                 -- Banco multimedia LSA: se llena desde signs_database.json (ver ImportadorSenas)
@@ -135,6 +147,31 @@ namespace ProyectoFinal
                     Valor TEXT NOT NULL
                 );";
             comando.ExecuteNonQuery();
+
+            MigrarEsquemaProgreso(conexion);
+        }
+
+        private static void MigrarEsquemaProgreso(SqliteConnection conexion)
+        {
+            string[] columnasAAgregar = {
+                "ALTER TABLE Perfiles ADD COLUMN MejorRacha INTEGER NOT NULL DEFAULT 0;",
+                "ALTER TABLE Perfiles ADD COLUMN AciertosTotales INTEGER NOT NULL DEFAULT 0;",
+                "ALTER TABLE Perfiles ADD COLUMN FallosTotales INTEGER NOT NULL DEFAULT 0;"
+            };
+
+            foreach (var alter in columnasAAgregar)
+            {
+                try
+                {
+                    using var cmd = conexion.CreateCommand();
+                    cmd.CommandText = alter;
+                    cmd.ExecuteNonQuery();
+                }
+                catch (SqliteException)
+                {
+                    // Ignoramos el error: significa que la columna ya existe
+                }
+            }
         }
 
         private static void ApartarArchivoCorrupto()
