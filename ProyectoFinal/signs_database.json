@@ -1372,7 +1372,7 @@
       "word": "Amargo",
       "category": "alimentos",
       "difficulty": 2,
-      "description": "La mano dominante cerrada en puño, con la palma orientada hacia adentro, se apoya frente a la boca y la nariz acompañada de un gesto facial de desagrado (revisar).",
+      "description": "La mano dominante cerrada en puño, con la palma orientada hacia adentro, se apoya frente a la boca y la nariz acompañada de un gesto facial de desagrado.",
       "handshape_id": null,
       "media": {
         "image_static": "assets/signs/alimentos/amargo.png",
@@ -4927,7 +4927,7 @@
       "word": "Opaco",
       "category": "avanzado",
       "difficulty": 4,
-      "description": "La mano dominante en forma de C frente al rostro se cierra frente a la mejilla con la palma hacia adentro, acompañada de gesto serio (revisar).",
+      "description": "La mano dominante en forma de C frente al rostro se cierra frente a la mejilla con la palma hacia adentro, acompañada de gesto serio.",
       "handshape_id": null,
       "media": {
         "image_static": "assets/signs/avanzado/opaco.png",
@@ -4942,7 +4942,7 @@
       "word": "Trampa",
       "category": "avanzado",
       "difficulty": 4,
-      "description": "La mano dominante cerrada sobre el dorso o muñeca de la mano de base frente al pecho realiza un movimiento de sujeción o enganche simulando una trampa (revisar).",
+      "description": "La mano dominante cerrada sobre el dorso o muñeca de la mano de base frente al pecho realiza un movimiento de sujeción o enganche simulando una trampa.",
       "handshape_id": null,
       "media": {
         "image_static": "assets/signs/avanzado/trampa.png",
@@ -5629,7 +5629,7 @@
       "word": "Marron",
       "category": "colores",
       "difficulty": 1,
-      "description": "La mano derecha, con el dedo índice extendido, roza lateralmente la zona del mentón debajo del labio inferior (revisar).",
+      "description": "La mano derecha, con el dedo índice extendido, roza lateralmente la zona del mentón debajo del labio inferior.",
       "instructions": [
         "Letra M",
         "Rozar abajo"
@@ -5821,7 +5821,7 @@
       "word": "Violeta",
       "category": "colores",
       "difficulty": 1,
-      "description": "Ambas manos abiertas con los dedos separados se elevan a los lados del rostro con las palmas enfrentadas, realizando un breve movimiento antes de bajar (revisar).",
+      "description": "Ambas manos abiertas con los dedos separados se elevan a los lados del rostro con las palmas enfrentadas, realizando un breve movimiento antes de bajar.",
       "instructions": [
         "Letra V",
         "Zig-zag aire"
@@ -6013,7 +6013,7 @@
       "word": "DEPORTES",
       "category": "deportes",
       "difficulty": 2,
-      "description": "Primero ambos puños se ubican a los lados del pecho con un movimiento corto; luego ambos índices extendidos tocan debajo de los ojos y las manos bajan hacia los costados con expresión neutra (revisar).",
+      "description": "Primero ambos puños se ubican a los lados del pecho con un movimiento corto; luego ambos índices extendidos tocan debajo de los ojos y las manos bajan hacia los costados con expresión neutra.",
       "instructions": [
         "Observá la posición de las manos y flechas de movimiento en la imagen de 'DEPORTES'.",
         "Reproducí la configuración manual y el movimiento indicado."
@@ -6301,7 +6301,7 @@
       "word": "Burlar",
       "category": "emociones",
       "difficulty": 3,
-      "description": "La mano dominante en garra o con índice y meñique extendidos se mueve sobre el dorso de la mano base horizontal frente al pecho con expresión burlona (revisar).",
+      "description": "La mano dominante en garra o con índice y meñique extendidos se mueve sobre el dorso de la mano base horizontal frente al pecho con expresión burlona.",
       "handshape_id": null,
       "media": {
         "image_static": "assets/signs/emociones/burlar.png",
@@ -6316,7 +6316,7 @@
       "word": "Enemigo",
       "category": "emociones",
       "difficulty": 3,
-      "description": "Ambas manos o la mano dominante con el dedo índice extendido frente al mentón apuntan de forma enfrentada y se separan bruscamente con ceño fruncido (revisar).",
+      "description": "Ambas manos o la mano dominante con el dedo índice extendido frente al mentón apuntan de forma enfrentada y se separan bruscamente con ceño fruncido.",
       "handshape_id": null,
       "media": {
         "image_static": "assets/signs/emociones/enemigo.png",
@@ -8025,7 +8025,7 @@
       "word": "Hijo",
       "category": "familia",
       "difficulty": 1,
-      "description": "La mano activa, con los dedos índice y mayor extendidos y juntos apuntando hacia arriba y la palma hacia adelante, se eleva desde la altura del rostro hacia el frente (revisar).",
+      "description": "La mano activa, con los dedos índice y mayor extendidos y juntos apuntando hacia arriba y la palma hacia adelante, se eleva desde la altura del rostro hacia el frente.",
       "instructions": [
         "Mano plana",
         "Bajar mano"
@@ -8089,7 +8089,7 @@
       "word": "Hombre",
       "category": "familia",
       "difficulty": 1,
-      "description": "La mano activa, con el índice y el pulgar extendidos y la palma hacia el costado, apoya los dedos sobre la mejilla y desciende bordeando la mandíbula hacia el mentón (revisar).",
+      "description": "La mano activa, con el índice y el pulgar extendidos y la palma hacia el costado, apoya los dedos sobre la mejilla y desciende bordeando la mandíbula hacia el mentón.",
       "instructions": [
         "Agarre en frente",
         "Tirar adelante"
@@ -8217,7 +8217,7 @@
       "word": "Mujer",
       "category": "familia",
       "difficulty": 1,
-      "description": "La mano activa, con los dedos índice y mayor extendidos y juntos apuntando hacia arriba y la palma hacia el rostro, desliza las yemas por la mejilla hacia abajo (revisar).",
+      "description": "La mano activa, con los dedos índice y mayor extendidos y juntos apuntando hacia arriba y la palma hacia el rostro, desliza las yemas por la mejilla hacia abajo.",
       "instructions": [
         "Índice en mejilla",
         "Deslizar abajo"
@@ -8601,7 +8601,7 @@
       "word": "Donde",
       "category": "frases_comunes",
       "difficulty": 4,
-      "description": "La mano dominante o ambas manos frente al pecho, con el índice y el pulgar o las palmas hacia arriba, realizan un corto movimiento lateral interrogativo (revisar).",
+      "description": "La mano dominante o ambas manos frente al pecho, con el índice y el pulgar o las palmas hacia arriba, realizan un corto movimiento lateral interrogativo.",
       "handshape_id": null,
       "media": {
         "image_static": "assets/signs/frases_comunes/donde.png",
@@ -14454,7 +14454,7 @@
       "word": "Buenos dias",
       "category": "saludos",
       "difficulty": 1,
-      "description": "Ambas manos con los dedos abiertos y las palmas hacia el cuerpo se ubican frente al pecho y se abren hacia los costados a la altura de los hombros con expresión sonriente (revisar).",
+      "description": "Ambas manos con los dedos abiertos y las palmas hacia el cuerpo se ubican frente al pecho y se abren hacia los costados a la altura de los hombros con expresión sonriente.",
       "instructions": [
         "Llevar mano a barbilla",
         "Bajar mano al otro brazo"
@@ -17056,7 +17056,7 @@
       "word": "Barco",
       "category": "transporte",
       "difficulty": 3,
-      "description": "Ambas manos unidas por los bordes inferiores formando el casco de un bote avanzan con movimiento ondulante frente al pecho, o la mano dominante traza la proa hacia adelante (revisar).",
+      "description": "Ambas manos unidas por los bordes inferiores formando el casco de un bote avanzan con movimiento ondulante frente al pecho, o la mano dominante traza la proa hacia adelante.",
       "instructions": [
         "Juntar manos",
         "Avanzar ola"

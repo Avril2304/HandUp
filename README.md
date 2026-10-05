@@ -101,7 +101,7 @@ Solución: `ProyectoFinal.sln`, proyecto `ProyectoFinal.csproj` (net8.0-windows,
 - **JSON:** `categories` (22 entradas, todas con señas: `id`, `name`, `emoji`, `description`, `color`) y `signs` (563: `id` "sign_001"…, `word`, `category`, `difficulty` 1-4, `description`, `media.image_static`, `media.video`; además traen `instructions` (lista de pasos), `tags`, `handshape`, `movement`, `location`, `related_signs` y `examples`). Las 563 señas tienen video y ninguna ruta está rota (`media.thumbnail` = `media.image_static`).
 - **Niveles:** 1 Principiante (117 señas): abecedario, numeros, saludos, colores, familia. 2 Básico (185): alimentos, ropa, clima, deportes. 3 Intermedio (154): tiempo, escuela, verbos_cotidianos, juegos, emociones, lugares, transporte. 4 Avanzado (107): paises, provincias, profesiones, medios_comunicacion, avanzado, frases_comunes. Cada categoría tiene un único nivel.
 - **Abecedario:** A-Z + CH + Ñ (28 letras justas; no hay LL ni RR, así que para el deletreo hay que partir LL/RR en letras sueltas). La entrada "ABECEDARIO" se movió a `escuela`. Hay además 48 imágenes `handshape_XX_*.png` (dataset LSA16) que no están en el JSON.
-- **Descripciones:** las 563 tienen una `description` real del movimiento de manos (story 13). 14 terminan en "(revisar)" y se pueden pulir después: Amargo, Opaco, Trampa, Marron, Violeta, DEPORTES, Burlar, Enemigo, Hijo, Hombre, Mujer, Donde, Buenos dias y Barco.
+- **Descripciones:** las 563 tienen una `description` real del movimiento de manos (story 13), todas revisadas por el equipo (el 2026-10-01 se sacaron las 14 marcas "(revisar)" que quedaban).
 - **Detalles a tener en cuenta:**
   - En 375 señas, `handshape`/`movement`/`location` son texto de relleno ("Ver imagen oficial CAS"), así que no conviene mostrarlos. 56 señas no tienen `instructions`: mostrarlas solo si existen.
   - Hay homónimos en distintas categorías: NARANJA (alimentos/colores), PAPA (alimentos/familia), UNO (juegos/numeros) y MERIENDA (alimentos/tiempo). El traductor tiene que decidir cuál mostrar.
@@ -118,7 +118,6 @@ Solución: `ProyectoFinal.sln`, proyecto `ProyectoFinal.csproj` (net8.0-windows,
 
 - Definir la fecha límite real (Sprint 0 sigue sin fecha).
 - Repartir los 5 módulos entre los 2 o 3 integrantes.
-- Pulir las 14 descripciones marcadas "(revisar)" (no bloquea).
 - Citar las fuentes del material (Señario V2, LSA16) en el informe.
 
 ## Cómo trabajar

@@ -9,3 +9,6 @@ obj/
 *.db-journal
 *.migrado
 perfiles.json
+
+# Contexto local para Claude Code (no se sube)
+CLAUDE.md
