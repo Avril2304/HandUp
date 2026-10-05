@@ -180,7 +180,7 @@ namespace ProyectoFinal
             });
         }
 
-        public void Agregar(Sena item) => 
+        public Sena Agregar(Sena item) => 
             throw new NotSupportedException("Las señas son de solo lectura y se cargan mediante el ImportadorSenas.");
 
         public void Actualizar(Sena item) => 

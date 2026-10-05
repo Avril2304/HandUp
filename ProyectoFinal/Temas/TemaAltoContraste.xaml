@@ -1,0 +1,35 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- Alto contraste: fondo negro, texto blanco, acento amarillo brillante.
+         Mismas claves que TemaNormal.xaml. -->
+
+    <SolidColorBrush x:Key="BrushBackground" Color="#000000"/>
+    <SolidColorBrush x:Key="BrushCard" Color="#1A1A1A"/>
+    <SolidColorBrush x:Key="BrushBorder" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="BrushBorderAccent" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="BrushInk" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="BrushMuted" Color="#CCCCCC"/>
+
+    <SolidColorBrush x:Key="BrushAccent" Color="#FFD700"/>
+    <SolidColorBrush x:Key="BrushAccentDark" Color="#FFC000"/>
+    <SolidColorBrush x:Key="BrushAccentSoft" Color="#333300"/>
+    <SolidColorBrush x:Key="BrushOnAccent" Color="#000000"/>
+
+    <SolidColorBrush x:Key="BrushError" Color="#FF4444"/>
+    <SolidColorBrush x:Key="BrushErrorBg" Color="#330000"/>
+    <SolidColorBrush x:Key="BrushSuccess" Color="#44FF44"/>
+    <SolidColorBrush x:Key="BrushSuccessBg" Color="#003300"/>
+
+    <SolidColorBrush x:Key="BrushSidebar" Color="#1A1A1A"/>
+    <SolidColorBrush x:Key="BrushOnSidebar" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="BrushSidebarMuted" Color="#CCCCCC"/>
+    <SolidColorBrush x:Key="BrushSidebarSubtle" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="BrushSidebarHover" Color="#333333"/>
+    <SolidColorBrush x:Key="BrushSidebarLine" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="BrushSidebarTrack" Color="#444444"/>
+    <SolidColorBrush x:Key="BrushSidebarHighlight" Color="#FFD700"/>
+    <SolidColorBrush x:Key="BrushSidebarDanger" Color="#FF8888"/>
+    <SolidColorBrush x:Key="BrushNavActive" Color="#4D4100"/>
+    <SolidColorBrush x:Key="BrushHeroHover" Color="#333333"/>
+
+</ResourceDictionary>

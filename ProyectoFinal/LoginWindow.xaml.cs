@@ -98,10 +98,7 @@ namespace ProyectoFinal
                 PreferenciasUsuario prefs = new RepositorioPreferencias().ObtenerPorPerfil(perfil.Id);
 
                 // Aplicar tema visual según preferencias
-                if (prefs.AltoContraste)
-                {
-                    Application.Current.Resources.MergedDictionaries.Add(TemaVisual.ObtenerDiccionarioAltoContraste());
-                }
+                TemaVisual.Aplicar(prefs.AltoContraste);
 
                 // Cargo el perfil seleccionado y navego al menú principal
                 var menuPrincipal = new MainMenuWindow(perfil, prefs);

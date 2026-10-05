@@ -90,7 +90,7 @@ namespace ProyectoFinal
             });
         }
 
-        public void Agregar(Categoria item) => 
+        public Categoria Agregar(Categoria item) => 
             throw new NotSupportedException("Las categorías son de solo lectura y se cargan mediante el ImportadorSenas.");
 
         public void Actualizar(Categoria item) => 
