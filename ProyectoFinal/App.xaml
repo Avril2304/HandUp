@@ -229,6 +229,119 @@
                 </Setter>
             </Style>
 
+            <!-- ===== Menú principal ===== -->
+
+            <!-- Fuente de íconos del sistema (Windows 11; en Windows 10 cae a MDL2, que comparte los glifos) -->
+            <FontFamily x:Key="FontIconos">Segoe Fluent Icons, Segoe MDL2 Assets</FontFamily>
+            <SolidColorBrush x:Key="BrushSidebar" Color="#14332B"/>
+            <SolidColorBrush x:Key="BrushSidebarMuted" Color="#9DBDB4"/>
+
+            <!-- Tile del inicio: tarjeta blanca clickeable y enfocable con Tab -->
+            <Style x:Key="MenuTile" TargetType="Button">
+                <Setter Property="Background" Value="White"/>
+                <Setter Property="Foreground" Value="{StaticResource BrushInk}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource BrushBorder}"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Padding" Value="20"/>
+                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="bg" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="1.5" CornerRadius="18" Padding="{TemplateBinding Padding}">
+                                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="bg" Property="BorderBrush" Value="{StaticResource BrushAccent}"/>
+                                </Trigger>
+                                <!-- Foco de teclado bien visible (no depende solo del color: el borde se engrosa) -->
+                                <Trigger Property="IsKeyboardFocused" Value="True">
+                                    <Setter TargetName="bg" Property="BorderBrush" Value="{StaticResource BrushAccent}"/>
+                                    <Setter TargetName="bg" Property="BorderThickness" Value="3"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="bg" Property="Background" Value="{StaticResource BrushAccentSoft}"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- Tile destacado (Aprender): fondo verde oscuro, mismo comportamiento -->
+            <Style x:Key="MenuTileHero" TargetType="Button" BasedOn="{StaticResource MenuTile}">
+                <Setter Property="Background" Value="{StaticResource BrushSidebar}"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="BorderBrush" Value="{StaticResource BrushSidebar}"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="bg" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="1.5" CornerRadius="18" Padding="{TemplateBinding Padding}">
+                                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="bg" Property="Background" Value="{StaticResource BrushAccentDark}"/>
+                                </Trigger>
+                                <Trigger Property="IsKeyboardFocused" Value="True">
+                                    <Setter TargetName="bg" Property="BorderBrush" Value="#5DCAA5"/>
+                                    <Setter TargetName="bg" Property="BorderThickness" Value="3"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- Recuadro del atajo de teclado ("1", "Esc") en la esquina de cada tile -->
+            <Style x:Key="AtajoBadge" TargetType="Border">
+                <Setter Property="BorderBrush" Value="{StaticResource BrushBorderAccent}"/>
+                <Setter Property="BorderThickness" Value="1.5"/>
+                <Setter Property="CornerRadius" Value="5"/>
+                <Setter Property="Padding" Value="6,1"/>
+                <Setter Property="HorizontalAlignment" Value="Right"/>
+                <Setter Property="VerticalAlignment" Value="Top"/>
+            </Style>
+
+            <!-- Ítem de la barra lateral. Tag="activo" marca la sección en la que estás -->
+            <Style x:Key="NavItem" TargetType="Button">
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="Height" Value="42"/>
+                <Setter Property="Margin" Value="0,0,0,4"/>
+                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="bg" Background="{TemplateBinding Background}" BorderBrush="Transparent"
+                                    BorderThickness="2" CornerRadius="10" Padding="12,0">
+                                <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="bg" Property="Background" Value="#22483F"/>
+                                </Trigger>
+                                <Trigger Property="Tag" Value="activo">
+                                    <Setter TargetName="bg" Property="Background" Value="{StaticResource BrushAccent}"/>
+                                </Trigger>
+                                <Trigger Property="IsKeyboardFocused" Value="True">
+                                    <Setter TargetName="bg" Property="BorderBrush" Value="#5DCAA5"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

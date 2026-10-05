@@ -1,40 +1,113 @@
 using System;
+using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace ProyectoFinal
 {
+    // Menú principal. Tiene dos estados dentro de la misma ventana:
+    //  - Inicio: tiles grandes, sin barra lateral.
+    //  - Sección: barra lateral a la izquierda y la vista de la sección a la derecha.
     public partial class MainMenuWindow : Window
     {
+        // Cantidad de señas de cada nivel según el banco multimedia (ver README)
+        private static readonly (string Nombre, int Cantidad)[] Niveles =
+        {
+            ("Principiante", 117),
+            ("Básico", 185),
+            ("Intermedio", 154),
+            ("Avanzado", 107)
+        };
+
         private readonly Perfil _perfil;
         private readonly ServicioProgreso _servicio;
+
+        // Ítem de la barra lateral que corresponde a cada sección (para marcar el activo)
+        private readonly Dictionary<Seccion, Button> _itemsNav;
+
+        private Seccion _seccionActual = Seccion.Inicio;
+
+        // Tile desde el que se entró a una sección: al volver, el foco regresa ahí
+        private Button? _tileOrigen;
 
         public MainMenuWindow(Perfil perfil)
         {
             InitializeComponent();
             _perfil = perfil;
             _servicio = new ServicioProgreso(_perfil, new RepositorioPerfiles());
-            
+
             _servicio.ProgresoActualizado += Servicio_ProgresoActualizado;
             Closing += MainMenuWindow_Closing;
 
+            _itemsNav = new Dictionary<Seccion, Button>
+            {
+                [Seccion.Inicio] = navInicio,
+                [Seccion.Aprender] = navAprender,
+                [Seccion.Desafio] = navDesafio,
+                [Seccion.Traductor] = navTraductor,
+                [Seccion.Diccionario] = navDiccionario,
+                [Seccion.MiPerfil] = navPerfil
+            };
+
+            lblCantidadSenas.Text = TextoCantidadSenas();
             ActualizarUI();
         }
 
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            // Arranca con el foco en la opción principal: Enter entra directo a Aprender
+            tileAprender.Focus();
+        }
+
+        // ===== Datos del perfil =====
+
         private void ActualizarUI()
         {
-            lblSaludo.Text = $"¡Hola, {PrimerNombre(_perfil.Nombre)}!";
-            lblNivel.Text = $"Nivel {_perfil.Nivel}";
-            lblRacha.Text = _perfil.Racha.ToString();
-            borderRacha.ToolTip = $"Mejor racha: {_perfil.MejorRacha}";
-            
-            int metaNivel = ObtenerMetaNivel(_perfil.Nivel);
-            lblSenas.Text = $"{_perfil.SenasDominadas} / {metaNivel}";
+            string nombre = PrimerNombre(_perfil.Nombre);
+            lblSaludo.Text = $"¡Hola, {nombre}!";
+            lblNivel.Text = _perfil.Nivel;
+            lblRacha.Text = $"Racha {_perfil.Racha}";
+            borderRacha.ToolTip = $"Aciertos seguidos. Mejor racha: {_perfil.MejorRacha}";
+            lblMejorRacha.Text = _perfil.MejorRacha > 0
+                ? $"Mejor racha: {_perfil.MejorRacha}"
+                : "Contrarreloj con vidas";
 
-            if (XpTrack.ActualWidth > 0)
+            lblUsuarioLateral.Text = nombre;
+            lblRachaLateral.Text = _perfil.Racha.ToString();
+
+            // Progreso dentro del nivel actual (no del total de la app)
+            int indice = Math.Max(0, Array.FindIndex(Niveles, n => n.Nombre == _perfil.Nivel));
+            int senasNivelesAnteriores = 0;
+            for (int i = 0; i < indice; i++)
+                senasNivelesAnteriores += Niveles[i].Cantidad;
+
+            int totalNivel = Niveles[indice].Cantidad;
+            int dominadasNivel = Math.Clamp(_perfil.SenasDominadas - senasNivelesAnteriores, 0, totalNivel);
+            double proporcion = (double)dominadasNivel / totalNivel;
+
+            lblProgresoNivel.Text = $"{_perfil.Nivel}: {dominadasNivel} / {totalNivel} señas";
+            colProgresoLleno.Width = new GridLength(proporcion, GridUnitType.Star);
+            colProgresoVacio.Width = new GridLength(1 - proporcion, GridUnitType.Star);
+        }
+
+        // Si la base no responde, el tile muestra un texto genérico en vez de fallar
+        private static string TextoCantidadSenas()
+        {
+            try
             {
-                double proporcion = Math.Min(1.0, (double)_perfil.SenasDominadas / metaNivel);
-                XpFill.Width = XpTrack.ActualWidth * proporcion;
+                int cantidad = Database.Ejecutar(conexion =>
+                {
+                    using var comando = conexion.CreateCommand();
+                    comando.CommandText = "SELECT COUNT(*) FROM Senas";
+                    return Convert.ToInt32(comando.ExecuteScalar());
+                });
+                return cantidad > 0 ? $"{cantidad} señas para consultar" : "Buscá cualquier seña";
+            }
+            catch (DatabaseException)
+            {
+                return "Buscá cualquier seña";
             }
         }
 
@@ -46,23 +119,15 @@ namespace ProyectoFinal
 
         private void MainMenuWindow_Closing(object? sender, System.ComponentModel.CancelEventArgs e)
         {
-            _servicio.GuardarProgreso("Cierre de aplicación");
-        }
-
-        private int ObtenerMetaNivel(string nivel)
-        {
-            int n1 = 117;
-            int n2 = 185;
-            int n3 = 154;
-            int n4 = 107;
-
-            return nivel switch
+            try
             {
-                "Principiante" => n1,
-                "Básico" => n1 + n2,
-                "Intermedio" => n1 + n2 + n3,
-                _ => n1 + n2 + n3 + n4 // Avanzado
-            };
+                _servicio.GuardarProgreso("Cierre de aplicación");
+            }
+            catch (DatabaseException ex)
+            {
+                MessageBox.Show($"No se pudo guardar tu progreso.\n\nDetalle: {ex.Message}",
+                    "HandUp", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
 
         private static string PrimerNombre(string nombreCompleto)
@@ -73,21 +138,117 @@ namespace ProyectoFinal
             return nombreCompleto.Split(' ', StringSplitOptions.RemoveEmptyEntries)[0];
         }
 
-        // La barra se dimensiona una vez que la ventana ya midió su ancho real
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        // ===== Navegación =====
+
+        // Un solo manejador para todos los tiles e ítems de la barra: la sección viene en CommandParameter
+        private void Nav_Click(object sender, RoutedEventArgs e)
         {
+            if (sender is Button boton && boton.CommandParameter is Seccion destino)
+                Navegar(destino);
+        }
+
+        private void Navegar(Seccion destino)
+        {
+            if (destino == Seccion.Inicio)
+            {
+                MostrarInicio();
+                return;
+            }
+
+            if (_seccionActual == Seccion.Inicio)
+                _tileOrigen = Keyboard.FocusedElement as Button;
+
+            // Por ahora todas las secciones muestran "Próximamente".
+            // Cuando un módulo esté listo, acá se crea su vista en lugar de esta.
+            var vista = new ProximamenteView(Secciones.Info[destino]);
+            vista.VolverSolicitado += (s, e) => MostrarInicio();
+            contenidoSeccion.Content = vista;
+
+            panelInicio.Visibility = Visibility.Collapsed;
+            contenidoSeccion.Visibility = Visibility.Visible;
+            barraLateral.Visibility = Visibility.Visible;
+
+            MarcarItemActivo(destino);
+            _seccionActual = destino;
+
+            // El foco queda en el ítem activo de la barra, así se sigue navegando con Tab
+            EnfocarDespuesDeMostrar(_itemsNav[destino]);
+        }
+
+        private void MostrarInicio()
+        {
+            contenidoSeccion.Content = null;
+            contenidoSeccion.Visibility = Visibility.Collapsed;
+            barraLateral.Visibility = Visibility.Collapsed;
+            panelInicio.Visibility = Visibility.Visible;
+
+            _seccionActual = Seccion.Inicio;
             ActualizarUI();
+
+            EnfocarDespuesDeMostrar(_tileOrigen ?? tileAprender);
         }
 
-        private void TileAprender_Click(object sender, MouseButtonEventArgs e) => MostrarModuloPendiente("Aprender");
-        private void TileDesafio_Click(object sender, MouseButtonEventArgs e) => MostrarModuloPendiente("Desafío");
-        private void TileTraductor_Click(object sender, MouseButtonEventArgs e) => MostrarModuloPendiente("Traductor");
-        private void TileDiccionario_Click(object sender, MouseButtonEventArgs e) => MostrarModuloPendiente("Diccionario");
-
-        private void MostrarModuloPendiente(string modulo)
+        private void MarcarItemActivo(Seccion activa)
         {
-            MessageBox.Show($"El módulo '{modulo}' todavía no está implementado en esta demo.",
-                "HandUp", MessageBoxButton.OK, MessageBoxImage.Information);
+            foreach (var (seccion, item) in _itemsNav)
+                item.Tag = seccion == activa ? "activo" : null;
         }
+
+        // Un control recién hecho visible todavía no se puede enfocar: se espera a que WPF lo dibuje
+        private void EnfocarDespuesDeMostrar(Control control)
+        {
+            Dispatcher.BeginInvoke(DispatcherPriority.Input, () => control.Focus());
+        }
+
+        private void Salir_Click(object sender, RoutedEventArgs e) => Salir();
+
+        private void Salir()
+        {
+            var respuesta = MessageBox.Show("¿Querés salir de HandUp? Tu progreso ya está guardado.",
+                "Salir de HandUp", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
+
+            if (respuesta == MessageBoxResult.Yes)
+                Close(); // Closing guarda el progreso y, al ser la última ventana, se cierra la app
+        }
+
+        // ===== Teclado =====
+        // Inicio:  1-5 entra a cada sección, Esc sale.
+        // Sección: Ctrl+1..5 cambia de sección, Esc vuelve al inicio.
+        // (Dentro de una sección los números quedan libres para los módulos, ej. responder 1-4 en Aprender.)
+        private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                if (_seccionActual == Seccion.Inicio)
+                    Salir();
+                else
+                    MostrarInicio();
+                e.Handled = true;
+                return;
+            }
+
+            Seccion? destino = SeccionPorTecla(e.Key);
+            if (destino is null)
+                return;
+
+            bool conCtrl = Keyboard.Modifiers == ModifierKeys.Control;
+            bool sinModificadores = Keyboard.Modifiers == ModifierKeys.None;
+
+            if (conCtrl || (sinModificadores && _seccionActual == Seccion.Inicio))
+            {
+                Navegar(destino.Value);
+                e.Handled = true;
+            }
+        }
+
+        private static Seccion? SeccionPorTecla(Key tecla) => tecla switch
+        {
+            Key.D1 or Key.NumPad1 => Seccion.Aprender,
+            Key.D2 or Key.NumPad2 => Seccion.Desafio,
+            Key.D3 or Key.NumPad3 => Seccion.Traductor,
+            Key.D4 or Key.NumPad4 => Seccion.Diccionario,
+            Key.D5 or Key.NumPad5 => Seccion.MiPerfil,
+            _ => null
+        };
     }
 }
