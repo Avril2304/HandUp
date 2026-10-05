@@ -145,6 +145,18 @@ namespace ProyectoFinal
                 CREATE TABLE IF NOT EXISTS Metadatos (
                     Clave TEXT PRIMARY KEY,
                     Valor TEXT NOT NULL
+                );
+
+                CREATE TABLE IF NOT EXISTS Preferencias (
+                    PerfilId            INTEGER PRIMARY KEY REFERENCES Perfiles(Id),
+                    AltoContraste       INTEGER NOT NULL DEFAULT 0,
+                    TamanoFuente        REAL    NOT NULL DEFAULT 1.0,
+                    TeclaOpcion1        TEXT    NOT NULL DEFAULT 'D1',
+                    TeclaOpcion2        TEXT    NOT NULL DEFAULT 'D2',
+                    TeclaOpcion3        TEXT    NOT NULL DEFAULT 'D3',
+                    TeclaOpcion4        TEXT    NOT NULL DEFAULT 'D4',
+                    TeclaConfirmar      TEXT    NOT NULL DEFAULT 'Return',
+                    TeclaPausar         TEXT    NOT NULL DEFAULT 'Space'
                 );";
             comando.ExecuteNonQuery();
 

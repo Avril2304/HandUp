@@ -23,6 +23,7 @@ namespace ProyectoFinal
 
         private readonly Perfil _perfil;
         private readonly ServicioProgreso _servicio;
+        private readonly PreferenciasUsuario _preferencias;
 
         // Ítem de la barra lateral que corresponde a cada sección (para marcar el activo)
         private readonly Dictionary<Seccion, Button> _itemsNav;
@@ -32,10 +33,11 @@ namespace ProyectoFinal
         // Tile desde el que se entró a una sección: al volver, el foco regresa ahí
         private Button? _tileOrigen;
 
-        public MainMenuWindow(Perfil perfil)
+        public MainMenuWindow(Perfil perfil, PreferenciasUsuario preferencias)
         {
             InitializeComponent();
             _perfil = perfil;
+            _preferencias = preferencias;
             _servicio = new ServicioProgreso(_perfil, new RepositorioPerfiles());
 
             _servicio.ProgresoActualizado += Servicio_ProgresoActualizado;

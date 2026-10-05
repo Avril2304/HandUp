@@ -94,8 +94,17 @@ namespace ProyectoFinal
                 // Verifico usuario y contraseña (hasheada) contra la base de datos
                 Perfil perfil = _repositorio.IniciarSesion(txtUsuario.Text, txtPassword.Password);
 
+                // Cargar preferencias del perfil
+                PreferenciasUsuario prefs = new RepositorioPreferencias().ObtenerPorPerfil(perfil.Id);
+
+                // Aplicar tema visual según preferencias
+                if (prefs.AltoContraste)
+                {
+                    Application.Current.Resources.MergedDictionaries.Add(TemaVisual.ObtenerDiccionarioAltoContraste());
+                }
+
                 // Cargo el perfil seleccionado y navego al menú principal
-                var menuPrincipal = new MainMenuWindow(perfil);
+                var menuPrincipal = new MainMenuWindow(perfil, prefs);
                 menuPrincipal.Show();
                 Close();
             }
