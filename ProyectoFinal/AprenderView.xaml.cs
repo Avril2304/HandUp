@@ -91,20 +91,37 @@ namespace ProyectoFinal
             lblPaso.Text = $"Paso 3 de 3 · {categoria.Nombre}";
             ActualizarBotonVolver("Volver a las categorías");
 
-            string texto;
+            IReadOnlyList<Sena> senas;
             try
             {
-                IReadOnlyList<Sena> senas = new RepositorioSenas().BuscarPorCategoria(categoria.Categoria.Id);
-                texto = $"Se cargaron {senas.Count} señas de {categoria.Nombre}:\n\n"
-                      + string.Join(" · ", senas.Select(s => s.Palabra))
-                      + "\n\nEl visor de señas está en construcción.";
+                senas = new RepositorioSenas().BuscarPorCategoria(categoria.Categoria.Id);
             }
             catch (DatabaseException ex)
             {
-                texto = $"No se pudieron cargar las señas. {ex.Message}";
+                contenidoPaso.Content = new TextBlock
+                {
+                    Text = $"No se pudieron cargar las señas. {ex.Message}",
+                    FontSize = 14,
+                    TextWrapping = TextWrapping.Wrap
+                };
+                return;
             }
 
-            contenidoPaso.Content = new TextBlock { Text = texto, FontSize = 14, TextWrapping = TextWrapping.Wrap };
+            // Provisorio hasta F4: el visor con la primera seña y la lista de las que se cargaron
+            var visor = new VisorSena { Width = 360, Height = 410, VerticalAlignment = VerticalAlignment.Top };
+            var detalle = new TextBlock
+            {
+                FontSize = 14,
+                TextWrapping = TextWrapping.Wrap,
+                Margin = new Thickness(24, 0, 0, 0),
+                Text = $"Se cargaron {senas.Count} señas de {categoria.Nombre}:\n\n"
+                     + string.Join(" · ", senas.Select(s => s.Palabra))
+                     + "\n\nEl recorrido seña por seña está en construcción."
+            };
+            DockPanel.SetDock(visor, Dock.Left);
+            contenidoPaso.Content = new DockPanel { Children = { visor, detalle } };
+            if (senas.Count > 0)
+                visor.Mostrar(senas[0]);
         }
 
         private void ActualizarBotonVolver(string texto)
