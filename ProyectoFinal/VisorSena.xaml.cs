@@ -31,21 +31,21 @@ namespace ProyectoFinal
             _sena = sena;
             _pausado = false;
 
-            // Cuando esté B1 (AssetNotFoundException, de Lolo), atraparla también en este catch
+            // ObtenerRutaMedio ya verifica que el archivo exista (y si falta el video, devuelve la imagen).
+            // Si no hay ningún archivo, lanza AssetNotFoundException.
             string ruta;
             try
             {
                 ruta = sena.ObtenerRutaMedio();
             }
-            catch (Exception ex) when (ex is IOException || ex is ArgumentException)
-            {
-                MostrarError($"No se pudo encontrar el archivo de la seña «{sena.Palabra}».");
-                return;
-            }
-
-            if (!File.Exists(ruta))
+            catch (AssetNotFoundException)
             {
                 MostrarError($"Falta el archivo de la seña «{sena.Palabra}». Probá con la siguiente.");
+                return;
+            }
+            catch (ArgumentException)
+            {
+                MostrarError($"La ruta del archivo de la seña «{sena.Palabra}» no es válida.");
                 return;
             }
 

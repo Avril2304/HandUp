@@ -15,17 +15,20 @@ namespace ProyectoFinal
         public event EventHandler? VolverSolicitado;
 
         private readonly Perfil _perfil;
+        private readonly PreferenciasUsuario _preferencias;
         private ElegirNivelView? _vistaNiveles;
         private ElegirCategoriaView? _vistaCategorias;
+        private RecorrerSenasView? _vistaRecorrido;
         private int _nivelDeVistaCategorias;
 
         private NivelAprendizaje? _nivelElegido;
         private CategoriaAprendizaje? _categoriaElegida;
 
-        public AprenderView(Perfil perfil)
+        public AprenderView(Perfil perfil, PreferenciasUsuario preferencias)
         {
             InitializeComponent();
             _perfil = perfil;
+            _preferencias = preferencias;
             MostrarNiveles();
         }
 
@@ -83,8 +86,7 @@ namespace ProyectoFinal
             return vista;
         }
 
-        // Paso 3: se cargan solo las señas de la categoría elegida.
-        // Por ahora muestra un resumen; el visor y el recorrido llegan en F3 y F4.
+        // Paso 3: se cargan solo las señas de la categoría elegida y se recorren de a una
         private void MostrarSenas(CategoriaAprendizaje categoria)
         {
             _categoriaElegida = categoria;
@@ -107,21 +109,9 @@ namespace ProyectoFinal
                 return;
             }
 
-            // Provisorio hasta F4: el visor con la primera seña y la lista de las que se cargaron
-            var visor = new VisorSena { Width = 360, Height = 410, VerticalAlignment = VerticalAlignment.Top };
-            var detalle = new TextBlock
-            {
-                FontSize = 14,
-                TextWrapping = TextWrapping.Wrap,
-                Margin = new Thickness(24, 0, 0, 0),
-                Text = $"Se cargaron {senas.Count} señas de {categoria.Nombre}:\n\n"
-                     + string.Join(" · ", senas.Select(s => s.Palabra))
-                     + "\n\nEl recorrido seña por seña está en construcción."
-            };
-            DockPanel.SetDock(visor, Dock.Left);
-            contenidoPaso.Content = new DockPanel { Children = { visor, detalle } };
-            if (senas.Count > 0)
-                visor.Mostrar(senas[0]);
+            _vistaRecorrido = new RecorrerSenasView(senas, _preferencias);
+            _vistaRecorrido.TerminarSolicitado += (s, e) => VolverUnPaso();
+            contenidoPaso.Content = _vistaRecorrido;
         }
 
         private void ActualizarBotonVolver(string texto)
@@ -140,7 +130,7 @@ namespace ProyectoFinal
             else if (_categoriaElegida is null)
                 _vistaCategorias?.EnfocarCategoria();
             else
-                Dispatcher.BeginInvoke(DispatcherPriority.Input, () => btnVolver.Focus());
+                _vistaRecorrido?.EnfocarInicio();
         }
 
         public bool VolverUnPaso()

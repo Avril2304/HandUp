@@ -1,0 +1,96 @@
+<UserControl x:Class="ProyectoFinal.RecorrerSenasView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:ProyectoFinal"
+             PreviewKeyDown="Vista_PreviewKeyDown">
+    <!-- Paso 3 de Aprender: recorrer las señas de la categoría una por una.
+         Izquierda: visor (imagen o video). Derecha: palabra, descripción y pasos. Abajo: anterior / siguiente. -->
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="360"/>
+            <ColumnDefinition Width="26"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <local:VisorSena x:Name="visor" Grid.Column="0"/>
+
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Avance: "Seña 3 de 19" y una barra -->
+            <StackPanel Grid.Row="0">
+                <TextBlock x:Name="lblAvance" FontSize="12.5" FontWeight="Bold" Foreground="{DynamicResource BrushMuted}"/>
+                <Border Height="6" CornerRadius="3" Margin="0,6,0,0" Background="{DynamicResource BrushBorder}" ClipToBounds="True">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition x:Name="colAvanceLleno" Width="0*"/>
+                            <ColumnDefinition x:Name="colAvanceVacio" Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border CornerRadius="3" Background="{DynamicResource BrushAccent}"/>
+                    </Grid>
+                </Border>
+            </StackPanel>
+
+            <!-- La palabra (se anuncia en lectores de pantalla cada vez que cambia) -->
+            <TextBlock Grid.Row="1" x:Name="lblPalabra" FontFamily="{StaticResource FontHeading}" FontSize="30" FontWeight="Bold"
+                       TextWrapping="Wrap" Margin="0,14,0,0" AutomationProperties.LiveSetting="Polite"/>
+
+            <!-- Descripción y pasos: si son largos, se desplazan -->
+            <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" Focusable="False" Margin="0,10,0,0">
+                <StackPanel>
+                    <TextBlock Text="CÓMO SE HACE" FontSize="11.5" FontWeight="Bold" Foreground="{DynamicResource BrushMuted}"/>
+                    <TextBlock x:Name="lblDescripcion" FontSize="14" TextWrapping="Wrap" Margin="0,4,0,0" LineHeight="20"/>
+
+                    <StackPanel x:Name="pnlPasos" Margin="0,16,0,0">
+                        <TextBlock Text="PASO A PASO" FontSize="11.5" FontWeight="Bold" Foreground="{DynamicResource BrushMuted}"/>
+                        <ItemsControl x:Name="lstPasos" Focusable="False" Margin="0,4,0,0">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="0,4,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="26"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{Binding Numero}" FontWeight="Bold" FontSize="14" Foreground="{DynamicResource BrushAccent}"/>
+                                        <TextBlock Grid.Column="1" Text="{Binding Texto}" FontSize="14" TextWrapping="Wrap"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </StackPanel>
+            </ScrollViewer>
+
+            <!-- Navegación -->
+            <Grid Grid.Row="3" Margin="0,14,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="btnAnterior" Style="{StaticResource SecondaryButton}" Click="BtnAnterior_Click"
+                        AutomationProperties.Name="Seña anterior" ToolTip="Seña anterior (flecha izquierda)">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="&#xE72B;" FontFamily="{StaticResource FontIconos}" FontSize="13" VerticalAlignment="Center"/>
+                        <TextBlock Text="Anterior" Margin="8,0,0,0" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+                <Button Grid.Column="2" x:Name="btnSiguiente" Style="{StaticResource PrimaryButton}" Click="BtnSiguiente_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock x:Name="lblSiguiente" Text="Siguiente" VerticalAlignment="Center"/>
+                        <TextBlock Text="&#xE72A;" FontFamily="{StaticResource FontIconos}" FontSize="13" Margin="8,0,0,0" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+            </Grid>
+        </Grid>
+
+        <!-- Si la categoría no tiene señas o la base falló -->
+        <TextBlock x:Name="lblMensaje" Grid.ColumnSpan="3" Visibility="Collapsed" FontSize="14" TextWrapping="Wrap"
+                   VerticalAlignment="Top" Background="{DynamicResource BrushBackground}"/>
+    </Grid>
+</UserControl>

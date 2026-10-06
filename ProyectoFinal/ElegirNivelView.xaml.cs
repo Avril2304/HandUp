@@ -22,13 +22,13 @@ namespace ProyectoFinal
         // Avisa qué nivel se eligió (1-4); AprenderView decide a qué paso ir
         public event EventHandler<NivelAprendizaje>? NivelElegido;
 
-        // Nombres y textos de cada nivel. Las categorías y la cantidad de señas salen de la base.
-        private static readonly (string Nombre, string Descripcion)[] TextosNiveles =
+        // Frase corta de cada nivel (texto de pantalla). Nombre, señas y categorías salen de la base.
+        private static readonly Dictionary<int, string> Descripciones = new()
         {
-            ("Principiante", "Para empezar desde cero."),
-            ("Básico", "Señas de todos los días."),
-            ("Intermedio", "Ampliá tu vocabulario."),
-            ("Avanzado", "Para comunicarte con fluidez.")
+            [1] = "Para empezar desde cero.",
+            [2] = "Señas de todos los días.",
+            [3] = "Ampliá tu vocabulario.",
+            [4] = "Para comunicarte con fluidez."
         };
 
         private IReadOnlyList<NivelAprendizaje> _niveles = Array.Empty<NivelAprendizaje>();
@@ -52,21 +52,22 @@ namespace ProyectoFinal
 
         private static IReadOnlyList<NivelAprendizaje> CargarNiveles(string nivelDelPerfil)
         {
-            var repo = new RepositorioCategorias();
-            var niveles = new List<NivelAprendizaje>();
+            // Nombres legibles de las categorías ("saludos" -> "Saludos y Cortesía"), en el orden del banco
+            var categorias = new RepositorioCategorias().ObtenerTodos();
+            var nombres = categorias.ToDictionary(c => c.Id, c => c.Nombre);
+            var orden = categorias.Select((c, i) => (c.Id, i)).ToDictionary(x => x.Id, x => x.i);
 
-            for (int numero = 1; numero <= TextosNiveles.Length; numero++)
-            {
-                var (nombre, descripcion) = TextosNiveles[numero - 1];
-                IReadOnlyList<Categoria> categorias = repo.ObtenerPorDificultad(numero);
-                long cantidad = categorias.Sum(c => repo.ContarSenas(c.Id));
-                string textoCategorias = string.Join(" · ", categorias.Select(c => c.Nombre));
-
-                niveles.Add(new NivelAprendizaje(numero, nombre, descripcion, textoCategorias, cantidad,
-                    EsTuNivel: nombre.Equals(nivelDelPerfil, StringComparison.OrdinalIgnoreCase)));
-            }
-
-            return niveles;
+            return new RepositorioSenas().ObtenerNiveles()
+                .Select(nivel => new NivelAprendizaje(
+                    nivel.Numero,
+                    nivel.Nombre,
+                    Descripciones.GetValueOrDefault(nivel.Numero, string.Empty),
+                    string.Join(" · ", nivel.Categorias
+                        .OrderBy(id => orden.GetValueOrDefault(id, int.MaxValue))
+                        .Select(id => nombres.GetValueOrDefault(id, id))),
+                    nivel.CantidadSenas,
+                    EsTuNivel: nivel.Nombre.Equals(nivelDelPerfil, StringComparison.OrdinalIgnoreCase)))
+                .ToList();
         }
 
         // Foco: el nivel indicado; si no se indica, el del perfil (o el primero)
