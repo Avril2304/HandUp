@@ -4,8 +4,6 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Threading;
 
 namespace ProyectoFinal
 {
@@ -71,30 +69,11 @@ namespace ProyectoFinal
             return niveles;
         }
 
-        // Foco inicial: la tarjeta del nivel del perfil (o la primera)
-        public void EnfocarNivel()
+        // Foco: el nivel indicado; si no se indica, el del perfil (o el primero)
+        public void EnfocarNivel(int? numero = null)
         {
-            int indice = Math.Max(0, _niveles.ToList().FindIndex(n => n.EsTuNivel));
-            Dispatcher.BeginInvoke(DispatcherPriority.Input, () =>
-            {
-                if (lstNiveles.ItemContainerGenerator.ContainerFromIndex(indice) is ContentPresenter contenedor
-                    && BuscarBoton(contenedor) is Button boton)
-                    boton.Focus();
-            });
-        }
-
-        // Primer botón dentro de un elemento (la tarjeta está dentro del contenedor que genera el ItemsControl)
-        private static Button? BuscarBoton(DependencyObject padre)
-        {
-            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(padre); i++)
-            {
-                var hijo = VisualTreeHelper.GetChild(padre, i);
-                if (hijo is Button boton)
-                    return boton;
-                if (BuscarBoton(hijo) is Button encontrado)
-                    return encontrado;
-            }
-            return null;
+            int indice = Math.Max(0, _niveles.ToList().FindIndex(n => numero is null ? n.EsTuNivel : n.Numero == numero));
+            AyudaFoco.EnfocarTarjeta(lstNiveles, indice);
         }
 
         private void Nivel_Click(object sender, RoutedEventArgs e)
