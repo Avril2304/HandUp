@@ -70,7 +70,7 @@
       "description": "Sentimientos y estados de ánimo",
       "color": "#DC2626",
       "difficulty_range": [
-        1,
+        3,
         3
       ]
     },
@@ -84,6 +84,18 @@
       "difficulty_range": [
         1,
         1
+      ]
+    },
+    {
+      "id": "acciones_tiempo",
+      "name": "Acciones y Tiempo",
+      "icon": "icons/cat_acciones_tiempo.svg",
+      "emoji": "⏰",
+      "description": "Verbos, gustos y palabras de tiempo para armar frases",
+      "color": "#175C52",
+      "difficulty_range": [
+        2,
+        2
       ]
     },
     {
@@ -118,7 +130,7 @@
       "description": "Acciones comunes del día a día",
       "color": "#14312B",
       "difficulty_range": [
-        2,
+        3,
         3
       ]
     },
@@ -130,7 +142,7 @@
       "description": "Días, meses, horas y clima",
       "color": "#6B7B76",
       "difficulty_range": [
-        2,
+        3,
         3
       ]
     },
@@ -6341,17 +6353,18 @@
     {
       "id": "sign_195",
       "word": "Hambre",
-      "category": "emociones",
-      "difficulty": 3,
+      "category": "acciones_tiempo",
+      "difficulty": 2,
       "description": "La mano dominante abierta y curvada en C se apoya en el costado del abdomen o estómago subiendo y bajando levemente.",
       "handshape_id": null,
       "media": {
-        "image_static": "assets/signs/emociones/hambre.png",
-        "video": "assets/signs/emociones/hambre.mp4",
+        "image_static": "assets/signs/acciones_tiempo/hambre.png",
+        "video": "assets/signs/acciones_tiempo/hambre.mp4",
         "gif_animated": null,
-        "image": "assets/signs/emociones/hambre.png",
-        "thumbnail": "assets/signs/emociones/hambre.png"
-      }
+        "image": "assets/signs/acciones_tiempo/hambre.png",
+        "thumbnail": "assets/signs/acciones_tiempo/hambre.png"
+      },
+      "tags": []
     },
     {
       "id": "sign_196",
@@ -15038,17 +15051,18 @@
     {
       "id": "sign_480",
       "word": "Ahora",
-      "category": "tiempo",
+      "category": "acciones_tiempo",
       "difficulty": 2,
       "description": "La mano izquierda se ubica frente al abdomen con la palma hacia adentro. La mano derecha, con el índice apuntando hacia abajo y los demás dedos cerrados, desciende con firmeza desde la altura del hombro hasta el abdomen.",
       "handshape_id": null,
       "media": {
-        "image_static": "assets/signs/tiempo/ahora.png",
-        "video": "assets/signs/tiempo/ahora.mp4",
+        "image_static": "assets/signs/acciones_tiempo/ahora.png",
+        "video": "assets/signs/acciones_tiempo/ahora.mp4",
         "gif_animated": null,
-        "image": "assets/signs/tiempo/ahora.png",
-        "thumbnail": "assets/signs/tiempo/ahora.png"
-      }
+        "image": "assets/signs/acciones_tiempo/ahora.png",
+        "thumbnail": "assets/signs/acciones_tiempo/ahora.png"
+      },
+      "tags": []
     },
     {
       "id": "sign_481",
@@ -15132,7 +15146,7 @@
     {
       "id": "sign_484",
       "word": "Ayer",
-      "category": "tiempo",
+      "category": "acciones_tiempo",
       "difficulty": 2,
       "description": "La mano derecha abierta con los dedos juntos y el pulgar extendido se ubica junto al hombro, con la palma hacia la izquierda, y realiza un movimiento en arco hacia atrás por encima del hombro.",
       "instructions": [
@@ -15140,10 +15154,10 @@
         "Mover hacia atrás del hombro"
       ],
       "media": {
-        "image": "assets/signs/tiempo/ayer.png",
-        "video": "assets/signs/tiempo/ayer.mp4",
-        "thumbnail": "assets/signs/tiempo/ayer.png",
-        "image_static": "assets/signs/tiempo/ayer.png",
+        "image": "assets/signs/acciones_tiempo/ayer.png",
+        "video": "assets/signs/acciones_tiempo/ayer.mp4",
+        "thumbnail": "assets/signs/acciones_tiempo/ayer.png",
+        "image_static": "assets/signs/acciones_tiempo/ayer.png",
         "gif_animated": null
       },
       "tags": [
@@ -15786,7 +15800,7 @@
     {
       "id": "sign_506",
       "word": "Hoy",
-      "category": "tiempo",
+      "category": "acciones_tiempo",
       "difficulty": 2,
       "description": "La mano derecha, con el dedo índice extendido apuntando hacia abajo y la palma hacia adentro, desciende en línea recta desde la altura del hombro hasta el centro del pecho.",
       "instructions": [
@@ -15794,10 +15808,10 @@
         "Golpe seco"
       ],
       "media": {
-        "image": "assets/signs/tiempo/hoy.png",
-        "video": "assets/signs/tiempo/hoy.mp4",
-        "thumbnail": "assets/signs/tiempo/hoy.png",
-        "image_static": "assets/signs/tiempo/hoy.png",
+        "image": "assets/signs/acciones_tiempo/hoy.png",
+        "video": "assets/signs/acciones_tiempo/hoy.mp4",
+        "thumbnail": "assets/signs/acciones_tiempo/hoy.png",
+        "image_static": "assets/signs/acciones_tiempo/hoy.png",
         "gif_animated": null
       },
       "tags": [
@@ -16172,7 +16186,7 @@
     {
       "id": "sign_518",
       "word": "Mañana (día siguiente)",
-      "category": "tiempo",
+      "category": "acciones_tiempo",
       "difficulty": 2,
       "description": "Para 'mañana (día siguiente)', la mano dominante con el índice extendido apunta hacia el torso a la altura del pecho y realiza un giro de muñeca en arco hacia abajo y adelante, terminando con la palma hacia arriba.",
       "instructions": [
@@ -16180,14 +16194,14 @@
         "Reproducí la configuración manual y el movimiento indicado."
       ],
       "media": {
-        "image": "assets/signs/tiempo/mañana.png",
-        "video": "assets/signs/tiempo/mañana.mp4",
-        "thumbnail": "assets/signs/tiempo/mañana.png",
-        "image_static": "assets/signs/tiempo/mañana.png",
+        "image": "assets/signs/acciones_tiempo/mañana.png",
+        "video": "assets/signs/acciones_tiempo/mañana.mp4",
+        "thumbnail": "assets/signs/acciones_tiempo/mañana.png",
+        "image_static": "assets/signs/acciones_tiempo/mañana.png",
         "gif_animated": null
       },
       "tags": [
-        "tiempo",
+        "acciones_tiempo",
         "señario_v2",
         "oficial_cas"
       ],
@@ -16204,17 +16218,18 @@
     {
       "id": "sign_519",
       "word": "Mañana (parte del día)",
-      "category": "tiempo",
+      "category": "acciones_tiempo",
       "difficulty": 2,
       "description": "Para 'mañana (parte del día)', la mano de base sujeta el antebrazo de la mano dominante, la cual comienza cerrada abajo y sube frente al pecho mientras abre los cinco dedos separados con la palma hacia adentro.",
       "handshape_id": null,
       "media": {
-        "image_static": "assets/signs/tiempo/mañana_v2.png",
-        "video": "assets/signs/tiempo/mañana_v2.mp4",
+        "image_static": "assets/signs/acciones_tiempo/mañana_v2.png",
+        "video": "assets/signs/acciones_tiempo/mañana_v2.mp4",
         "gif_animated": null,
-        "image": "assets/signs/tiempo/mañana_v2.png",
-        "thumbnail": "assets/signs/tiempo/mañana_v2.png"
-      }
+        "image": "assets/signs/acciones_tiempo/mañana_v2.png",
+        "thumbnail": "assets/signs/acciones_tiempo/mañana_v2.png"
+      },
+      "tags": []
     },
     {
       "id": "sign_520",
@@ -17144,18 +17159,18 @@
     {
       "id": "sign_551",
       "word": "Aprender",
-      "category": "verbos_cotidianos",
-      "difficulty": 3,
+      "category": "primeras_frases",
+      "difficulty": 1,
       "description": "La mano dominante comienza abierta frente a la cara y sube hacia la frente cerrando las yemas de los dedos contra el pulgar, simulando incorporar conocimiento.",
       "instructions": [
         "Pinza en palma abierta",
         "Llevar a la frente"
       ],
       "media": {
-        "image": "assets/signs/verbos_cotidianos/aprender.png",
-        "video": "assets/signs/verbos_cotidianos/aprender.mp4",
-        "thumbnail": "assets/signs/verbos_cotidianos/aprender.png",
-        "image_static": "assets/signs/verbos_cotidianos/aprender.png",
+        "image": "assets/signs/primeras_frases/aprender.png",
+        "video": "assets/signs/primeras_frases/aprender.mp4",
+        "thumbnail": "assets/signs/primeras_frases/aprender.png",
+        "image_static": "assets/signs/primeras_frases/aprender.png",
         "gif_animated": null
       },
       "tags": [
@@ -17192,18 +17207,18 @@
     {
       "id": "sign_553",
       "word": "Ayudar",
-      "category": "verbos_cotidianos",
-      "difficulty": 3,
+      "category": "acciones_tiempo",
+      "difficulty": 2,
       "description": "Ambas manos se elevan frente al pecho con los dedos juntos ligeramente curvados y las palmas enfrentadas, avanzando juntas hacia adelante.",
       "instructions": [
         "Palma bajo puño",
         "Levantar ambos al frente"
       ],
       "media": {
-        "image": "assets/signs/verbos_cotidianos/ayudar.png",
-        "video": "assets/signs/verbos_cotidianos/ayudar.mp4",
-        "thumbnail": "assets/signs/verbos_cotidianos/ayudar.png",
-        "image_static": "assets/signs/verbos_cotidianos/ayudar.png",
+        "image": "assets/signs/acciones_tiempo/ayudar.png",
+        "video": "assets/signs/acciones_tiempo/ayudar.mp4",
+        "thumbnail": "assets/signs/acciones_tiempo/ayudar.png",
+        "image_static": "assets/signs/acciones_tiempo/ayudar.png",
         "gif_animated": null
       },
       "tags": [
@@ -17254,7 +17269,7 @@
     {
       "id": "sign_556",
       "word": "Comprar",
-      "category": "verbos_cotidianos",
+      "category": "acciones_tiempo",
       "difficulty": 2,
       "description": "La mano dominante cerrada en puño con el pulgar extendido hacia arriba y los nudillos hacia adelante se extiende hacia el frente a la altura del pecho.",
       "instructions": [
@@ -17262,10 +17277,10 @@
         "Derecha entrega algo"
       ],
       "media": {
-        "image": "assets/signs/verbos_cotidianos/comprar.png",
-        "video": "assets/signs/verbos_cotidianos/comprar.mp4",
-        "thumbnail": "assets/signs/verbos_cotidianos/comprar.png",
-        "image_static": "assets/signs/verbos_cotidianos/comprar.png",
+        "image": "assets/signs/acciones_tiempo/comprar.png",
+        "video": "assets/signs/acciones_tiempo/comprar.mp4",
+        "thumbnail": "assets/signs/acciones_tiempo/comprar.png",
+        "image_static": "assets/signs/acciones_tiempo/comprar.png",
         "gif_animated": null
       },
       "tags": [
@@ -17316,18 +17331,18 @@
     {
       "id": "sign_559",
       "word": "Dar",
-      "category": "verbos_cotidianos",
-      "difficulty": 3,
+      "category": "acciones_tiempo",
+      "difficulty": 2,
       "description": "Ambas manos comienzan frente al pecho con las yemas unidas y se extienden juntas hacia adelante abriéndose hacia el frente.",
       "instructions": [
         "Mano cerrada",
         "Abrir proyectando al otro"
       ],
       "media": {
-        "image": "assets/signs/verbos_cotidianos/dar.png",
-        "video": "assets/signs/verbos_cotidianos/dar.mp4",
-        "thumbnail": "assets/signs/verbos_cotidianos/dar.png",
-        "image_static": "assets/signs/verbos_cotidianos/dar.png",
+        "image": "assets/signs/acciones_tiempo/dar.png",
+        "video": "assets/signs/acciones_tiempo/dar.mp4",
+        "thumbnail": "assets/signs/acciones_tiempo/dar.png",
+        "image_static": "assets/signs/acciones_tiempo/dar.png",
         "gif_animated": null
       },
       "tags": [
@@ -17873,8 +17888,8 @@
     {
       "id": "sign_580",
       "word": "Tener",
-      "category": "verbos_cotidianos",
-      "difficulty": 2,
+      "category": "primeras_frases",
+      "difficulty": 1,
       "description": "La mano dominante con dedos flexionados o palma abierta se apoya con firmeza sobre el pecho indicando posesión.",
       "instructions": [
         "Observá con atención el movimiento de la mano en el video de 'Tener'.",
@@ -17882,16 +17897,16 @@
         "Acompañá con la expresión facial y postura correspondiente."
       ],
       "media": {
-        "image_static": "assets/signs/verbos_cotidianos/tener.png",
-        "video": "assets/signs/verbos_cotidianos/tener.mp4",
+        "image_static": "assets/signs/primeras_frases/tener.png",
+        "video": "assets/signs/primeras_frases/tener.mp4",
         "gif_animated": null,
-        "image": "assets/signs/verbos_cotidianos/tener.png",
-        "thumbnail": "assets/signs/verbos_cotidianos/tener.png"
+        "image": "assets/signs/primeras_frases/tener.png",
+        "thumbnail": "assets/signs/primeras_frases/tener.png"
       },
       "tags": [
-        "verbos_cotidianos",
+        "primeras_frases",
         "gramática",
-        "nivel_2"
+        "nivel_1"
       ],
       "handshape": null,
       "movement": null,
@@ -17904,7 +17919,7 @@
     {
       "id": "sign_581",
       "word": "Gustar",
-      "category": "verbos_cotidianos",
+      "category": "acciones_tiempo",
       "difficulty": 2,
       "description": "La mano dominante abierta con la yema del pulgar y los dedos acaricia el pecho hacia abajo en señal de agrado.",
       "instructions": [
@@ -17913,14 +17928,14 @@
         "Acompañá con la expresión facial y postura correspondiente."
       ],
       "media": {
-        "image_static": "assets/signs/verbos_cotidianos/gustar.png",
-        "video": "assets/signs/verbos_cotidianos/gustar.mp4",
+        "image_static": "assets/signs/acciones_tiempo/gustar.png",
+        "video": "assets/signs/acciones_tiempo/gustar.mp4",
         "gif_animated": null,
-        "image": "assets/signs/verbos_cotidianos/gustar.png",
-        "thumbnail": "assets/signs/verbos_cotidianos/gustar.png"
+        "image": "assets/signs/acciones_tiempo/gustar.png",
+        "thumbnail": "assets/signs/acciones_tiempo/gustar.png"
       },
       "tags": [
-        "verbos_cotidianos",
+        "acciones_tiempo",
         "gramática",
         "nivel_2"
       ],
@@ -17935,7 +17950,7 @@
     {
       "id": "sign_582",
       "word": "Querer",
-      "category": "verbos_cotidianos",
+      "category": "acciones_tiempo",
       "difficulty": 2,
       "description": "Ambas manos con dedos flexionados en garra frente al pecho realizan un movimiento hacia el cuerpo como atrayendo algo.",
       "instructions": [
@@ -17944,14 +17959,14 @@
         "Acompañá con la expresión facial y postura correspondiente."
       ],
       "media": {
-        "image_static": "assets/signs/verbos_cotidianos/querer.png",
-        "video": "assets/signs/verbos_cotidianos/querer.mp4",
+        "image_static": "assets/signs/acciones_tiempo/querer.png",
+        "video": "assets/signs/acciones_tiempo/querer.mp4",
         "gif_animated": null,
-        "image": "assets/signs/verbos_cotidianos/querer.png",
-        "thumbnail": "assets/signs/verbos_cotidianos/querer.png"
+        "image": "assets/signs/acciones_tiempo/querer.png",
+        "thumbnail": "assets/signs/acciones_tiempo/querer.png"
       },
       "tags": [
-        "verbos_cotidianos",
+        "acciones_tiempo",
         "gramática",
         "nivel_2"
       ],
@@ -17966,7 +17981,7 @@
     {
       "id": "sign_583",
       "word": "Ir",
-      "category": "verbos_cotidianos",
+      "category": "acciones_tiempo",
       "difficulty": 2,
       "description": "La mano dominante con el índice extendido se proyecta desde el cuerpo hacia adelante en línea recta.",
       "instructions": [
@@ -17975,14 +17990,14 @@
         "Acompañá con la expresión facial y postura correspondiente."
       ],
       "media": {
-        "image_static": "assets/signs/verbos_cotidianos/ir.png",
-        "video": "assets/signs/verbos_cotidianos/ir.mp4",
+        "image_static": "assets/signs/acciones_tiempo/ir.png",
+        "video": "assets/signs/acciones_tiempo/ir.mp4",
         "gif_animated": null,
-        "image": "assets/signs/verbos_cotidianos/ir.png",
-        "thumbnail": "assets/signs/verbos_cotidianos/ir.png"
+        "image": "assets/signs/acciones_tiempo/ir.png",
+        "thumbnail": "assets/signs/acciones_tiempo/ir.png"
       },
       "tags": [
-        "verbos_cotidianos",
+        "acciones_tiempo",
         "gramática",
         "nivel_2"
       ],
@@ -17997,8 +18012,8 @@
     {
       "id": "sign_584",
       "word": "Vivir",
-      "category": "verbos_cotidianos",
-      "difficulty": 2,
+      "category": "primeras_frases",
+      "difficulty": 1,
       "description": "Ambas manos con pulgares hacia arriba o índices ascienden verticalmente por el torso desde el abdomen hacia el pecho.",
       "instructions": [
         "Observá con atención el movimiento de la mano en el video de 'Vivir'.",
@@ -18006,16 +18021,16 @@
         "Acompañá con la expresión facial y postura correspondiente."
       ],
       "media": {
-        "image_static": "assets/signs/verbos_cotidianos/vivir.png",
-        "video": "assets/signs/verbos_cotidianos/vivir.mp4",
+        "image_static": "assets/signs/primeras_frases/vivir.png",
+        "video": "assets/signs/primeras_frases/vivir.mp4",
         "gif_animated": null,
-        "image": "assets/signs/verbos_cotidianos/vivir.png",
-        "thumbnail": "assets/signs/verbos_cotidianos/vivir.png"
+        "image": "assets/signs/primeras_frases/vivir.png",
+        "thumbnail": "assets/signs/primeras_frases/vivir.png"
       },
       "tags": [
-        "verbos_cotidianos",
+        "primeras_frases",
         "gramática",
-        "nivel_2"
+        "nivel_1"
       ],
       "handshape": null,
       "movement": null,
@@ -18028,7 +18043,7 @@
     {
       "id": "sign_585",
       "word": "Tomar / Beber",
-      "category": "verbos_cotidianos",
+      "category": "acciones_tiempo",
       "difficulty": 2,
       "description": "La mano dominante en configuración de taza (letra C) se eleva hacia la boca simulando beber de un vaso.",
       "instructions": [
@@ -18037,14 +18052,14 @@
         "Acompañá con la expresión facial y postura correspondiente."
       ],
       "media": {
-        "image_static": "assets/signs/verbos_cotidianos/tomar.png",
-        "video": "assets/signs/verbos_cotidianos/tomar.mp4",
+        "image_static": "assets/signs/acciones_tiempo/tomar.png",
+        "video": "assets/signs/acciones_tiempo/tomar.mp4",
         "gif_animated": null,
-        "image": "assets/signs/verbos_cotidianos/tomar.png",
-        "thumbnail": "assets/signs/verbos_cotidianos/tomar.png"
+        "image": "assets/signs/acciones_tiempo/tomar.png",
+        "thumbnail": "assets/signs/acciones_tiempo/tomar.png"
       },
       "tags": [
-        "verbos_cotidianos",
+        "acciones_tiempo",
         "gramática",
         "nivel_2"
       ],
@@ -18059,7 +18074,7 @@
     {
       "id": "sign_586",
       "word": "Jugar",
-      "category": "verbos_cotidianos",
+      "category": "acciones_tiempo",
       "difficulty": 2,
       "description": "Ambas manos con configuración en Y (pulgar y meñique extendidos) rotan de forma alternada a los costados del pecho.",
       "instructions": [
@@ -18068,14 +18083,14 @@
         "Acompañá con la expresión facial y postura correspondiente."
       ],
       "media": {
-        "image_static": "assets/signs/verbos_cotidianos/jugar.png",
-        "video": "assets/signs/verbos_cotidianos/jugar.mp4",
+        "image_static": "assets/signs/acciones_tiempo/jugar.png",
+        "video": "assets/signs/acciones_tiempo/jugar.mp4",
         "gif_animated": null,
-        "image": "assets/signs/verbos_cotidianos/jugar.png",
-        "thumbnail": "assets/signs/verbos_cotidianos/jugar.png"
+        "image": "assets/signs/acciones_tiempo/jugar.png",
+        "thumbnail": "assets/signs/acciones_tiempo/jugar.png"
       },
       "tags": [
-        "verbos_cotidianos",
+        "acciones_tiempo",
         "gramática",
         "nivel_2"
       ],
@@ -18090,7 +18105,7 @@
     {
       "id": "sign_587",
       "word": "Trabajar",
-      "category": "verbos_cotidianos",
+      "category": "acciones_tiempo",
       "difficulty": 2,
       "description": "Ambas manos en puño cerrado con las muñecas cruzadas realizan pequeños golpes rítmicos hacia abajo.",
       "instructions": [
@@ -18099,14 +18114,14 @@
         "Acompañá con la expresión facial y postura correspondiente."
       ],
       "media": {
-        "image_static": "assets/signs/verbos_cotidianos/trabajar.png",
-        "video": "assets/signs/verbos_cotidianos/trabajar.mp4",
+        "image_static": "assets/signs/acciones_tiempo/trabajar.png",
+        "video": "assets/signs/acciones_tiempo/trabajar.mp4",
         "gif_animated": null,
-        "image": "assets/signs/verbos_cotidianos/trabajar.png",
-        "thumbnail": "assets/signs/verbos_cotidianos/trabajar.png"
+        "image": "assets/signs/acciones_tiempo/trabajar.png",
+        "thumbnail": "assets/signs/acciones_tiempo/trabajar.png"
       },
       "tags": [
-        "verbos_cotidianos",
+        "acciones_tiempo",
         "gramática",
         "nivel_2"
       ],
@@ -18121,8 +18136,8 @@
     {
       "id": "sign_588",
       "word": "Conocer",
-      "category": "verbos_cotidianos",
-      "difficulty": 2,
+      "category": "primeras_frases",
+      "difficulty": 1,
       "description": "La mano dominante con los dedos juntos extendidos toca con la yema la frente o sien en un toque firme.",
       "instructions": [
         "Observá con atención el movimiento de la mano en el video de 'Conocer'.",
@@ -18130,16 +18145,16 @@
         "Acompañá con la expresión facial y postura correspondiente."
       ],
       "media": {
-        "image_static": "assets/signs/verbos_cotidianos/conocer.png",
-        "video": "assets/signs/verbos_cotidianos/conocer.mp4",
+        "image_static": "assets/signs/primeras_frases/conocer.png",
+        "video": "assets/signs/primeras_frases/conocer.mp4",
         "gif_animated": null,
-        "image": "assets/signs/verbos_cotidianos/conocer.png",
-        "thumbnail": "assets/signs/verbos_cotidianos/conocer.png"
+        "image": "assets/signs/primeras_frases/conocer.png",
+        "thumbnail": "assets/signs/primeras_frases/conocer.png"
       },
       "tags": [
-        "verbos_cotidianos",
+        "primeras_frases",
         "gramática",
-        "nivel_2"
+        "nivel_1"
       ],
       "handshape": null,
       "movement": null,
@@ -18152,7 +18167,7 @@
     {
       "id": "sign_589",
       "word": "Lindo / Hermoso",
-      "category": "emociones",
+      "category": "acciones_tiempo",
       "difficulty": 2,
       "description": "La mano dominante abierta con dedos separados pasa frente al rostro cerrando las yemas de los dedos en gesto de gracia.",
       "instructions": [
@@ -18161,14 +18176,14 @@
         "Acompañá con la expresión facial y postura correspondiente."
       ],
       "media": {
-        "image_static": "assets/signs/emociones/lindo.png",
-        "video": "assets/signs/emociones/lindo.mp4",
+        "image_static": "assets/signs/acciones_tiempo/lindo.png",
+        "video": "assets/signs/acciones_tiempo/lindo.mp4",
         "gif_animated": null,
-        "image": "assets/signs/emociones/lindo.png",
-        "thumbnail": "assets/signs/emociones/lindo.png"
+        "image": "assets/signs/acciones_tiempo/lindo.png",
+        "thumbnail": "assets/signs/acciones_tiempo/lindo.png"
       },
       "tags": [
-        "emociones",
+        "acciones_tiempo",
         "gramática",
         "nivel_2"
       ],
