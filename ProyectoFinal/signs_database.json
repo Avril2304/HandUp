@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "total_signs": 617,
+  "total_signs": 622,
   "categories": [
     {
       "id": "primeras_frases",
@@ -19046,6 +19046,158 @@
       "movement": null,
       "location": null,
       "source": "LSA con Tere - Adjetivos en LSA",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_619",
+      "word": "¿Cuándo?",
+      "category": "primeras_frases",
+      "difficulty": 1,
+      "description": "La mano dominante con el índice extendido toca la mejilla y luego se separa hacia afuera, con expresión interrogativa.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de '¿Cuándo?'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/primeras_frases/cuando.png",
+        "video": "assets/signs/primeras_frases/cuando.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/primeras_frases/cuando.png",
+        "thumbnail": "assets/signs/primeras_frases/cuando.png"
+      },
+      "tags": [
+        "primeras_frases",
+        "nivel_1"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "Prof. Fabián - LSA preguntas y pronombres",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_620",
+      "word": "Por favor",
+      "category": "primeras_frases",
+      "difficulty": 1,
+      "description": "Ambas manos abiertas con las palmas juntas frente al pecho, en gesto de pedido.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Por favor'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/primeras_frases/por_favor.png",
+        "video": "assets/signs/primeras_frases/por_favor.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/primeras_frases/por_favor.png",
+        "thumbnail": "assets/signs/primeras_frases/por_favor.png"
+      },
+      "tags": [
+        "primeras_frases",
+        "nivel_1"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "Signs of Love - Vocabulario de los SALUDOS (LSA)",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_621",
+      "word": "Trabajo",
+      "category": "lugares",
+      "difficulty": 3,
+      "description": "Ambas manos en puño cerrado con las muñecas cruzadas realizan pequeños golpes rítmicos hacia abajo. En LSA es la misma seña que TRABAJAR.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Trabajo'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/lugares/trabajo.png",
+        "video": "assets/signs/lugares/trabajo.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/lugares/trabajo.png",
+        "thumbnail": "assets/signs/lugares/trabajo.png"
+      },
+      "tags": [
+        "lugares",
+        "nivel_3"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "Dirección de Documentación - VERBOS EN LSA",
+      "related_signs": [
+        "sign_587"
+      ],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_622",
+      "word": "Supermercado",
+      "category": "lugares",
+      "difficulty": 3,
+      "description": "Ambas manos en puño frente al cuerpo giran alternadamente hacia adelante, como empujando un carrito.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Supermercado'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/lugares/supermercado.png",
+        "video": "assets/signs/lugares/supermercado.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/lugares/supermercado.png",
+        "thumbnail": "assets/signs/lugares/supermercado.png"
+      },
+      "tags": [
+        "lugares",
+        "nivel_3"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "Maxi Villarruel - LSA Lugares",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_623",
+      "word": "Amigo",
+      "category": "emociones",
+      "difficulty": 3,
+      "description": "Los antebrazos se cruzan frente al cuerpo y la mano dominante toma la muñeca de la otra, indicando unión.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Amigo'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/emociones/amigo.png",
+        "video": "assets/signs/emociones/amigo.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/emociones/amigo.png",
+        "thumbnail": "assets/signs/emociones/amigo.png"
+      },
+      "tags": [
+        "emociones",
+        "nivel_3"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "Capacitación en LSA - Clase 4 Familia",
       "related_signs": [],
       "examples": [],
       "fun_fact": null
