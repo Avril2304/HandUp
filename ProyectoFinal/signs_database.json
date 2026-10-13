@@ -8616,11 +8616,11 @@
       "description": "La mano dominante o ambas manos frente al pecho, con el índice y el pulgar o las palmas hacia arriba, realizan un corto movimiento lateral interrogativo.",
       "handshape_id": null,
       "media": {
-        "image_static": "assets/signs/frases_comunes/donde.png",
-        "video": "assets/signs/frases_comunes/donde.mp4",
+        "image_static": "assets/signs/primeras_frases/donde.png",
+        "video": "assets/signs/primeras_frases/donde.mp4",
         "gif_animated": null,
-        "image": "assets/signs/frases_comunes/donde.png",
-        "thumbnail": "assets/signs/frases_comunes/donde.png"
+        "image": "assets/signs/primeras_frases/donde.png",
+        "thumbnail": "assets/signs/primeras_frases/donde.png"
       }
     },
     {
@@ -14918,10 +14918,10 @@
         "Reproducí la configuración manual y el movimiento indicado."
       ],
       "media": {
-        "image": "assets/signs/saludos/yo.jpeg",
-        "video": "assets/signs/saludos/yo.mp4",
-        "thumbnail": "assets/signs/saludos/yo.jpeg",
-        "image_static": "assets/signs/saludos/yo.jpeg",
+        "image": "assets/signs/primeras_frases/yo.jpeg",
+        "video": "assets/signs/primeras_frases/yo.mp4",
+        "thumbnail": "assets/signs/primeras_frases/yo.jpeg",
+        "image_static": "assets/signs/primeras_frases/yo.jpeg",
         "gif_animated": null
       },
       "tags": [
