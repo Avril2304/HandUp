@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "total_signs": 614,
+  "total_signs": 617,
   "categories": [
     {
       "id": "primeras_frases",
@@ -71,7 +71,7 @@
       "color": "#DC2626",
       "difficulty_range": [
         1,
-        2
+        3
       ]
     },
     {
@@ -131,7 +131,7 @@
       "color": "#6B7B76",
       "difficulty_range": [
         2,
-        2
+        3
       ]
     },
     {
@@ -155,7 +155,7 @@
       "color": "#1F7A6C",
       "difficulty_range": [
         2,
-        3
+        4
       ]
     },
     {
@@ -167,7 +167,7 @@
       "color": "#175C52",
       "difficulty_range": [
         2,
-        2
+        3
       ]
     },
     {
@@ -191,7 +191,7 @@
       "color": "#DC2626",
       "difficulty_range": [
         2,
-        3
+        4
       ]
     },
     {
@@ -215,7 +215,7 @@
       "color": "#1F7A6C",
       "difficulty_range": [
         2,
-        3
+        4
       ]
     },
     {
@@ -239,7 +239,7 @@
       "color": "#175C52",
       "difficulty_range": [
         1,
-        2
+        3
       ]
     },
     {
@@ -263,7 +263,7 @@
       "color": "#14312B",
       "difficulty_range": [
         2,
-        3
+        4
       ]
     },
     {
@@ -275,7 +275,7 @@
       "color": "#175C52",
       "difficulty_range": [
         2,
-        3
+        4
       ]
     }
   ],
@@ -18325,7 +18325,7 @@
       "handshape": null,
       "movement": null,
       "location": null,
-      "source": "LSA Oficial / YouTube",
+      "source": "Signs of Love - Vocabulario de los LUGARES (LSA)",
       "related_signs": [],
       "examples": [],
       "fun_fact": null
@@ -18355,7 +18355,7 @@
       "handshape": null,
       "movement": null,
       "location": null,
-      "source": "LSA Oficial / YouTube",
+      "source": "Signs of Love - Vocabulario de los LUGARES (LSA)",
       "related_signs": [],
       "examples": [],
       "fun_fact": null
@@ -18475,7 +18475,7 @@
       "handshape": null,
       "movement": null,
       "location": null,
-      "source": "LSA Oficial / YouTube",
+      "source": "Signs of Love - Vocabulario de los LUGARES (LSA)",
       "related_signs": [],
       "examples": [],
       "fun_fact": null
@@ -18745,7 +18745,7 @@
       "handshape": null,
       "movement": null,
       "location": null,
-      "source": "LSA Oficial / YouTube",
+      "source": "Signs of Love - Vocabulario del TRANSPORTE (LSA)",
       "related_signs": [],
       "examples": [],
       "fun_fact": null
@@ -18775,7 +18775,7 @@
       "handshape": null,
       "movement": null,
       "location": null,
-      "source": "LSA Oficial / YouTube",
+      "source": "Signs of Love - Vocabulario del TRANSPORTE (LSA)",
       "related_signs": [],
       "examples": [],
       "fun_fact": null
@@ -18805,7 +18805,7 @@
       "handshape": null,
       "movement": null,
       "location": null,
-      "source": "LSA Oficial / YouTube",
+      "source": "Signs of Love - Vocabulario del TRANSPORTE (LSA)",
       "related_signs": [],
       "examples": [],
       "fun_fact": null
@@ -18835,7 +18835,7 @@
       "handshape": null,
       "movement": null,
       "location": null,
-      "source": "LSA Oficial / YouTube",
+      "source": "Fundación Effata - Medios de Transporte en LSA",
       "related_signs": [],
       "examples": [],
       "fun_fact": null
@@ -18865,7 +18865,7 @@
       "handshape": null,
       "movement": null,
       "location": null,
-      "source": "LSA Oficial / YouTube",
+      "source": "Signs of Love - Vocabulario del TRANSPORTE (LSA)",
       "related_signs": [],
       "examples": [],
       "fun_fact": null
@@ -18895,7 +18895,7 @@
       "handshape": null,
       "movement": null,
       "location": null,
-      "source": "LSA Oficial / YouTube",
+      "source": "Signs of Love - Vocabulario del TRANSPORTE (LSA)",
       "related_signs": [],
       "examples": [],
       "fun_fact": null
@@ -18925,7 +18925,7 @@
       "handshape": null,
       "movement": null,
       "location": null,
-      "source": "LSA Oficial / YouTube",
+      "source": "Signs of Love - Vocabulario del TRANSPORTE (LSA)",
       "related_signs": [],
       "examples": [],
       "fun_fact": null
@@ -18955,7 +18955,97 @@
       "handshape": null,
       "movement": null,
       "location": null,
-      "source": "LSA Oficial / YouTube",
+      "source": "Signs of Love - Vocabulario del TRANSPORTE (LSA)",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_616",
+      "word": "Cocina",
+      "category": "lugares",
+      "difficulty": 3,
+      "description": "Ambas manos frente al cuerpo, una con la palma hacia arriba y la otra girando sobre ella como si diera vuelta algo en una sartén.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Cocina'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/lugares/cocina.png",
+        "video": "assets/signs/lugares/cocina.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/lugares/cocina.png",
+        "thumbnail": "assets/signs/lugares/cocina.png"
+      },
+      "tags": [
+        "lugares",
+        "nivel_3"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "Signs of Love - Vocabulario del HOGAR (LSA)",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_617",
+      "word": "Fácil",
+      "category": "avanzado",
+      "difficulty": 4,
+      "description": "La mano dominante en puño frente al cuerpo se abre con un movimiento corto y suelto hacia adelante, con expresión relajada.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Fácil'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/avanzado/facil.png",
+        "video": "assets/signs/avanzado/facil.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/avanzado/facil.png",
+        "thumbnail": "assets/signs/avanzado/facil.png"
+      },
+      "tags": [
+        "avanzado",
+        "nivel_4"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "LSA con Tere - Adjetivos en LSA",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_618",
+      "word": "Difícil",
+      "category": "avanzado",
+      "difficulty": 4,
+      "description": "La mano dominante con los dedos índice y medio flexionados en garra realiza pequeños movimientos frente al cuerpo, con expresión de esfuerzo.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Difícil'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/avanzado/dificil.png",
+        "video": "assets/signs/avanzado/dificil.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/avanzado/dificil.png",
+        "thumbnail": "assets/signs/avanzado/dificil.png"
+      },
+      "tags": [
+        "avanzado",
+        "nivel_4"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "LSA con Tere - Adjetivos en LSA",
       "related_signs": [],
       "examples": [],
       "fun_fact": null
