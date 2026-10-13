@@ -1,7 +1,19 @@
 {
   "version": "1.0",
-  "total_signs": 563,
+  "total_signs": 589,
   "categories": [
+    {
+      "id": "primeras_frases",
+      "name": "Primeras Frases",
+      "icon": "icons/cat_primeras_frases.svg",
+      "emoji": "💬",
+      "description": "Gramática básica, pronombres y preguntas",
+      "color": "#FF5733",
+      "difficulty_range": [
+        1,
+        1
+      ]
+    },
     {
       "id": "abecedario",
       "name": "Abecedario Dactilológico",
@@ -8599,8 +8611,8 @@
     {
       "id": "sign_267",
       "word": "Donde",
-      "category": "frases_comunes",
-      "difficulty": 4,
+      "category": "primeras_frases",
+      "difficulty": 1,
       "description": "La mano dominante o ambas manos frente al pecho, con el índice y el pulgar o las palmas hacia arriba, realizan un corto movimiento lateral interrogativo.",
       "handshape_id": null,
       "media": {
@@ -15027,7 +15039,7 @@
       "id": "sign_480",
       "word": "Ahora",
       "category": "tiempo",
-      "difficulty": 3,
+      "difficulty": 2,
       "description": "La mano izquierda se ubica frente al abdomen con la palma hacia adentro. La mano derecha, con el índice apuntando hacia abajo y los demás dedos cerrados, desciende con firmeza desde la altura del hombro hasta el abdomen.",
       "handshape_id": null,
       "media": {
@@ -15121,7 +15133,7 @@
       "id": "sign_484",
       "word": "Ayer",
       "category": "tiempo",
-      "difficulty": 3,
+      "difficulty": 2,
       "description": "La mano derecha abierta con los dedos juntos y el pulgar extendido se ubica junto al hombro, con la palma hacia la izquierda, y realiza un movimiento en arco hacia atrás por encima del hombro.",
       "instructions": [
         "Mano en mejilla",
@@ -15775,7 +15787,7 @@
       "id": "sign_506",
       "word": "Hoy",
       "category": "tiempo",
-      "difficulty": 3,
+      "difficulty": 2,
       "description": "La mano derecha, con el dedo índice extendido apuntando hacia abajo y la palma hacia adentro, desciende en línea recta desde la altura del hombro hasta el centro del pecho.",
       "instructions": [
         "Bajar las manos",
@@ -16161,7 +16173,7 @@
       "id": "sign_518",
       "word": "Mañana (día siguiente)",
       "category": "tiempo",
-      "difficulty": 3,
+      "difficulty": 2,
       "description": "Para 'mañana (día siguiente)', la mano dominante con el índice extendido apunta hacia el torso a la altura del pecho y realiza un giro de muñeca en arco hacia abajo y adelante, terminando con la palma hacia arriba.",
       "instructions": [
         "Observá la posición de las manos y flechas de movimiento en la imagen de 'MAÑANA'.",
@@ -16193,7 +16205,7 @@
       "id": "sign_519",
       "word": "Mañana (parte del día)",
       "category": "tiempo",
-      "difficulty": 3,
+      "difficulty": 2,
       "description": "Para 'mañana (parte del día)', la mano de base sujeta el antebrazo de la mano dominante, la cual comienza cerrada abajo y sube frente al pecho mientras abre los cinco dedos separados con la palma hacia adentro.",
       "handshape_id": null,
       "media": {
@@ -17243,7 +17255,7 @@
       "id": "sign_556",
       "word": "Comprar",
       "category": "verbos_cotidianos",
-      "difficulty": 3,
+      "difficulty": 2,
       "description": "La mano dominante cerrada en puño con el pulgar extendido hacia arriba y los nudillos hacia adelante se extiende hacia el frente a la altura del pecho.",
       "instructions": [
         "Palma abierta izquierda",
@@ -17392,6 +17404,812 @@
         "image": "assets/signs/verbos_cotidianos/nacer.png",
         "thumbnail": "assets/signs/verbos_cotidianos/nacer.png"
       }
+    },
+    {
+      "id": "sign_564",
+      "word": "Yo",
+      "category": "primeras_frases",
+      "difficulty": 1,
+      "description": "La mano dominante con el dedo índice extendido señala directamente hacia el propio pecho.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Yo'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/primeras_frases/yo.png",
+        "video": "assets/signs/primeras_frases/yo.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/primeras_frases/yo.png",
+        "thumbnail": "assets/signs/primeras_frases/yo.png"
+      },
+      "tags": [
+        "primeras_frases",
+        "gramática",
+        "nivel_1"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "LSA Oficial / YouTube",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_565",
+      "word": "Vos",
+      "category": "primeras_frases",
+      "difficulty": 1,
+      "description": "La mano dominante con el dedo índice extendido señala hacia el frente en dirección al interlocutor.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Vos'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/primeras_frases/vos.png",
+        "video": "assets/signs/primeras_frases/vos.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/primeras_frases/vos.png",
+        "thumbnail": "assets/signs/primeras_frases/vos.png"
+      },
+      "tags": [
+        "primeras_frases",
+        "gramática",
+        "nivel_1"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "LSA Oficial / YouTube",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_566",
+      "word": "Él / Ella",
+      "category": "primeras_frases",
+      "difficulty": 1,
+      "description": "La mano dominante con el dedo índice extendido señala hacia un lado en dirección a una tercera persona ausente.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Él / Ella'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/primeras_frases/el_ella.png",
+        "video": "assets/signs/primeras_frases/el_ella.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/primeras_frases/el_ella.png",
+        "thumbnail": "assets/signs/primeras_frases/el_ella.png"
+      },
+      "tags": [
+        "primeras_frases",
+        "gramática",
+        "nivel_1"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "LSA Oficial / YouTube",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_567",
+      "word": "Nosotros",
+      "category": "primeras_frases",
+      "difficulty": 1,
+      "description": "La mano dominante con el índice extendido realiza un semicírculo horizontal que incluye al propio pecho y a las demás personas.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Nosotros'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/primeras_frases/nosotros.png",
+        "video": "assets/signs/primeras_frases/nosotros.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/primeras_frases/nosotros.png",
+        "thumbnail": "assets/signs/primeras_frases/nosotros.png"
+      },
+      "tags": [
+        "primeras_frases",
+        "gramática",
+        "nivel_1"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "LSA Oficial / YouTube",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_568",
+      "word": "Ellos / Ellas",
+      "category": "primeras_frases",
+      "difficulty": 1,
+      "description": "La mano dominante con el índice extendido realiza un barrido lateral indicando a varias personas ausentes.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Ellos / Ellas'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/primeras_frases/ellos.png",
+        "video": "assets/signs/primeras_frases/ellos.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/primeras_frases/ellos.png",
+        "thumbnail": "assets/signs/primeras_frases/ellos.png"
+      },
+      "tags": [
+        "primeras_frases",
+        "gramática",
+        "nivel_1"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "LSA Oficial / YouTube",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_569",
+      "word": "Ustedes",
+      "category": "primeras_frases",
+      "difficulty": 1,
+      "description": "La mano dominante con el índice extendido realiza un movimiento horizontal semicircular frente al cuerpo hacia los interlocutores.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Ustedes'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/primeras_frases/ustedes.png",
+        "video": "assets/signs/primeras_frases/ustedes.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/primeras_frases/ustedes.png",
+        "thumbnail": "assets/signs/primeras_frases/ustedes.png"
+      },
+      "tags": [
+        "primeras_frases",
+        "gramática",
+        "nivel_1"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "LSA Oficial / YouTube",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_570",
+      "word": "Mío / Mi",
+      "category": "primeras_frases",
+      "difficulty": 1,
+      "description": "La mano dominante abierta con la palma apoyada plana en el centro del pecho realiza un leve golpe de posesión.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Mío / Mi'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/primeras_frases/mio.png",
+        "video": "assets/signs/primeras_frases/mio.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/primeras_frases/mio.png",
+        "thumbnail": "assets/signs/primeras_frases/mio.png"
+      },
+      "tags": [
+        "primeras_frases",
+        "gramática",
+        "nivel_1"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "LSA Oficial / YouTube",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_571",
+      "word": "Tuyo / Tu",
+      "category": "primeras_frases",
+      "difficulty": 1,
+      "description": "La mano dominante abierta con los dedos juntos y la palma orientada hacia el interlocutor se proyecta levemente hacia adelante.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Tuyo / Tu'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/primeras_frases/tuyo.png",
+        "video": "assets/signs/primeras_frases/tuyo.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/primeras_frases/tuyo.png",
+        "thumbnail": "assets/signs/primeras_frases/tuyo.png"
+      },
+      "tags": [
+        "primeras_frases",
+        "gramática",
+        "nivel_1"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "LSA Oficial / YouTube",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_572",
+      "word": "Suyo / Su",
+      "category": "primeras_frases",
+      "difficulty": 1,
+      "description": "La mano dominante abierta con la palma hacia un lado se orienta en dirección a una tercera persona.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Suyo / Su'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/primeras_frases/suyo.png",
+        "video": "assets/signs/primeras_frases/suyo.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/primeras_frases/suyo.png",
+        "thumbnail": "assets/signs/primeras_frases/suyo.png"
+      },
+      "tags": [
+        "primeras_frases",
+        "gramática",
+        "nivel_1"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "LSA Oficial / YouTube",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_573",
+      "word": "Sí",
+      "category": "primeras_frases",
+      "difficulty": 1,
+      "description": "La mano dominante en puño o con el meñique/índice asiente de arriba abajo emulando una afirmación firme.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Sí'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/primeras_frases/si.png",
+        "video": "assets/signs/primeras_frases/si.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/primeras_frases/si.png",
+        "thumbnail": "assets/signs/primeras_frases/si.png"
+      },
+      "tags": [
+        "primeras_frases",
+        "gramática",
+        "nivel_1"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "LSA Oficial / YouTube",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_574",
+      "word": "No",
+      "category": "primeras_frases",
+      "difficulty": 1,
+      "description": "La mano dominante con el índice extendido o el índice y pulgar realiza un movimiento oscilante lateral acompañado por negación con la cabeza.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'No'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/primeras_frases/no.png",
+        "video": "assets/signs/primeras_frases/no.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/primeras_frases/no.png",
+        "thumbnail": "assets/signs/primeras_frases/no.png"
+      },
+      "tags": [
+        "primeras_frases",
+        "gramática",
+        "nivel_1"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "LSA Oficial / YouTube",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_575",
+      "word": "Bien",
+      "category": "primeras_frases",
+      "difficulty": 1,
+      "description": "La mano dominante con el pulgar hacia arriba en puño (o dedos juntos saliendo de la boca) avanza hacia el frente con gesto positivo.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Bien'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/primeras_frases/bien.png",
+        "video": "assets/signs/primeras_frases/bien.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/primeras_frases/bien.png",
+        "thumbnail": "assets/signs/primeras_frases/bien.png"
+      },
+      "tags": [
+        "primeras_frases",
+        "gramática",
+        "nivel_1"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "LSA Oficial / YouTube",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_576",
+      "word": "¿Cómo estás?",
+      "category": "primeras_frases",
+      "difficulty": 1,
+      "description": "Ambas manos giran de abajo hacia arriba con palmas abiertas frente al pecho acompañadas de expresión interrogativa.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de '¿Cómo estás?'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/primeras_frases/como_estas.png",
+        "video": "assets/signs/primeras_frases/como_estas.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/primeras_frases/como_estas.png",
+        "thumbnail": "assets/signs/primeras_frases/como_estas.png"
+      },
+      "tags": [
+        "primeras_frases",
+        "gramática",
+        "nivel_1"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "LSA Oficial / YouTube",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_577",
+      "word": "Perdón",
+      "category": "primeras_frases",
+      "difficulty": 1,
+      "description": "La mano dominante con configuración en Y (o puño cerrado) frota suavemente en círculo sobre el centro del pecho.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Perdón'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/primeras_frases/perdon.png",
+        "video": "assets/signs/primeras_frases/perdon.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/primeras_frases/perdon.png",
+        "thumbnail": "assets/signs/primeras_frases/perdon.png"
+      },
+      "tags": [
+        "primeras_frases",
+        "gramática",
+        "nivel_1"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "LSA Oficial / YouTube",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_578",
+      "word": "¿Cómo?",
+      "category": "primeras_frases",
+      "difficulty": 1,
+      "description": "Ambas manos abiertas frente al cuerpo con las palmas hacia arriba giran hacia los laterales con gesto de interrogación.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de '¿Cómo?'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/primeras_frases/como.png",
+        "video": "assets/signs/primeras_frases/como.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/primeras_frases/como.png",
+        "thumbnail": "assets/signs/primeras_frases/como.png"
+      },
+      "tags": [
+        "primeras_frases",
+        "gramática",
+        "nivel_1"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "LSA Oficial / YouTube",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_579",
+      "word": "¿Cuántos?",
+      "category": "primeras_frases",
+      "difficulty": 1,
+      "description": "Las manos frente al pecho abren y cierran los dedos de forma sucesiva en movimiento ascendente con expresión de pregunta.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de '¿Cuántos?'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/primeras_frases/cuantos.png",
+        "video": "assets/signs/primeras_frases/cuantos.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/primeras_frases/cuantos.png",
+        "thumbnail": "assets/signs/primeras_frases/cuantos.png"
+      },
+      "tags": [
+        "primeras_frases",
+        "gramática",
+        "nivel_1"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "LSA Oficial / YouTube",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_580",
+      "word": "Tener",
+      "category": "verbos_cotidianos",
+      "difficulty": 2,
+      "description": "La mano dominante con dedos flexionados o palma abierta se apoya con firmeza sobre el pecho indicando posesión.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Tener'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/verbos_cotidianos/tener.png",
+        "video": "assets/signs/verbos_cotidianos/tener.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/verbos_cotidianos/tener.png",
+        "thumbnail": "assets/signs/verbos_cotidianos/tener.png"
+      },
+      "tags": [
+        "verbos_cotidianos",
+        "gramática",
+        "nivel_2"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "LSA Oficial / YouTube",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_581",
+      "word": "Gustar",
+      "category": "verbos_cotidianos",
+      "difficulty": 2,
+      "description": "La mano dominante abierta con la yema del pulgar y los dedos acaricia el pecho hacia abajo en señal de agrado.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Gustar'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/verbos_cotidianos/gustar.png",
+        "video": "assets/signs/verbos_cotidianos/gustar.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/verbos_cotidianos/gustar.png",
+        "thumbnail": "assets/signs/verbos_cotidianos/gustar.png"
+      },
+      "tags": [
+        "verbos_cotidianos",
+        "gramática",
+        "nivel_2"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "LSA Oficial / YouTube",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_582",
+      "word": "Querer",
+      "category": "verbos_cotidianos",
+      "difficulty": 2,
+      "description": "Ambas manos con dedos flexionados en garra frente al pecho realizan un movimiento hacia el cuerpo como atrayendo algo.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Querer'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/verbos_cotidianos/querer.png",
+        "video": "assets/signs/verbos_cotidianos/querer.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/verbos_cotidianos/querer.png",
+        "thumbnail": "assets/signs/verbos_cotidianos/querer.png"
+      },
+      "tags": [
+        "verbos_cotidianos",
+        "gramática",
+        "nivel_2"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "LSA Oficial / YouTube",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_583",
+      "word": "Ir",
+      "category": "verbos_cotidianos",
+      "difficulty": 2,
+      "description": "La mano dominante con el índice extendido se proyecta desde el cuerpo hacia adelante en línea recta.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Ir'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/verbos_cotidianos/ir.png",
+        "video": "assets/signs/verbos_cotidianos/ir.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/verbos_cotidianos/ir.png",
+        "thumbnail": "assets/signs/verbos_cotidianos/ir.png"
+      },
+      "tags": [
+        "verbos_cotidianos",
+        "gramática",
+        "nivel_2"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "LSA Oficial / YouTube",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_584",
+      "word": "Vivir",
+      "category": "verbos_cotidianos",
+      "difficulty": 2,
+      "description": "Ambas manos con pulgares hacia arriba o índices ascienden verticalmente por el torso desde el abdomen hacia el pecho.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Vivir'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/verbos_cotidianos/vivir.png",
+        "video": "assets/signs/verbos_cotidianos/vivir.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/verbos_cotidianos/vivir.png",
+        "thumbnail": "assets/signs/verbos_cotidianos/vivir.png"
+      },
+      "tags": [
+        "verbos_cotidianos",
+        "gramática",
+        "nivel_2"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "LSA Oficial / YouTube",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_585",
+      "word": "Tomar / Beber",
+      "category": "verbos_cotidianos",
+      "difficulty": 2,
+      "description": "La mano dominante en configuración de taza (letra C) se eleva hacia la boca simulando beber de un vaso.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Tomar / Beber'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/verbos_cotidianos/tomar.png",
+        "video": "assets/signs/verbos_cotidianos/tomar.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/verbos_cotidianos/tomar.png",
+        "thumbnail": "assets/signs/verbos_cotidianos/tomar.png"
+      },
+      "tags": [
+        "verbos_cotidianos",
+        "gramática",
+        "nivel_2"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "LSA Oficial / YouTube",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_586",
+      "word": "Jugar",
+      "category": "verbos_cotidianos",
+      "difficulty": 2,
+      "description": "Ambas manos con configuración en Y (pulgar y meñique extendidos) rotan de forma alternada a los costados del pecho.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Jugar'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/verbos_cotidianos/jugar.png",
+        "video": "assets/signs/verbos_cotidianos/jugar.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/verbos_cotidianos/jugar.png",
+        "thumbnail": "assets/signs/verbos_cotidianos/jugar.png"
+      },
+      "tags": [
+        "verbos_cotidianos",
+        "gramática",
+        "nivel_2"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "LSA Oficial / YouTube",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_587",
+      "word": "Trabajar",
+      "category": "verbos_cotidianos",
+      "difficulty": 2,
+      "description": "Ambas manos en puño cerrado con las muñecas cruzadas realizan pequeños golpes rítmicos hacia abajo.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Trabajar'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/verbos_cotidianos/trabajar.png",
+        "video": "assets/signs/verbos_cotidianos/trabajar.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/verbos_cotidianos/trabajar.png",
+        "thumbnail": "assets/signs/verbos_cotidianos/trabajar.png"
+      },
+      "tags": [
+        "verbos_cotidianos",
+        "gramática",
+        "nivel_2"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "LSA Oficial / YouTube",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_588",
+      "word": "Conocer",
+      "category": "verbos_cotidianos",
+      "difficulty": 2,
+      "description": "La mano dominante con los dedos juntos extendidos toca con la yema la frente o sien en un toque firme.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Conocer'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/verbos_cotidianos/conocer.png",
+        "video": "assets/signs/verbos_cotidianos/conocer.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/verbos_cotidianos/conocer.png",
+        "thumbnail": "assets/signs/verbos_cotidianos/conocer.png"
+      },
+      "tags": [
+        "verbos_cotidianos",
+        "gramática",
+        "nivel_2"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "LSA Oficial / YouTube",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_589",
+      "word": "Lindo / Hermoso",
+      "category": "emociones",
+      "difficulty": 2,
+      "description": "La mano dominante abierta con dedos separados pasa frente al rostro cerrando las yemas de los dedos en gesto de gracia.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Lindo / Hermoso'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/emociones/lindo.png",
+        "video": "assets/signs/emociones/lindo.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/emociones/lindo.png",
+        "thumbnail": "assets/signs/emociones/lindo.png"
+      },
+      "tags": [
+        "emociones",
+        "gramática",
+        "nivel_2"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "LSA Oficial / YouTube",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
     }
   ]
 }
