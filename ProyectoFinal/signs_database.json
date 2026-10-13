@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "total_signs": 589,
+  "total_signs": 615,
   "categories": [
     {
       "id": "primeras_frases",
@@ -18202,6 +18202,786 @@
         "emociones",
         "gramática",
         "nivel_2"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "LSA Oficial / YouTube",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_590",
+      "word": "¿Qué?",
+      "category": "primeras_frases",
+      "difficulty": 1,
+      "description": "Ambas manos frente al pecho con las yemas de los dedos juntas hacia arriba oscilan hacia adelante y atrás con gesto de pregunta.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de '¿Qué?'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/primeras_frases/que.png",
+        "video": "assets/signs/primeras_frases/que.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/primeras_frases/que.png",
+        "thumbnail": "assets/signs/primeras_frases/que.png"
+      },
+      "tags": [
+        "primeras_frases",
+        "nivel_1"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "LSA Oficial / YouTube",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_591",
+      "word": "¿Quién?",
+      "category": "primeras_frases",
+      "difficulty": 1,
+      "description": "La mano dominante con el índice extendido realiza un leve movimiento oscilante o círculo frente a la boca con expresión interrogativa.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de '¿Quién?'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/primeras_frases/quien.png",
+        "video": "assets/signs/primeras_frases/quien.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/primeras_frases/quien.png",
+        "thumbnail": "assets/signs/primeras_frases/quien.png"
+      },
+      "tags": [
+        "primeras_frases",
+        "nivel_1"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "LSA Oficial / YouTube",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_592",
+      "word": "Mal",
+      "category": "primeras_frases",
+      "difficulty": 1,
+      "description": "La mano dominante abierta con la palma hacia abajo o puño desciende con fuerza en gesto desaprobatorio.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Mal'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/primeras_frases/mal.png",
+        "video": "assets/signs/primeras_frases/mal.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/primeras_frases/mal.png",
+        "thumbnail": "assets/signs/primeras_frases/mal.png"
+      },
+      "tags": [
+        "primeras_frases",
+        "nivel_1"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "LSA Oficial / YouTube",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_593",
+      "word": "Más o menos",
+      "category": "primeras_frases",
+      "difficulty": 1,
+      "description": "La mano dominante abierta con los dedos separados oscila de un lado al otro girando la muñeca horizontalmente.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Más o menos'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/primeras_frases/mas_o_menos.png",
+        "video": "assets/signs/primeras_frases/mas_o_menos.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/primeras_frases/mas_o_menos.png",
+        "thumbnail": "assets/signs/primeras_frases/mas_o_menos.png"
+      },
+      "tags": [
+        "primeras_frases",
+        "nivel_1"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "LSA Oficial / YouTube",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_594",
+      "word": "Casa",
+      "category": "lugares",
+      "difficulty": 3,
+      "description": "Ambas manos abiertas con las yemas de los dedos en diagonal se tocan formando un techo o triángulo a dos aguas frente al pecho.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Casa'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/lugares/casa.png",
+        "video": "assets/signs/lugares/casa.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/lugares/casa.png",
+        "thumbnail": "assets/signs/lugares/casa.png"
+      },
+      "tags": [
+        "lugares",
+        "nivel_3"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "LSA Oficial / YouTube",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_595",
+      "word": "Baño",
+      "category": "lugares",
+      "difficulty": 3,
+      "description": "La mano dominante con dedos flexionados o letra B realiza un movimiento de contacto lateral a la altura de la sien o pecho.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Baño'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/lugares/baño.png",
+        "video": "assets/signs/lugares/baño.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/lugares/baño.png",
+        "thumbnail": "assets/signs/lugares/baño.png"
+      },
+      "tags": [
+        "lugares",
+        "nivel_3"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "LSA Oficial / YouTube",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_596",
+      "word": "Hospital",
+      "category": "lugares",
+      "difficulty": 3,
+      "description": "La mano dominante con el índice y medio cruzados (o formando una cruz) traza una cruz en la frente o brazo opuesto.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Hospital'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/lugares/hospital.png",
+        "video": "assets/signs/lugares/hospital.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/lugares/hospital.png",
+        "thumbnail": "assets/signs/lugares/hospital.png"
+      },
+      "tags": [
+        "lugares",
+        "nivel_3"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "LSA Oficial / YouTube",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_597",
+      "word": "Banco",
+      "category": "lugares",
+      "difficulty": 3,
+      "description": "La mano dominante en configuración de billete o letra B golpea suavemente sobre la palma abierta de la mano base.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Banco'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/lugares/banco.png",
+        "video": "assets/signs/lugares/banco.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/lugares/banco.png",
+        "thumbnail": "assets/signs/lugares/banco.png"
+      },
+      "tags": [
+        "lugares",
+        "nivel_3"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "LSA Oficial / YouTube",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_598",
+      "word": "Iglesia",
+      "category": "lugares",
+      "difficulty": 3,
+      "description": "Ambas manos juntas en posición de rezo con las palmas unidas frente al pecho se elevan ligeramente.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Iglesia'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/lugares/iglesia.png",
+        "video": "assets/signs/lugares/iglesia.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/lugares/iglesia.png",
+        "thumbnail": "assets/signs/lugares/iglesia.png"
+      },
+      "tags": [
+        "lugares",
+        "nivel_3"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "LSA Oficial / YouTube",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_599",
+      "word": "Plaza / Parque",
+      "category": "lugares",
+      "difficulty": 3,
+      "description": "Ambas manos abiertas con las palmas hacia abajo se abren en círculo horizontal delimitando un espacio verde abierto.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Plaza / Parque'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/lugares/plaza.png",
+        "video": "assets/signs/lugares/plaza.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/lugares/plaza.png",
+        "thumbnail": "assets/signs/lugares/plaza.png"
+      },
+      "tags": [
+        "lugares",
+        "nivel_3"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "LSA Oficial / YouTube",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_600",
+      "word": "Restaurante",
+      "category": "lugares",
+      "difficulty": 3,
+      "description": "La mano dominante simula el uso de cubiertos o llevar comida a la boca indicando el acto de comer en un salón.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Restaurante'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/lugares/restaurante.png",
+        "video": "assets/signs/lugares/restaurante.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/lugares/restaurante.png",
+        "thumbnail": "assets/signs/lugares/restaurante.png"
+      },
+      "tags": [
+        "lugares",
+        "nivel_3"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "LSA Oficial / YouTube",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_601",
+      "word": "Feliz / Alegría",
+      "category": "emociones",
+      "difficulty": 3,
+      "description": "Ambas manos abiertas frente al pecho realizan movimientos circulares ascendentes acompañadas de una amplia sonrisa.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Feliz / Alegría'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/emociones/feliz.png",
+        "video": "assets/signs/emociones/feliz.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/emociones/feliz.png",
+        "thumbnail": "assets/signs/emociones/feliz.png"
+      },
+      "tags": [
+        "emociones",
+        "nivel_3"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "LSA Oficial / YouTube",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_602",
+      "word": "Triste / Tristeza",
+      "category": "emociones",
+      "difficulty": 3,
+      "description": "La mano dominante abierta desciende frente al rostro mientras los dedos se cierran suavemente, con gesto de congoja.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Triste / Tristeza'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/emociones/triste.png",
+        "video": "assets/signs/emociones/triste.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/emociones/triste.png",
+        "thumbnail": "assets/signs/emociones/triste.png"
+      },
+      "tags": [
+        "emociones",
+        "nivel_3"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "LSA Oficial / YouTube",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_603",
+      "word": "Enojado / Furia",
+      "category": "emociones",
+      "difficulty": 3,
+      "description": "La mano dominante en garra frente al rostro o pecho asciende con tensión expresando disgusto y enfado.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Enojado / Furia'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/emociones/enojado.png",
+        "video": "assets/signs/emociones/enojado.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/emociones/enojado.png",
+        "thumbnail": "assets/signs/emociones/enojado.png"
+      },
+      "tags": [
+        "emociones",
+        "nivel_3"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "LSA Oficial / YouTube",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_604",
+      "word": "Miedo / Susto",
+      "category": "emociones",
+      "difficulty": 3,
+      "description": "Ambas manos abiertas frente al pecho retroceden hacia el cuerpo con un leve temblor y gesto facial de sobresalto.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Miedo / Susto'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/emociones/miedo.png",
+        "video": "assets/signs/emociones/miedo.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/emociones/miedo.png",
+        "thumbnail": "assets/signs/emociones/miedo.png"
+      },
+      "tags": [
+        "emociones",
+        "nivel_3"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "LSA Oficial / YouTube",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_605",
+      "word": "Cansado / Cansancio",
+      "category": "emociones",
+      "difficulty": 3,
+      "description": "Las manos abiertas apoyadas en los hombros o pecho caen pesadamente hacia adelante con exhalación de fatiga.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Cansado / Cansancio'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/emociones/cansado.png",
+        "video": "assets/signs/emociones/cansado.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/emociones/cansado.png",
+        "thumbnail": "assets/signs/emociones/cansado.png"
+      },
+      "tags": [
+        "emociones",
+        "nivel_3"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "LSA Oficial / YouTube",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_606",
+      "word": "Nervioso / Nervios",
+      "category": "emociones",
+      "difficulty": 3,
+      "description": "Los dedos flexionados de ambas manos se frotan de forma agitada frente al pecho transmitiendo intranquilidad.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Nervioso / Nervios'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/emociones/nervioso.png",
+        "video": "assets/signs/emociones/nervioso.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/emociones/nervioso.png",
+        "thumbnail": "assets/signs/emociones/nervioso.png"
+      },
+      "tags": [
+        "emociones",
+        "nivel_3"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "LSA Oficial / YouTube",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_607",
+      "word": "Amor",
+      "category": "emociones",
+      "difficulty": 3,
+      "description": "Ambas manos cruzadas sobre el pecho con las palmas apoyadas en el corazón expresan afecto profundo.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Amor'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/emociones/amor.png",
+        "video": "assets/signs/emociones/amor.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/emociones/amor.png",
+        "thumbnail": "assets/signs/emociones/amor.png"
+      },
+      "tags": [
+        "emociones",
+        "nivel_3"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "LSA Oficial / YouTube",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_608",
+      "word": "Auto",
+      "category": "transporte",
+      "difficulty": 3,
+      "description": "Ambas manos en puño cerrado frente al pecho simulan sostener y maniobrar el volante de un vehículo.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Auto'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/transporte/auto.png",
+        "video": "assets/signs/transporte/auto.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/transporte/auto.png",
+        "thumbnail": "assets/signs/transporte/auto.png"
+      },
+      "tags": [
+        "transporte",
+        "nivel_3"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "LSA Oficial / YouTube",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_609",
+      "word": "Moto",
+      "category": "transporte",
+      "difficulty": 3,
+      "description": "Ambas manos simulan sostener el manillar de una moto y la mano derecha gira la muñeca hacia atrás acelerando.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Moto'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/transporte/moto.png",
+        "video": "assets/signs/transporte/moto.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/transporte/moto.png",
+        "thumbnail": "assets/signs/transporte/moto.png"
+      },
+      "tags": [
+        "transporte",
+        "nivel_3"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "LSA Oficial / YouTube",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_610",
+      "word": "Tren",
+      "category": "transporte",
+      "difficulty": 3,
+      "description": "Los dedos índice y medio extendidos de ambas manos se deslizan hacia adelante simulando ruedas sobre rieles.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Tren'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/transporte/tren.png",
+        "video": "assets/signs/transporte/tren.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/transporte/tren.png",
+        "thumbnail": "assets/signs/transporte/tren.png"
+      },
+      "tags": [
+        "transporte",
+        "nivel_3"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "LSA Oficial / YouTube",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_611",
+      "word": "Subte",
+      "category": "transporte",
+      "difficulty": 3,
+      "description": "La mano dominante en letra S o dedos extendidos pasa por debajo de la palma abierta de la mano base (túnel).",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Subte'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/transporte/subte.png",
+        "video": "assets/signs/transporte/subte.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/transporte/subte.png",
+        "thumbnail": "assets/signs/transporte/subte.png"
+      },
+      "tags": [
+        "transporte",
+        "nivel_3"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "LSA Oficial / YouTube",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_612",
+      "word": "Colectivo",
+      "category": "transporte",
+      "difficulty": 3,
+      "description": "Ambas manos sostienen un volante amplio y realizan el ademán de cobrar o detenerse en paradas.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Colectivo'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/transporte/colectivo.png",
+        "video": "assets/signs/transporte/colectivo.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/transporte/colectivo.png",
+        "thumbnail": "assets/signs/transporte/colectivo.png"
+      },
+      "tags": [
+        "transporte",
+        "nivel_3"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "LSA Oficial / YouTube",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_613",
+      "word": "Bicicleta",
+      "category": "transporte",
+      "difficulty": 3,
+      "description": "Ambas manos en puño cerrado realizan giros circulares alternados frente al torso imitando el pedaleo continuo.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Bicicleta'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/transporte/bicicleta.png",
+        "video": "assets/signs/transporte/bicicleta.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/transporte/bicicleta.png",
+        "thumbnail": "assets/signs/transporte/bicicleta.png"
+      },
+      "tags": [
+        "transporte",
+        "nivel_3"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "LSA Oficial / YouTube",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_614",
+      "word": "Avión",
+      "category": "transporte",
+      "difficulty": 3,
+      "description": "La mano dominante con pulgar y meñique extendidos (alas) avanza volando en diagonal ascendente por el aire.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Avión'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/transporte/avion.png",
+        "video": "assets/signs/transporte/avion.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/transporte/avion.png",
+        "thumbnail": "assets/signs/transporte/avion.png"
+      },
+      "tags": [
+        "transporte",
+        "nivel_3"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "LSA Oficial / YouTube",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_615",
+      "word": "Taxi",
+      "category": "transporte",
+      "difficulty": 3,
+      "description": "La mano dominante realiza el señalamiento del cartel superior en el techo de un auto o el deletreo T-A-X-I.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Taxi'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/transporte/taxi.png",
+        "video": "assets/signs/transporte/taxi.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/transporte/taxi.png",
+        "thumbnail": "assets/signs/transporte/taxi.png"
+      },
+      "tags": [
+        "transporte",
+        "nivel_3"
       ],
       "handshape": null,
       "movement": null,
