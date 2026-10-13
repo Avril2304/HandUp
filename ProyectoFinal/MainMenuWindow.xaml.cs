@@ -50,7 +50,8 @@ namespace ProyectoFinal
                 [Seccion.Desafio] = navDesafio,
                 [Seccion.Traductor] = navTraductor,
                 [Seccion.Diccionario] = navDiccionario,
-                [Seccion.MiPerfil] = navPerfil
+                [Seccion.MiPerfil] = navPerfil,
+                [Seccion.Configuracion] = navConfiguracion
             };
 
             lblCantidadSenas.Text = TextoCantidadSenas();
@@ -160,11 +161,7 @@ namespace ProyectoFinal
             if (_seccionActual == Seccion.Inicio)
                 _tileOrigen = Keyboard.FocusedElement as Button;
 
-            // Por ahora todas las secciones muestran "Próximamente".
-            // Cuando un módulo esté listo, acá se crea su vista en lugar de esta.
-            var vista = new ProximamenteView(Secciones.Info[destino]);
-            vista.VolverSolicitado += (s, e) => MostrarInicio();
-            contenidoSeccion.Content = vista;
+            contenidoSeccion.Content = CrearVista(destino);
 
             panelInicio.Visibility = Visibility.Collapsed;
             contenidoSeccion.Visibility = Visibility.Visible;
@@ -175,6 +172,22 @@ namespace ProyectoFinal
 
             // El foco queda en el ítem activo de la barra, así se sigue navegando con Tab
             EnfocarDespuesDeMostrar(_itemsNav[destino]);
+        }
+
+        // Las secciones que todavía no están hechas muestran "Próximamente".
+        // Cuando un módulo esté listo, se agrega acá su vista.
+        private UserControl CrearVista(Seccion destino)
+        {
+            if (destino == Seccion.Configuracion)
+            {
+                var configuracion = new ConfiguracionView(_preferencias);
+                configuracion.VolverSolicitado += (s, e) => MostrarInicio();
+                return configuracion;
+            }
+
+            var proximamente = new ProximamenteView(Secciones.Info[destino]);
+            proximamente.VolverSolicitado += (s, e) => MostrarInicio();
+            return proximamente;
         }
 
         private void MostrarInicio()
@@ -214,11 +227,15 @@ namespace ProyectoFinal
         }
 
         // ===== Teclado =====
-        // Inicio:  1-5 entra a cada sección, Esc sale.
-        // Sección: Ctrl+1..5 cambia de sección, Esc vuelve al inicio.
+        // Inicio:  1-6 entra a cada sección, Esc sale.
+        // Sección: Ctrl+1..6 cambia de sección, Esc vuelve al inicio.
         // (Dentro de una sección los números quedan libres para los módulos, ej. responder 1-4 en Aprender.)
         private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
         {
+            // En Configuración, mientras se elige una tecla nueva, cualquier tecla (incluso Esc) es para esa pantalla
+            if (contenidoSeccion.Content is ConfiguracionView { CapturandoTecla: true })
+                return;
+
             if (e.Key == Key.Escape)
             {
                 if (_seccionActual == Seccion.Inicio)
@@ -250,6 +267,7 @@ namespace ProyectoFinal
             Key.D3 or Key.NumPad3 => Seccion.Traductor,
             Key.D4 or Key.NumPad4 => Seccion.Diccionario,
             Key.D5 or Key.NumPad5 => Seccion.MiPerfil,
+            Key.D6 or Key.NumPad6 => Seccion.Configuracion,
             _ => null
         };
     }

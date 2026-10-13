@@ -18,6 +18,7 @@ namespace ProyectoFinal
         public LoginWindow(string? usuarioRecienRegistrado = null)
         {
             InitializeComponent();
+            chkAltoContraste.IsChecked = TemaVisual.AltoContrasteActivo;
 
             try
             {
@@ -97,11 +98,15 @@ namespace ProyectoFinal
                 // Cargar preferencias del perfil
                 PreferenciasUsuario prefs = new RepositorioPreferencias().ObtenerPorPerfil(perfil.Id);
 
-                // Aplicar tema visual según preferencias
-                if (prefs.AltoContraste)
+                // Si prendió el alto contraste en el login, se respeta y queda guardado en su perfil
+                if (TemaVisual.AltoContrasteActivo && !prefs.AltoContraste)
                 {
-                    Application.Current.Resources.MergedDictionaries.Add(TemaVisual.ObtenerDiccionarioAltoContraste());
+                    prefs.AltoContraste = true;
+                    GuardarPreferenciasSinInterrumpir(prefs);
                 }
+
+                // Aplicar tema visual según preferencias
+                TemaVisual.Aplicar(prefs.AltoContraste);
 
                 // Cargo el perfil seleccionado y navego al menú principal
                 var menuPrincipal = new MainMenuWindow(perfil, prefs);
@@ -113,6 +118,23 @@ namespace ProyectoFinal
                 lblInfo.Visibility = Visibility.Collapsed;
                 lblError.Text = ex.Message;
             }
+        }
+
+        // Un error al guardar preferencias no tiene que impedir entrar: el tema igual se aplica en esta sesión
+        private static void GuardarPreferenciasSinInterrumpir(PreferenciasUsuario prefs)
+        {
+            try
+            {
+                new RepositorioPreferencias().Guardar(prefs);
+            }
+            catch (Exception ex) when (ex is DatabaseException || ex is InvalidInputException)
+            {
+            }
+        }
+
+        private void ChkAltoContraste_Click(object sender, RoutedEventArgs e)
+        {
+            TemaVisual.Aplicar(chkAltoContraste.IsChecked == true);
         }
 
         private void BtnCrearPerfil_Click(object sender, RoutedEventArgs e)

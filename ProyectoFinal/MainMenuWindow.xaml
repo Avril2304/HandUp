@@ -6,7 +6,8 @@
         Height="650" Width="1000"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
-        Background="{StaticResource BrushBackground}"
+        Background="{DynamicResource BrushBackground}"
+        Foreground="{DynamicResource BrushInk}"
         FontFamily="Segoe UI"
         Loaded="Window_Loaded"
         PreviewKeyDown="Window_PreviewKeyDown">
@@ -17,7 +18,7 @@
         </Grid.ColumnDefinitions>
 
         <!-- ===== Barra lateral: solo aparece dentro de una sección ===== -->
-        <Border Grid.Column="0" x:Name="barraLateral" Width="220" Background="{StaticResource BrushSidebar}"
+        <Border Grid.Column="0" x:Name="barraLateral" Width="220" Background="{DynamicResource BrushSidebar}"
                 Padding="14,20" Visibility="Collapsed">
             <Grid>
                 <Grid.RowDefinitions>
@@ -32,20 +33,20 @@
                 <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="6,0,0,0">
                     <Border Width="34" Height="34" CornerRadius="9" ClipToBounds="True">
                         <Border.Background>
-                            <ImageBrush ImageSource="Assets/logo.jpg" Stretch="UniformToFill"/>
+                            <ImageBrush ImageSource="{DynamicResource ImagenLogo}" Stretch="UniformToFill"/>
                         </Border.Background>
                     </Border>
                     <TextBlock Text="HandUp" FontFamily="{StaticResource FontHeading}" FontSize="20" FontWeight="Bold"
-                               Foreground="White" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                               Foreground="{DynamicResource BrushOnSidebar}" Margin="10,0,0,0" VerticalAlignment="Center"/>
                 </StackPanel>
 
                 <!-- Usuario y racha -->
                 <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="6,12,0,18">
-                    <TextBlock x:Name="lblUsuarioLateral" Text="Usuario" FontSize="12.5" Foreground="{StaticResource BrushSidebarMuted}"/>
-                    <TextBlock Text=" · " FontSize="12.5" Foreground="{StaticResource BrushSidebarMuted}"/>
+                    <TextBlock x:Name="lblUsuarioLateral" Text="Usuario" FontSize="12.5" Foreground="{DynamicResource BrushSidebarMuted}"/>
+                    <TextBlock Text=" · " FontSize="12.5" Foreground="{DynamicResource BrushSidebarMuted}"/>
                     <TextBlock Text="&#xE945;" FontFamily="{StaticResource FontIconos}" FontSize="12"
-                               Foreground="{StaticResource BrushSidebarMuted}" VerticalAlignment="Center"/>
-                    <TextBlock x:Name="lblRachaLateral" Text="0" FontSize="12.5" Foreground="{StaticResource BrushSidebarMuted}" Margin="3,0,0,0"/>
+                               Foreground="{DynamicResource BrushSidebarMuted}" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="lblRachaLateral" Text="0" FontSize="12.5" Foreground="{DynamicResource BrushSidebarMuted}" Margin="3,0,0,0"/>
                 </StackPanel>
 
                 <!-- Secciones principales -->
@@ -58,7 +59,7 @@
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="&#xE80F;" FontFamily="{StaticResource FontIconos}" FontSize="16" VerticalAlignment="Center"/>
                             <TextBlock Grid.Column="1" Text="Inicio" VerticalAlignment="Center"/>
-                            <TextBlock Grid.Column="2" Text="Esc" FontSize="11" Foreground="{StaticResource BrushSidebarMuted}" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="2" Text="Esc" FontSize="11" Foreground="{DynamicResource BrushSidebarMuted}" VerticalAlignment="Center"/>
                         </Grid>
                     </Button>
                     <Button x:Name="navAprender" Style="{StaticResource NavItem}" Click="Nav_Click"
@@ -69,7 +70,7 @@
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="&#xE7BE;" FontFamily="{StaticResource FontIconos}" FontSize="16" VerticalAlignment="Center"/>
                             <TextBlock Grid.Column="1" Text="Aprender" VerticalAlignment="Center"/>
-                            <TextBlock Grid.Column="2" Text="Ctrl+1" FontSize="11" Foreground="{StaticResource BrushSidebarMuted}" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="2" Text="Ctrl+1" FontSize="11" Foreground="{DynamicResource BrushSidebarMuted}" VerticalAlignment="Center"/>
                         </Grid>
                     </Button>
                     <Button x:Name="navDesafio" Style="{StaticResource NavItem}" Click="Nav_Click"
@@ -80,7 +81,7 @@
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="&#xE916;" FontFamily="{StaticResource FontIconos}" FontSize="16" VerticalAlignment="Center"/>
                             <TextBlock Grid.Column="1" Text="Desafío" VerticalAlignment="Center"/>
-                            <TextBlock Grid.Column="2" Text="Ctrl+2" FontSize="11" Foreground="{StaticResource BrushSidebarMuted}" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="2" Text="Ctrl+2" FontSize="11" Foreground="{DynamicResource BrushSidebarMuted}" VerticalAlignment="Center"/>
                         </Grid>
                     </Button>
                     <Button x:Name="navTraductor" Style="{StaticResource NavItem}" Click="Nav_Click"
@@ -91,7 +92,7 @@
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="&#xE8C1;" FontFamily="{StaticResource FontIconos}" FontSize="16" VerticalAlignment="Center"/>
                             <TextBlock Grid.Column="1" Text="Traductor" VerticalAlignment="Center"/>
-                            <TextBlock Grid.Column="2" Text="Ctrl+3" FontSize="11" Foreground="{StaticResource BrushSidebarMuted}" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="2" Text="Ctrl+3" FontSize="11" Foreground="{DynamicResource BrushSidebarMuted}" VerticalAlignment="Center"/>
                         </Grid>
                     </Button>
                     <Button x:Name="navDiccionario" Style="{StaticResource NavItem}" Click="Nav_Click"
@@ -102,7 +103,7 @@
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="&#xE82D;" FontFamily="{StaticResource FontIconos}" FontSize="16" VerticalAlignment="Center"/>
                             <TextBlock Grid.Column="1" Text="Diccionario" VerticalAlignment="Center"/>
-                            <TextBlock Grid.Column="2" Text="Ctrl+4" FontSize="11" Foreground="{StaticResource BrushSidebarMuted}" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="2" Text="Ctrl+4" FontSize="11" Foreground="{DynamicResource BrushSidebarMuted}" VerticalAlignment="Center"/>
                         </Grid>
                     </Button>
                 </StackPanel>
@@ -117,7 +118,18 @@
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="&#xE77B;" FontFamily="{StaticResource FontIconos}" FontSize="16" VerticalAlignment="Center"/>
                             <TextBlock Grid.Column="1" Text="Mi perfil" VerticalAlignment="Center"/>
-                            <TextBlock Grid.Column="2" Text="Ctrl+5" FontSize="11" Foreground="{StaticResource BrushSidebarMuted}" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="2" Text="Ctrl+5" FontSize="11" Foreground="{DynamicResource BrushSidebarMuted}" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Button>
+                    <Button x:Name="navConfiguracion" Style="{StaticResource NavItem}" Click="Nav_Click"
+                            CommandParameter="{x:Static local:Seccion.Configuracion}" AutomationProperties.Name="Configuración">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="28"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="&#xE713;" FontFamily="{StaticResource FontIconos}" FontSize="16" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="1" Text="Configuración" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="2" Text="Ctrl+6" FontSize="11" Foreground="{DynamicResource BrushSidebarMuted}" VerticalAlignment="Center"/>
                         </Grid>
                     </Button>
                     <Button x:Name="navSalir" Style="{StaticResource NavItem}" Click="Salir_Click" AutomationProperties.Name="Salir de HandUp">
@@ -125,8 +137,8 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="28"/><ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="&#xF3B1;" FontFamily="{StaticResource FontIconos}" FontSize="16" Foreground="#F7C1C1" VerticalAlignment="Center"/>
-                            <TextBlock Grid.Column="1" Text="Salir" Foreground="#F7C1C1" VerticalAlignment="Center"/>
+                            <TextBlock Text="&#xF3B1;" FontFamily="{StaticResource FontIconos}" FontSize="16" Foreground="{DynamicResource BrushSidebarDanger}" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="1" Text="Salir" Foreground="{DynamicResource BrushSidebarDanger}" VerticalAlignment="Center"/>
                         </Grid>
                     </Button>
                 </StackPanel>
@@ -153,19 +165,19 @@
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock x:Name="lblSaludo" Text="¡Hola!" FontFamily="{StaticResource FontHeading}"
-                               FontSize="26" FontWeight="Bold" Foreground="{StaticResource BrushInk}" VerticalAlignment="Center"/>
+                               FontSize="26" FontWeight="Bold" Foreground="{DynamicResource BrushInk}" VerticalAlignment="Center"/>
                     <StackPanel Grid.Column="1" Orientation="Horizontal">
-                        <Border x:Name="borderRacha" Background="White" BorderBrush="{StaticResource BrushBorder}" BorderThickness="1"
+                        <Border x:Name="borderRacha" Background="{DynamicResource BrushCard}" BorderBrush="{DynamicResource BrushBorder}" BorderThickness="1"
                                 CornerRadius="20" Padding="14,7" Margin="0,0,10,0">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="&#xE945;" FontFamily="{StaticResource FontIconos}" FontSize="13"
-                                           Foreground="{StaticResource BrushAccent}" VerticalAlignment="Center"/>
+                                           Foreground="{DynamicResource BrushAccent}" VerticalAlignment="Center"/>
                                 <TextBlock x:Name="lblRacha" Text="Racha 0" FontWeight="Bold" FontSize="13"
-                                           Foreground="{StaticResource BrushInk}" Margin="6,0,0,0" VerticalAlignment="Center"/>
+                                           Foreground="{DynamicResource BrushInk}" Margin="6,0,0,0" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Border>
-                        <Border Background="{StaticResource BrushAccent}" CornerRadius="20" Padding="14,7">
-                            <TextBlock x:Name="lblNivel" Text="Nivel" Foreground="White" FontWeight="Bold" FontSize="13"/>
+                        <Border Background="{DynamicResource BrushAccent}" CornerRadius="20" Padding="14,7">
+                            <TextBlock x:Name="lblNivel" Text="Nivel" Foreground="{DynamicResource BrushOnAccent}" FontWeight="Bold" FontSize="13"/>
                         </Border>
                     </StackPanel>
                 </Grid>
@@ -199,30 +211,30 @@
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
-                            <Border Grid.Row="0" Width="56" Height="56" CornerRadius="14" Background="{StaticResource BrushAccent}" HorizontalAlignment="Left">
-                                <TextBlock Text="&#xE7BE;" FontFamily="{StaticResource FontIconos}" FontSize="28" Foreground="White"
+                            <Border Grid.Row="0" Width="56" Height="56" CornerRadius="14" Background="{DynamicResource BrushAccent}" HorizontalAlignment="Left">
+                                <TextBlock Text="&#xE7BE;" FontFamily="{StaticResource FontIconos}" FontSize="28" Foreground="{DynamicResource BrushOnAccent}"
                                            HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
-                            <Border Grid.Row="0" Style="{StaticResource AtajoBadge}" BorderBrush="#3D6B60">
-                                <TextBlock Text="1" FontSize="12" FontWeight="Bold" Foreground="#CFE8E1"/>
+                            <Border Grid.Row="0" Style="{StaticResource AtajoBadge}" BorderBrush="{DynamicResource BrushSidebarLine}">
+                                <TextBlock Text="1" FontSize="12" FontWeight="Bold" Foreground="{DynamicResource BrushSidebarSubtle}"/>
                             </Border>
                             <TextBlock Grid.Row="1" Text="Aprender" FontFamily="{StaticResource FontHeading}" FontSize="28"
                                        FontWeight="Bold" Margin="0,16,0,0"/>
                             <TextBlock Grid.Row="2" Text="Elegí un nivel y una categoría, y practicá seña por seña."
-                                       FontSize="13.5" Foreground="#CFE8E1" TextWrapping="Wrap" Margin="0,6,0,0"/>
-                            <TextBlock Grid.Row="4" x:Name="lblProgresoNivel" Text="0 / 0 señas del nivel" FontSize="12.5" Foreground="#CFE8E1"/>
+                                       FontSize="13.5" Foreground="{DynamicResource BrushSidebarSubtle}" TextWrapping="Wrap" Margin="0,6,0,0"/>
+                            <TextBlock Grid.Row="4" x:Name="lblProgresoNivel" Text="0 / 0 señas del nivel" FontSize="12.5" Foreground="{DynamicResource BrushSidebarSubtle}"/>
                             <!-- Barra de progreso: dos columnas proporcionales (lleno / vacío) -->
-                            <Border Grid.Row="5" Height="10" CornerRadius="5" Background="#2A4D44" Margin="0,6,0,0" ClipToBounds="True">
+                            <Border Grid.Row="5" Height="10" CornerRadius="5" Background="{DynamicResource BrushSidebarTrack}" Margin="0,6,0,0" ClipToBounds="True">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition x:Name="colProgresoLleno" Width="0*"/>
                                         <ColumnDefinition x:Name="colProgresoVacio" Width="1*"/>
                                     </Grid.ColumnDefinitions>
-                                    <Border Grid.Column="0" CornerRadius="5" Background="#5DCAA5"/>
+                                    <Border Grid.Column="0" CornerRadius="5" Background="{DynamicResource BrushSidebarHighlight}"/>
                                 </Grid>
                             </Border>
-                            <Border Grid.Row="6" Background="{StaticResource BrushAccent}" CornerRadius="10" Height="42" Margin="0,18,0,0">
-                                <TextBlock Text="Empezar  →" FontSize="14" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Border Grid.Row="6" Background="{DynamicResource BrushAccent}" CornerRadius="10" Height="42" Margin="0,18,0,0">
+                                <TextBlock Text="Empezar  →" FontSize="14" Foreground="{DynamicResource BrushOnAccent}" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
                         </Grid>
                     </Button>
@@ -235,16 +247,16 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <Border Width="48" Height="48" CornerRadius="12" Background="{StaticResource BrushAccentSoft}" HorizontalAlignment="Left">
-                                <TextBlock Text="&#xE916;" FontFamily="{StaticResource FontIconos}" FontSize="24" Foreground="{StaticResource BrushAccent}"
+                            <Border Width="48" Height="48" CornerRadius="12" Background="{DynamicResource BrushAccentSoft}" HorizontalAlignment="Left">
+                                <TextBlock Text="&#xE916;" FontFamily="{StaticResource FontIconos}" FontSize="24" Foreground="{DynamicResource BrushAccent}"
                                            HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
                             <Border Style="{StaticResource AtajoBadge}">
-                                <TextBlock Text="2" FontSize="12" FontWeight="Bold" Foreground="{StaticResource BrushAccentDark}"/>
+                                <TextBlock Text="2" FontSize="12" FontWeight="Bold" Foreground="{DynamicResource BrushAccentDark}"/>
                             </Border>
                             <TextBlock Grid.Row="1" Text="Desafío" FontFamily="{StaticResource FontHeading}" FontSize="20" FontWeight="Bold" Margin="0,12,0,0"/>
                             <TextBlock Grid.Row="2" x:Name="lblMejorRacha" Text="Contrarreloj con vidas" FontSize="12.5"
-                                       Foreground="{StaticResource BrushMuted}" TextWrapping="Wrap" Margin="0,4,0,0"/>
+                                       Foreground="{DynamicResource BrushMuted}" TextWrapping="Wrap" Margin="0,4,0,0"/>
                         </Grid>
                     </Button>
 
@@ -256,16 +268,16 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <Border Width="48" Height="48" CornerRadius="12" Background="{StaticResource BrushAccentSoft}" HorizontalAlignment="Left">
-                                <TextBlock Text="&#xE8C1;" FontFamily="{StaticResource FontIconos}" FontSize="24" Foreground="{StaticResource BrushAccent}"
+                            <Border Width="48" Height="48" CornerRadius="12" Background="{DynamicResource BrushAccentSoft}" HorizontalAlignment="Left">
+                                <TextBlock Text="&#xE8C1;" FontFamily="{StaticResource FontIconos}" FontSize="24" Foreground="{DynamicResource BrushAccent}"
                                            HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
                             <Border Style="{StaticResource AtajoBadge}">
-                                <TextBlock Text="3" FontSize="12" FontWeight="Bold" Foreground="{StaticResource BrushAccentDark}"/>
+                                <TextBlock Text="3" FontSize="12" FontWeight="Bold" Foreground="{DynamicResource BrushAccentDark}"/>
                             </Border>
                             <TextBlock Grid.Row="1" Text="Traductor" FontFamily="{StaticResource FontHeading}" FontSize="20" FontWeight="Bold" Margin="0,12,0,0"/>
                             <TextBlock Grid.Row="2" Text="De texto a señas" FontSize="12.5"
-                                       Foreground="{StaticResource BrushMuted}" TextWrapping="Wrap" Margin="0,4,0,0"/>
+                                       Foreground="{DynamicResource BrushMuted}" TextWrapping="Wrap" Margin="0,4,0,0"/>
                         </Grid>
                     </Button>
 
@@ -277,23 +289,23 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <Border Width="48" Height="48" CornerRadius="12" Background="{StaticResource BrushAccentSoft}" HorizontalAlignment="Left">
-                                <TextBlock Text="&#xE82D;" FontFamily="{StaticResource FontIconos}" FontSize="24" Foreground="{StaticResource BrushAccent}"
+                            <Border Width="48" Height="48" CornerRadius="12" Background="{DynamicResource BrushAccentSoft}" HorizontalAlignment="Left">
+                                <TextBlock Text="&#xE82D;" FontFamily="{StaticResource FontIconos}" FontSize="24" Foreground="{DynamicResource BrushAccent}"
                                            HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
                             <Border Style="{StaticResource AtajoBadge}">
-                                <TextBlock Text="4" FontSize="12" FontWeight="Bold" Foreground="{StaticResource BrushAccentDark}"/>
+                                <TextBlock Text="4" FontSize="12" FontWeight="Bold" Foreground="{DynamicResource BrushAccentDark}"/>
                             </Border>
                             <TextBlock Grid.Row="1" Text="Diccionario" FontFamily="{StaticResource FontHeading}" FontSize="20" FontWeight="Bold" Margin="0,12,0,0"/>
                             <TextBlock Grid.Row="2" x:Name="lblCantidadSenas" Text="Buscá cualquier seña" FontSize="12.5"
-                                       Foreground="{StaticResource BrushMuted}" TextWrapping="Wrap" Margin="0,4,0,0"/>
+                                       Foreground="{DynamicResource BrushMuted}" TextWrapping="Wrap" Margin="0,4,0,0"/>
                         </Grid>
                     </Button>
 
-                    <!-- 5. Mi perfil y Salir, más chicos -->
+                    <!-- 5. Mi perfil, Configuración y Salir, más chicos -->
                     <Grid Grid.Column="4" Grid.Row="2">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/><RowDefinition Height="12"/><RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/><RowDefinition Height="10"/><RowDefinition Height="*"/><RowDefinition Height="10"/><RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <Button Grid.Row="0" x:Name="tilePerfil" Style="{StaticResource MenuTile}" Padding="18,0"
                                 Click="Nav_Click" CommandParameter="{x:Static local:Seccion.MiPerfil}"
@@ -302,31 +314,45 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Text="&#xE77B;" FontFamily="{StaticResource FontIconos}" FontSize="22" Foreground="{StaticResource BrushAccent}" VerticalAlignment="Center"/>
+                                <TextBlock Text="&#xE77B;" FontFamily="{StaticResource FontIconos}" FontSize="22" Foreground="{DynamicResource BrushAccent}" VerticalAlignment="Center"/>
                                 <TextBlock Grid.Column="1" Text="Mi perfil" FontSize="15" FontWeight="Bold" Margin="12,0,0,0" VerticalAlignment="Center"/>
                                 <Border Grid.Column="2" Style="{StaticResource AtajoBadge}" VerticalAlignment="Center">
-                                    <TextBlock Text="5" FontSize="12" FontWeight="Bold" Foreground="{StaticResource BrushAccentDark}"/>
+                                    <TextBlock Text="5" FontSize="12" FontWeight="Bold" Foreground="{DynamicResource BrushAccentDark}"/>
                                 </Border>
                             </Grid>
                         </Button>
-                        <Button Grid.Row="2" x:Name="tileSalir" Style="{StaticResource MenuTile}" Padding="18,0"
+                        <Button Grid.Row="2" x:Name="tileConfiguracion" Style="{StaticResource MenuTile}" Padding="18,0"
+                                Click="Nav_Click" CommandParameter="{x:Static local:Seccion.Configuracion}"
+                                AutomationProperties.Name="Configuración. Atajo: tecla 6">
+                            <Grid VerticalAlignment="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="&#xE713;" FontFamily="{StaticResource FontIconos}" FontSize="22" Foreground="{DynamicResource BrushAccent}" VerticalAlignment="Center"/>
+                                <TextBlock Grid.Column="1" Text="Configuración" FontSize="15" FontWeight="Bold" Margin="12,0,0,0" VerticalAlignment="Center"/>
+                                <Border Grid.Column="2" Style="{StaticResource AtajoBadge}" VerticalAlignment="Center">
+                                    <TextBlock Text="6" FontSize="12" FontWeight="Bold" Foreground="{DynamicResource BrushAccentDark}"/>
+                                </Border>
+                            </Grid>
+                        </Button>
+                        <Button Grid.Row="4" x:Name="tileSalir" Style="{StaticResource MenuTile}" Padding="18,0"
                                 Click="Salir_Click" AutomationProperties.Name="Salir de HandUp. Atajo: Escape">
                             <Grid VerticalAlignment="Center">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Text="&#xF3B1;" FontFamily="{StaticResource FontIconos}" FontSize="22" Foreground="{StaticResource BrushError}" VerticalAlignment="Center"/>
+                                <TextBlock Text="&#xF3B1;" FontFamily="{StaticResource FontIconos}" FontSize="22" Foreground="{DynamicResource BrushError}" VerticalAlignment="Center"/>
                                 <TextBlock Grid.Column="1" Text="Salir" FontSize="15" FontWeight="Bold" Margin="12,0,0,0" VerticalAlignment="Center"/>
                                 <Border Grid.Column="2" Style="{StaticResource AtajoBadge}" VerticalAlignment="Center">
-                                    <TextBlock Text="Esc" FontSize="12" FontWeight="Bold" Foreground="{StaticResource BrushAccentDark}"/>
+                                    <TextBlock Text="Esc" FontSize="12" FontWeight="Bold" Foreground="{DynamicResource BrushAccentDark}"/>
                                 </Border>
                             </Grid>
                         </Button>
                     </Grid>
                 </Grid>
 
-                <TextBlock Grid.Row="4" Text="Usá Tab y Enter para moverte, o las teclas 1 a 5 para entrar directo."
-                           FontSize="12.5" Foreground="{StaticResource BrushMuted}" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Row="4" Text="Usá Tab y Enter para moverte, o las teclas 1 a 6 para entrar directo."
+                           FontSize="12.5" Foreground="{DynamicResource BrushMuted}" HorizontalAlignment="Center"/>
             </Grid>
 
             <!-- Sección: acá se carga la vista de cada módulo (por ahora, "Próximamente") -->

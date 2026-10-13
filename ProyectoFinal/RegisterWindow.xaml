@@ -5,7 +5,8 @@
         Height="660" Width="940"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
-        Background="{StaticResource BrushBackground}"
+        Background="{DynamicResource BrushBackground}"
+        Foreground="{DynamicResource BrushInk}"
         FontFamily="Segoe UI"
         PreviewKeyDown="Window_PreviewKeyDown">
     <Grid>
@@ -15,14 +16,21 @@
         </Grid.ColumnDefinitions>
 
         <!-- Panel de marca -->
-        <Border Grid.Column="0" Background="#14332B">
+        <Border Grid.Column="0" Background="{DynamicResource BrushSidebar}">
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                <Image Source="Assets/logo.jpg" Width="240" Height="240"
+                <Image Source="{DynamicResource ImagenLogo}" Width="240" Height="240"
                        RenderOptions.BitmapScalingMode="HighQuality"/>
                 <TextBlock Text="HandUp" FontFamily="{StaticResource FontHeading}" FontSize="36"
-                           FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" Margin="0,4,0,0"/>
+                           FontWeight="Bold" Foreground="{DynamicResource BrushOnSidebar}" HorizontalAlignment="Center" Margin="0,4,0,0"/>
             </StackPanel>
         </Border>
+
+        <!-- Alto contraste disponible antes de iniciar sesión, por si se necesita para leer el formulario -->
+        <CheckBox Grid.Column="1" x:Name="chkAltoContraste" Style="{StaticResource SwitchToggle}"
+                  HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,14,18,0" Panel.ZIndex="1"
+                  AutomationProperties.Name="Alto contraste" Click="ChkAltoContraste_Click">
+            <TextBlock Text="Alto contraste" FontSize="12.5" FontWeight="SemiBold"/>
+        </CheckBox>
 
         <!-- Panel de formulario -->
         <Grid Grid.Column="1" Margin="56,40,56,32">
@@ -45,9 +53,9 @@
             </Grid.RowDefinitions>
 
             <TextBlock Grid.Row="0" Text="Crear cuenta" FontFamily="{StaticResource FontHeading}" FontSize="26"
-                       FontWeight="Bold" Foreground="{StaticResource BrushInk}"/>
+                       FontWeight="Bold" Foreground="{DynamicResource BrushInk}"/>
             <TextBlock Grid.Row="1" Text="Completá tus datos para empezar a aprender Lengua de Señas."
-                       FontSize="13" Foreground="{StaticResource BrushMuted}" Margin="0,6,0,0" TextWrapping="Wrap"/>
+                       FontSize="13" Foreground="{DynamicResource BrushMuted}" Margin="0,6,0,0" TextWrapping="Wrap"/>
 
             <TextBlock Grid.Row="3" Text="Nombre completo" Style="{StaticResource FieldLabel}"/>
             <TextBox Grid.Row="4" x:Name="txtNombre" Style="{StaticResource RoundedTextBox}" Margin="0,0,0,12"/>
@@ -72,12 +80,12 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <TextBlock x:Name="regla" FontSize="11.5" Margin="0,0,16,0"
-                                       Foreground="{StaticResource BrushMuted}">
+                                       Foreground="{DynamicResource BrushMuted}">
                                 <Run x:Name="icono" Text="○"/><Run Text=" "/><Run Text="{Binding Descripcion, Mode=OneWay}"/>
                             </TextBlock>
                             <DataTemplate.Triggers>
                                 <DataTrigger Binding="{Binding Cumplida}" Value="True">
-                                    <Setter TargetName="regla" Property="Foreground" Value="{StaticResource BrushSuccess}"/>
+                                    <Setter TargetName="regla" Property="Foreground" Value="{DynamicResource BrushSuccess}"/>
                                     <Setter TargetName="regla" Property="FontWeight" Value="SemiBold"/>
                                     <Setter TargetName="icono" Property="Text" Value="✓"/>
                                 </DataTrigger>
@@ -104,7 +112,7 @@
             <Button Grid.Row="12" x:Name="btnRegistrar" Content="Crear mi cuenta" Style="{StaticResource PrimaryButton}" Click="BtnCrearPerfil_Click"/>
 
             <StackPanel Grid.Row="14" Orientation="Horizontal" HorizontalAlignment="Center">
-                <TextBlock Text="¿Ya tenés cuenta?" FontSize="13" Foreground="{StaticResource BrushMuted}" VerticalAlignment="Center"/>
+                <TextBlock Text="¿Ya tenés cuenta?" FontSize="13" Foreground="{DynamicResource BrushMuted}" VerticalAlignment="Center"/>
                 <Button Content="Iniciar sesión" Style="{StaticResource LinkButton}" Margin="6,0,0,0" Click="BtnVolverLogin_Click"/>
             </StackPanel>
         </Grid>

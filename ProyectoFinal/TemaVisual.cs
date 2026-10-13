@@ -4,52 +4,40 @@ using System.Windows;
 namespace ProyectoFinal
 {
     // Utilitario que la UI llama al cargar las preferencias para aplicar el tema visual.
-    // Solo provee los diccionarios de recursos; NO modifica ventanas directamente.
+    // Los colores viven en Temas/TemaNormal.xaml y Temas/TemaAltoContraste.xaml (mismas claves en los dos).
+    // Las vistas usan {DynamicResource Brush...}, así que el cambio se ve en vivo en las ventanas abiertas.
     public static class TemaVisual
     {
+        private static readonly Uri UriNormal = new("pack://application:,,,/ProyectoFinal;component/Temas/TemaNormal.xaml");
+        private static readonly Uri UriAltoContraste = new("pack://application:,,,/ProyectoFinal;component/Temas/TemaAltoContraste.xaml");
+
         // Devuelve un ResourceDictionary con los brushes de alto contraste
-        public static ResourceDictionary ObtenerDiccionarioAltoContraste()
-        {
-            var dict = new ResourceDictionary();
-            // Fondo negro, texto blanco, acento amarillo brillante
-            dict["BrushBackground"] = BrushDesdeHex("#000000");
-            dict["BrushCard"] = BrushDesdeHex("#1A1A1A");
-            dict["BrushBorder"] = BrushDesdeHex("#FFFFFF");
-            dict["BrushInk"] = BrushDesdeHex("#FFFFFF");
-            dict["BrushMuted"] = BrushDesdeHex("#CCCCCC");
-            dict["BrushAccent"] = BrushDesdeHex("#FFD700");
-            dict["BrushAccentDark"] = BrushDesdeHex("#FFC000");
-            dict["BrushAccentSoft"] = BrushDesdeHex("#333300");
-            dict["BrushError"] = BrushDesdeHex("#FF4444");
-            dict["BrushErrorBg"] = BrushDesdeHex("#330000");
-            dict["BrushSuccess"] = BrushDesdeHex("#44FF44");
-            dict["BrushSuccessBg"] = BrushDesdeHex("#003300");
-            return dict;
-        }
+        public static ResourceDictionary ObtenerDiccionarioAltoContraste() => new() { Source = UriAltoContraste };
 
         // Devuelve el diccionario normal (para revertir el alto contraste)
-        public static ResourceDictionary ObtenerDiccionarioNormal()
-        {
-            var dict = new ResourceDictionary();
-            dict["BrushBackground"] = BrushDesdeHex("#FAF8F4");
-            dict["BrushCard"] = BrushDesdeHex("#FFFFFF");
-            dict["BrushBorder"] = BrushDesdeHex("#E7E2D6");
-            dict["BrushInk"] = BrushDesdeHex("#14312B");
-            dict["BrushMuted"] = BrushDesdeHex("#6B7B76");
-            dict["BrushAccent"] = BrushDesdeHex("#1F7A6C");
-            dict["BrushAccentDark"] = BrushDesdeHex("#175C52");
-            dict["BrushAccentSoft"] = BrushDesdeHex("#EAF4F1");
-            dict["BrushError"] = BrushDesdeHex("#DC2626");
-            dict["BrushErrorBg"] = BrushDesdeHex("#FEE2E2");
-            dict["BrushSuccess"] = BrushDesdeHex("#15803D");
-            dict["BrushSuccessBg"] = BrushDesdeHex("#DCFCE7");
-            return dict;
-        }
+        public static ResourceDictionary ObtenerDiccionarioNormal() => new() { Source = UriNormal };
 
-        private static System.Windows.Media.SolidColorBrush BrushDesdeHex(string hex)
+        // Tema que se está viendo ahora (sirve para el interruptor del login, antes de que haya un usuario)
+        public static bool AltoContrasteActivo { get; private set; }
+
+        // Activa o desactiva el alto contraste en toda la app.
+        // Reemplaza el diccionario de tema actual en lugar de agregar otro encima (si se apilaran, crecerían sin fin).
+        public static void Aplicar(bool altoContraste)
         {
-            var color = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString(hex);
-            return new System.Windows.Media.SolidColorBrush(color);
+            AltoContrasteActivo = altoContraste;
+            var nuevo = altoContraste ? ObtenerDiccionarioAltoContraste() : ObtenerDiccionarioNormal();
+            var diccionarios = Application.Current.Resources.MergedDictionaries;
+
+            for (int i = 0; i < diccionarios.Count; i++)
+            {
+                if (diccionarios[i].Contains("BrushBackground"))
+                {
+                    diccionarios[i] = nuevo;
+                    return;
+                }
+            }
+
+            diccionarios.Add(nuevo);
         }
     }
 }

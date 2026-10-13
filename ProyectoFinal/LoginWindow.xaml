@@ -5,7 +5,8 @@
         Height="600" Width="940"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
-        Background="{StaticResource BrushBackground}"
+        Background="{DynamicResource BrushBackground}"
+        Foreground="{DynamicResource BrushInk}"
         FontFamily="Segoe UI"
         PreviewKeyDown="Window_PreviewKeyDown">
     <Grid>
@@ -15,14 +16,21 @@
         </Grid.ColumnDefinitions>
 
         <!-- Panel de marca -->
-        <Border Grid.Column="0" Background="#14332B">
+        <Border Grid.Column="0" Background="{DynamicResource BrushSidebar}">
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                <Image Source="Assets/logo.jpg" Width="240" Height="240"
+                <Image Source="{DynamicResource ImagenLogo}" Width="240" Height="240"
                        RenderOptions.BitmapScalingMode="HighQuality"/>
                 <TextBlock Text="HandUp" FontFamily="{StaticResource FontHeading}" FontSize="36"
-                           FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" Margin="0,4,0,0"/>
+                           FontWeight="Bold" Foreground="{DynamicResource BrushOnSidebar}" HorizontalAlignment="Center" Margin="0,4,0,0"/>
             </StackPanel>
         </Border>
+
+        <!-- Alto contraste disponible antes de iniciar sesión, por si se necesita para leer el formulario -->
+        <CheckBox Grid.Column="1" x:Name="chkAltoContraste" Style="{StaticResource SwitchToggle}"
+                  HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,14,18,0" Panel.ZIndex="1"
+                  AutomationProperties.Name="Alto contraste" Click="ChkAltoContraste_Click">
+            <TextBlock Text="Alto contraste" FontSize="12.5" FontWeight="SemiBold"/>
+        </CheckBox>
 
         <!-- Panel de formulario -->
         <Grid Grid.Column="1" Margin="56,44,56,36">
@@ -44,12 +52,12 @@
             </Grid.RowDefinitions>
 
             <TextBlock Grid.Row="0" Text="Iniciá sesión" FontFamily="{StaticResource FontHeading}" FontSize="26"
-                       FontWeight="Bold" Foreground="{StaticResource BrushInk}"/>
+                       FontWeight="Bold" Foreground="{DynamicResource BrushInk}"/>
             <TextBlock Grid.Row="1" Text="Elegí tu perfil o completá tus datos para continuar."
-                       FontSize="13" Foreground="{StaticResource BrushMuted}" Margin="0,6,0,0" TextWrapping="Wrap"/>
+                       FontSize="13" Foreground="{DynamicResource BrushMuted}" Margin="0,6,0,0" TextWrapping="Wrap"/>
 
             <TextBlock Grid.Row="3" Text="PERFILES EXISTENTES" FontSize="11" FontWeight="Bold"
-                       Foreground="{StaticResource BrushMuted}" Margin="0,0,0,8"/>
+                       Foreground="{DynamicResource BrushMuted}" Margin="0,0,0,8"/>
 
             <!-- Perfiles guardados: una sola fila con hasta 3 chips + "Ver más", para que el formulario
                  no se desplace hacia abajo a medida que se registran más perfiles -->
@@ -91,7 +99,7 @@
             </Grid>
 
             <TextBlock Grid.Row="5" Text="o ingresá tus datos manualmente" FontSize="11.5" FontStyle="Italic"
-                       Foreground="{StaticResource BrushMuted}" HorizontalAlignment="Center" Margin="0,12,0,14"/>
+                       Foreground="{DynamicResource BrushMuted}" HorizontalAlignment="Center" Margin="0,12,0,14"/>
 
             <TextBlock Grid.Row="6" Text="Usuario" Style="{StaticResource FieldLabel}"/>
             <TextBox Grid.Row="7" x:Name="txtUsuario" Style="{StaticResource RoundedTextBox}" Margin="0,0,0,12"/>
@@ -99,15 +107,15 @@
             <TextBlock Grid.Row="8" Text="Contraseña" Style="{StaticResource FieldLabel}"/>
             <PasswordBox Grid.Row="9" x:Name="txtPassword" Style="{StaticResource RoundedPasswordBox}" Margin="0,0,0,8"/>
 
-            <TextBlock Grid.Row="10" x:Name="lblInfo" Foreground="{StaticResource BrushSuccess}" FontSize="12"
+            <TextBlock Grid.Row="10" x:Name="lblInfo" Foreground="{DynamicResource BrushSuccess}" FontSize="12"
                        FontWeight="SemiBold" TextWrapping="Wrap" Margin="0,0,0,4" Visibility="Collapsed"/>
-            <TextBlock Grid.Row="10" x:Name="lblError" Foreground="{StaticResource BrushError}" FontSize="12"
+            <TextBlock Grid.Row="10" x:Name="lblError" Foreground="{DynamicResource BrushError}" FontSize="12"
                        TextWrapping="Wrap" Margin="0,0,0,8"/>
 
             <Button Grid.Row="11" Content="Iniciar sesión" Style="{StaticResource PrimaryButton}" Click="BtnIniciarSesion_Click"/>
 
             <StackPanel Grid.Row="13" Orientation="Horizontal" HorizontalAlignment="Center">
-                <TextBlock Text="¿No tenés una cuenta?" FontSize="13" Foreground="{StaticResource BrushMuted}" VerticalAlignment="Center"/>
+                <TextBlock Text="¿No tenés una cuenta?" FontSize="13" Foreground="{DynamicResource BrushMuted}" VerticalAlignment="Center"/>
                 <Button Content="Creala acá" Style="{StaticResource LinkButton}" Margin="6,0,0,0" Click="BtnCrearPerfil_Click"/>
             </StackPanel>
         </Grid>

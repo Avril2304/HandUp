@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <Resource Include="Assets\logo.jpg" />
+    <Resource Include="Assets\logo_alto_contraste.jpg" />
   </ItemGroup>
 
   <!-- Banco multimedia LSA: se copia junto al .exe (no va como Resource para no inflar el ejecutable) -->

@@ -20,6 +20,7 @@ namespace ProyectoFinal
         public RegisterWindow()
         {
             InitializeComponent();
+            chkAltoContraste.IsChecked = TemaVisual.AltoContrasteActivo;
             ActualizarChecklist();
         }
 
@@ -105,22 +106,27 @@ namespace ProyectoFinal
             IrALogin();
         }
 
+        private void ChkAltoContraste_Click(object sender, RoutedEventArgs e)
+        {
+            TemaVisual.Aplicar(chkAltoContraste.IsChecked == true);
+        }
+
         private void MostrarExito(string mensaje)
         {
             pnlFeedback.Visibility = Visibility.Visible;
-            pnlFeedback.Background = (Brush)FindResource("BrushSuccessBg");
-            pnlFeedback.BorderBrush = (Brush)FindResource("BrushSuccess");
-            lblFeedbackMensaje.Foreground = (Brush)FindResource("BrushSuccess");
+            pnlFeedback.SetResourceReference(Border.BackgroundProperty, "BrushSuccessBg");
+            pnlFeedback.SetResourceReference(Border.BorderBrushProperty, "BrushSuccess");
+            lblFeedbackMensaje.SetResourceReference(TextBlock.ForegroundProperty, "BrushSuccess");
             lblFeedbackMensaje.Text = mensaje;
-            lblCountdown.Foreground = (Brush)FindResource("BrushSuccess");
+            lblCountdown.SetResourceReference(TextBlock.ForegroundProperty, "BrushSuccess");
         }
 
         private void MostrarError(string mensaje)
         {
             pnlFeedback.Visibility = Visibility.Visible;
-            pnlFeedback.Background = (Brush)FindResource("BrushErrorBg");
-            pnlFeedback.BorderBrush = (Brush)FindResource("BrushError");
-            lblFeedbackMensaje.Foreground = (Brush)FindResource("BrushError");
+            pnlFeedback.SetResourceReference(Border.BackgroundProperty, "BrushErrorBg");
+            pnlFeedback.SetResourceReference(Border.BorderBrushProperty, "BrushError");
+            lblFeedbackMensaje.SetResourceReference(TextBlock.ForegroundProperty, "BrushError");
             lblFeedbackMensaje.Text = mensaje;
             lblCountdown.Visibility = Visibility.Collapsed;
         }
