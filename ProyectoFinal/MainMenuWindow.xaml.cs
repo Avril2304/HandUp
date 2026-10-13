@@ -161,7 +161,8 @@ namespace ProyectoFinal
             if (_seccionActual == Seccion.Inicio)
                 _tileOrigen = Keyboard.FocusedElement as Button;
 
-            contenidoSeccion.Content = CrearVista(destino);
+            UserControl vista = CrearVista(destino);
+            contenidoSeccion.Content = vista;
 
             panelInicio.Visibility = Visibility.Collapsed;
             contenidoSeccion.Visibility = Visibility.Visible;
@@ -170,14 +171,25 @@ namespace ProyectoFinal
             MarcarItemActivo(destino);
             _seccionActual = destino;
 
-            // El foco queda en el ítem activo de la barra, así se sigue navegando con Tab
-            EnfocarDespuesDeMostrar(_itemsNav[destino]);
+            // Las secciones con pasos ponen el foco en su contenido (así el teclado funciona al entrar);
+            // las demás lo dejan en el ítem activo de la barra, para seguir navegando con Tab
+            if (vista is IVistaDeSeccion conPasos)
+                Dispatcher.BeginInvoke(DispatcherPriority.Input, conPasos.EnfocarContenido);
+            else
+                EnfocarDespuesDeMostrar(_itemsNav[destino]);
         }
 
         // Las secciones que todavía no están hechas muestran "Próximamente".
         // Cuando un módulo esté listo, se agrega acá su vista.
         private UserControl CrearVista(Seccion destino)
         {
+            if (destino == Seccion.Aprender)
+            {
+                var aprender = new AprenderView(_perfil, _preferencias);
+                aprender.VolverSolicitado += (s, e) => MostrarInicio();
+                return aprender;
+            }
+
             if (destino == Seccion.Configuracion)
             {
                 var configuracion = new ConfiguracionView(_preferencias);
@@ -228,7 +240,7 @@ namespace ProyectoFinal
 
         // ===== Teclado =====
         // Inicio:  1-6 entra a cada sección, Esc sale.
-        // Sección: Ctrl+1..6 cambia de sección, Esc vuelve al inicio.
+        // Sección: Ctrl+1..6 cambia de sección, Esc vuelve un paso (o al inicio si ya está en el primero).
         // (Dentro de una sección los números quedan libres para los módulos, ej. responder 1-4 en Aprender.)
         private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
         {
@@ -240,8 +252,8 @@ namespace ProyectoFinal
             {
                 if (_seccionActual == Seccion.Inicio)
                     Salir();
-                else
-                    MostrarInicio();
+                else if (contenidoSeccion.Content is not IVistaDeSeccion conPasos || !conPasos.VolverUnPaso())
+                    MostrarInicio(); // la sección no tenía un paso anterior al cual volver
                 e.Handled = true;
                 return;
             }

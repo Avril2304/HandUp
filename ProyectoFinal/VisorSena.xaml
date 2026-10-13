@@ -1,0 +1,59 @@
+<UserControl x:Class="ProyectoFinal.VisorSena"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Unloaded="Visor_Unloaded">
+    <!-- Muestra una seña: imagen fija (estáticas) o video en loop (animadas), con controles para el video.
+         Se reusa en Aprender, Diccionario, Traductor y Desafío. -->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Marco del medio: fondo oscuro fijo para que el video no "flote" en ningún tema -->
+        <Border CornerRadius="16" Background="#101010" BorderThickness="1.5" BorderBrush="{DynamicResource BrushBorder}"
+                ClipToBounds="True">
+            <Grid>
+                <Image x:Name="imgSena" Stretch="Uniform" Visibility="Collapsed"
+                       RenderOptions.BitmapScalingMode="HighQuality" ImageFailed="ImgSena_ImageFailed"/>
+                <MediaElement x:Name="videoSena" Stretch="Uniform" Visibility="Collapsed"
+                              LoadedBehavior="Manual" UnloadedBehavior="Close" IsMuted="True"
+                              MediaEnded="VideoSena_MediaEnded" MediaFailed="VideoSena_MediaFailed"/>
+
+                <!-- Si falta el archivo o no se puede abrir: aviso en lugar del medio -->
+                <StackPanel x:Name="pnlError" Visibility="Collapsed" VerticalAlignment="Center" HorizontalAlignment="Center"
+                            Margin="24" MaxWidth="320">
+                    <TextBlock Text="&#xE783;" FontFamily="{StaticResource FontIconos}" FontSize="34" Foreground="#FFFFFF"
+                               HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="lblError" FontSize="14" Foreground="#FFFFFF" TextWrapping="Wrap" TextAlignment="Center"
+                               Margin="0,10,0,0"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Controles del video (solo para señas animadas) -->
+        <StackPanel Grid.Row="1" x:Name="pnlControles" Orientation="Horizontal" HorizontalAlignment="Center"
+                    Margin="0,12,0,0" Visibility="Collapsed">
+            <Button x:Name="btnPausa" Style="{StaticResource SecondaryButton}" Height="38" Width="112" Click="BtnPausa_Click">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Name="icoPausa" Text="&#xE769;" FontFamily="{StaticResource FontIconos}" FontSize="14" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="lblPausa" Text="Pausar" Margin="8,0,0,0" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+            <Button x:Name="btnRepetir" Style="{StaticResource SecondaryButton}" Height="38" Width="112" Margin="8,0,0,0"
+                    Click="BtnRepetir_Click" AutomationProperties.Name="Repetir el video desde el principio">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="&#xE72C;" FontFamily="{StaticResource FontIconos}" FontSize="14" VerticalAlignment="Center"/>
+                    <TextBlock Text="Repetir" Margin="8,0,0,0" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+            <Button x:Name="btnVelocidad" Style="{StaticResource SecondaryButton}" Height="38" Width="112" Margin="8,0,0,0"
+                    Click="BtnVelocidad_Click">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="&#xEC4A;" FontFamily="{StaticResource FontIconos}" FontSize="14" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="lblVelocidad" Text="Más lento" Margin="8,0,0,0" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+    </Grid>
+</UserControl>

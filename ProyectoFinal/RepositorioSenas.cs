@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Globalization;
 using Microsoft.Data.Sqlite;
 
 namespace ProyectoFinal
@@ -67,20 +69,31 @@ namespace ProyectoFinal
 
         public IReadOnlyList<Sena> BuscarPorCategoria(string categoriaId)
         {
-            return Database.Ejecutar(conexion =>
+            var lista = Database.Ejecutar(conexion =>
             {
                 using var comando = conexion.CreateCommand();
-                comando.CommandText = $"SELECT {ColumnasSena} FROM Senas WHERE CategoriaId = $cat ORDER BY Palabra;";
+                comando.CommandText = $"SELECT {ColumnasSena} FROM Senas WHERE CategoriaId = $cat;";
                 comando.Parameters.AddWithValue("$cat", categoriaId);
 
-                var lista = new List<Sena>();
+                var temp = new List<Sena>();
                 using var lector = comando.ExecuteReader();
                 while (lector.Read())
                 {
-                    lista.Add(LeerSena(lector));
+                    temp.Add(LeerSena(lector));
                 }
-                return lista.AsReadOnly();
+                return temp;
             });
+
+            if (categoriaId.Equals("numeros", StringComparison.OrdinalIgnoreCase))
+            {
+                return lista.OrderBy(s => ObtenerValorNumerico(s.Palabra)).ToList().AsReadOnly();
+            }
+            else
+            {
+                var culture = new CultureInfo("es-ES");
+                var comparer = StringComparer.Create(culture, true);
+                return lista.OrderBy(s => s.Palabra, comparer).ToList().AsReadOnly();
+            }
         }
 
         public IReadOnlyList<Sena> BuscarPorDificultad(int nivel)
@@ -185,6 +198,53 @@ namespace ProyectoFinal
 
         public void Actualizar(Sena item) => 
             throw new NotSupportedException("Las señas son de solo lectura y se actualizan mediante el ImportadorSenas.");
+
+        public IReadOnlyList<NivelInfo> ObtenerNiveles()
+        {
+            var todasLasSenas = ObtenerTodos();
+            
+            var grupos = todasLasSenas.GroupBy(s => s.Dificultad).OrderBy(g => g.Key);
+            var niveles = new List<NivelInfo>();
+
+            foreach (var grupo in grupos)
+            {
+                string nombre = grupo.Key switch
+                {
+                    1 => "Principiante",
+                    2 => "Básico",
+                    3 => "Intermedio",
+                    4 => "Avanzado",
+                    _ => "Nivel " + grupo.Key
+                };
+
+                niveles.Add(new NivelInfo
+                {
+                    Numero = grupo.Key,
+                    Nombre = nombre,
+                    CantidadSenas = grupo.Count(),
+                    Categorias = grupo.Select(s => s.CategoriaId).Distinct().ToList()
+                });
+            }
+
+            return niveles.AsReadOnly();
+        }
+
+        private int ObtenerValorNumerico(string palabra)
+        {
+            var map = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase)
+            {
+                {"CERO", 0}, {"UNO", 1}, {"DOS", 2}, {"TRES", 3}, {"CUATRO", 4},
+                {"CINCO", 5}, {"SEIS", 6}, {"SIETE", 7}, {"OCHO", 8}, {"NUEVE", 9},
+                {"DIEZ", 10}, {"ONCE", 11}, {"DOCE", 12}, {"TRECE", 13}, {"CATORCE", 14},
+                {"QUINCE", 15}, {"DIECISEIS", 16}, {"DIECISIETE", 17}, {"DIECIOCHO", 18},
+                {"DIECINUEVE", 19}, {"VEINTE", 20}, {"TREINTA", 30}, {"CUARENTA", 40},
+                {"CINCUENTA", 50}, {"SESENTA", 60}, {"SETENTA", 70}, {"OCHENTA", 80},
+                {"NOVENTA", 90}, {"CIEN", 100}, {"MIL", 1000}, {"MILLON", 1000000},
+                {"NUMEROS", -1}
+            };
+
+            return map.TryGetValue(palabra, out int valor) ? valor : 9999;
+        }
 
         private static Sena LeerSena(SqliteDataReader lector)
         {
