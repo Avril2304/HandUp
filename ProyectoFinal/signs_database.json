@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "total_signs": 615,
+  "total_signs": 614,
   "categories": [
     {
       "id": "primeras_frases",
@@ -14910,7 +14910,7 @@
     {
       "id": "sign_476",
       "word": "YO",
-      "category": "saludos",
+      "category": "primeras_frases",
       "difficulty": 1,
       "description": "La mano derecha apunta hacia el propio cuerpo y apoya el dedo sobre el centro del pecho.",
       "instructions": [
@@ -14925,7 +14925,7 @@
         "gif_animated": null
       },
       "tags": [
-        "saludos",
+        "primeras_frases",
         "señario_v1",
         "oficial_cas"
       ],
@@ -17404,37 +17404,6 @@
         "image": "assets/signs/verbos_cotidianos/nacer.png",
         "thumbnail": "assets/signs/verbos_cotidianos/nacer.png"
       }
-    },
-    {
-      "id": "sign_564",
-      "word": "Yo",
-      "category": "primeras_frases",
-      "difficulty": 1,
-      "description": "La mano dominante con el dedo índice extendido señala directamente hacia el propio pecho.",
-      "instructions": [
-        "Observá con atención el movimiento de la mano en el video de 'Yo'.",
-        "Imitá la configuración manual y la orientación frente al cuerpo.",
-        "Acompañá con la expresión facial y postura correspondiente."
-      ],
-      "media": {
-        "image_static": "assets/signs/primeras_frases/yo.png",
-        "video": "assets/signs/primeras_frases/yo.mp4",
-        "gif_animated": null,
-        "image": "assets/signs/primeras_frases/yo.png",
-        "thumbnail": "assets/signs/primeras_frases/yo.png"
-      },
-      "tags": [
-        "primeras_frases",
-        "gramática",
-        "nivel_1"
-      ],
-      "handshape": null,
-      "movement": null,
-      "location": null,
-      "source": "LSA Oficial / YouTube",
-      "related_signs": [],
-      "examples": [],
-      "fun_fact": null
     },
     {
       "id": "sign_565",
