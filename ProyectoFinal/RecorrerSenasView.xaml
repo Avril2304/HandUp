@@ -25,7 +25,7 @@
             <!-- Avance: "Seña 3 de 19" y una barra -->
             <StackPanel Grid.Row="0">
                 <TextBlock x:Name="lblAvance" FontSize="12.5" FontWeight="Bold" Foreground="{DynamicResource BrushMuted}"/>
-                <Border Height="6" CornerRadius="3" Margin="0,6,0,0" Background="{DynamicResource BrushBorder}" ClipToBounds="True">
+                <Border Height="6" CornerRadius="3" Margin="0,6,0,0" Background="{DynamicResource BrushTrack}" ClipToBounds="True">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition x:Name="colAvanceLleno" Width="0*"/>

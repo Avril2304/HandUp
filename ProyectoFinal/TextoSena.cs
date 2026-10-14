@@ -8,17 +8,26 @@ namespace ProyectoFinal
     {
         private static readonly TextInfo Espanol = new CultureInfo("es-AR").TextInfo;
 
-        public static string Palabra(Sena sena)
+        public static string Palabra(Sena sena) => Palabra(sena.Palabra);
+
+        // Para textos sueltos, como las opciones de una pregunta
+        public static string Palabra(string texto)
         {
-            string palabra = sena.Palabra.Trim();
+            string palabra = texto.Trim();
+            if (palabra.Length == 0)
+                return palabra;
 
             // Letras del abecedario ("A", "CH", "Ñ"): siempre en mayúscula
             if (palabra.Length <= 2)
                 return Espanol.ToUpper(palabra);
 
-            // El resto, con mayúscula inicial: "BUENAS NOCHES" -> "Buenas noches"
+            // El resto, con mayúscula en la primera letra: "BUENAS NOCHES" -> "Buenas noches",
+            // "¿CÓMO ESTÁS?" -> "¿Cómo estás?" (se saltean los signos del principio)
             string minusculas = Espanol.ToLower(palabra);
-            return Espanol.ToUpper(minusculas[0]) + minusculas[1..];
+            int primeraLetra = minusculas.TakeWhile(c => !char.IsLetterOrDigit(c)).Count();
+            if (primeraLetra >= minusculas.Length)
+                return minusculas;
+            return minusculas[..primeraLetra] + Espanol.ToUpper(minusculas[primeraLetra]) + minusculas[(primeraLetra + 1)..];
         }
     }
 }

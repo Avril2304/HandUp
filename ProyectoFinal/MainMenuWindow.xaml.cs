@@ -12,14 +12,8 @@ namespace ProyectoFinal
     //  - Sección: barra lateral a la izquierda y la vista de la sección a la derecha.
     public partial class MainMenuWindow : Window
     {
-        // Cantidad de señas de cada nivel según el banco multimedia (ver README)
-        private static readonly (string Nombre, int Cantidad)[] Niveles =
-        {
-            ("Principiante", 117),
-            ("Básico", 185),
-            ("Intermedio", 154),
-            ("Avanzado", 107)
-        };
+        // Cantidad de señas de cada nivel, calculada desde la base (cambia cuando se suman señas al banco)
+        private readonly (string Nombre, int Cantidad)[] _niveles = CargarNiveles();
 
         private readonly Perfil _perfil;
         private readonly ServicioProgreso _servicio;
@@ -81,18 +75,35 @@ namespace ProyectoFinal
             lblRachaLateral.Text = _perfil.Racha.ToString();
 
             // Progreso dentro del nivel actual (no del total de la app)
-            int indice = Math.Max(0, Array.FindIndex(Niveles, n => n.Nombre == _perfil.Nivel));
+            int indice = Math.Max(0, Array.FindIndex(_niveles, n => n.Nombre == _perfil.Nivel));
             int senasNivelesAnteriores = 0;
             for (int i = 0; i < indice; i++)
-                senasNivelesAnteriores += Niveles[i].Cantidad;
+                senasNivelesAnteriores += _niveles[i].Cantidad;
 
-            int totalNivel = Niveles[indice].Cantidad;
+            int totalNivel = _niveles[indice].Cantidad;
             int dominadasNivel = Math.Clamp(_perfil.SenasDominadas - senasNivelesAnteriores, 0, totalNivel);
             double proporcion = (double)dominadasNivel / totalNivel;
 
             lblProgresoNivel.Text = $"{_perfil.Nivel}: {dominadasNivel} / {totalNivel} señas";
             colProgresoLleno.Width = new GridLength(proporcion, GridUnitType.Star);
             colProgresoVacio.Width = new GridLength(1 - proporcion, GridUnitType.Star);
+        }
+
+        private static (string Nombre, int Cantidad)[] CargarNiveles()
+        {
+            try
+            {
+                var niveles = new RepositorioSenas().ObtenerNiveles()
+                    .Select(n => (n.Nombre, n.CantidadSenas))
+                    .ToArray();
+                if (niveles.Length > 0)
+                    return niveles;
+            }
+            catch (DatabaseException)
+            {
+                // Sin base: valores mínimos para que la barra de progreso no divida por cero ni rompa el menú
+            }
+            return new[] { ("Principiante", 1), ("Básico", 1), ("Intermedio", 1), ("Avanzado", 1) };
         }
 
         // Si la base no responde, el tile muestra un texto genérico en vez de fallar
@@ -185,7 +196,7 @@ namespace ProyectoFinal
         {
             if (destino == Seccion.Aprender)
             {
-                var aprender = new AprenderView(_perfil, _preferencias);
+                var aprender = new AprenderView(_perfil, _preferencias, _servicio);
                 aprender.VolverSolicitado += (s, e) => MostrarInicio();
                 return aprender;
             }

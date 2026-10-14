@@ -328,6 +328,54 @@
                 </Setter>
             </Style>
 
+            <!-- Opción de respuesta (opción múltiple). Tag indica el estado:
+                 "elegida" = seleccionada sin confirmar, "correcta" / "incorrecta" = después de confirmar.
+                 El estado también se muestra con texto dentro de la opción, no solo con el color. -->
+            <Style x:Key="OpcionRespuesta" TargetType="Button">
+                <Setter Property="Background" Value="{DynamicResource BrushCard}"/>
+                <Setter Property="Foreground" Value="{DynamicResource BrushInk}"/>
+                <Setter Property="BorderBrush" Value="{DynamicResource BrushBorder}"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="FontSize" Value="15"/>
+                <Setter Property="MinHeight" Value="48"/>
+                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="bg" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="1.5" CornerRadius="12" Padding="12,8">
+                                <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="bg" Property="BorderBrush" Value="{DynamicResource BrushAccent}"/>
+                                </Trigger>
+                                <Trigger Property="IsKeyboardFocused" Value="True">
+                                    <Setter TargetName="bg" Property="BorderBrush" Value="{DynamicResource BrushAccent}"/>
+                                    <Setter TargetName="bg" Property="BorderThickness" Value="2.5"/>
+                                </Trigger>
+                                <Trigger Property="Tag" Value="elegida">
+                                    <Setter TargetName="bg" Property="Background" Value="{DynamicResource BrushAccentSoft}"/>
+                                    <Setter TargetName="bg" Property="BorderBrush" Value="{DynamicResource BrushAccent}"/>
+                                    <Setter TargetName="bg" Property="BorderThickness" Value="2.5"/>
+                                </Trigger>
+                                <Trigger Property="Tag" Value="correcta">
+                                    <Setter TargetName="bg" Property="Background" Value="{DynamicResource BrushSuccessBg}"/>
+                                    <Setter TargetName="bg" Property="BorderBrush" Value="{DynamicResource BrushSuccess}"/>
+                                    <Setter TargetName="bg" Property="BorderThickness" Value="2.5"/>
+                                </Trigger>
+                                <Trigger Property="Tag" Value="incorrecta">
+                                    <Setter TargetName="bg" Property="Background" Value="{DynamicResource BrushErrorBg}"/>
+                                    <Setter TargetName="bg" Property="BorderBrush" Value="{DynamicResource BrushError}"/>
+                                    <Setter TargetName="bg" Property="BorderThickness" Value="2.5"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
             <!-- Recuadro del atajo de teclado ("1", "Esc") en la esquina de cada tile -->
             <Style x:Key="AtajoBadge" TargetType="Border">
                 <Setter Property="BorderBrush" Value="{DynamicResource BrushBorderAccent}"/>
