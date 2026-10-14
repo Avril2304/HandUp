@@ -26,6 +26,10 @@ namespace ProyectoFinal
             ? 0 
             : (double)AciertosTotales / (AciertosTotales + FallosTotales);
 
+        // Sin ninguna respuesta ni progreso todavía (Mi perfil muestra una invitación a empezar en vez de ceros)
+        public bool SinActividad => AciertosTotales + FallosTotales == 0
+            && SenasDominadas == 0 && Puntos == 0 && Racha == 0 && MejorRacha == 0;
+
         // Primera letra del nombre, para el avatar del listado de perfiles (no se guarda en la base)
         public string Inicial => string.IsNullOrWhiteSpace(Nombre) ? "?" : Nombre.Trim()[0].ToString().ToUpper();
 

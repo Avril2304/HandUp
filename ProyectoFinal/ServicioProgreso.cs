@@ -52,22 +52,7 @@ namespace ProyectoFinal
 
         private void RecalcularNivel()
         {
-            // Cantidades reales de señas por nivel según el README
-            int totalNivel1 = 117;
-            int totalNivel2 = 185;
-            int totalNivel3 = 154;
-            // totalNivel4 = 107;
-
-            int dominadas = _perfil.SenasDominadas;
-
-            if (dominadas < totalNivel1)
-                _perfil.Nivel = "Principiante";
-            else if (dominadas < totalNivel1 + totalNivel2)
-                _perfil.Nivel = "Básico";
-            else if (dominadas < totalNivel1 + totalNivel2 + totalNivel3)
-                _perfil.Nivel = "Intermedio";
-            else
-                _perfil.Nivel = "Avanzado";
+            _perfil.Nivel = Niveles.SegunSenasDominadas(_perfil.SenasDominadas);
         }
 
         // Guarda automáticamente en la base y notifica a la UI
