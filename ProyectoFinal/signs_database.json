@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "total_signs": 622,
+  "total_signs": 640,
   "categories": [
     {
       "id": "primeras_frases",
@@ -19152,7 +19152,7 @@
       "location": null,
       "source": "Dirección de Documentación - VERBOS EN LSA",
       "related_signs": [
-        "sign_587"
+        "Trabajar"
       ],
       "examples": [],
       "fun_fact": null
@@ -19213,6 +19213,548 @@
       "movement": null,
       "location": null,
       "source": "Capacitación en LSA - Clase 4 Familia",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_624",
+      "word": "Grande",
+      "category": "acciones_tiempo",
+      "difficulty": 2,
+      "description": "Ambas manos abiertas frente al cuerpo se separan hacia los costados y hacia arriba, marcando un tamaño grande.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Grande'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/acciones_tiempo/grande.png",
+        "video": "assets/signs/acciones_tiempo/grande.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/acciones_tiempo/grande.png",
+        "thumbnail": "assets/signs/acciones_tiempo/grande.png"
+      },
+      "tags": [
+        "acciones_tiempo",
+        "nivel_2"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "Adjetivos en LSA Parte I (vBSQD1A3OIg)",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_625",
+      "word": "Chico",
+      "category": "acciones_tiempo",
+      "difficulty": 2,
+      "description": "Ambas manos abiertas y enfrentadas frente al pecho se acercan entre sí, marcando un tamaño pequeño.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Chico'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/acciones_tiempo/chico.png",
+        "video": "assets/signs/acciones_tiempo/chico.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/acciones_tiempo/chico.png",
+        "thumbnail": "assets/signs/acciones_tiempo/chico.png"
+      },
+      "tags": [
+        "acciones_tiempo",
+        "nivel_2"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "Adjetivos en LSA Parte I (vBSQD1A3OIg)",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_626",
+      "word": "Feo",
+      "category": "acciones_tiempo",
+      "difficulty": 2,
+      "description": "La mano dominante en puño se acerca al costado de la cara y baja hacia adelante, con expresión de desagrado.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Feo'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/acciones_tiempo/feo.png",
+        "video": "assets/signs/acciones_tiempo/feo.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/acciones_tiempo/feo.png",
+        "thumbnail": "assets/signs/acciones_tiempo/feo.png"
+      },
+      "tags": [
+        "acciones_tiempo",
+        "nivel_2"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "Adjetivos en LSA Parte I (vBSQD1A3OIg)",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_627",
+      "word": "Caliente",
+      "category": "acciones_tiempo",
+      "difficulty": 2,
+      "description": "La mano dominante con los dedos curvados frente a la boca se aleja con un movimiento rápido, como si quemara.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Caliente'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/acciones_tiempo/caliente.png",
+        "video": "assets/signs/acciones_tiempo/caliente.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/acciones_tiempo/caliente.png",
+        "thumbnail": "assets/signs/acciones_tiempo/caliente.png"
+      },
+      "tags": [
+        "acciones_tiempo",
+        "nivel_2"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "Adjetivos en LSA Parte I (vBSQD1A3OIg)",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_628",
+      "word": "Mucho",
+      "category": "acciones_tiempo",
+      "difficulty": 2,
+      "description": "Ambas manos con los dedos separados frente al pecho se cruzan y se abren hacia afuera, indicando gran cantidad.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Mucho'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/acciones_tiempo/mucho.png",
+        "video": "assets/signs/acciones_tiempo/mucho.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/acciones_tiempo/mucho.png",
+        "thumbnail": "assets/signs/acciones_tiempo/mucho.png"
+      },
+      "tags": [
+        "acciones_tiempo",
+        "nivel_2"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "Prof. Fabián Gervasoni - Adverbios de cantidad",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_629",
+      "word": "Poco",
+      "category": "acciones_tiempo",
+      "difficulty": 2,
+      "description": "La mano dominante frente a la boca junta las yemas del pulgar y el índice, indicando una cantidad pequeña.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Poco'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/acciones_tiempo/poco.png",
+        "video": "assets/signs/acciones_tiempo/poco.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/acciones_tiempo/poco.png",
+        "thumbnail": "assets/signs/acciones_tiempo/poco.png"
+      },
+      "tags": [
+        "acciones_tiempo",
+        "nivel_2"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "Prof. Fabián Gervasoni - Adverbios de cantidad",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_630",
+      "word": "Cocinar",
+      "category": "acciones_tiempo",
+      "difficulty": 2,
+      "description": "Ambas manos frente al cuerpo, una con la palma hacia arriba y la otra girando sobre ella, como dando vuelta algo en una sartén.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Cocinar'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/acciones_tiempo/cocinar.png",
+        "video": "assets/signs/acciones_tiempo/cocinar.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/acciones_tiempo/cocinar.png",
+        "thumbnail": "assets/signs/acciones_tiempo/cocinar.png"
+      },
+      "tags": [
+        "acciones_tiempo",
+        "nivel_2"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "Dirección de Documentación - VERBOS EN LSA",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_631",
+      "word": "Necesitar",
+      "category": "acciones_tiempo",
+      "difficulty": 2,
+      "description": "La mano dominante con los dedos curvados frente al pecho realiza un movimiento corto hacia abajo, con expresión de necesidad.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Necesitar'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/acciones_tiempo/necesitar.png",
+        "video": "assets/signs/acciones_tiempo/necesitar.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/acciones_tiempo/necesitar.png",
+        "thumbnail": "assets/signs/acciones_tiempo/necesitar.png"
+      },
+      "tags": [
+        "acciones_tiempo",
+        "nivel_2"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "Maxi Villarruel - LSA Palabras varias 4",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_632",
+      "word": "Venir",
+      "category": "verbos_cotidianos",
+      "difficulty": 3,
+      "description": "La mano dominante con el índice extendido se mueve desde adelante hacia el propio cuerpo.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Venir'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/verbos_cotidianos/venir.png",
+        "video": "assets/signs/verbos_cotidianos/venir.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/verbos_cotidianos/venir.png",
+        "thumbnail": "assets/signs/verbos_cotidianos/venir.png"
+      },
+      "tags": [
+        "verbos_cotidianos",
+        "nivel_3"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "Dirección de Documentación - VERBOS EN LSA",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_633",
+      "word": "Llegar",
+      "category": "verbos_cotidianos",
+      "difficulty": 3,
+      "description": "La mano dominante avanza desde un costado y se detiene frente al cuerpo, marcando la llegada a un lugar.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Llegar'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/verbos_cotidianos/llegar.png",
+        "video": "assets/signs/verbos_cotidianos/llegar.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/verbos_cotidianos/llegar.png",
+        "thumbnail": "assets/signs/verbos_cotidianos/llegar.png"
+      },
+      "tags": [
+        "verbos_cotidianos",
+        "nivel_3"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "Signs of Love - Vocabulario de los VERBOS (LSA)",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_634",
+      "word": "Salir",
+      "category": "verbos_cotidianos",
+      "difficulty": 3,
+      "description": "La mano dominante con los dedos juntos en pinza se aleja del cuerpo hacia adelante, como saliendo de un lugar.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Salir'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/verbos_cotidianos/salir.png",
+        "video": "assets/signs/verbos_cotidianos/salir.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/verbos_cotidianos/salir.png",
+        "thumbnail": "assets/signs/verbos_cotidianos/salir.png"
+      },
+      "tags": [
+        "verbos_cotidianos",
+        "nivel_3"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "Maxi Villarruel - LSA Palabras varias 9",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_635",
+      "word": "¿Por qué?",
+      "category": "primeras_frases",
+      "difficulty": 1,
+      "description": "La mano dominante con los dedos flexionados se mueve frente al pecho con un giro corto de muñeca, con expresión interrogativa.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de '¿Por qué?'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/primeras_frases/por_que.png",
+        "video": "assets/signs/primeras_frases/por_que.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/primeras_frases/por_que.png",
+        "thumbnail": "assets/signs/primeras_frases/por_que.png"
+      },
+      "tags": [
+        "primeras_frases",
+        "nivel_1"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "Prof. Fabián - LSA preguntas y pronombres",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_636",
+      "word": "¿Para qué?",
+      "category": "primeras_frases",
+      "difficulty": 1,
+      "description": "La mano dominante con el índice extendido toca el mentón y luego se adelanta, con expresión interrogativa.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de '¿Para qué?'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/primeras_frases/para_que.png",
+        "video": "assets/signs/primeras_frases/para_que.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/primeras_frases/para_que.png",
+        "thumbnail": "assets/signs/primeras_frases/para_que.png"
+      },
+      "tags": [
+        "primeras_frases",
+        "nivel_1"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "ULSA - Preguntas en LSA",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_637",
+      "word": "Cada uno",
+      "category": "acciones_tiempo",
+      "difficulty": 2,
+      "description": "La mano dominante con el índice extendido señala uno por uno a varias personas u objetos frente al cuerpo, indicando a todos de forma individual.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Cada uno'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/acciones_tiempo/cada_uno.png",
+        "video": "assets/signs/acciones_tiempo/cada_uno.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/acciones_tiempo/cada_uno.png",
+        "thumbnail": "assets/signs/acciones_tiempo/cada_uno.png"
+      },
+      "tags": [
+        "acciones_tiempo",
+        "nivel_2"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "Dirección de Documentación - Pronombres en LSA",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_638",
+      "word": "Probar",
+      "category": "acciones_tiempo",
+      "difficulty": 2,
+      "description": "La mano dominante con los dedos juntos toca los labios y se separa, como probando un sabor.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Probar'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/acciones_tiempo/probar.png",
+        "video": "assets/signs/acciones_tiempo/probar.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/acciones_tiempo/probar.png",
+        "thumbnail": "assets/signs/acciones_tiempo/probar.png"
+      },
+      "tags": [
+        "acciones_tiempo",
+        "nivel_2"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "ULSA - Listado de verbos en LSA (12)",
+      "related_signs": [
+        "Gustar"
+      ],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_639",
+      "word": "Acompañar",
+      "category": "verbos_cotidianos",
+      "difficulty": 3,
+      "description": "Ambas manos con el pulgar hacia arriba se juntan frente al cuerpo y avanzan juntas, indicando ir con alguien.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Acompañar'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/verbos_cotidianos/acompanar.png",
+        "video": "assets/signs/verbos_cotidianos/acompanar.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/verbos_cotidianos/acompanar.png",
+        "thumbnail": "assets/signs/verbos_cotidianos/acompanar.png"
+      },
+      "tags": [
+        "verbos_cotidianos",
+        "nivel_3"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "Signs of Love - Categorías de VERBOS (LSA)",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_640",
+      "word": "No entiendo",
+      "category": "frases_comunes",
+      "difficulty": 4,
+      "description": "La mano dominante toca la sien con los dedos y luego se aleja girando hacia afuera mientras se niega con la cabeza.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'No entiendo'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/frases_comunes/no_entiendo.png",
+        "video": "assets/signs/frases_comunes/no_entiendo.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/frases_comunes/no_entiendo.png",
+        "thumbnail": "assets/signs/frases_comunes/no_entiendo.png"
+      },
+      "tags": [
+        "frases_comunes",
+        "nivel_4"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "Signs of Love - Vocabulario de los SALUDOS (LSA)",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_641",
+      "word": "Repetir",
+      "category": "frases_comunes",
+      "difficulty": 4,
+      "description": "La mano dominante se apoya sobre la palma de la otra y repite el movimiento, indicando hacerlo otra vez.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Repetir'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/frases_comunes/repetir.png",
+        "video": "assets/signs/frases_comunes/repetir.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/frases_comunes/repetir.png",
+        "thumbnail": "assets/signs/frases_comunes/repetir.png"
+      },
+      "tags": [
+        "frases_comunes",
+        "nivel_4"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "ULSA - Listado de verbos en LSA (12)",
       "related_signs": [],
       "examples": [],
       "fun_fact": null
