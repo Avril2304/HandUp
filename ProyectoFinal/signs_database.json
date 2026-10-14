@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "total_signs": 638,
+  "total_signs": 640,
   "categories": [
     {
       "id": "primeras_frases",
@@ -19695,6 +19695,66 @@
       "movement": null,
       "location": null,
       "source": "Signs of Love - Categorías de VERBOS (LSA)",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_640",
+      "word": "No entiendo",
+      "category": "frases_comunes",
+      "difficulty": 4,
+      "description": "La mano dominante toca la sien con los dedos y luego se aleja girando hacia afuera mientras se niega con la cabeza.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'No entiendo'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/frases_comunes/no_entiendo.png",
+        "video": "assets/signs/frases_comunes/no_entiendo.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/frases_comunes/no_entiendo.png",
+        "thumbnail": "assets/signs/frases_comunes/no_entiendo.png"
+      },
+      "tags": [
+        "frases_comunes",
+        "nivel_4"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "Signs of Love - Vocabulario de los SALUDOS (LSA)",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_641",
+      "word": "Repetir",
+      "category": "frases_comunes",
+      "difficulty": 4,
+      "description": "La mano dominante se apoya sobre la palma de la otra y repite el movimiento, indicando hacerlo otra vez.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Repetir'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/frases_comunes/repetir.png",
+        "video": "assets/signs/frases_comunes/repetir.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/frases_comunes/repetir.png",
+        "thumbnail": "assets/signs/frases_comunes/repetir.png"
+      },
+      "tags": [
+        "frases_comunes",
+        "nivel_4"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "ULSA - Listado de verbos en LSA (12)",
       "related_signs": [],
       "examples": [],
       "fun_fact": null
