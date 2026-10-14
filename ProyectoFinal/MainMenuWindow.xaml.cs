@@ -12,15 +12,6 @@ namespace ProyectoFinal
     //  - Sección: barra lateral a la izquierda y la vista de la sección a la derecha.
     public partial class MainMenuWindow : Window
     {
-        // Cantidad de señas de cada nivel según el banco multimedia (ver README)
-        private static readonly (string Nombre, int Cantidad)[] Niveles =
-        {
-            ("Principiante", 117),
-            ("Básico", 185),
-            ("Intermedio", 154),
-            ("Avanzado", 107)
-        };
-
         private readonly Perfil _perfil;
         private readonly ServicioProgreso _servicio;
         private readonly PreferenciasUsuario _preferencias;
@@ -81,18 +72,10 @@ namespace ProyectoFinal
             lblRachaLateral.Text = _perfil.Racha.ToString();
 
             // Progreso dentro del nivel actual (no del total de la app)
-            int indice = Math.Max(0, Array.FindIndex(Niveles, n => n.Nombre == _perfil.Nivel));
-            int senasNivelesAnteriores = 0;
-            for (int i = 0; i < indice; i++)
-                senasNivelesAnteriores += Niveles[i].Cantidad;
-
-            int totalNivel = Niveles[indice].Cantidad;
-            int dominadasNivel = Math.Clamp(_perfil.SenasDominadas - senasNivelesAnteriores, 0, totalNivel);
-            double proporcion = (double)dominadasNivel / totalNivel;
-
-            lblProgresoNivel.Text = $"{_perfil.Nivel}: {dominadasNivel} / {totalNivel} señas";
-            colProgresoLleno.Width = new GridLength(proporcion, GridUnitType.Star);
-            colProgresoVacio.Width = new GridLength(1 - proporcion, GridUnitType.Star);
+            ProgresoNivel progreso = Niveles.ProgresoDe(_perfil);
+            lblProgresoNivel.Text = $"{_perfil.Nivel}: {progreso.Dominadas} / {progreso.Total} señas";
+            colProgresoLleno.Width = new GridLength(progreso.Proporcion, GridUnitType.Star);
+            colProgresoVacio.Width = new GridLength(1 - progreso.Proporcion, GridUnitType.Star);
         }
 
         // Si la base no responde, el tile muestra un texto genérico en vez de fallar
