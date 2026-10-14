@@ -168,6 +168,14 @@ namespace ProyectoFinal
                 return configuracion;
             }
 
+            if (destino == Seccion.MiPerfil)
+            {
+                var miPerfil = new PerfilView(_perfil, _servicio);
+                miPerfil.VolverSolicitado += (s, e) => MostrarInicio();
+                miPerfil.NavegacionSolicitada += (s, seccion) => Navegar(seccion);
+                return miPerfil;
+            }
+
             var proximamente = new ProximamenteView(Secciones.Info[destino]);
             proximamente.VolverSolicitado += (s, e) => MostrarInicio();
             return proximamente;
