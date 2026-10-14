@@ -1,0 +1,33 @@
+<UserControl x:Class="ProyectoFinal.AprenderView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- Sección Aprender: encabezado fijo y, abajo, el paso actual (nivel → categoría → señas) -->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel>
+                <TextBlock x:Name="lblTitulo" Text="Aprender" FontFamily="{StaticResource FontHeading}" FontSize="26"
+                           FontWeight="Bold" Foreground="{DynamicResource BrushInk}"/>
+                <TextBlock x:Name="lblPaso" FontSize="13" Foreground="{DynamicResource BrushMuted}" Margin="0,2,0,0"/>
+            </StackPanel>
+            <Button Grid.Column="1" x:Name="btnVolver" Style="{StaticResource SecondaryButton}" VerticalAlignment="Top"
+                    Click="BtnVolver_Click">
+                <StackPanel Orientation="Horizontal" Margin="16,0">
+                    <TextBlock Text="&#xE72B;" FontFamily="{StaticResource FontIconos}" FontSize="14" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="lblVolver" Text="Volver al inicio" Margin="8,0,0,0" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+        </Grid>
+
+        <ContentControl Grid.Row="2" x:Name="contenidoPaso" Focusable="False"/>
+    </Grid>
+</UserControl>
