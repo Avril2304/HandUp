@@ -1,19 +1,43 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ProyectoFinal
 {
-    // Los 4 niveles de LSA y cuántas señas tiene cada uno según el banco multimedia (ver README).
+    // Los 4 niveles de LSA y cuántas señas tiene cada uno.
     // Lo usan el menú, Mi perfil y ServicioProgreso, así la cuenta está en un solo lugar.
     public static class Niveles
     {
-        public static readonly IReadOnlyList<(string Nombre, int Cantidad)> Todos = new[]
+        // Respaldo por si la base no responde (cantidades del banco multimedia al 2026-10-14)
+        private static readonly (string Nombre, int Cantidad)[] Respaldo =
         {
-            ("Principiante", 117),
-            ("Básico", 185),
-            ("Intermedio", 154),
-            ("Avanzado", 107)
+            ("Principiante", 145),
+            ("Básico", 211),
+            ("Intermedio", 174),
+            ("Avanzado", 110)
         };
+
+        private static IReadOnlyList<(string Nombre, int Cantidad)>? _todos;
+
+        // Se cuentan una sola vez desde las señas importadas: si cambia el banco, los números siguen siendo reales
+        public static IReadOnlyList<(string Nombre, int Cantidad)> Todos => _todos ??= ContarEnLaBase();
+
+        private static IReadOnlyList<(string Nombre, int Cantidad)> ContarEnLaBase()
+        {
+            try
+            {
+                IReadOnlyList<NivelInfo> niveles = new RepositorioSenas().ObtenerNiveles();
+
+                // Si falta algún nivel (banco vacío o incompleto), las cuentas no serían confiables
+                if (niveles.Count == Respaldo.Length)
+                    return niveles.Select(n => (n.Nombre, n.CantidadSenas)).ToList();
+            }
+            catch (DatabaseException)
+            {
+                // Sin base usamos el respaldo; la app sigue funcionando
+            }
+            return Respaldo;
+        }
 
         // Avance del perfil dentro de su nivel actual (no del total de la app)
         public static ProgresoNivel ProgresoDe(Perfil perfil)
