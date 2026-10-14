@@ -12,3 +12,10 @@ perfiles.json
 
 # Contexto local para Claude Code (no se sube)
 CLAUDE.md
+
+# Archivos del sistema
+.DS_Store
+*/.DS_Store
+*/*/.DS_Store
+*/*/*/.DS_Store
+
