@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "total_signs": 633,
+  "total_signs": 638,
   "categories": [
     {
       "id": "primeras_frases",
@@ -19543,6 +19543,158 @@
       "movement": null,
       "location": null,
       "source": "Maxi Villarruel - LSA Palabras varias 9",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_635",
+      "word": "¿Por qué?",
+      "category": "primeras_frases",
+      "difficulty": 1,
+      "description": "La mano dominante con los dedos flexionados se mueve frente al pecho con un giro corto de muñeca, con expresión interrogativa.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de '¿Por qué?'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/primeras_frases/por_que.png",
+        "video": "assets/signs/primeras_frases/por_que.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/primeras_frases/por_que.png",
+        "thumbnail": "assets/signs/primeras_frases/por_que.png"
+      },
+      "tags": [
+        "primeras_frases",
+        "nivel_1"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "Prof. Fabián - LSA preguntas y pronombres",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_636",
+      "word": "¿Para qué?",
+      "category": "primeras_frases",
+      "difficulty": 1,
+      "description": "La mano dominante con el índice extendido toca el mentón y luego se adelanta, con expresión interrogativa.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de '¿Para qué?'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/primeras_frases/para_que.png",
+        "video": "assets/signs/primeras_frases/para_que.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/primeras_frases/para_que.png",
+        "thumbnail": "assets/signs/primeras_frases/para_que.png"
+      },
+      "tags": [
+        "primeras_frases",
+        "nivel_1"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "ULSA - Preguntas en LSA",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_637",
+      "word": "Cada uno",
+      "category": "acciones_tiempo",
+      "difficulty": 2,
+      "description": "La mano dominante con el índice extendido señala uno por uno a varias personas u objetos frente al cuerpo, indicando a todos de forma individual.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Cada uno'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/acciones_tiempo/cada_uno.png",
+        "video": "assets/signs/acciones_tiempo/cada_uno.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/acciones_tiempo/cada_uno.png",
+        "thumbnail": "assets/signs/acciones_tiempo/cada_uno.png"
+      },
+      "tags": [
+        "acciones_tiempo",
+        "nivel_2"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "Dirección de Documentación - Pronombres en LSA",
+      "related_signs": [],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_638",
+      "word": "Probar",
+      "category": "acciones_tiempo",
+      "difficulty": 2,
+      "description": "La mano dominante con los dedos juntos toca los labios y se separa, como probando un sabor.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Probar'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/acciones_tiempo/probar.png",
+        "video": "assets/signs/acciones_tiempo/probar.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/acciones_tiempo/probar.png",
+        "thumbnail": "assets/signs/acciones_tiempo/probar.png"
+      },
+      "tags": [
+        "acciones_tiempo",
+        "nivel_2"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "ULSA - Listado de verbos en LSA (12)",
+      "related_signs": [
+        "Gustar"
+      ],
+      "examples": [],
+      "fun_fact": null
+    },
+    {
+      "id": "sign_639",
+      "word": "Acompañar",
+      "category": "verbos_cotidianos",
+      "difficulty": 3,
+      "description": "Ambas manos con el pulgar hacia arriba se juntan frente al cuerpo y avanzan juntas, indicando ir con alguien.",
+      "instructions": [
+        "Observá con atención el movimiento de la mano en el video de 'Acompañar'.",
+        "Imitá la configuración manual y la orientación frente al cuerpo.",
+        "Acompañá con la expresión facial y postura correspondiente."
+      ],
+      "media": {
+        "image_static": "assets/signs/verbos_cotidianos/acompanar.png",
+        "video": "assets/signs/verbos_cotidianos/acompanar.mp4",
+        "gif_animated": null,
+        "image": "assets/signs/verbos_cotidianos/acompanar.png",
+        "thumbnail": "assets/signs/verbos_cotidianos/acompanar.png"
+      },
+      "tags": [
+        "verbos_cotidianos",
+        "nivel_3"
+      ],
+      "handshape": null,
+      "movement": null,
+      "location": null,
+      "source": "Signs of Love - Categorías de VERBOS (LSA)",
       "related_signs": [],
       "examples": [],
       "fun_fact": null
