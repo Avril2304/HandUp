@@ -8,6 +8,8 @@
     <SolidColorBrush x:Key="BrushCard" Color="#FFFFFF"/>
     <SolidColorBrush x:Key="BrushBorder" Color="#E7E2D6"/>
     <SolidColorBrush x:Key="BrushBorderAccent" Color="#CFE8E1"/>
+    <!-- Fondo vacío de las barras de avance -->
+    <SolidColorBrush x:Key="BrushTrack" Color="#E7E2D6"/>
     <SolidColorBrush x:Key="BrushInk" Color="#14312B"/>
     <SolidColorBrush x:Key="BrushMuted" Color="#6B7B76"/>
 

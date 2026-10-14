@@ -7,6 +7,7 @@
     <SolidColorBrush x:Key="BrushCard" Color="#1A1A1A"/>
     <SolidColorBrush x:Key="BrushBorder" Color="#FFFFFF"/>
     <SolidColorBrush x:Key="BrushBorderAccent" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="BrushTrack" Color="#444444"/>
     <SolidColorBrush x:Key="BrushInk" Color="#FFFFFF"/>
     <SolidColorBrush x:Key="BrushMuted" Color="#CCCCCC"/>
 

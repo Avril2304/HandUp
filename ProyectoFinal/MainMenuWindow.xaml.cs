@@ -185,7 +185,7 @@ namespace ProyectoFinal
         {
             if (destino == Seccion.Aprender)
             {
-                var aprender = new AprenderView(_perfil, _preferencias);
+                var aprender = new AprenderView(_perfil, _preferencias, _servicio);
                 aprender.VolverSolicitado += (s, e) => MostrarInicio();
                 return aprender;
             }

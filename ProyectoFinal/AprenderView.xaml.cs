@@ -8,7 +8,8 @@ using System.Windows.Threading;
 
 namespace ProyectoFinal
 {
-    // Sección Aprender. Maneja los pasos: 1) elegir nivel, 2) elegir categoría, 3) recorrer las señas.
+    // Sección Aprender. Maneja los pasos: 1) elegir nivel, 2) elegir categoría, 3) recorrer las señas,
+    // y al final la práctica de la categoría.
     public partial class AprenderView : UserControl, IVistaDeSeccion
     {
         // Pide volver al inicio del menú (desde el primer paso)
@@ -16,19 +17,23 @@ namespace ProyectoFinal
 
         private readonly Perfil _perfil;
         private readonly PreferenciasUsuario _preferencias;
+        private readonly ServicioProgreso _servicio;
         private ElegirNivelView? _vistaNiveles;
         private ElegirCategoriaView? _vistaCategorias;
         private RecorrerSenasView? _vistaRecorrido;
+        private PracticaView? _vistaPractica;
+        private IReadOnlyList<Sena> _senasCategoria = Array.Empty<Sena>();
         private int _nivelDeVistaCategorias;
 
         private NivelAprendizaje? _nivelElegido;
         private CategoriaAprendizaje? _categoriaElegida;
 
-        public AprenderView(Perfil perfil, PreferenciasUsuario preferencias)
+        public AprenderView(Perfil perfil, PreferenciasUsuario preferencias, ServicioProgreso servicio)
         {
             InitializeComponent();
             _perfil = perfil;
             _preferencias = preferencias;
+            _servicio = servicio;
             MostrarNiveles();
         }
 
@@ -69,6 +74,7 @@ namespace ProyectoFinal
 
             _nivelElegido = nivel;
             _categoriaElegida = null;
+            _vistaPractica = null;
             contenidoPaso.Content = _vistaCategorias;
 
             lblPaso.Text = $"Paso 2 de 3 · {nivel.Nombre}: elegí una categoría";
@@ -109,9 +115,24 @@ namespace ProyectoFinal
                 return;
             }
 
+            _senasCategoria = senas;
+            _vistaPractica = null;
             _vistaRecorrido = new RecorrerSenasView(senas, _preferencias);
-            _vistaRecorrido.TerminarSolicitado += (s, e) => VolverUnPaso();
+            _vistaRecorrido.PracticarSolicitado += (s, e) => MostrarPractica();
             contenidoPaso.Content = _vistaRecorrido;
+        }
+
+        // Práctica (stories de opción múltiple, tipeo y Confirmar deshabilitado) con las señas de la categoría
+        private void MostrarPractica()
+        {
+            if (_categoriaElegida is null)
+                return;
+
+            lblPaso.Text = $"Práctica · {_categoriaElegida.Nombre}";
+            _vistaPractica = new PracticaView(_senasCategoria, _preferencias, _servicio);
+            _vistaPractica.OtraCategoriaSolicitada += (s, e) => VolverUnPaso();
+            contenidoPaso.Content = _vistaPractica;
+            EnfocarContenido();
         }
 
         private void ActualizarBotonVolver(string texto)
@@ -129,6 +150,8 @@ namespace ProyectoFinal
                 _vistaNiveles?.EnfocarNivel();
             else if (_categoriaElegida is null)
                 _vistaCategorias?.EnfocarCategoria();
+            else if (_vistaPractica is not null)
+                _vistaPractica.EnfocarInicio();
             else
                 _vistaRecorrido?.EnfocarInicio();
         }

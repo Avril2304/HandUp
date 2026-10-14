@@ -12,8 +12,8 @@ namespace ProyectoFinal
     // Paso 3 de Aprender: muestra las señas de una categoría de a una, con anterior / siguiente.
     public partial class RecorrerSenasView : UserControl
     {
-        // Se terminó de recorrer la categoría y se quiere elegir otra
-        public event EventHandler? TerminarSolicitado;
+        // Se terminó de recorrer la categoría y se quiere practicar con sus señas
+        public event EventHandler? PracticarSolicitado;
 
         private record PasoInstruccion(int Numero, string Texto);
 
@@ -62,9 +62,9 @@ namespace ProyectoFinal
             pnlPasos.Visibility = pasos.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
 
             btnAnterior.IsEnabled = _indice > 0;
-            lblSiguiente.Text = esUltima ? "Terminar" : "Siguiente";
-            AutomationProperties.SetName(btnSiguiente, esUltima ? "Terminar y elegir otra categoría" : "Seña siguiente");
-            btnSiguiente.ToolTip = esUltima ? "Terminar y elegir otra categoría" : "Seña siguiente (flecha derecha)";
+            lblSiguiente.Text = esUltima ? "Practicar" : "Siguiente";
+            AutomationProperties.SetName(btnSiguiente, esUltima ? "Practicar con las señas de esta categoría" : "Seña siguiente");
+            btnSiguiente.ToolTip = esUltima ? "Practicar con las señas de esta categoría" : "Seña siguiente (flecha derecha)";
             AutomationProperties.SetName(lblPalabra, $"{palabra}, seña {_indice + 1} de {_senas.Count}");
         }
 
@@ -86,7 +86,7 @@ namespace ProyectoFinal
             else
             {
                 visor.Detener();
-                TerminarSolicitado?.Invoke(this, EventArgs.Empty);
+                PracticarSolicitado?.Invoke(this, EventArgs.Empty);
             }
         }
 
