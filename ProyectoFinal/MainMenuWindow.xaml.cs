@@ -34,6 +34,7 @@ namespace ProyectoFinal
             _servicio = new ServicioProgreso(_perfil, new RepositorioPerfiles());
 
             _servicio.ProgresoActualizado += Servicio_ProgresoActualizado;
+            _servicio.NivelDesbloqueado += Servicio_NivelDesbloqueado;
             Closing += MainMenuWindow_Closing;
 
             _itemsNav = new Dictionary<Seccion, Button>
@@ -185,6 +186,12 @@ namespace ProyectoFinal
         private void Servicio_ProgresoActualizado(object? sender, ProgresoEventArgs e)
         {
             // Nos aseguramos de actualizar en el hilo de la UI
+            Dispatcher.Invoke(ActualizarUI);
+        }
+
+        // Al aprobar una prueba final cambia el nivel: el encabezado y la barra pasan a mostrar el nivel nuevo
+        private void Servicio_NivelDesbloqueado(object? sender, NivelDesbloqueadoEventArgs e)
+        {
             Dispatcher.Invoke(ActualizarUI);
         }
 

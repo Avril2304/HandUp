@@ -26,6 +26,7 @@ namespace ProyectoFinal
         private ElegirCategoriaView? _vistaCategorias;
         private RecorrerSenasView? _vistaRecorrido;
         private PracticaView? _vistaPractica;
+        private PracticaView? _vistaPrueba;           // prueba final del nivel (sale desde Elegir nivel)
         private IReadOnlyList<Sena> _senasCategoria = Array.Empty<Sena>();
         private int _nivelDeVistaCategorias;
 
@@ -48,6 +49,7 @@ namespace ProyectoFinal
         {
             _nivelElegido = null;
             _categoriaElegida = null;
+            _vistaPrueba = null;
             _vistaNiveles ??= CrearVistaNiveles();
             contenidoPaso.Content = _vistaNiveles;
 
@@ -57,13 +59,54 @@ namespace ProyectoFinal
 
         private ElegirNivelView CrearVistaNiveles()
         {
-            var vista = new ElegirNivelView(_perfil.NivelDesbloqueado);
+            int? mejorPorcentaje = null;
+            try
+            {
+                mejorPorcentaje = new RepositorioPerfiles().ObtenerMejorPorcentaje(_perfil.Id, _perfil.NivelDesbloqueado);
+            }
+            catch (DatabaseException)
+            {
+                // Sin base no mostramos el mejor resultado; la prueba igual se puede rendir
+            }
+
+            var vista = new ElegirNivelView(_perfil.NivelDesbloqueado, mejorPorcentaje);
             vista.NivelElegido += (s, nivel) =>
             {
                 MostrarCategorias(nivel);
                 EnfocarContenido();
             };
+            vista.PruebaFinalSolicitada += (s, nivel) => MostrarPruebaFinal(nivel);
             return vista;
+        }
+
+        // Prueba final del nivel: reutiliza la pantalla de Práctica en modo prueba.
+        // Al salir se vuelve a armar la elección de nivel, porque puede haber cambiado el nivel desbloqueado.
+        private void MostrarPruebaFinal(int nivel)
+        {
+            _vistaPrueba = new PracticaView(nivel, _preferencias, _servicio);
+            _vistaPrueba.VolverANivelesSolicitado += (s, e) => SalirDePrueba();
+            _vistaPrueba.NivelSolicitado += (s, numero) =>
+            {
+                SalirDePrueba();
+                NivelAprendizaje? desbloqueado = _vistaNiveles?.BuscarNivel(numero);
+                if (desbloqueado is not null && !desbloqueado.Bloqueado)
+                {
+                    MostrarCategorias(desbloqueado);
+                    EnfocarContenido();
+                }
+            };
+
+            contenidoPaso.Content = _vistaPrueba;
+            lblPaso.Text = $"Prueba final de {Niveles.NombreDe(nivel)} · aprobás con {PruebaFinal.PorcentajeParaAprobar}% o más";
+            ActualizarBotonVolver("Volver a los niveles");
+            _vistaPrueba.EnfocarInicio();
+        }
+
+        private void SalirDePrueba()
+        {
+            _vistaNiveles = null; // se rearma con el nivel y el mejor resultado actualizados
+            MostrarNiveles();
+            _vistaNiveles?.EnfocarNivel();
         }
 
         // Paso 2 (story "elegir una categoría temática")
@@ -192,7 +235,9 @@ namespace ProyectoFinal
 
         public void EnfocarContenido()
         {
-            if (_nivelElegido is null)
+            if (_vistaPrueba is not null)
+                _vistaPrueba.EnfocarInicio();
+            else if (_nivelElegido is null)
                 _vistaNiveles?.EnfocarNivel();
             else if (_categoriaElegida is null)
                 _vistaCategorias?.EnfocarCategoria();
@@ -208,6 +253,13 @@ namespace ProyectoFinal
             {
                 _vinoDeMiPerfil = false;
                 VolverAPerfilSolicitado?.Invoke(this, EventArgs.Empty);
+                return true;
+            }
+
+            // Salir a mitad de la prueba final la abandona (no se guarda ningún resultado)
+            if (_vistaPrueba is not null)
+            {
+                SalirDePrueba();
                 return true;
             }
 

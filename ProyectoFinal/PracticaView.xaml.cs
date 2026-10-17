@@ -12,10 +12,15 @@ namespace ProyectoFinal
 {
     // Práctica de una categoría (stories: responder por opción múltiple con atajos, responder tipeando,
     // y botón Confirmar deshabilitado hasta elegir). Cada respuesta suma al progreso del perfil.
+    // También es la pantalla de la prueba final de un nivel: mismas preguntas, otra ronda y otro resultado.
     public partial class PracticaView : UserControl
     {
         // Terminó la práctica y se quiere elegir otra categoría
         public event EventHandler? OtraCategoriaSolicitada;
+
+        // Prueba final: se quiere volver a la elección de nivel, o ir directo a un nivel (el que se acaba de desbloquear)
+        public event EventHandler? VolverANivelesSolicitado;
+        public event EventHandler<int>? NivelSolicitado;
 
         private const int MaximoPreguntas = 10;
         private const int PuntosOpcionMultiple = 10;
@@ -26,6 +31,8 @@ namespace ProyectoFinal
         private static readonly Regex PalabraSimple = new(@"^[\p{L} ]+$");
 
         private readonly IReadOnlyList<Sena> _senasCategoria;
+        private readonly int? _nivelPrueba;          // null: práctica de una categoría
+        private ResultadoPruebaFinal? _resultadoPrueba;
         private readonly PreferenciasUsuario _preferencias;
         private readonly ServicioProgreso _servicio;
         private readonly GeneradorPreguntas _generador = new(new RepositorioSenas());
@@ -39,9 +46,21 @@ namespace ProyectoFinal
         private readonly List<Button> _botonesOpcion = new();
 
         public PracticaView(IReadOnlyList<Sena> senasCategoria, PreferenciasUsuario preferencias, ServicioProgreso servicio)
+            : this(senasCategoria, null, preferencias, servicio)
+        {
+        }
+
+        // Prueba final del nivel indicado (1 a 4)
+        public PracticaView(int nivelPrueba, PreferenciasUsuario preferencias, ServicioProgreso servicio)
+            : this(Array.Empty<Sena>(), nivelPrueba, preferencias, servicio)
+        {
+        }
+
+        private PracticaView(IReadOnlyList<Sena> senasCategoria, int? nivelPrueba, PreferenciasUsuario preferencias, ServicioProgreso servicio)
         {
             InitializeComponent();
             _senasCategoria = senasCategoria;
+            _nivelPrueba = nivelPrueba;
             _preferencias = preferencias;
             _servicio = servicio;
             visor.TeclaPausar = _preferencias.TeclaPausar;
@@ -53,21 +72,41 @@ namespace ProyectoFinal
         private void EmpezarRonda()
         {
             pnlResultado.Visibility = Visibility.Collapsed;
+            _resultadoPrueba = null;
 
-            if (_senasCategoria.Count < 2)
+            try
             {
-                pnlPregunta.Visibility = Visibility.Collapsed;
-                lblMensaje.Text = "Esta categoría tiene muy pocas señas para practicar.";
-                lblMensaje.Visibility = Visibility.Visible;
+                // Prueba final: 20 señas del nivel repartidas entre sus categorías.
+                // Práctica: hasta 10 señas de la categoría, en orden al azar.
+                _ronda = _nivelPrueba is int nivel
+                    ? PruebaFinal.ElegirSenas(nivel, _random)
+                    : _senasCategoria.OrderBy(_ => _random.Next()).Take(MaximoPreguntas).ToList();
+            }
+            catch (DatabaseException ex)
+            {
+                MostrarMensaje($"No se pudo armar la prueba. {ex.Message}");
                 return;
             }
 
-            // Hasta 10 señas de la categoría, en orden al azar
-            _ronda = _senasCategoria.OrderBy(_ => _random.Next()).Take(MaximoPreguntas).ToList();
+            if (_ronda.Count < 2)
+            {
+                MostrarMensaje(_nivelPrueba is null
+                    ? "Esta categoría tiene muy pocas señas para practicar."
+                    : "Este nivel tiene muy pocas señas para armar la prueba final.");
+                return;
+            }
+
             _indice = 0;
             _aciertos = 0;
             pnlPregunta.Visibility = Visibility.Visible;
             MostrarPregunta();
+        }
+
+        private void MostrarMensaje(string mensaje)
+        {
+            pnlPregunta.Visibility = Visibility.Collapsed;
+            lblMensaje.Text = mensaje;
+            lblMensaje.Visibility = Visibility.Visible;
         }
 
         private void MostrarPregunta()
@@ -75,7 +114,8 @@ namespace ProyectoFinal
             Sena sena = _ronda[_indice];
             visor.Mostrar(sena);
 
-            lblAvance.Text = $"PREGUNTA {_indice + 1} DE {_ronda.Count}";
+            string prefijo = _nivelPrueba is not null ? "PRUEBA FINAL · " : string.Empty;
+            lblAvance.Text = $"{prefijo}PREGUNTA {_indice + 1} DE {_ronda.Count}";
             double avance = (double)_indice / _ronda.Count;
             colAvanceLleno.Width = new GridLength(avance, GridUnitType.Star);
             colAvanceVacio.Width = new GridLength(1 - avance, GridUnitType.Star);
@@ -338,6 +378,13 @@ namespace ProyectoFinal
             pnlPregunta.Visibility = Visibility.Collapsed;
             pnlResultado.Visibility = Visibility.Visible;
 
+            if (_nivelPrueba is int nivel)
+            {
+                MostrarResultadoPrueba(nivel);
+                Dispatcher.BeginInvoke(DispatcherPriority.Input, () => btnPracticarDeNuevo.Focus());
+                return;
+            }
+
             double porcentaje = (double)_aciertos / _ronda.Count;
             lblResultado.Text = $"Acertaste {_aciertos} de {_ronda.Count}";
             (lblResultadoIcono.Text, lblResultadoDetalle.Text) = porcentaje switch
@@ -350,18 +397,80 @@ namespace ProyectoFinal
             Dispatcher.BeginInvoke(DispatcherPriority.Input, () => btnPracticarDeNuevo.Focus());
         }
 
-        private void BtnPracticarDeNuevo_Click(object sender, RoutedEventArgs e) => EmpezarRonda();
+        // Resultado de la prueba final: se guarda (ServicioProgreso decide si desbloquea) y se muestra cómo salió.
+        // Si desbloqueó un nivel es la pantalla de logro, con un botón para ir directo a ese nivel.
+        private void MostrarResultadoPrueba(int nivel)
+        {
+            string nombre = Niveles.NombreDe(nivel);
+            string siguiente = Niveles.NombreDe(nivel + 1);
+            string? avisoGuardado = null;
+
+            try
+            {
+                _resultadoPrueba = _servicio.RegistrarPruebaFinal(nivel, _aciertos, _ronda.Count);
+            }
+            catch (Exception ex) when (ex is DatabaseException or UserNotFoundException)
+            {
+                int porcentajeSinGuardar = PruebaFinal.Porcentaje(_aciertos, _ronda.Count);
+                _resultadoPrueba = new ResultadoPruebaFinal(nivel, _aciertos, _ronda.Count, porcentajeSinGuardar, null, Desbloqueo: false);
+                avisoGuardado = "No se pudo guardar el resultado: probá rendirla de nuevo más tarde.";
+            }
+
+            ResultadoPruebaFinal r = _resultadoPrueba;
+            string cuenta = $"{r.Porcentaje}% ({r.Aciertos} de {r.Total})";
+
+            if (r.Desbloqueo)
+            {
+                lblResultadoIcono.Text = "\uE735"; // estrella
+                lblResultado.Text = $"¡Desbloqueaste {siguiente}!";
+                lblResultadoDetalle.Text = $"Sacaste {cuenta} en la prueba final de {nombre}. Ya podés aprender las señas de {siguiente}.";
+                btnPracticarDeNuevo.Content = $"Ir a {siguiente}";
+            }
+            else if (r.Aprobada)
+            {
+                lblResultadoIcono.Text = "\uE73E"; // tilde
+                lblResultado.Text = $"Aprobaste con {cuenta}";
+                lblResultadoDetalle.Text = $"Ya tenías desbloqueado {siguiente}. Tu mejor resultado en {nombre}: {r.Mejor}%.";
+                btnPracticarDeNuevo.Content = "Rendir de nuevo";
+            }
+            else
+            {
+                lblResultadoIcono.Text = "\uE72C"; // volver a intentar
+                lblResultado.Text = $"Sacaste {cuenta}";
+                string mejor = r.MejorAnterior is null ? string.Empty : $" Tu mejor resultado: {r.Mejor}%.";
+                lblResultadoDetalle.Text = $"Necesitás {PruebaFinal.PorcentajeParaAprobar}% o más para desbloquear {siguiente}.{mejor} " +
+                                           $"Repasá las señas de {nombre} y probá de nuevo.";
+                btnPracticarDeNuevo.Content = "Rendir de nuevo";
+            }
+
+            if (avisoGuardado is not null)
+                lblResultadoDetalle.Text += $"\n{avisoGuardado}";
+            btnSecundario.Content = "Volver a los niveles";
+        }
+
+        private void BtnPracticarDeNuevo_Click(object sender, RoutedEventArgs e)
+        {
+            if (_resultadoPrueba is { Desbloqueo: true })
+                NivelSolicitado?.Invoke(this, _resultadoPrueba.Nivel + 1);
+            else
+                EmpezarRonda();
+        }
 
         private void BtnOtraCategoria_Click(object sender, RoutedEventArgs e)
         {
             visor.Detener();
-            OtraCategoriaSolicitada?.Invoke(this, EventArgs.Empty);
+            if (_nivelPrueba is null)
+                OtraCategoriaSolicitada?.Invoke(this, EventArgs.Empty);
+            else
+                VolverANivelesSolicitado?.Invoke(this, EventArgs.Empty);
         }
 
         // Foco inicial al entrar a la práctica
         public void EnfocarInicio()
         {
-            if (_pregunta is PreguntaOpcionMultiple && _botonesOpcion.Count > 0)
+            if (pnlResultado.Visibility == Visibility.Visible)
+                Dispatcher.BeginInvoke(DispatcherPriority.Input, () => btnPracticarDeNuevo.Focus());
+            else if (_pregunta is PreguntaOpcionMultiple && _botonesOpcion.Count > 0)
                 Dispatcher.BeginInvoke(DispatcherPriority.Input, () => _botonesOpcion[0].Focus());
             else if (_pregunta is PreguntaTipeo)
                 Dispatcher.BeginInvoke(DispatcherPriority.Input, () => txtRespuesta.Focus());

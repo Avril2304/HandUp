@@ -10,6 +10,9 @@ namespace ProyectoFinal
 
         public event EventHandler<ProgresoEventArgs>? ProgresoActualizado;
 
+        // Se dispara cuando el perfil aprueba la prueba final de su nivel y se le abre el siguiente (lo escucha el menú)
+        public event EventHandler<NivelDesbloqueadoEventArgs>? NivelDesbloqueado;
+
         // Después de eliminar el perfil ya no hay nada que guardar (ej. al cerrar el menú)
         public bool PerfilEliminado { get; private set; }
 
@@ -67,6 +70,27 @@ namespace ProyectoFinal
             }
 
             GuardarProgreso("SenasDominadas");
+        }
+
+        // Registra el resultado de la prueba final de un nivel. Guarda el mejor porcentaje (uno peor no lo pisa) y,
+        // si aprobó la prueba de su nivel actual, le desbloquea el siguiente y dispara NivelDesbloqueado.
+        public ResultadoPruebaFinal RegistrarPruebaFinal(int nivel, int aciertos, int total)
+        {
+            int porcentaje = PruebaFinal.Porcentaje(aciertos, total);
+            int? mejorAnterior = _repositorio.ObtenerMejorPorcentaje(_perfil.Id, nivel);
+            _repositorio.GuardarResultadoPrueba(_perfil.Id, nivel, porcentaje);
+
+            bool desbloquea = PruebaFinal.Aprueba(porcentaje)
+                              && nivel == _perfil.NivelDesbloqueado
+                              && nivel < Niveles.Nombres.Count;
+            if (desbloquea)
+            {
+                _perfil.NivelDesbloqueado = nivel + 1;
+                GuardarProgreso("Nivel");
+                OnNivelDesbloqueado(nivel);
+            }
+
+            return new ResultadoPruebaFinal(nivel, aciertos, total, porcentaje, mejorAnterior, desbloquea);
         }
 
         // Cambia el nombre visible del perfil (Mi perfil). El menú se entera por ProgresoActualizado y actualiza el saludo.
@@ -156,6 +180,11 @@ namespace ProyectoFinal
 
             _repositorio.Actualizar(_perfil);
             OnProgresoActualizado(campoContexto);
+        }
+
+        protected virtual void OnNivelDesbloqueado(int nivelAprobado)
+        {
+            NivelDesbloqueado?.Invoke(this, new NivelDesbloqueadoEventArgs(_perfil, nivelAprobado, _perfil.NivelDesbloqueado));
         }
 
         protected virtual void OnProgresoActualizado(string campoActualizado)
