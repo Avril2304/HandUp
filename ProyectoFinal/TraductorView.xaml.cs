@@ -1,6 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Controls;
@@ -47,6 +51,12 @@ namespace ProyectoFinal
         // El visor donde se muestra la secuencia: el grande si hay pantalla completa, si no el de esta vista
         private VisorSena VisorActivo => _pantallaCompleta?.Visor ?? visor;
 
+        // Exportar como video: el texto que se tradujo, la cancelación (null si no se está exportando) y el último archivo
+        private string _textoTraducido = string.Empty;
+        private CancellationTokenSource? _cancelacionExportar;
+        private string? _ultimoVideo;
+        private bool Exportando => _cancelacionExportar is not null;
+
         public TraductorView(PreferenciasUsuario preferencias)
         {
             InitializeComponent();
@@ -62,12 +72,13 @@ namespace ProyectoFinal
             Unloaded += (s, e) =>
             {
                 _timer.Stop();
+                _cancelacionExportar?.Cancel();
                 _pantallaCompleta?.Close();
                 visor.Detener();
             };
 
             lblAtajos.Text = $"Enter: traducir · {TextoTecla.Nombre(preferencias.TeclaPausar)}: pausar · R: repetir · " +
-                             "C: cambiar significado · F: pantalla completa · Esc: detener";
+                             "C: cambiar significado · F: pantalla completa · E: exportar video · Esc: detener";
 
             try
             {
@@ -99,12 +110,14 @@ namespace ProyectoFinal
 
         private void Traducir()
         {
-            // Story 14: con el campo vacío no pasa nada
-            if (_traductor is null || string.IsNullOrWhiteSpace(txtTexto.Text))
+            // Story 14: con el campo vacío no pasa nada (y mientras se exporta un video, la traducción no cambia)
+            if (_traductor is null || string.IsNullOrWhiteSpace(txtTexto.Text) || Exportando)
                 return;
 
             Detener();
             OcultarAviso();
+            pnlExportado.Visibility = Visibility.Collapsed;
+            _textoTraducido = txtTexto.Text.Trim();
             _elementos = _traductor.Traducir(txtTexto.Text);
             ArmarPasos();
             ArmarChips();
@@ -458,6 +471,9 @@ namespace ProyectoFinal
 
         private void CambiarSignificado(int elemento)
         {
+            if (Exportando)
+                return; // el video que se está generando usa la traducción tal como estaba
+
             _elementos[elemento].CambiarOpcion();
             ArmarPasos();
             ArmarChips();
@@ -503,11 +519,107 @@ namespace ProyectoFinal
                 CambiarSignificado(elemento);
         }
 
+        // ===== Exportar como video =====
+
+        private async void BtnExportar_Click(object sender, RoutedEventArgs e) => await ExportarVideoAsync();
+
+        private void BtnCancelarExportacion_Click(object sender, RoutedEventArgs e) => _cancelacionExportar?.Cancel();
+
+        private async Task ExportarVideoAsync()
+        {
+            if (Exportando || _pasos.Count == 0)
+                return;
+
+            var dialogo = new Microsoft.Win32.SaveFileDialog
+            {
+                Title = "Guardar la traducción como video",
+                Filter = "Video MP4 (*.mp4)|*.mp4",
+                DefaultExt = ".mp4",
+                AddExtension = true,
+                FileName = NombreSugerido(),
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyVideos)
+            };
+            if (dialogo.ShowDialog(Window.GetWindow(this)) != true)
+                return;
+
+            var exportador = new ExportadorVideo();
+            exportador.ProgresoCambiado += Exportador_ProgresoCambiado;
+            _cancelacionExportar = new CancellationTokenSource();
+
+            OcultarAviso();
+            pnlExportado.Visibility = Visibility.Collapsed;
+            lblExportando.Text = "Preparando las señas…";
+            barExportando.Value = 0;
+            pnlExportando.Visibility = Visibility.Visible;
+            ActualizarControles();
+
+            try
+            {
+                await exportador.ExportarAsync(_textoTraducido, _elementos, dialogo.FileName,
+                                               SegundosLetraActual(), _cancelacionExportar.Token);
+                _ultimoVideo = dialogo.FileName;
+                MostrarResultadoExportacion($"✓ Video guardado: {Path.GetFileName(dialogo.FileName)}", conArchivo: true);
+            }
+            catch (OperationCanceledException)
+            {
+                MostrarResultadoExportacion("Se canceló la exportación del video.", conArchivo: false);
+            }
+            catch (ExportacionException ex)
+            {
+                MostrarAviso(ex.Message);
+            }
+            finally
+            {
+                exportador.ProgresoCambiado -= Exportador_ProgresoCambiado;
+                _cancelacionExportar.Dispose();
+                _cancelacionExportar = null;
+                pnlExportando.Visibility = Visibility.Collapsed;
+                ActualizarControles();
+            }
+        }
+
+        // El avance puede llegar desde otro hilo (mientras Windows genera el video): se pasa al hilo de la pantalla
+        private void Exportador_ProgresoCambiado(object? sender, ProgresoExportacionEventArgs e)
+        {
+            Dispatcher.BeginInvoke(() =>
+            {
+                barExportando.Value = e.Porcentaje;
+                lblExportando.Text = $"{e.Etapa}… {e.Porcentaje:0}%";
+            });
+        }
+
+        private void MostrarResultadoExportacion(string mensaje, bool conArchivo)
+        {
+            lblExportado.Text = mensaje;
+            btnMostrarVideo.Visibility = conArchivo ? Visibility.Visible : Visibility.Collapsed;
+            pnlExportado.Visibility = Visibility.Visible;
+        }
+
+        private void BtnMostrarVideo_Click(object sender, RoutedEventArgs e)
+        {
+            if (_ultimoVideo is null || !File.Exists(_ultimoVideo))
+            {
+                MostrarAviso("No se encontró el video: puede que lo hayan movido o borrado.");
+                return;
+            }
+            Process.Start("explorer.exe", $"/select,\"{_ultimoVideo}\"");
+        }
+
+        // "HandUp - Hola me llamo Ana.mp4" (sin caracteres que Windows no acepta en un nombre de archivo)
+        private string NombreSugerido()
+        {
+            string limpio = new string(_textoTraducido.Where(c => !Path.GetInvalidFileNameChars().Contains(c)).ToArray()).Trim();
+            if (limpio.Length > 40)
+                limpio = limpio[..40].Trim();
+            return limpio.Length == 0 ? "HandUp - Traducción.mp4" : $"HandUp - {limpio}.mp4";
+        }
+
         // ===== Estado de la pantalla =====
 
         private void ActualizarControles()
         {
-            btnTraducir.IsEnabled = _traductor is not null && !string.IsNullOrWhiteSpace(txtTexto.Text);
+            btnTraducir.IsEnabled = _traductor is not null && !string.IsNullOrWhiteSpace(txtTexto.Text) && !Exportando;
+            btnExportar.IsEnabled = _pasos.Count > 0 && !Exportando;
             btnRepetir.IsEnabled = _pasos.Count > 0;
             btnDetener.IsEnabled = _estado is Estado.Reproduciendo or Estado.Pausada;
             btnPausar.IsEnabled = _estado is Estado.Reproduciendo or Estado.Pausada
@@ -580,6 +692,11 @@ namespace ProyectoFinal
             else if (e.Key == Key.C && _elementos.Any(el => el.EsHomonimo))
             {
                 CambiarSignificadoConTeclado();
+                e.Handled = true;
+            }
+            else if (e.Key == Key.E && btnExportar.IsEnabled)
+            {
+                _ = ExportarVideoAsync();
                 e.Handled = true;
             }
             else if (e.Key == Key.F && _pasos.Count > 0)

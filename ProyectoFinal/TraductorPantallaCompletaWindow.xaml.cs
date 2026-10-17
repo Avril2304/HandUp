@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 
 namespace ProyectoFinal
 {
@@ -13,12 +11,6 @@ namespace ProyectoFinal
     // y esta ventana le avisa, con eventos, lo que el usuario pide (pausar, repetir, más lento, cambiar significado).
     public partial class TraductorPantallaCompletaWindow : Window
     {
-        private static readonly Brush TextoClaro = new SolidColorBrush(Color.FromRgb(0xF1, 0xEF, 0xE8));
-        private static readonly Brush TextoApagado = new SolidColorBrush(Color.FromRgb(0xB4, 0xB2, 0xA9));
-        private static readonly Brush BordeNormal = new SolidColorBrush(Color.FromRgb(0x5F, 0x5E, 0x5A));
-        private static readonly Brush BordeActual = new SolidColorBrush(Color.FromRgb(0x5D, 0xCA, 0xA5));
-        private static readonly Brush FondoActual = new SolidColorBrush(Color.FromRgb(0x08, 0x50, 0x41));
-
         public event EventHandler? PausaSolicitada;
         public event EventHandler? RepetirSolicitado;
         public event EventHandler? LentoSolicitado;
@@ -51,7 +43,7 @@ namespace ProyectoFinal
             lblAvance.Text = avance;
             colAvanceLleno.Width = new GridLength(proporcion, GridUnitType.Star);
             colAvanceVacio.Width = new GridLength(1 - proporcion, GridUnitType.Star);
-            ArmarFrase(elementos, elementoActual, letraActual);
+            FraseEnSenas.Armar(pnlFrase, elementos, elementoActual, letraActual);
         }
 
         public void MostrarDetalle(string detalle) => lblDetalle.Text = detalle;
@@ -67,64 +59,6 @@ namespace ProyectoFinal
 
             lblLento.Text = lento ? "Normal" : "Más lento";
             AutomationProperties.SetName(btnLento, lento ? "Volver a la velocidad normal" : "Mostrar las señas más lento");
-        }
-
-        // La frase completa: cada palabra con su tipo; la actual resaltada (y, si se deletrea, la letra actual)
-        private void ArmarFrase(IReadOnlyList<ElementoTraduccion> elementos, int elementoActual, int letraActual)
-        {
-            pnlFrase.Children.Clear();
-            for (int i = 0; i < elementos.Count; i++)
-            {
-                ElementoTraduccion elemento = elementos[i];
-                bool actual = i == elementoActual;
-
-                var titulo = new TextBlock { Text = elemento.Texto, FontSize = 17, FontWeight = FontWeights.Bold, Foreground = TextoClaro };
-                var detalle = new TextBlock { FontSize = 13, Foreground = TextoApagado, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 2, 0, 0) };
-
-                switch (elemento.Tipo)
-                {
-                    case TipoElemento.Sena:
-                        detalle.Text = elemento.EsHomonimo ? $"Seña ({elemento.OpcionElegida + 1} de {elemento.Opciones.Count})" : "Seña";
-                        break;
-
-                    case TipoElemento.Deletreo:
-                        // Las letras separadas por guiones, con la que se está mostrando resaltada
-                        for (int j = 0; j < elemento.Letras.Count; j++)
-                        {
-                            if (j > 0)
-                                detalle.Inlines.Add(new Run("-"));
-                            var letra = new Run(TextoSena.Palabra(elemento.Letras[j]));
-                            if (actual && j == letraActual)
-                            {
-                                letra.Foreground = BordeActual;
-                                letra.FontWeight = FontWeights.Bold;
-                                letra.TextDecorations = TextDecorations.Underline;
-                            }
-                            detalle.Inlines.Add(letra);
-                        }
-                        break;
-
-                    default:
-                        detalle.Text = "No se seña";
-                        break;
-                }
-
-                var contenido = new StackPanel();
-                contenido.Children.Add(titulo);
-                contenido.Children.Add(detalle);
-
-                pnlFrase.Children.Add(new Border
-                {
-                    Child = contenido,
-                    Background = actual ? FondoActual : Brushes.Transparent,
-                    BorderBrush = actual ? BordeActual : BordeNormal,
-                    BorderThickness = new Thickness(actual ? 2 : 1.5),
-                    CornerRadius = new CornerRadius(10),
-                    Padding = new Thickness(12, 7, 12, 7),
-                    Margin = new Thickness(0, 0, 8, 8),
-                    Opacity = elemento.Tipo == TipoElemento.Omitida ? 0.5 : 1
-                });
-            }
         }
 
         private void BtnPausar_Click(object sender, RoutedEventArgs e) => PausaSolicitada?.Invoke(this, EventArgs.Empty);

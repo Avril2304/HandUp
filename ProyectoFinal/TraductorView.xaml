@@ -235,6 +235,42 @@
                             <ComboBoxItem Content="Normal (1,2 s por letra)" IsSelected="True"/>
                             <ComboBoxItem Content="Rápida (0,7 s por letra)"/>
                         </ComboBox>
+
+                        <!-- Exportar la traducción como video MP4 (seña a la izquierda, panel con la frase a la derecha) -->
+                        <Button x:Name="btnExportar" Style="{StaticResource SecondaryButton}" Margin="0,14,0,0" IsEnabled="False"
+                                Click="BtnExportar_Click" AutomationProperties.Name="Exportar la traducción como video"
+                                ToolTip="Guardar la traducción como video MP4 (E)">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="&#xE714;" FontFamily="{StaticResource FontIconos}" FontSize="14" VerticalAlignment="Center"/>
+                                <TextBlock Text="Exportar video" Margin="8,0,0,0" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+
+                        <!-- Avance de la exportación -->
+                        <Border x:Name="pnlExportando" Visibility="Collapsed" Margin="0,10,0,0" CornerRadius="10" Padding="12,8"
+                                Background="{DynamicResource BrushAccentSoft}" BorderBrush="{DynamicResource BrushBorderAccent}" BorderThickness="1.5">
+                            <StackPanel>
+                                <TextBlock x:Name="lblExportando" FontSize="13" Foreground="{DynamicResource BrushAccentDark}"
+                                           AutomationProperties.LiveSetting="Polite"/>
+                                <ProgressBar x:Name="barExportando" Height="6" Minimum="0" Maximum="100" Margin="0,6,0,0"
+                                             Foreground="{DynamicResource BrushAccent}" Background="{DynamicResource BrushTrack}" BorderThickness="0"
+                                             AutomationProperties.Name="Avance de la exportación"/>
+                                <Button x:Name="btnCancelarExportacion" Style="{StaticResource LinkButton}" Content="Cancelar"
+                                        HorizontalAlignment="Left" Margin="0,4,0,0" Click="BtnCancelarExportacion_Click"
+                                        AutomationProperties.Name="Cancelar la exportación del video"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Resultado de la exportación -->
+                        <Border x:Name="pnlExportado" Visibility="Collapsed" Margin="0,10,0,0" CornerRadius="10" Padding="12,8"
+                                Background="{DynamicResource BrushSuccessBg}" BorderBrush="{DynamicResource BrushSuccess}" BorderThickness="1.5">
+                            <StackPanel>
+                                <TextBlock x:Name="lblExportado" FontSize="13" TextWrapping="Wrap" Foreground="{DynamicResource BrushSuccess}"
+                                           AutomationProperties.LiveSetting="Polite"/>
+                                <Button x:Name="btnMostrarVideo" Style="{StaticResource LinkButton}" Content="Mostrar en la carpeta"
+                                        HorizontalAlignment="Left" Margin="0,4,0,0" Click="BtnMostrarVideo_Click"/>
+                            </StackPanel>
+                        </Border>
                     </StackPanel>
                 </Grid>
             </Border>

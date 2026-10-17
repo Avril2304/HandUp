@@ -1,0 +1,59 @@
+<UserControl x:Class="ProyectoFinal.PanelVideoTraduccion"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Width="1280" Height="720" Background="#101010">
+    <!-- Fondo de cada cuadro del video exportado (1280x720). A la izquierda queda el lugar de la seña,
+         que el editor de video superpone encima; a la derecha, lo mismo que la pantalla completa del Traductor. -->
+    <Grid>
+        <!-- Encabezado -->
+        <StackPanel Orientation="Horizontal" Margin="32,26,0,0" VerticalAlignment="Top">
+            <TextBlock Text="HandUp" FontFamily="{StaticResource FontHeading}" FontSize="26" FontWeight="Bold" Foreground="#F1EFE8"/>
+            <TextBlock Text="Traducción a Lengua de Señas Argentina" FontSize="17" Foreground="#888780"
+                       VerticalAlignment="Bottom" Margin="14,0,0,3"/>
+        </StackPanel>
+
+        <!-- Lugar de la seña (ZonaSena en el código): el video o la imagen se superponen acá -->
+        <Border Margin="32,90,0,0" Width="820" Height="540" HorizontalAlignment="Left" VerticalAlignment="Top"
+                Background="#000000"/>
+
+        <!-- Texto completo que se tradujo -->
+        <TextBlock x:Name="lblTexto" Margin="32,646,428,0" VerticalAlignment="Top" FontSize="19" Foreground="#B4B2A9"
+                   TextTrimming="CharacterEllipsis"/>
+
+        <!-- Panel lateral -->
+        <Border Margin="884,90,32,90" BorderBrush="#444441" BorderThickness="1.5,0,0,0" Padding="28,0,0,0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel>
+                    <TextBlock Text="AHORA" FontSize="15" FontWeight="Bold" Foreground="#888780"/>
+                    <TextBlock x:Name="lblAhora" FontFamily="{StaticResource FontHeading}" FontSize="58" FontWeight="Bold"
+                               Foreground="#F1EFE8" TextWrapping="Wrap" Margin="0,2,0,0"/>
+                    <TextBlock x:Name="lblDetalle" FontSize="17" Foreground="#B4B2A9" TextWrapping="Wrap" Margin="0,4,0,0"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Margin="0,24,0,0">
+                    <TextBlock Text="FRASE" FontSize="15" FontWeight="Bold" Foreground="#888780"/>
+                    <WrapPanel x:Name="pnlFrase" Margin="0,10,0,0"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="2">
+                    <TextBlock x:Name="lblAvance" FontSize="15" FontWeight="Bold" Foreground="#888780"/>
+                    <Border Height="7" CornerRadius="3.5" Margin="0,8,0,0" Background="#444441" ClipToBounds="True">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition x:Name="colAvanceLleno" Width="0*"/>
+                                <ColumnDefinition x:Name="colAvanceVacio" Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <Border CornerRadius="3.5" Background="#1D9E75"/>
+                        </Grid>
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>
