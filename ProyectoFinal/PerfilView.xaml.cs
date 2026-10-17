@@ -9,11 +9,12 @@ using System.Windows.Media;
 
 namespace ProyectoFinal
 {
-    public partial class PerfilView : UserControl
+    public partial class PerfilView : UserControl, IVistaDeSeccion
     {
         // Igual que las demás vistas: no navega por su cuenta, avisa y el menú principal decide
         public event EventHandler? VolverSolicitado;
         public event EventHandler<Seccion>? NavegacionSolicitada;
+        public event EventHandler? CerrarSesionSolicitado;
 
         // Una estadística: cómo se llama, su ícono y cómo sacar del perfil el valor y una aclaración corta
         private record Estadistica(string Nombre, string Glifo, Func<Perfil, (string Valor, string Detalle)> Calcular);
@@ -27,7 +28,7 @@ namespace ProyectoFinal
             new("Dominadas", "", p => (Numero(p.SenasDominadas), $"de {Numero(TotalSenas)} señas")),
             new("Puntos", "", p => (Numero(p.Puntos), "acumulados")),
             new("Racha actual", "", p => (Numero(p.Racha), "aciertos seguidos")),
-            // La mejor racha nunca puede ser menor que la actual (los perfiles de ejemplo traen racha sin mejor racha)
+            // La mejor racha nunca puede ser menor que la actual (Database ya lo corrige al arrancar; esto es por las dudas)
             new("Mejor racha", "", p => (Numero(Math.Max(p.MejorRacha, p.Racha)), "tu récord")),
         };
 
@@ -47,6 +48,9 @@ namespace ProyectoFinal
 
         private readonly ServicioProgreso _servicio;
         private readonly Dictionary<Estadistica, (Label Tarjeta, TextBlock Valor, TextBlock Detalle)> _tarjetas = new();
+
+        // El último perfil mostrado (de ahí sale el nombre actual al editarlo)
+        private Perfil? _perfilMostrado;
 
         public PerfilView(Perfil perfil, ServicioProgreso servicio)
         {
@@ -94,6 +98,7 @@ namespace ProyectoFinal
 
         private void Mostrar(Perfil perfil)
         {
+            _perfilMostrado = perfil;
             ProgresoNivel progreso = Niveles.ProgresoDe(perfil);
             string desde = perfil.FechaRegistro.ToString("d 'de' MMMM 'de' yyyy", Cultura);
 
@@ -182,6 +187,89 @@ namespace ProyectoFinal
         }
 
         private static string Numero(int valor) => valor.ToString("N0", Cultura);
+
+        // ===== Cuenta =====
+
+        private void BtnEditarNombre_Click(object sender, RoutedEventArgs e)
+        {
+            lblCuentaOk.Visibility = Visibility.Collapsed;
+            lblErrorNombre.Visibility = Visibility.Collapsed;
+            txtNombre.Text = _perfilMostrado?.Nombre ?? string.Empty;
+            pnlEditarNombre.Visibility = Visibility.Visible;
+            Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Input, () =>
+            {
+                txtNombre.Focus();
+                txtNombre.SelectAll();
+            });
+        }
+
+        private void BtnGuardarNombre_Click(object sender, RoutedEventArgs e) => GuardarNombre();
+        private void BtnCancelarNombre_Click(object sender, RoutedEventArgs e) => CancelarEdicionNombre();
+
+        private void TxtNombre_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.Return)
+            {
+                GuardarNombre();
+                e.Handled = true;
+            }
+        }
+
+        // Si queda vacío, ServicioProgreso lanza InvalidInputException y se muestra el mensaje sin cerrar la edición.
+        // Al guardar se dispara ProgresoActualizado: esta vista y el saludo del menú se actualizan solos.
+        private void GuardarNombre()
+        {
+            try
+            {
+                _servicio.CambiarNombre(txtNombre.Text);
+                pnlEditarNombre.Visibility = Visibility.Collapsed;
+                lblCuentaOk.Text = "✓ Nombre actualizado.";
+                lblCuentaOk.Visibility = Visibility.Visible;
+                btnEditarNombre.Focus();
+            }
+            catch (InvalidInputException ex)
+            {
+                MostrarErrorNombre(ex.Message);
+            }
+            catch (Exception ex) when (ex is DatabaseException or UserNotFoundException)
+            {
+                MostrarErrorNombre($"No se pudo guardar el nombre. {ex.Message}");
+            }
+        }
+
+        private void MostrarErrorNombre(string mensaje)
+        {
+            lblErrorNombre.Text = $"✗ {mensaje}";
+            lblErrorNombre.Visibility = Visibility.Visible;
+            txtNombre.Focus();
+        }
+
+        private void CancelarEdicionNombre()
+        {
+            pnlEditarNombre.Visibility = Visibility.Collapsed;
+            lblErrorNombre.Visibility = Visibility.Collapsed;
+            btnEditarNombre.Focus();
+        }
+
+        // El progreso ya se guarda solo; el menú principal se encarga de volver al login
+        private void BtnCerrarSesion_Click(object sender, RoutedEventArgs e)
+        {
+            CerrarSesionSolicitado?.Invoke(this, EventArgs.Empty);
+        }
+
+        // ===== IVistaDeSeccion =====
+
+        public void EnfocarContenido() => datoIdentidad.Focus();
+
+        // Esc: si se está editando el nombre, cancela la edición; si no, el menú vuelve al inicio
+        public bool VolverUnPaso()
+        {
+            if (pnlEditarNombre.Visibility != Visibility.Visible)
+                return false;
+
+            CancelarEdicionNombre();
+            return true;
+        }
 
         // ===== Navegación =====
 

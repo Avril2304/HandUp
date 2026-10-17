@@ -190,6 +190,63 @@
                     </StackPanel>
                 </Border>
 
+                <!-- Tarjeta: cuenta (story "gestionar mi cuenta": por ahora editar el nombre y cerrar sesión) -->
+                <Border Background="{DynamicResource BrushCard}" BorderBrush="{DynamicResource BrushBorder}" BorderThickness="1.5"
+                        CornerRadius="18" Padding="26,18" Margin="0,12,0,0">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="&#xE77B;" FontFamily="{StaticResource FontIconos}" FontSize="16"
+                                       Foreground="{DynamicResource BrushAccent}" VerticalAlignment="Center"/>
+                            <TextBlock Text="CUENTA" FontSize="12" FontWeight="Bold" Foreground="{DynamicResource BrushMuted}"
+                                       Margin="8,0,0,0" VerticalAlignment="Center"/>
+                        </StackPanel>
+
+                        <WrapPanel Margin="0,12,0,0">
+                            <Button x:Name="btnEditarNombre" Style="{StaticResource SecondaryButton}" Margin="0,0,10,0"
+                                    Click="BtnEditarNombre_Click" AutomationProperties.Name="Editar tu nombre">
+                                <StackPanel Orientation="Horizontal" Margin="16,0">
+                                    <TextBlock Text="&#xE70F;" FontFamily="{StaticResource FontIconos}" FontSize="14" VerticalAlignment="Center"/>
+                                    <TextBlock Text="Editar nombre" Margin="8,0,0,0" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                            <Button x:Name="btnCerrarSesion" Style="{StaticResource SecondaryButton}"
+                                    Click="BtnCerrarSesion_Click" AutomationProperties.Name="Cerrar sesión y volver al inicio de sesión">
+                                <StackPanel Orientation="Horizontal" Margin="16,0">
+                                    <TextBlock Text="&#xE7E8;" FontFamily="{StaticResource FontIconos}" FontSize="14" VerticalAlignment="Center"/>
+                                    <TextBlock Text="Cerrar sesión" Margin="8,0,0,0" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                        </WrapPanel>
+
+                        <!-- Edición del nombre: Enter guarda, Esc cancela -->
+                        <StackPanel x:Name="pnlEditarNombre" Visibility="Collapsed" Margin="0,16,0,0">
+                            <TextBlock Text="Nombre" Style="{StaticResource FieldLabel}"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" MaxWidth="360"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="8"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox x:Name="txtNombre" Style="{StaticResource RoundedTextBox}" MaxLength="60"
+                                         KeyDown="TxtNombre_KeyDown" AutomationProperties.Name="Nuevo nombre. Enter para guardar, Escape para cancelar"/>
+                                <Button Grid.Column="2" Style="{StaticResource PrimaryButton}" Height="40" Width="110"
+                                        Content="Guardar" Click="BtnGuardarNombre_Click" AutomationProperties.Name="Guardar el nombre"/>
+                                <Button Grid.Column="4" Style="{StaticResource SecondaryButton}" Height="40" Width="110"
+                                        Content="Cancelar" Click="BtnCancelarNombre_Click" AutomationProperties.Name="Cancelar la edición del nombre"/>
+                            </Grid>
+                            <TextBlock x:Name="lblErrorNombre" FontSize="13" Foreground="{DynamicResource BrushError}" TextWrapping="Wrap"
+                                       Margin="2,6,0,0" Visibility="Collapsed" AutomationProperties.LiveSetting="Assertive"/>
+                        </StackPanel>
+
+                        <!-- Confirmación después de guardar (con símbolo, no solo color) -->
+                        <TextBlock x:Name="lblCuentaOk" FontSize="13" FontWeight="SemiBold" Foreground="{DynamicResource BrushSuccess}"
+                                   Margin="2,12,0,0" Visibility="Collapsed" AutomationProperties.LiveSetting="Polite"/>
+                    </StackPanel>
+                </Border>
+
             </StackPanel>
         </ScrollViewer>
     </Grid>

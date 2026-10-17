@@ -185,6 +185,7 @@ namespace ProyectoFinal
                 var miPerfil = new PerfilView(_perfil, _servicio);
                 miPerfil.VolverSolicitado += (s, e) => MostrarInicio();
                 miPerfil.NavegacionSolicitada += (s, seccion) => Navegar(seccion);
+                miPerfil.CerrarSesionSolicitado += (s, e) => CerrarSesion();
                 return miPerfil;
             }
 
@@ -233,6 +234,15 @@ namespace ProyectoFinal
         }
 
         private void Salir_Click(object sender, RoutedEventArgs e) => Salir();
+
+        // Vuelve al login sin cerrar la app (Closing guarda el progreso, como siempre).
+        // El tema vuelve al normal: si no, el próximo que inicie sesión heredaría el alto contraste de este perfil.
+        private void CerrarSesion()
+        {
+            TemaVisual.Aplicar(false);
+            new LoginWindow().Show(); // se abre antes de cerrar el menú, así la app no se queda sin ventanas
+            Close();
+        }
 
         private void Salir()
         {

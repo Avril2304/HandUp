@@ -67,6 +67,26 @@ namespace ProyectoFinal
             GuardarProgreso("SenasDominadas");
         }
 
+        // Cambia el nombre visible del perfil (Mi perfil). El menú se entera por ProgresoActualizado y actualiza el saludo.
+        public void CambiarNombre(string nuevoNombre)
+        {
+            string nombre = (nuevoNombre ?? string.Empty).Trim();
+            if (nombre.Length == 0)
+                throw new InvalidInputException("El nombre no puede quedar vacío.");
+
+            string anterior = _perfil.Nombre;
+            _perfil.Nombre = nombre;
+            try
+            {
+                GuardarProgreso("Nombre");
+            }
+            catch (Exception ex) when (ex is DatabaseException or UserNotFoundException)
+            {
+                _perfil.Nombre = anterior; // si no se pudo guardar, en pantalla queda el nombre de antes
+                throw;
+            }
+        }
+
         private void RecalcularNivel()
         {
             _perfil.Nivel = Niveles.Actualizar(_perfil.Nivel, _perfil.SenasDominadas);
