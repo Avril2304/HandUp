@@ -10,7 +10,7 @@ namespace ProyectoFinal
     public class RepositorioPerfiles : IRepositorio<Perfil>
     {
         private const string ColumnasPerfil =
-            "Id, Nombre, Usuario, PasswordHash, PasswordSalt, Nivel, Racha, MejorRacha, SenasDominadas, Puntos, AciertosTotales, FallosTotales, FechaRegistro";
+            "Id, Nombre, Usuario, PasswordHash, PasswordSalt, Nivel, Racha, MejorRacha, SenasDominadas, Puntos, AciertosTotales, FallosTotales, FechaRegistro, NivelDesbloqueado";
 
         public IReadOnlyList<Perfil> ObtenerTodos()
         {
@@ -60,7 +60,7 @@ namespace ProyectoFinal
                 using var comando = conexion.CreateCommand();
                 comando.CommandText = @"
                     UPDATE Perfiles SET
-                        Nombre = $nombre, PasswordHash = $hash, PasswordSalt = $sal, Nivel = $nivel,
+                        Nombre = $nombre, PasswordHash = $hash, PasswordSalt = $sal, Nivel = $nivel, NivelDesbloqueado = $desbloqueado,
                         Racha = $racha, MejorRacha = $mejor, SenasDominadas = $senas, Puntos = $puntos,
                         AciertosTotales = $aciertos, FallosTotales = $fallos
                     WHERE Id = $id;";
@@ -68,6 +68,7 @@ namespace ProyectoFinal
                 comando.Parameters.AddWithValue("$hash", perfil.PasswordHash);
                 comando.Parameters.AddWithValue("$sal", perfil.PasswordSalt);
                 comando.Parameters.AddWithValue("$nivel", perfil.Nivel);
+                comando.Parameters.AddWithValue("$desbloqueado", perfil.NivelDesbloqueado);
                 comando.Parameters.AddWithValue("$racha", perfil.Racha);
                 comando.Parameters.AddWithValue("$mejor", perfil.MejorRacha);
                 comando.Parameters.AddWithValue("$senas", perfil.SenasDominadas);
@@ -116,13 +117,31 @@ namespace ProyectoFinal
             });
         }
 
-        // Borra el progreso por seña de un perfil (al reiniciar el progreso desde Mi perfil)
+        // Cuántas señas de un nivel (1 a 4) tiene dominadas el perfil. Es lo que muestra la barra de progreso del nivel.
+        public int ContarDominadasDelNivel(int perfilId, int nivel)
+        {
+            return Database.Ejecutar(conexion =>
+            {
+                using var comando = conexion.CreateCommand();
+                comando.CommandText = @"
+                    SELECT COUNT(*) FROM ProgresoSenas p
+                    JOIN Senas s ON s.Id = p.SenaId
+                    WHERE p.PerfilId = $id AND p.Dominada = 1 AND s.Dificultad = $nivel;";
+                comando.Parameters.AddWithValue("$id", perfilId);
+                comando.Parameters.AddWithValue("$nivel", nivel);
+                return Convert.ToInt32(comando.ExecuteScalar());
+            });
+        }
+
+        // Borra el progreso por seña y los resultados de las pruebas finales de un perfil (al reiniciar el progreso desde Mi perfil)
         public void BorrarProgresoSenas(int perfilId)
         {
             Database.Ejecutar(conexion =>
             {
                 using var comando = conexion.CreateCommand();
-                comando.CommandText = "DELETE FROM ProgresoSenas WHERE PerfilId = $id;";
+                comando.CommandText = @"
+                    DELETE FROM ProgresoSenas WHERE PerfilId = $id;
+                    DELETE FROM PruebasFinales WHERE PerfilId = $id;";
                 comando.Parameters.AddWithValue("$id", perfilId);
                 comando.ExecuteNonQuery();
             });
@@ -134,7 +153,7 @@ namespace ProyectoFinal
             int filasAfectadas = Database.Ejecutar(conexion =>
             {
                 using var transaccion = conexion.BeginTransaction();
-                foreach (string tabla in new[] { "ProgresoSenas", "Preferencias" })
+                foreach (string tabla in new[] { "ProgresoSenas", "PruebasFinales", "Preferencias" })
                 {
                     using var borrarDatos = conexion.CreateCommand();
                     borrarDatos.Transaction = transaccion;
@@ -255,14 +274,15 @@ namespace ProyectoFinal
             using var comando = conexion.CreateCommand();
             comando.Transaction = transaccion;
             comando.CommandText = @"
-                INSERT INTO Perfiles (Nombre, Usuario, PasswordHash, PasswordSalt, Nivel, Racha, MejorRacha, SenasDominadas, Puntos, AciertosTotales, FallosTotales, FechaRegistro)
-                VALUES ($nombre, $usuario, $hash, $sal, $nivel, $racha, $mejor, $senas, $puntos, $aciertos, $fallos, $fecha);
+                INSERT INTO Perfiles (Nombre, Usuario, PasswordHash, PasswordSalt, Nivel, NivelDesbloqueado, Racha, MejorRacha, SenasDominadas, Puntos, AciertosTotales, FallosTotales, FechaRegistro)
+                VALUES ($nombre, $usuario, $hash, $sal, $nivel, $desbloqueado, $racha, $mejor, $senas, $puntos, $aciertos, $fallos, $fecha);
                 SELECT last_insert_rowid();";
             comando.Parameters.AddWithValue("$nombre", perfil.Nombre);
             comando.Parameters.AddWithValue("$usuario", perfil.Usuario);
             comando.Parameters.AddWithValue("$hash", perfil.PasswordHash);
             comando.Parameters.AddWithValue("$sal", perfil.PasswordSalt);
             comando.Parameters.AddWithValue("$nivel", perfil.Nivel);
+            comando.Parameters.AddWithValue("$desbloqueado", perfil.NivelDesbloqueado);
             comando.Parameters.AddWithValue("$racha", perfil.Racha);
             comando.Parameters.AddWithValue("$mejor", perfil.MejorRacha);
             comando.Parameters.AddWithValue("$senas", perfil.SenasDominadas);
@@ -288,7 +308,8 @@ namespace ProyectoFinal
                 Usuario = lector.GetString(2),
                 PasswordHash = lector.GetString(3),
                 PasswordSalt = lector.GetString(4),
-                Nivel = lector.GetString(5),
+                // El nivel sale del número desbloqueado; la columna Nivel (texto) se sigue guardando para leer la base a mano
+                NivelDesbloqueado = lector.GetInt32(13),
                 Racha = lector.GetInt32(6),
                 MejorRacha = lector.GetInt32(7),
                 SenasDominadas = lector.GetInt32(8),

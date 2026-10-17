@@ -12,7 +12,20 @@ namespace ProyectoFinal
         public string PasswordHash { get; set; } = string.Empty;
         public string PasswordSalt { get; set; } = string.Empty;
 
-        public string Nivel { get; set; } = "Principiante";
+        // Nivel más alto que tiene desbloqueado (1 = Principiante ... 4 = Avanzado). Solo sube aprobando la prueba final.
+        private int _nivelDesbloqueado = 1;
+        public int NivelDesbloqueado
+        {
+            get => _nivelDesbloqueado;
+            set => _nivelDesbloqueado = Math.Clamp(value, 1, Niveles.Nombres.Count);
+        }
+
+        // Nombre del nivel desbloqueado ("Principiante", "Básico"...). Es otra forma de leer y escribir NivelDesbloqueado.
+        public string Nivel
+        {
+            get => Niveles.NombreDe(NivelDesbloqueado);
+            set => NivelDesbloqueado = Niveles.NumeroDe(value);
+        }
         public int Racha { get; set; } = 0;
         public int MejorRacha { get; set; } = 0;
         public int SenasDominadas { get; set; } = 0;

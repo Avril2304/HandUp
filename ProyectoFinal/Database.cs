@@ -105,7 +105,16 @@ namespace ProyectoFinal
                     Puntos         INTEGER NOT NULL DEFAULT 0,
                     AciertosTotales INTEGER NOT NULL DEFAULT 0,
                     FallosTotales  INTEGER NOT NULL DEFAULT 0,
-                    FechaRegistro  TEXT    NOT NULL
+                    FechaRegistro  TEXT    NOT NULL,
+                    NivelDesbloqueado INTEGER NOT NULL DEFAULT 1 CHECK (NivelDesbloqueado BETWEEN 1 AND 4)
+                );
+
+                -- Mejor resultado de cada perfil en la prueba final de cada nivel (con 80% o más se desbloquea el siguiente)
+                CREATE TABLE IF NOT EXISTS PruebasFinales (
+                    PerfilId        INTEGER NOT NULL REFERENCES Perfiles(Id),
+                    Nivel           INTEGER NOT NULL CHECK (Nivel BETWEEN 1 AND 4),
+                    MejorPorcentaje INTEGER NOT NULL CHECK (MejorPorcentaje BETWEEN 0 AND 100),
+                    PRIMARY KEY (PerfilId, Nivel)
                 );
 
                 CREATE TABLE IF NOT EXISTS ProgresoSenas (
@@ -162,7 +171,57 @@ namespace ProyectoFinal
             comando.ExecuteNonQuery();
 
             MigrarEsquemaProgreso(conexion);
+            MigrarNivelDesbloqueado(conexion);
             CorregirMejorRacha(conexion);
+        }
+
+        private const string ClaveMigracionNivel = "MigracionNivelDesbloqueado";
+
+        // Corre una sola vez por base (queda marcada en Metadatos). Las bases anteriores tenían solo el nombre del nivel,
+        // y la columna NivelDesbloqueado se agregó con 1: cada perfil conserva el nivel que ya tenía.
+        private static void MigrarNivelDesbloqueado(SqliteConnection conexion)
+        {
+            using var transaccion = conexion.BeginTransaction();
+
+            using (var consultarMarca = conexion.CreateCommand())
+            {
+                consultarMarca.Transaction = transaccion;
+                consultarMarca.CommandText = "SELECT COUNT(*) FROM Metadatos WHERE Clave = $clave;";
+                consultarMarca.Parameters.AddWithValue("$clave", ClaveMigracionNivel);
+                if (Convert.ToInt64(consultarMarca.ExecuteScalar()) > 0)
+                    return;
+            }
+
+            var niveles = new List<(long Id, string Nivel)>();
+            using (var leer = conexion.CreateCommand())
+            {
+                leer.Transaction = transaccion;
+                leer.CommandText = "SELECT Id, Nivel FROM Perfiles;";
+                using SqliteDataReader lector = leer.ExecuteReader();
+                while (lector.Read())
+                    niveles.Add((lector.GetInt64(0), lector.GetString(1)));
+            }
+
+            foreach (var (id, nivel) in niveles)
+            {
+                using var actualizar = conexion.CreateCommand();
+                actualizar.Transaction = transaccion;
+                actualizar.CommandText = "UPDATE Perfiles SET NivelDesbloqueado = $numero WHERE Id = $id;";
+                actualizar.Parameters.AddWithValue("$numero", Niveles.NumeroDe(nivel));
+                actualizar.Parameters.AddWithValue("$id", id);
+                actualizar.ExecuteNonQuery();
+            }
+
+            using (var marcar = conexion.CreateCommand())
+            {
+                marcar.Transaction = transaccion;
+                marcar.CommandText = "INSERT INTO Metadatos (Clave, Valor) VALUES ($clave, $valor);";
+                marcar.Parameters.AddWithValue("$clave", ClaveMigracionNivel);
+                marcar.Parameters.AddWithValue("$valor", DateTime.Now.ToString("o", System.Globalization.CultureInfo.InvariantCulture));
+                marcar.ExecuteNonQuery();
+            }
+
+            transaccion.Commit();
         }
 
         // La mejor racha nunca puede ser menor que la racha actual. Las bases creadas con versiones anteriores
@@ -180,7 +239,8 @@ namespace ProyectoFinal
                 "ALTER TABLE Perfiles ADD COLUMN MejorRacha INTEGER NOT NULL DEFAULT 0;",
                 "ALTER TABLE Perfiles ADD COLUMN AciertosTotales INTEGER NOT NULL DEFAULT 0;",
                 "ALTER TABLE Perfiles ADD COLUMN FallosTotales INTEGER NOT NULL DEFAULT 0;",
-                "ALTER TABLE Preferencias ADD COLUMN BarraColapsada INTEGER NOT NULL DEFAULT 0;"
+                "ALTER TABLE Preferencias ADD COLUMN BarraColapsada INTEGER NOT NULL DEFAULT 0;",
+                "ALTER TABLE Perfiles ADD COLUMN NivelDesbloqueado INTEGER NOT NULL DEFAULT 1 CHECK (NivelDesbloqueado BETWEEN 1 AND 4);"
             };
 
             foreach (var alter in columnasAAgregar)

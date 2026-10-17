@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace ProyectoFinal
@@ -39,52 +40,42 @@ namespace ProyectoFinal
             return Respaldo;
         }
 
-        // Avance del perfil dentro de su nivel actual (no del total de la app)
+        // Nombres de los 4 niveles, en orden. No dependen de la base: los usa Perfil para pasar del número al nombre.
+        public static IReadOnlyList<string> Nombres { get; } = Respaldo.Select(n => n.Nombre).ToArray();
+
+        // "Básico" -> 2. No distingue mayúsculas ni tildes; si el nivel no existe (un dato viejo o editado a mano) se toma Principiante.
+        public static int NumeroDe(string? nivel)
+        {
+            for (int i = 0; i < Nombres.Count; i++)
+            {
+                if (string.Compare(Nombres[i], nivel?.Trim(), CultureInfo.InvariantCulture,
+                        CompareOptions.IgnoreCase | CompareOptions.IgnoreNonSpace) == 0)
+                    return i + 1;
+            }
+            return 1;
+        }
+
+        // 2 -> "Básico"
+        public static string NombreDe(int numero) => Nombres[Math.Clamp(numero, 1, Nombres.Count) - 1];
+
+        // Avance del perfil dentro de su nivel actual: señas de ese nivel que ya dominó (según ProgresoSenas)
         public static ProgresoNivel ProgresoDe(Perfil perfil)
         {
-            int indice = IndiceDe(perfil.Nivel);
-
-            int senasNivelesAnteriores = 0;
-            for (int i = 0; i < indice; i++)
-                senasNivelesAnteriores += Todos[i].Cantidad;
-
+            int indice = perfil.NivelDesbloqueado - 1;
             int total = Todos[indice].Cantidad;
-            int dominadas = Math.Clamp(perfil.SenasDominadas - senasNivelesAnteriores, 0, total);
+
+            int dominadas = 0;
+            try
+            {
+                dominadas = new RepositorioPerfiles().ContarDominadasDelNivel(perfil.Id, perfil.NivelDesbloqueado);
+            }
+            catch (DatabaseException)
+            {
+                // Sin base mostramos la barra vacía; la app sigue funcionando
+            }
+
             string? siguiente = indice + 1 < Todos.Count ? Todos[indice + 1].Nombre : null;
-
-            return new ProgresoNivel(Todos[indice].Nombre, dominadas, total, siguiente);
-        }
-
-        // Nivel que corresponde a una cantidad de señas dominadas en total
-        public static string SegunSenasDominadas(int dominadas)
-        {
-            int acumuladas = 0;
-            foreach (var (nombre, cantidad) in Todos)
-            {
-                acumuladas += cantidad;
-                if (dominadas < acumuladas)
-                    return nombre;
-            }
-            return Todos[Todos.Count - 1].Nombre;
-        }
-
-        // Nivel nuevo del perfil después de dominar más señas: puede subir, pero nunca bajar.
-        // Así se conserva el nivel que ya tenía (el que eligió al registrarse o el de una versión anterior).
-        public static string Actualizar(string nivelActual, int dominadas)
-        {
-            int indice = Math.Max(IndiceDe(nivelActual), IndiceDe(SegunSenasDominadas(dominadas)));
-            return Todos[indice].Nombre;
-        }
-
-        // Si el nivel guardado no existe (un dato viejo o editado a mano), se toma Principiante
-        private static int IndiceDe(string nivel)
-        {
-            for (int i = 0; i < Todos.Count; i++)
-            {
-                if (Todos[i].Nombre == nivel)
-                    return i;
-            }
-            return 0;
+            return new ProgresoNivel(Todos[indice].Nombre, Math.Clamp(dominadas, 0, total), total, siguiente);
         }
     }
 
