@@ -17,6 +17,7 @@ namespace ProyectoFinal
         public event EventHandler? CerrarSesionSolicitado;
         public event EventHandler? PerfilEliminado;
         public event EventHandler<string>? PracticarCategoriaSolicitada; // con el Id de la categoría
+        public event EventHandler? NivelacionSolicitada; // rendir la prueba de nivelación pendiente
 
         // Estado de una regla de PoliticaPassword para el checklist: "pendiente" (sin escribir), "ok" o "error"
         private record EstadoRegla(string Descripcion, string Estado);
@@ -144,6 +145,8 @@ namespace ProyectoFinal
                 : $"Siguiente nivel: {progreso.Siguiente}";
             AutomationProperties.SetName(datoProgresoNivel,
                 $"{lblTituloProgreso.Text}: {lblCuentaProgreso.Text}, {Math.Round(progreso.Proporcion * 100)} por ciento. {lblSiguienteNivel.Text}");
+
+            MostrarNivelacion(perfil);
 
             // Estadísticas, o la invitación a empezar si todavía no hay nada que mostrar
             pnlEstadisticas.Visibility = perfil.SinActividad ? Visibility.Collapsed : Visibility.Visible;
@@ -576,6 +579,48 @@ namespace ProyectoFinal
         }
 
         // --- Reiniciar progreso y eliminar perfil (piden confirmación) ---
+
+        // Si eligió un nivel más alto al registrarse y todavía no lo validó, se puede rendir acá o dejarlo de lado
+        private void MostrarNivelacion(Perfil perfil)
+        {
+            if (perfil.NivelacionPendiente is not int objetivo)
+            {
+                pnlNivelacion.Visibility = Visibility.Collapsed;
+                return;
+            }
+
+            string elegido = Niveles.NombreDe(objetivo);
+            string prueba = Niveles.NombreDe(objetivo - 1);
+            lblNivelacion.Text = $"Nivelación pendiente: {elegido}";
+            lblNivelacionDetalle.Text = $"Al registrarte elegiste {elegido}. Aprobá la prueba final de {prueba} " +
+                                        $"con {PruebaFinal.PorcentajeParaAprobar}% o más para empezar ahí. " +
+                                        $"Mientras tanto seguís en {perfil.Nivel}.";
+            AutomationProperties.SetName(btnRendirNivelacion, $"Rendir la prueba de nivelación para {elegido}");
+            pnlNivelacion.Visibility = Visibility.Visible;
+        }
+
+        private void BtnRendirNivelacion_Click(object sender, RoutedEventArgs e) =>
+            NivelacionSolicitada?.Invoke(this, EventArgs.Empty);
+
+        private void BtnDescartarNivelacion_Click(object sender, RoutedEventArgs e)
+        {
+            bool descartada = DialogoConfirmacion.Mostrar(Window.GetWindow(this),
+                "Empezar como Principiante",
+                "Ya no vas a poder rendir la prueba de nivelación: vas a avanzar de a un nivel, aprobando la prueba final de cada uno.",
+                "Empezar como Principiante", palabraClave: null, pedirPassword: false,
+                accion: _ => _servicio.DescartarNivelacion());
+
+            if (descartada)
+            {
+                lblCuentaOk.Text = "✓ Listo: empezás como Principiante.";
+                lblCuentaOk.Visibility = Visibility.Visible;
+                datoProgresoNivel.Focus();
+            }
+            else
+            {
+                btnDescartarNivelacion.Focus();
+            }
+        }
 
         private void BtnReiniciar_Click(object sender, RoutedEventArgs e)
         {

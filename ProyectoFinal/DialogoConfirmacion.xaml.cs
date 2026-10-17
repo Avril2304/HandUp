@@ -36,6 +36,9 @@ namespace ProyectoFinal
                 AutomationProperties.SetName(txtPalabra, lblPalabra.Text);
                 pnlPalabra.Visibility = Visibility.Visible;
             }
+
+            // Si no pide nada para completar, Confirmar arranca habilitado (igual el foco empieza en Cancelar)
+            btnConfirmar.IsEnabled = palabraClave is null && !pedirPassword;
         }
 
         // Devuelve true si se confirmó y la acción terminó bien

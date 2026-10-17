@@ -106,7 +106,8 @@ namespace ProyectoFinal
                     AciertosTotales INTEGER NOT NULL DEFAULT 0,
                     FallosTotales  INTEGER NOT NULL DEFAULT 0,
                     FechaRegistro  TEXT    NOT NULL,
-                    NivelDesbloqueado INTEGER NOT NULL DEFAULT 1 CHECK (NivelDesbloqueado BETWEEN 1 AND 4)
+                    NivelDesbloqueado INTEGER NOT NULL DEFAULT 1 CHECK (NivelDesbloqueado BETWEEN 1 AND 4),
+                    NivelacionPendiente INTEGER CHECK (NivelacionPendiente BETWEEN 2 AND 4)
                 );
 
                 -- Mejor resultado de cada perfil en la prueba final de cada nivel (con 80% o más se desbloquea el siguiente)
@@ -240,7 +241,8 @@ namespace ProyectoFinal
                 "ALTER TABLE Perfiles ADD COLUMN AciertosTotales INTEGER NOT NULL DEFAULT 0;",
                 "ALTER TABLE Perfiles ADD COLUMN FallosTotales INTEGER NOT NULL DEFAULT 0;",
                 "ALTER TABLE Preferencias ADD COLUMN BarraColapsada INTEGER NOT NULL DEFAULT 0;",
-                "ALTER TABLE Perfiles ADD COLUMN NivelDesbloqueado INTEGER NOT NULL DEFAULT 1 CHECK (NivelDesbloqueado BETWEEN 1 AND 4);"
+                "ALTER TABLE Perfiles ADD COLUMN NivelDesbloqueado INTEGER NOT NULL DEFAULT 1 CHECK (NivelDesbloqueado BETWEEN 1 AND 4);",
+                "ALTER TABLE Perfiles ADD COLUMN NivelacionPendiente INTEGER CHECK (NivelacionPendiente BETWEEN 2 AND 4);"
             };
 
             foreach (var alter in columnasAAgregar)

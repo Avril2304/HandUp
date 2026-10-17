@@ -62,14 +62,14 @@ namespace ProyectoFinal
             int? mejorPorcentaje = null;
             try
             {
-                mejorPorcentaje = new RepositorioPerfiles().ObtenerMejorPorcentaje(_perfil.Id, _perfil.NivelDesbloqueado);
+                mejorPorcentaje = new RepositorioPerfiles().ObtenerMejorPorcentaje(_perfil.Id, _perfil.NivelDePruebaFinal);
             }
             catch (DatabaseException)
             {
                 // Sin base no mostramos el mejor resultado; la prueba igual se puede rendir
             }
 
-            var vista = new ElegirNivelView(_perfil.NivelDesbloqueado, mejorPorcentaje);
+            var vista = new ElegirNivelView(_perfil, mejorPorcentaje);
             vista.NivelElegido += (s, nivel) =>
             {
                 MostrarCategorias(nivel);
@@ -77,6 +77,13 @@ namespace ProyectoFinal
             };
             vista.PruebaFinalSolicitada += (s, nivel) => MostrarPruebaFinal(nivel);
             return vista;
+        }
+
+        // Desde afuera (al registrarse con "Rendir ahora", o desde Mi perfil): va directo a la prueba de nivelación
+        public void RendirNivelacion()
+        {
+            if (_perfil.NivelacionPendiente is not null)
+                MostrarPruebaFinal(_perfil.NivelDePruebaFinal);
         }
 
         // Prueba final del nivel: reutiliza la pantalla de Práctica en modo prueba.
@@ -97,7 +104,9 @@ namespace ProyectoFinal
             };
 
             contenidoPaso.Content = _vistaPrueba;
-            lblPaso.Text = $"Prueba final de {Niveles.NombreDe(nivel)} · aprobás con {PruebaFinal.PorcentajeParaAprobar}% o más";
+            lblPaso.Text = _perfil.NivelacionPendiente == nivel + 1
+                ? $"Prueba de nivelación para {Niveles.NombreDe(nivel + 1)} · aprobás con {PruebaFinal.PorcentajeParaAprobar}% o más"
+                : $"Prueba final de {Niveles.NombreDe(nivel)} · aprobás con {PruebaFinal.PorcentajeParaAprobar}% o más";
             ActualizarBotonVolver("Volver a los niveles");
             _vistaPrueba.EnfocarInicio();
         }

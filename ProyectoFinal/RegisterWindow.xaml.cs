@@ -1,5 +1,6 @@
 using System;
 using System.Windows;
+using System.Windows.Automation;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -13,6 +14,7 @@ namespace ProyectoFinal
         private DispatcherTimer? _timerRedireccion;
         private int _segundosRestantes;
         private string _usuarioRegistrado = string.Empty;
+        private Perfil? _perfilRegistrado;
 
         // Estado de una regla para el checklist (Descripcion + si la contraseña actual la cumple)
         private record EstadoRegla(string Descripcion, bool Cumplida);
@@ -44,10 +46,75 @@ namespace ProyectoFinal
                 Perfil nuevoPerfil = _repositorio.Registrar(txtNombre.Text, txtUsuario.Text, txtPassword.Password, nivel);
 
                 _usuarioRegistrado = nuevoPerfil.Usuario;
+                _perfilRegistrado = nuevoPerfil;
                 MostrarExito($"¡Listo, {nuevoPerfil.Nombre}! Tu cuenta se creó correctamente.");
-                IniciarRegresoAutomatico();
+
+                if (nuevoPerfil.NivelacionPendiente is int objetivo)
+                    OfrecerNivelacion(objetivo);
+                else
+                    IniciarRegresoAutomatico();
             }
             catch (Exception ex) when (ex is InvalidInputException || ex is DatabaseException)
+            {
+                MostrarError(ex.Message);
+            }
+        }
+
+        private void BloquearFormulario()
+        {
+            btnRegistrar.IsEnabled = false;
+            txtNombre.IsEnabled = false;
+            txtUsuario.IsEnabled = false;
+            txtPassword.IsEnabled = false;
+            cmbNivel.IsEnabled = false;
+        }
+
+        // Eligió un nivel mayor a Principiante: para empezar ahí tiene que aprobar la prueba final del nivel anterior.
+        // No hay cuenta regresiva: decide entre rendirla ahora o empezar como Principiante.
+        // Si cierra sin elegir, la nivelación queda pendiente (se rinde desde Aprender o Mi perfil).
+        private void OfrecerNivelacion(int objetivo)
+        {
+            BloquearFormulario();
+            btnRegistrar.Visibility = Visibility.Collapsed; // la cuenta ya está creada: las opciones ocupan su lugar
+            string elegido = Niveles.NombreDe(objetivo);
+            string prueba = Niveles.NombreDe(objetivo - 1);
+
+            lblNivelacion.Text = $"Elegiste {elegido}. Para empezar ahí, aprobá la prueba de nivelación: la prueba final de " +
+                                 $"{prueba} ({PruebaFinal.CantidadPreguntas} señas, {PruebaFinal.PorcentajeParaAprobar}% o más). " +
+                                 $"Si no, empezás como Principiante.";
+            AutomationProperties.SetName(btnRendirAhora, $"Rendir ahora la prueba de nivelación para {elegido}");
+            pnlNivelacion.Visibility = Visibility.Visible;
+            btnRendirAhora.Focus();
+        }
+
+        // Entra directo al menú (acaba de elegir su contraseña) y abre la prueba de nivelación
+        private void BtnRendirAhora_Click(object sender, RoutedEventArgs e)
+        {
+            if (_perfilRegistrado is null)
+                return;
+
+            try
+            {
+                LoginWindow.AbrirMenu(_perfilRegistrado, rendirNivelacion: true);
+                Close();
+            }
+            catch (DatabaseException ex)
+            {
+                MostrarError(ex.Message);
+            }
+        }
+
+        private void BtnEmpezarPrincipiante_Click(object sender, RoutedEventArgs e)
+        {
+            if (_perfilRegistrado is null)
+                return;
+
+            try
+            {
+                new ServicioProgreso(_perfilRegistrado, _repositorio).DescartarNivelacion();
+                IrALogin();
+            }
+            catch (Exception ex) when (ex is DatabaseException or UserNotFoundException)
             {
                 MostrarError(ex.Message);
             }
@@ -56,11 +123,7 @@ namespace ProyectoFinal
         // Tras un registro exitoso, cuenta regresiva y vuelve sola al login (con opción de saltarla)
         private void IniciarRegresoAutomatico()
         {
-            btnRegistrar.IsEnabled = false;
-            txtNombre.IsEnabled = false;
-            txtUsuario.IsEnabled = false;
-            txtPassword.IsEnabled = false;
-            cmbNivel.IsEnabled = false;
+            BloquearFormulario();
 
             _segundosRestantes = 3;
             lblCountdown.Visibility = Visibility.Visible;

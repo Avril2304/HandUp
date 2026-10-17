@@ -74,23 +74,41 @@ namespace ProyectoFinal
 
         // Registra el resultado de la prueba final de un nivel. Guarda el mejor porcentaje (uno peor no lo pisa) y,
         // si aprobó la prueba de su nivel actual, le desbloquea el siguiente y dispara NivelDesbloqueado.
+        // Nivelación: si tiene una pendiente (eligió Intermedio al registrarse), aprobar la prueba final del nivel
+        // anterior (Básico) lo lleva directo al nivel elegido, aunque todavía no lo tuviera desbloqueado.
         public ResultadoPruebaFinal RegistrarPruebaFinal(int nivel, int aciertos, int total)
         {
             int porcentaje = PruebaFinal.Porcentaje(aciertos, total);
             int? mejorAnterior = _repositorio.ObtenerMejorPorcentaje(_perfil.Id, nivel);
             _repositorio.GuardarResultadoPrueba(_perfil.Id, nivel, porcentaje);
 
+            bool esNivelacion = _perfil.NivelacionPendiente == nivel + 1;
             bool desbloquea = PruebaFinal.Aprueba(porcentaje)
-                              && nivel == _perfil.NivelDesbloqueado
+                              && (nivel == _perfil.NivelDesbloqueado || esNivelacion)
                               && nivel < Niveles.Nombres.Count;
             if (desbloquea)
             {
                 _perfil.NivelDesbloqueado = nivel + 1;
+
+                // Si ya llegó al nivel que había elegido (por nivelación o avanzando de a uno), no queda nada pendiente
+                if (_perfil.NivelacionPendiente <= _perfil.NivelDesbloqueado)
+                    _perfil.NivelacionPendiente = null;
+
                 GuardarProgreso("Nivel");
                 OnNivelDesbloqueado(nivel);
             }
 
             return new ResultadoPruebaFinal(nivel, aciertos, total, porcentaje, mejorAnterior, desbloquea);
+        }
+
+        // "Empezar como Principiante": deja de lado la nivelación pendiente y sigue avanzando de a un nivel
+        public void DescartarNivelacion()
+        {
+            if (_perfil.NivelacionPendiente is null)
+                return;
+
+            _perfil.NivelacionPendiente = null;
+            GuardarProgreso("Nivelacion");
         }
 
         // Cambia el nombre visible del perfil (Mi perfil). El menú se entera por ProgresoActualizado y actualiza el saludo.
@@ -152,6 +170,7 @@ namespace ProyectoFinal
             _repositorio.BorrarProgresoSenas(_perfil.Id);
 
             _perfil.NivelDesbloqueado = 1;
+            _perfil.NivelacionPendiente = null;
             _perfil.SenasDominadas = 0;
             _perfil.Puntos = 0;
             _perfil.AciertosTotales = 0;
