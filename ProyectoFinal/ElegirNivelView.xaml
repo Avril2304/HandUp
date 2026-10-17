@@ -42,10 +42,16 @@
                     <TextBlock x:Name="lblPruebaDetalle" FontSize="13" TextWrapping="Wrap" Margin="23,2,0,0"
                                Foreground="{DynamicResource BrushMuted}"/>
                 </StackPanel>
-                <Button Grid.Column="1" x:Name="btnPruebaFinal" Style="{StaticResource PrimaryButton}" Margin="16,0,0,0"
-                        VerticalAlignment="Center" Click="BtnPruebaFinal_Click">
-                    <TextBlock x:Name="lblBotonPrueba" Margin="18,0"/>
-                </Button>
+                <StackPanel Grid.Column="1" Margin="16,0,0,0" VerticalAlignment="Center">
+                    <Button x:Name="btnPruebaFinal" Style="{StaticResource PrimaryButton}" Click="BtnPruebaFinal_Click">
+                        <TextBlock x:Name="lblBotonPrueba" Margin="18,0"/>
+                    </Button>
+                    <!-- Con la nivelación pendiente también se puede avanzar de a un nivel: la prueba final del nivel actual -->
+                    <Button x:Name="btnPruebaNivelActual" Style="{StaticResource SecondaryButton}" Margin="0,8,0,0"
+                            Visibility="Collapsed" Click="BtnPruebaNivelActual_Click">
+                        <TextBlock x:Name="lblBotonPruebaNivelActual" Margin="18,0"/>
+                    </Button>
+                </StackPanel>
             </Grid>
         </Border>
 

@@ -602,7 +602,10 @@ namespace ProyectoFinal
             lblNivelacion.Text = $"Nivelación pendiente: {elegido}";
             lblNivelacionDetalle.Text = $"Al registrarte elegiste {elegido}. Aprobá la prueba final de {prueba} " +
                                         $"con {PruebaFinal.PorcentajeParaAprobar}% o más para empezar ahí. " +
-                                        $"Mientras tanto seguís en {perfil.Nivel}.";
+                                        $"Mientras tanto seguís en {perfil.Nivel}" +
+                                        (objetivo - 1 > perfil.NivelDesbloqueado
+                                            ? $" y podés avanzar de a uno con la prueba final de {perfil.Nivel}, desde Aprender."
+                                            : ".");
             AutomationProperties.SetName(btnRendirNivelacion, $"Rendir la prueba de nivelación para {elegido}");
             pnlNivelacion.Visibility = Visibility.Visible;
         }

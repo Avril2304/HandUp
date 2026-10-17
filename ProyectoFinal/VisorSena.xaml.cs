@@ -44,6 +44,9 @@ namespace ProyectoFinal
         private string NombreAccesible(string tipo) =>
             OcultarPalabra ? $"{tipo} de la seña a adivinar" : $"{tipo} de la seña {_sena?.Palabra}";
 
+        // Para los mensajes de error: con OcultarPalabra tampoco se nombra la seña
+        private string DeLaSena => OcultarPalabra ? "de esta seña" : $"de la seña «{_sena?.Palabra}»";
+
         // Si lo que se está mostrando es un video (false si es una imagen o un aviso de error)
         public bool MuestraVideo => _esVideo;
 
@@ -101,12 +104,12 @@ namespace ProyectoFinal
             }
             catch (AssetNotFoundException)
             {
-                MostrarError($"Falta el archivo de la seña «{sena.Palabra}». Probá con la siguiente.");
+                MostrarError($"Falta el archivo {DeLaSena}. Probá con la siguiente.");
                 return;
             }
             catch (ArgumentException)
             {
-                MostrarError($"La ruta del archivo de la seña «{sena.Palabra}» no es válida.");
+                MostrarError($"La ruta del archivo {DeLaSena} no es válida.");
                 return;
             }
 
@@ -317,13 +320,13 @@ namespace ProyectoFinal
             }
             else
             {
-                MostrarError($"No se pudo reproducir la seña «{_sena?.Palabra}».");
+                MostrarError($"No se pudo reproducir el video {DeLaSena}.");
             }
         }
 
         private void ImgSena_ImageFailed(object? sender, ExceptionRoutedEventArgs e)
         {
-            MostrarError($"No se pudo abrir la imagen de la seña «{_sena?.Palabra}».");
+            MostrarError($"No se pudo abrir la imagen {DeLaSena}.");
         }
 
         private void Visor_Unloaded(object sender, RoutedEventArgs e) => Detener();
