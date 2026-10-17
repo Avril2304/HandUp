@@ -91,7 +91,8 @@ namespace ProyectoFinal
                 int largo = BuscarFraseMasLarga(normalizadas, esArticulo, i, out IReadOnlyList<Sena> opciones);
                 if (largo > 0)
                 {
-                    resultado.Add(ElementoTraduccion.ConSena(string.Join(' ', originales.Skip(i).Take(largo)), opciones));
+                    string escrito = string.Join(' ', originales.Skip(i).Take(largo));
+                    resultado.Add(ElementoTraduccion.ConSena(escrito, PreferirMismaTilde(opciones, escrito)));
                     i += largo;
                     continue;
                 }
@@ -111,6 +112,26 @@ namespace ProyectoFinal
             }
 
             return resultado;
+        }
+
+        // Homónimos: si lo escrito coincide con la palabra de una seña respetando las tildes, esa va primero.
+        // Así "papá" muestra a la familia y "papa", la comida. Si ninguna coincide, queda el orden de siempre.
+        private static IReadOnlyList<Sena> PreferirMismaTilde(IReadOnlyList<Sena> opciones, string escrito)
+        {
+            if (opciones.Count < 2)
+                return opciones;
+
+            string buscado = ConTildes(escrito);
+            return opciones.OrderBy(sena => ConTildes(sena.Palabra) == buscado ? 0 : 1).ToList(); // OrderBy es estable
+        }
+
+        // Minúsculas y sin signos, pero conservando las tildes: "PAPÁ" -> "papá"
+        private static string ConTildes(string texto)
+        {
+            var sb = new StringBuilder(texto.Length);
+            foreach (char c in texto.Trim().ToLower(Espanol).Normalize(NormalizationForm.FormC))
+                sb.Append(char.IsLetterOrDigit(c) ? c : ' ');
+            return Regex.Replace(sb.ToString(), @"\s+", " ").Trim();
         }
 
         // Prueba desde la palabra "inicio" la frase más larga del banco; devuelve cuántas palabras ocupa (0 = ninguna)
