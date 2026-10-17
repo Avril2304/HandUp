@@ -1,0 +1,128 @@
+<UserControl x:Class="ProyectoFinal.PartidaDesafioView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:ProyectoFinal"
+             PreviewKeyDown="Vista_PreviewKeyDown">
+    <!-- Partida del Desafío: marcador arriba (tiempo, vidas, racha, puntaje), la seña a la izquierda y las opciones a la derecha.
+         Cada dato del marcador tiene ícono y texto: nada depende solo del color. -->
+    <Grid>
+        <Grid x:Name="pnlJuego">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="14"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- ===== Marcador ===== -->
+            <Border Grid.Row="0" CornerRadius="12" Padding="16,10" Background="{DynamicResource BrushCard}"
+                    BorderBrush="{DynamicResource BrushBorder}" BorderThickness="1.5">
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0" Orientation="Horizontal">
+                            <TextBlock x:Name="icoTiempo" Text="&#xE916;" FontFamily="{StaticResource FontIconos}" FontSize="18"
+                                       VerticalAlignment="Center" Foreground="{DynamicResource BrushAccentDark}"/>
+                            <TextBlock x:Name="lblTiempo" FontSize="20" FontWeight="Bold" Margin="8,0,0,0" VerticalAlignment="Center"
+                                       Foreground="{DynamicResource BrushInk}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Orientation="Horizontal">
+                            <TextBlock x:Name="lblCorazones" FontFamily="{StaticResource FontIconos}" FontSize="17"
+                                       VerticalAlignment="Center" Foreground="{DynamicResource BrushError}"/>
+                            <TextBlock x:Name="lblVidas" FontSize="15" FontWeight="SemiBold" Margin="8,0,0,0" VerticalAlignment="Center"
+                                       Foreground="{DynamicResource BrushInk}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="2" Orientation="Horizontal">
+                            <TextBlock Text="&#xE945;" FontFamily="{StaticResource FontIconos}" FontSize="17"
+                                       VerticalAlignment="Center" Foreground="{DynamicResource BrushAccentDark}"/>
+                            <TextBlock x:Name="lblRacha" FontSize="15" FontWeight="SemiBold" Margin="8,0,0,0" VerticalAlignment="Center"
+                                       Foreground="{DynamicResource BrushInk}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="3" Orientation="Horizontal">
+                            <TextBlock Text="&#xE735;" FontFamily="{StaticResource FontIconos}" FontSize="17"
+                                       VerticalAlignment="Center" Foreground="{DynamicResource BrushAccentDark}"/>
+                            <TextBlock x:Name="lblPuntaje" FontSize="15" FontWeight="SemiBold" Margin="8,0,0,0" VerticalAlignment="Center"
+                                       Foreground="{DynamicResource BrushInk}"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- Tiempo restante como barra -->
+                    <Border Height="6" CornerRadius="3" Margin="0,10,0,0" Background="{DynamicResource BrushTrack}" ClipToBounds="True">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition x:Name="colTiempoLleno" Width="1*"/>
+                                <ColumnDefinition x:Name="colTiempoVacio" Width="0*"/>
+                            </Grid.ColumnDefinitions>
+                            <Border x:Name="barraTiempo" CornerRadius="3" Background="{DynamicResource BrushAccent}"/>
+                        </Grid>
+                    </Border>
+
+                    <!-- Avisos de tiempo (quedan 30 / 10 segundos) para el lector de pantalla y para quien no mira el reloj -->
+                    <TextBlock x:Name="lblAvisoTiempo" FontSize="12.5" FontWeight="SemiBold" Margin="0,6,0,0" Visibility="Collapsed"
+                               Foreground="{DynamicResource BrushError}" AutomationProperties.LiveSetting="Polite"/>
+                </StackPanel>
+            </Border>
+
+            <!-- ===== Pregunta ===== -->
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="340"/>
+                    <ColumnDefinition Width="26"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <local:VisorSena x:Name="visor" Grid.Column="0"/>
+
+                <StackPanel Grid.Column="2">
+                    <TextBlock Text="¿Qué seña es esta?" FontFamily="{StaticResource FontHeading}" FontSize="22" FontWeight="Bold"
+                               Margin="0,0,0,10" Foreground="{DynamicResource BrushInk}"/>
+                    <StackPanel x:Name="pnlOpciones"/>
+
+                    <!-- Resultado de la respuesta: con símbolo y texto. Se anuncia en lectores de pantalla. -->
+                    <Border x:Name="pnlFeedback" Visibility="Collapsed" CornerRadius="12" BorderThickness="1.5" Padding="14,10" Margin="0,6,0,0">
+                        <TextBlock x:Name="lblFeedback" FontSize="15" FontWeight="Bold" TextWrapping="Wrap"
+                                   AutomationProperties.LiveSetting="Assertive"/>
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </Grid>
+
+        <!-- ===== Resultado final ===== -->
+        <Border x:Name="pnlResultado" Visibility="Collapsed" Background="{DynamicResource BrushCard}"
+                BorderBrush="{DynamicResource BrushBorder}" BorderThickness="1.5" CornerRadius="18" Padding="40"
+                VerticalAlignment="Top">
+            <StackPanel>
+                <TextBlock x:Name="lblResultadoIcono" FontFamily="{StaticResource FontIconos}" FontSize="40"
+                           Foreground="{DynamicResource BrushAccent}"/>
+                <TextBlock x:Name="lblResultadoTitulo" FontFamily="{StaticResource FontHeading}" FontSize="28" FontWeight="Bold"
+                           Margin="0,12,0,0" Foreground="{DynamicResource BrushInk}" AutomationProperties.LiveSetting="Assertive"/>
+                <TextBlock x:Name="lblPuntajeFinal" FontSize="20" FontWeight="Bold" Margin="0,8,0,0"
+                           Foreground="{DynamicResource BrushAccentDark}"/>
+                <TextBlock x:Name="lblResultadoDetalle" FontSize="15" Foreground="{DynamicResource BrushMuted}"
+                           TextWrapping="Wrap" Margin="0,6,0,0"/>
+                <TextBlock x:Name="lblRecord" FontSize="15" FontWeight="SemiBold" Foreground="{DynamicResource BrushInk}"
+                           TextWrapping="Wrap" Margin="0,4,0,0"/>
+                <TextBlock x:Name="lblAvisoGuardado" FontSize="13" Foreground="{DynamicResource BrushError}"
+                           TextWrapping="Wrap" Margin="0,6,0,0" Visibility="Collapsed"/>
+                <StackPanel Orientation="Horizontal" Margin="0,26,0,0">
+                    <Button x:Name="btnJugarDeNuevo" Style="{StaticResource PrimaryButton}" Width="220"
+                            Click="BtnJugarDeNuevo_Click" Content="Jugar de nuevo"/>
+                    <Button Style="{StaticResource SecondaryButton}" Width="240" Margin="12,0,0,0"
+                            Click="BtnCambiarCategoria_Click" Content="Cambiar categoría"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <!-- Si no se puede armar la partida (ej. MazoVacioException) -->
+        <StackPanel x:Name="pnlMensaje" Visibility="Collapsed" VerticalAlignment="Top">
+            <TextBlock x:Name="lblMensaje" FontSize="14" TextWrapping="Wrap" Foreground="{DynamicResource BrushError}"/>
+            <Button Style="{StaticResource SecondaryButton}" Width="240" HorizontalAlignment="Left" Margin="0,14,0,0"
+                    Click="BtnCambiarCategoria_Click" Content="Cambiar categoría"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

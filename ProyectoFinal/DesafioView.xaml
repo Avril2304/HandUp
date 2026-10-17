@@ -1,0 +1,99 @@
+<UserControl x:Class="ProyectoFinal.DesafioView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- Sección Desafío: arriba el encabezado fijo; abajo, la configuración (nivel y categoría) o la partida -->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel>
+                <TextBlock Text="Desafío" FontFamily="{StaticResource FontHeading}" FontSize="26"
+                           FontWeight="Bold" Foreground="{DynamicResource BrushInk}"/>
+                <TextBlock x:Name="lblPaso" FontSize="13" Foreground="{DynamicResource BrushMuted}" Margin="0,2,0,0"/>
+            </StackPanel>
+            <Button Grid.Column="1" x:Name="btnVolver" Style="{StaticResource SecondaryButton}" VerticalAlignment="Top"
+                    Click="BtnVolver_Click">
+                <StackPanel Orientation="Horizontal" Margin="16,0">
+                    <TextBlock Text="&#xE72B;" FontFamily="{StaticResource FontIconos}" FontSize="14" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="lblVolver" Text="Volver al inicio" Margin="8,0,0,0" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+        </Grid>
+
+        <!-- ===== Configuración de la partida ===== -->
+        <ScrollViewer Grid.Row="2" x:Name="pnlConfig" VerticalScrollBarVisibility="Auto" Focusable="False">
+            <StackPanel Margin="0,0,6,0">
+                <!-- Reglas: con íconos y texto (no dependen del color) -->
+                <Border CornerRadius="12" Padding="16,12" Background="{DynamicResource BrushAccentSoft}"
+                        BorderBrush="{DynamicResource BrushBorderAccent}" BorderThickness="1.5">
+                    <WrapPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,2,22,2">
+                            <TextBlock Text="&#xE916;" FontFamily="{StaticResource FontIconos}" FontSize="15"
+                                       VerticalAlignment="Center" Foreground="{DynamicResource BrushAccentDark}"/>
+                            <TextBlock x:Name="lblReglaTiempo" FontSize="13.5" FontWeight="SemiBold" Margin="8,0,0,0"
+                                       VerticalAlignment="Center" Foreground="{DynamicResource BrushInk}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,2,22,2">
+                            <TextBlock Text="&#xEB52;" FontFamily="{StaticResource FontIconos}" FontSize="15"
+                                       VerticalAlignment="Center" Foreground="{DynamicResource BrushAccentDark}"/>
+                            <TextBlock x:Name="lblReglaVidas" FontSize="13.5" FontWeight="SemiBold" Margin="8,0,0,0"
+                                       VerticalAlignment="Center" Foreground="{DynamicResource BrushInk}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,2,22,2">
+                            <TextBlock Text="&#xE735;" FontFamily="{StaticResource FontIconos}" FontSize="15"
+                                       VerticalAlignment="Center" Foreground="{DynamicResource BrushAccentDark}"/>
+                            <TextBlock x:Name="lblReglaPuntos" FontSize="13.5" FontWeight="SemiBold" Margin="8,0,0,0"
+                                       VerticalAlignment="Center" Foreground="{DynamicResource BrushInk}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,2,0,2">
+                            <TextBlock Text="&#xE72C;" FontFamily="{StaticResource FontIconos}" FontSize="15"
+                                       VerticalAlignment="Center" Foreground="{DynamicResource BrushAccentDark}"/>
+                            <TextBlock Text="Las señas que fallás vuelven a aparecer más seguido" FontSize="13.5" FontWeight="SemiBold"
+                                       Margin="8,0,0,0" VerticalAlignment="Center" Foreground="{DynamicResource BrushInk}"/>
+                        </StackPanel>
+                    </WrapPanel>
+                </Border>
+
+                <TextBlock Text="1. Elegí el nivel" FontSize="15" FontWeight="Bold" Foreground="{DynamicResource BrushInk}" Margin="0,18,0,8"/>
+                <UniformGrid x:Name="pnlNiveles" Rows="1" Columns="4" Margin="0,0,-8,0"/>
+
+                <!-- Aviso de nivel bloqueado. LiveSetting: el lector de pantalla lo lee apenas aparece. -->
+                <StackPanel x:Name="avisoBloqueado" Orientation="Horizontal" Visibility="Collapsed" Margin="2,4,0,0">
+                    <TextBlock Text="&#xE72E;" FontFamily="{StaticResource FontIconos}" FontSize="14" VerticalAlignment="Center"
+                               Foreground="{DynamicResource BrushAccentDark}"/>
+                    <TextBlock x:Name="lblBloqueado" FontSize="13.5" FontWeight="SemiBold" TextWrapping="Wrap" Margin="8,0,0,0"
+                               VerticalAlignment="Center" Foreground="{DynamicResource BrushInk}"
+                               AutomationProperties.LiveSetting="Assertive"/>
+                </StackPanel>
+
+                <TextBlock x:Name="lblTituloCategorias" Text="2. Elegí la categoría" FontSize="15" FontWeight="Bold"
+                           Foreground="{DynamicResource BrushInk}" Margin="0,18,0,8"/>
+                <WrapPanel x:Name="pnlCategorias" Margin="0,0,-8,0"/>
+                <TextBlock x:Name="lblMensajeCategorias" Visibility="Collapsed" FontSize="13.5" TextWrapping="Wrap"/>
+
+                <!-- Story: "Empezar partida" deshabilitado hasta elegir una categoría -->
+                <StackPanel Orientation="Horizontal" Margin="0,18,0,6">
+                    <Button x:Name="btnEmpezar" Style="{StaticResource PrimaryButton}" IsEnabled="False" Click="BtnEmpezar_Click">
+                        <StackPanel Orientation="Horizontal" Margin="22,0">
+                            <TextBlock Text="&#xE768;" FontFamily="{StaticResource FontIconos}" FontSize="14" VerticalAlignment="Center"/>
+                            <TextBlock Text="Empezar partida" Margin="8,0,0,0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <TextBlock x:Name="lblAyudaEmpezar" Text="Elegí una categoría para empezar." FontSize="13"
+                               Foreground="{DynamicResource BrushMuted}" VerticalAlignment="Center" Margin="14,0,0,0"/>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- ===== Partida (PartidaDesafioView) ===== -->
+        <ContentControl Grid.Row="2" x:Name="contenidoPartida" Focusable="False" Visibility="Collapsed"/>
+    </Grid>
+</UserControl>
