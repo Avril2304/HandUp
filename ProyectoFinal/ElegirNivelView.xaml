@@ -4,23 +4,45 @@
              PreviewKeyDown="Vista_PreviewKeyDown">
     <!-- Paso 1 de Aprender: los 4 niveles en una grilla de 2x2. Teclas 1-4 para elegir.
          Los niveles por encima del desbloqueado se ven atenuados y con candado, pero se pueden enfocar y elegir:
-         al elegirlos aparece arriba el aviso de qué hay que aprobar para desbloquearlos. -->
+         al elegirlos aparece arriba el aviso de qué hay que aprobar para desbloquearlos.
+         Arriba está la prueba final del nivel actual (tecla P): con 80% o más se desbloquea el siguiente. -->
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Aviso de nivel bloqueado. LiveSetting: el lector de pantalla lo lee apenas aparece. -->
-        <Border x:Name="avisoBloqueado" Visibility="Collapsed" CornerRadius="12" Padding="16,12" Margin="0,0,0,14"
+        <!-- Prueba final (no aparece en el último nivel) y, cuando se elige un nivel bloqueado, el aviso -->
+        <Border x:Name="pnlPruebaFinal" Visibility="Collapsed" CornerRadius="12" Padding="16,12" Margin="0,0,0,14"
                 Background="{DynamicResource BrushAccentSoft}" BorderBrush="{DynamicResource BrushBorderAccent}" BorderThickness="1.5">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="&#xE72E;" FontFamily="{StaticResource FontIconos}" FontSize="16" VerticalAlignment="Center"
-                           Foreground="{DynamicResource BrushAccentDark}"/>
-                <TextBlock x:Name="lblBloqueado" FontSize="14" FontWeight="SemiBold" TextWrapping="Wrap" Margin="10,0,0,0"
-                           VerticalAlignment="Center" Foreground="{DynamicResource BrushInk}"
-                           AutomationProperties.LiveSetting="Assertive"/>
-            </StackPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel VerticalAlignment="Center">
+                    <!-- Aviso de nivel bloqueado. LiveSetting: el lector de pantalla lo lee apenas aparece. -->
+                    <StackPanel x:Name="filaBloqueado" Orientation="Horizontal" Visibility="Collapsed" Margin="0,0,0,6">
+                        <TextBlock Text="&#xE72E;" FontFamily="{StaticResource FontIconos}" FontSize="15" VerticalAlignment="Center"
+                                   Foreground="{DynamicResource BrushAccentDark}"/>
+                        <TextBlock x:Name="lblBloqueado" FontSize="14" FontWeight="Bold" TextWrapping="Wrap" Margin="8,0,0,0"
+                                   VerticalAlignment="Center" Foreground="{DynamicResource BrushInk}"
+                                   AutomationProperties.LiveSetting="Assertive"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="&#xE7C1;" FontFamily="{StaticResource FontIconos}" FontSize="15" VerticalAlignment="Center"
+                                   Foreground="{DynamicResource BrushAccentDark}"/>
+                        <TextBlock x:Name="lblPruebaFinal" FontSize="14" FontWeight="SemiBold" Margin="8,0,0,0"
+                                   VerticalAlignment="Center" Foreground="{DynamicResource BrushInk}"/>
+                    </StackPanel>
+                    <TextBlock x:Name="lblPruebaDetalle" FontSize="13" TextWrapping="Wrap" Margin="23,2,0,0"
+                               Foreground="{DynamicResource BrushMuted}"/>
+                </StackPanel>
+                <Button Grid.Column="1" x:Name="btnPruebaFinal" Style="{StaticResource PrimaryButton}" Margin="16,0,0,0"
+                        VerticalAlignment="Center" Click="BtnPruebaFinal_Click">
+                    <TextBlock x:Name="lblBotonPrueba" Margin="18,0"/>
+                </Button>
+            </Grid>
         </Border>
 
         <!-- El margen negativo compensa el espacio que deja cada tarjeta a su derecha y abajo -->

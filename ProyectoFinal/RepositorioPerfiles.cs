@@ -133,6 +133,37 @@ namespace ProyectoFinal
             });
         }
 
+        // Mejor porcentaje que sacó el perfil en la prueba final de un nivel; null si nunca la rindió
+        public int? ObtenerMejorPorcentaje(int perfilId, int nivel)
+        {
+            return Database.Ejecutar(conexion =>
+            {
+                using var comando = conexion.CreateCommand();
+                comando.CommandText = "SELECT MejorPorcentaje FROM PruebasFinales WHERE PerfilId = $id AND Nivel = $nivel;";
+                comando.Parameters.AddWithValue("$id", perfilId);
+                comando.Parameters.AddWithValue("$nivel", nivel);
+                object? valor = comando.ExecuteScalar();
+                return valor is null ? (int?)null : Convert.ToInt32(valor);
+            });
+        }
+
+        // Guarda el resultado de una prueba final sin pisar uno mejor que ya estuviera
+        public void GuardarResultadoPrueba(int perfilId, int nivel, int porcentaje)
+        {
+            Database.Ejecutar(conexion =>
+            {
+                using var comando = conexion.CreateCommand();
+                comando.CommandText = @"
+                    INSERT INTO PruebasFinales (PerfilId, Nivel, MejorPorcentaje) VALUES ($id, $nivel, $porcentaje)
+                    ON CONFLICT(PerfilId, Nivel) DO UPDATE SET
+                        MejorPorcentaje = MAX(MejorPorcentaje, excluded.MejorPorcentaje);";
+                comando.Parameters.AddWithValue("$id", perfilId);
+                comando.Parameters.AddWithValue("$nivel", nivel);
+                comando.Parameters.AddWithValue("$porcentaje", Math.Clamp(porcentaje, 0, 100));
+                comando.ExecuteNonQuery();
+            });
+        }
+
         // Borra el progreso por seña y los resultados de las pruebas finales de un perfil (al reiniciar el progreso desde Mi perfil)
         public void BorrarProgresoSenas(int perfilId)
         {

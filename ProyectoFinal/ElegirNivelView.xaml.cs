@@ -33,6 +33,11 @@ namespace ProyectoFinal
         // Avisa qué nivel se eligió (1-4); AprenderView decide a qué paso ir. Nunca se dispara con un nivel bloqueado.
         public event EventHandler<NivelAprendizaje>? NivelElegido;
 
+        // Se quiere rendir la prueba final de este nivel (el nivel actual del perfil)
+        public event EventHandler<int>? PruebaFinalSolicitada;
+
+        private readonly int _nivelDesbloqueado;
+
         // Frase corta de cada nivel (texto de pantalla). Nombre, señas y categorías salen de la base.
         private static readonly Dictionary<int, string> Descripciones = new()
         {
@@ -44,9 +49,12 @@ namespace ProyectoFinal
 
         private IReadOnlyList<NivelAprendizaje> _niveles = Array.Empty<NivelAprendizaje>();
 
-        public ElegirNivelView(int nivelDesbloqueado)
+        // mejorPorcentaje: el mejor resultado en la prueba final del nivel actual (null si nunca la rindió)
+        public ElegirNivelView(int nivelDesbloqueado, int? mejorPorcentaje)
         {
             InitializeComponent();
+            _nivelDesbloqueado = nivelDesbloqueado;
+            MostrarPruebaFinal(mejorPorcentaje);
 
             try
             {
@@ -59,6 +67,35 @@ namespace ProyectoFinal
                 lblError.Text = $"No se pudieron cargar los niveles. {ex.Message}";
                 lblError.Visibility = Visibility.Visible;
             }
+        }
+
+        // En el último nivel no hay prueba final: no queda nada por desbloquear
+        private bool HayPruebaFinal => _nivelDesbloqueado < Niveles.Nombres.Count;
+
+        private void MostrarPruebaFinal(int? mejorPorcentaje)
+        {
+            if (!HayPruebaFinal)
+                return;
+
+            string nivel = Niveles.NombreDe(_nivelDesbloqueado);
+            string siguiente = Niveles.NombreDe(_nivelDesbloqueado + 1);
+            string mejor = mejorPorcentaje is null ? string.Empty : $" Tu mejor resultado: {mejorPorcentaje}%.";
+
+            lblPruebaFinal.Text = $"Prueba final de {nivel}";
+            lblPruebaDetalle.Text = $"{PruebaFinal.CantidadPreguntas} señas del nivel. " +
+                                    $"Con {PruebaFinal.PorcentajeParaAprobar}% o más desbloqueás {siguiente}.{mejor}";
+            lblBotonPrueba.Text = "Rendir prueba (P)";
+            AutomationProperties.SetName(btnPruebaFinal,
+                $"Rendir la prueba final de {nivel}. {lblPruebaDetalle.Text} Atajo: tecla P");
+            pnlPruebaFinal.Visibility = Visibility.Visible;
+        }
+
+        private void BtnPruebaFinal_Click(object sender, RoutedEventArgs e) => RendirPruebaFinal();
+
+        private void RendirPruebaFinal()
+        {
+            if (HayPruebaFinal)
+                PruebaFinalSolicitada?.Invoke(this, _nivelDesbloqueado);
         }
 
         private static IReadOnlyList<NivelAprendizaje> CargarNiveles(int nivelDesbloqueado)
@@ -107,26 +144,35 @@ namespace ProyectoFinal
                 return;
             }
 
-            avisoBloqueado.Visibility = Visibility.Collapsed;
+            filaBloqueado.Visibility = Visibility.Collapsed;
             NivelElegido?.Invoke(this, nivel);
         }
 
-        // Muestra arriba qué hay que aprobar para desbloquear el nivel y se lo anuncia al lector de pantalla
+        // Muestra arriba qué hay que aprobar para desbloquear el nivel (justo encima de la prueba final)
+        // y se lo anuncia al lector de pantalla
         public void AvisarBloqueado(NivelAprendizaje nivel)
         {
             lblBloqueado.Text = nivel.MensajeBloqueado;
-            avisoBloqueado.Visibility = Visibility.Visible;
+            filaBloqueado.Visibility = Visibility.Visible;
+            pnlPruebaFinal.Visibility = Visibility.Visible;
 
             AutomationPeer? peer = UIElementAutomationPeer.FromElement(lblBloqueado)
                                    ?? UIElementAutomationPeer.CreatePeerForElement(lblBloqueado);
             peer?.RaiseAutomationEvent(AutomationEvents.LiveRegionChanged);
         }
 
-        // Teclas 1-4 (fila de números o teclado numérico) eligen el nivel directamente
+        // Teclas 1-4 (fila de números o teclado numérico) eligen el nivel directamente; P rinde la prueba final
         private void Vista_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (Keyboard.Modifiers != ModifierKeys.None)
                 return;
+
+            if (e.Key == Key.P && HayPruebaFinal)
+            {
+                RendirPruebaFinal();
+                e.Handled = true;
+                return;
+            }
 
             int numero = e.Key switch
             {
