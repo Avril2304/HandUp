@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -193,6 +193,13 @@ namespace ProyectoFinal
                 var diccionario = new DiccionarioView();
                 diccionario.VolverSolicitado += (s, e) => MostrarInicio();
                 return diccionario;
+            }
+
+            if (destino == Seccion.Traductor)
+            {
+                var traductor = new TraductorView(_preferencias);
+                traductor.VolverSolicitado += (s, e) => MostrarInicio();
+                return traductor;
             }
 
             var proximamente = new ProximamenteView(Secciones.Info[destino]);
