@@ -17,7 +17,10 @@ namespace ProyectoFinal
         private Perfil? _perfilRegistrado;
 
         // Estado de una regla para el checklist (Descripcion + si la contraseña actual la cumple)
-        private record EstadoRegla(string Descripcion, bool Cumplida);
+        private record EstadoRegla(string Descripcion, bool Cumplida)
+        {
+            public override string ToString() => $"{Descripcion}: {(Cumplida ? "cumplida" : "pendiente")}";
+        }
 
         public RegisterWindow()
         {

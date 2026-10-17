@@ -26,6 +26,9 @@ namespace ProyectoFinal
         public string NombreAccesible => Bloqueado
             ? $"{Nombre}, bloqueado. {MensajeBloqueado} Atajo: tecla {Numero}"
             : $"{Nombre}, {CantidadSenas} señas{(EsTuNivel ? ", tu nivel" : "")}. Atajo: tecla {Numero}";
+
+        // Accesibilidad: el lector de pantalla anuncia cada ítem de la lista con este texto
+        public override string ToString() => NombreAccesible;
     }
 
     public partial class ElegirNivelView : UserControl
@@ -156,6 +159,7 @@ namespace ProyectoFinal
             }
 
             filaBloqueado.Visibility = Visibility.Collapsed;
+            lblPruebaDetalle.Visibility = Visibility.Visible;
             NivelElegido?.Invoke(this, nivel);
         }
 
@@ -165,6 +169,7 @@ namespace ProyectoFinal
         {
             lblBloqueado.Text = nivel.MensajeBloqueado;
             filaBloqueado.Visibility = Visibility.Visible;
+            lblPruebaDetalle.Visibility = Visibility.Collapsed; // el aviso ya dice qué aprobar: así las tarjetas no se achican
             pnlPruebaFinal.Visibility = Visibility.Visible;
 
             AutomationPeer? peer = UIElementAutomationPeer.FromElement(lblBloqueado)

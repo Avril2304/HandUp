@@ -22,13 +22,17 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel VerticalAlignment="Center">
                     <!-- Aviso de nivel bloqueado. LiveSetting: el lector de pantalla lo lee apenas aparece. -->
-                    <StackPanel x:Name="filaBloqueado" Orientation="Horizontal" Visibility="Collapsed" Margin="0,0,0,6">
-                        <TextBlock Text="&#xE72E;" FontFamily="{StaticResource FontIconos}" FontSize="15" VerticalAlignment="Center"
+                    <Grid x:Name="filaBloqueado" Visibility="Collapsed" Margin="0,0,0,6">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="&#xE72E;" FontFamily="{StaticResource FontIconos}" FontSize="15" VerticalAlignment="Top" Margin="0,2,0,0"
                                    Foreground="{DynamicResource BrushAccentDark}"/>
-                        <TextBlock x:Name="lblBloqueado" FontSize="14" FontWeight="Bold" TextWrapping="Wrap" Margin="8,0,0,0"
+                        <TextBlock Grid.Column="1" x:Name="lblBloqueado" FontSize="14" FontWeight="Bold" TextWrapping="Wrap" Margin="8,0,0,0"
                                    VerticalAlignment="Center" Foreground="{DynamicResource BrushInk}"
                                    AutomationProperties.LiveSetting="Assertive"/>
-                    </StackPanel>
+                    </Grid>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="&#xE7C1;" FontFamily="{StaticResource FontIconos}" FontSize="15" VerticalAlignment="Center"
                                    Foreground="{DynamicResource BrushAccentDark}"/>
@@ -96,7 +100,7 @@
                             <TextBlock Grid.Row="2" Text="{Binding Descripcion}" FontSize="13"
                                        Foreground="{DynamicResource BrushMuted}" TextWrapping="Wrap" Margin="0,2,0,0"/>
 
-                            <TextBlock Grid.Row="3" Text="{Binding Categorias}" FontSize="12.5" TextWrapping="Wrap"
+                            <TextBlock Grid.Row="3" Text="{Binding Categorias}" FontSize="12.5" TextWrapping="NoWrap"
                                        Foreground="{DynamicResource BrushMuted}" Margin="0,10,0,0" TextTrimming="CharacterEllipsis"/>
 
                             <TextBlock Grid.Row="4" FontSize="13.5" FontWeight="Bold" Foreground="{DynamicResource BrushAccent}" Margin="0,8,0,0"

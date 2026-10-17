@@ -76,7 +76,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <local:VisorSena x:Name="visor" Grid.Column="0"/>
+                <local:VisorSena x:Name="visor" Grid.Column="0" OcultarPalabra="True"/>
 
                 <StackPanel Grid.Column="2">
                     <TextBlock Text="¿Qué seña es esta?" FontFamily="{StaticResource FontHeading}" FontSize="22" FontWeight="Bold"
