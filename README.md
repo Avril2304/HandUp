@@ -113,7 +113,7 @@ Solución: `ProyectoFinal.sln`, proyecto `ProyectoFinal.csproj` (`net8.0-windows
 ### Qué está hecho
 
 - **Usuarios (stories 1 a 4):** registro, login, carga segura y progreso automático. `ServicioProgreso` guarda cada acierto o fallo (dispara el evento `ProgresoActualizado`) y registra cada seña en la tabla `ProgresoSenas`. El nivel puede subir pero nunca bajar (`Niveles.Actualizar`).
-- **Mi perfil** (`PerfilView`): datos, avance en el nivel y estadísticas. En "Cuenta" se puede editar el nombre (vacío → `InvalidInputException`) y cerrar sesión (vuelve al login sin cerrar la app).
+- **Mi perfil** (`PerfilView`): datos, avance en el nivel, estadísticas y estadísticas por categoría (`EstadisticaCategoria`, con "Practicar" para las más flojas). En "Cuenta": editar el nombre, cambiar la contraseña, cerrar sesión, reiniciar el progreso y eliminar el perfil (las dos últimas con `DialogoConfirmacion`).
 - **Aprender** (`AprenderView` → `ElegirNivelView` → `ElegirCategoriaView` → `RecorrerSenasView` → `PracticaView`): stories 5 a 10. Polimorfismo: `Sena` (`SenaEstatica` / `SenaAnimada`) y `Pregunta` (`PreguntaOpcionMultiple` / `PreguntaTipeo`). `RepositorioSenas : IRepositorio<Sena>` lee el banco; `GeneradorPreguntas` arma las preguntas.
 - **Visor de señas** (`VisorSena`): imagen o video con Pausar, Repetir y Más lento, y pantalla completa (`VisorPantallaCompletaWindow`).
 - **Diccionario** (`DiccionarioView`): stories 11, 12 y 13.
@@ -124,7 +124,6 @@ Solución: `ProyectoFinal.sln`, proyecto `ProyectoFinal.csproj` (`net8.0-windows
 
 - **Desafío** (stories 16 a 19): contrarreloj con vidas, botón Empezar deshabilitado, racha en pantalla y repetición espaciada.
 - **Sistema de niveles:** niveles bloqueados, prueba final con 80% para desbloquear, nivelación al registrarse y banco de frases. El plan está en `PLAN_NIVELES.md`.
-- **Mi perfil:** cambiar contraseña, reiniciar progreso, eliminar perfil y estadísticas por categoría.
 - **Accesibilidad:** agrandar el texto (la preferencia `TamanoFuente` ya existe en la base, falta el control).
 
 > Nota: esta sección refleja el estado al 2026-10-17. Actualizala a medida que se avance.
