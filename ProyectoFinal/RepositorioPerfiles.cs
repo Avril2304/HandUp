@@ -82,6 +82,40 @@ namespace ProyectoFinal
                 throw new UserNotFoundException(perfil.Id);
         }
 
+        // Registra el resultado de una seña en la tabla ProgresoSenas y devuelve la cantidad total de señas dominadas
+        public int RegistrarResultadoSena(int perfilId, int senaId, bool correcto)
+        {
+            return Database.Ejecutar(conexion =>
+            {
+                using var comando = conexion.CreateCommand();
+                if (correcto)
+                {
+                    comando.CommandText = @"
+                        INSERT INTO ProgresoSenas (PerfilId, SenaId, Dominada, Aciertos, Fallos)
+                        VALUES ($perfilId, $senaId, 1, 1, 0)
+                        ON CONFLICT(PerfilId, SenaId) DO UPDATE SET
+                            Aciertos = Aciertos + 1,
+                            Dominada = 1;
+
+                        SELECT COUNT(*) FROM ProgresoSenas WHERE PerfilId = $perfilId AND Dominada = 1;";
+                }
+                else
+                {
+                    comando.CommandText = @"
+                        INSERT INTO ProgresoSenas (PerfilId, SenaId, Dominada, Aciertos, Fallos)
+                        VALUES ($perfilId, $senaId, 0, 0, 1)
+                        ON CONFLICT(PerfilId, SenaId) DO UPDATE SET
+                            Fallos = Fallos + 1;
+
+                        SELECT COUNT(*) FROM ProgresoSenas WHERE PerfilId = $perfilId AND Dominada = 1;";
+                }
+                comando.Parameters.AddWithValue("$perfilId", perfilId);
+                comando.Parameters.AddWithValue("$senaId", senaId);
+
+                return Convert.ToInt32(comando.ExecuteScalar());
+            });
+        }
+
         // Valida y registra un perfil nuevo; lanza InvalidInputException si los datos no son válidos
         public Perfil Registrar(string nombre, string usuario, string password, string nivelInicial)
         {

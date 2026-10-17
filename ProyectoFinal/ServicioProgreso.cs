@@ -27,8 +27,13 @@ namespace ProyectoFinal
                 _perfil.MejorRacha = _perfil.Racha;
             }
 
-            // TODO: Podríamos marcar la seña como dominada si alcanza X aciertos consecutivos,
-            // registrándola en ProgresoSenas (Story 19).
+            // Registramos el acierto en ProgresoSenas y actualizamos el total de señas dominadas
+            if (senaId > 0)
+            {
+                int dominadasEnBase = _repositorio.RegistrarResultadoSena(_perfil.Id, senaId, correcto: true);
+                _perfil.SenasDominadas = Math.Max(_perfil.SenasDominadas, dominadasEnBase);
+                RecalcularNivel();
+            }
 
             GuardarProgreso("Acierto");
         }
@@ -38,13 +43,25 @@ namespace ProyectoFinal
             _perfil.FallosTotales++;
             _perfil.Racha = 0; // Se pierde la racha actual
 
+            if (senaId > 0)
+            {
+                _repositorio.RegistrarResultadoSena(_perfil.Id, senaId, correcto: false);
+            }
+
             GuardarProgreso("Fallo");
         }
 
         public void MarcarSenaDominada(int senaId)
         {
-            // En una implementación real (Story 19) acá se guardaría en ProgresoSenas
-            _perfil.SenasDominadas++;
+            if (senaId > 0)
+            {
+                int dominadasEnBase = _repositorio.RegistrarResultadoSena(_perfil.Id, senaId, correcto: true);
+                _perfil.SenasDominadas = Math.Max(_perfil.SenasDominadas, dominadasEnBase);
+            }
+            else
+            {
+                _perfil.SenasDominadas++;
+            }
             RecalcularNivel();
             
             GuardarProgreso("SenasDominadas");
@@ -52,7 +69,7 @@ namespace ProyectoFinal
 
         private void RecalcularNivel()
         {
-            _perfil.Nivel = Niveles.SegunSenasDominadas(_perfil.SenasDominadas);
+            _perfil.Nivel = Niveles.Actualizar(_perfil.Nivel, _perfil.SenasDominadas);
         }
 
         // Guarda automáticamente en la base y notifica a la UI
