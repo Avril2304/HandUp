@@ -172,8 +172,9 @@ namespace ProyectoFinal
             Dispatcher.BeginInvoke(DispatcherPriority.Input, () => _botonesOpcion[0].Focus());
         }
 
-        // Contenido de una opción: [tecla] texto ............ estado (✓ Correcta / ✗ Tu respuesta)
-        private static Grid CrearContenidoOpcion(string tecla, string texto, string? estado)
+        // Contenido de una opción: [tecla] texto ............ estado (✓ Correcta / ✗ Tu respuesta).
+        // También lo usa la partida del Desafío.
+        internal static Grid CrearContenidoOpcion(string tecla, string texto, string? estado)
         {
             var grid = new Grid();
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });

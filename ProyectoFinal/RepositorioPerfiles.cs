@@ -134,6 +134,23 @@ namespace ProyectoFinal
             });
         }
 
+        // Aciertos y fallos guardados de cada seña que el perfil ya respondió (para la repetición espaciada del Desafío)
+        public IReadOnlyDictionary<int, (int Aciertos, int Fallos)> ObtenerHistorialSenas(int perfilId)
+        {
+            return Database.Ejecutar(conexion =>
+            {
+                using var comando = conexion.CreateCommand();
+                comando.CommandText = "SELECT SenaId, Aciertos, Fallos FROM ProgresoSenas WHERE PerfilId = $id;";
+                comando.Parameters.AddWithValue("$id", perfilId);
+
+                var historial = new Dictionary<int, (int Aciertos, int Fallos)>();
+                using SqliteDataReader lector = comando.ExecuteReader();
+                while (lector.Read())
+                    historial[lector.GetInt32(0)] = (lector.GetInt32(1), lector.GetInt32(2));
+                return historial;
+            });
+        }
+
         // Mejor porcentaje que sacó el perfil en la prueba final de un nivel; null si nunca la rindió
         public int? ObtenerMejorPorcentaje(int perfilId, int nivel)
         {

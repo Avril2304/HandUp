@@ -320,6 +320,13 @@ namespace ProyectoFinal
                 return miPerfil;
             }
 
+            if (destino == Seccion.Desafio)
+            {
+                var desafio = new DesafioView(_perfil, _preferencias, _servicio);
+                desafio.VolverSolicitado += (s, e) => MostrarInicio();
+                return desafio;
+            }
+
             if (destino == Seccion.Diccionario)
             {
                 var diccionario = new DiccionarioView();
