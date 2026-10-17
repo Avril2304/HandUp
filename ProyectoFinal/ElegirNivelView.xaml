@@ -2,10 +2,29 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              PreviewKeyDown="Vista_PreviewKeyDown">
-    <!-- Paso 1 de Aprender: los 4 niveles en una grilla de 2x2. Teclas 1-4 para elegir. -->
+    <!-- Paso 1 de Aprender: los 4 niveles en una grilla de 2x2. Teclas 1-4 para elegir.
+         Los niveles por encima del desbloqueado se ven atenuados y con candado, pero se pueden enfocar y elegir:
+         al elegirlos aparece arriba el aviso de qué hay que aprobar para desbloquearlos. -->
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Aviso de nivel bloqueado. LiveSetting: el lector de pantalla lo lee apenas aparece. -->
+        <Border x:Name="avisoBloqueado" Visibility="Collapsed" CornerRadius="12" Padding="16,12" Margin="0,0,0,14"
+                Background="{DynamicResource BrushAccentSoft}" BorderBrush="{DynamicResource BrushBorderAccent}" BorderThickness="1.5">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="&#xE72E;" FontFamily="{StaticResource FontIconos}" FontSize="16" VerticalAlignment="Center"
+                           Foreground="{DynamicResource BrushAccentDark}"/>
+                <TextBlock x:Name="lblBloqueado" FontSize="14" FontWeight="SemiBold" TextWrapping="Wrap" Margin="10,0,0,0"
+                           VerticalAlignment="Center" Foreground="{DynamicResource BrushInk}"
+                           AutomationProperties.LiveSetting="Assertive"/>
+            </StackPanel>
+        </Border>
+
         <!-- El margen negativo compensa el espacio que deja cada tarjeta a su derecha y abajo -->
-        <ItemsControl x:Name="lstNiveles" Focusable="False" Margin="0,0,-14,-14">
+        <ItemsControl Grid.Row="1" x:Name="lstNiveles" Focusable="False" Margin="0,0,-14,-14">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <UniformGrid Rows="2" Columns="2"/>
@@ -13,8 +32,18 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Button Style="{StaticResource MenuTile}" Margin="0,0,14,14" Click="Nivel_Click"
-                            AutomationProperties.Name="{Binding NombreAccesible}">
+                    <Button Margin="0,0,14,14" Click="Nivel_Click" AutomationProperties.Name="{Binding NombreAccesible}">
+                        <Button.Style>
+                            <!-- Bloqueado: fondo de la página y texto apagado (además del candado, para no depender solo del color) -->
+                            <Style TargetType="Button" BasedOn="{StaticResource MenuTile}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Bloqueado}" Value="True">
+                                        <Setter Property="Background" Value="{DynamicResource BrushBackground}"/>
+                                        <Setter Property="Foreground" Value="{DynamicResource BrushMuted}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
@@ -24,10 +53,17 @@
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
 
-                            <!-- "Tu nivel" (solo en el nivel actual del perfil) y la tecla del atajo -->
+                            <!-- "Tu nivel" (solo en el nivel actual del perfil) o "Bloqueado", y la tecla del atajo -->
                             <Border CornerRadius="10" Padding="10,3" HorizontalAlignment="Left"
                                     Background="{DynamicResource BrushAccent}" Visibility="{Binding VisibilidadTuNivel}">
                                 <TextBlock Text="Tu nivel" FontSize="11.5" FontWeight="Bold" Foreground="{DynamicResource BrushOnAccent}"/>
+                            </Border>
+                            <Border CornerRadius="10" Padding="10,3" HorizontalAlignment="Left" BorderThickness="1.5"
+                                    BorderBrush="{DynamicResource BrushBorder}" Visibility="{Binding VisibilidadBloqueado}">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="&#xE72E;" FontFamily="{StaticResource FontIconos}" FontSize="11.5" VerticalAlignment="Center"/>
+                                    <TextBlock Text="Bloqueado" FontSize="11.5" FontWeight="Bold" Margin="6,0,0,0" VerticalAlignment="Center"/>
+                                </StackPanel>
                             </Border>
                             <Border Style="{StaticResource AtajoBadge}">
                                 <TextBlock Text="{Binding Numero}" FontSize="12" FontWeight="Bold" Foreground="{DynamicResource BrushAccentDark}"/>
@@ -41,8 +77,13 @@
                             <TextBlock Grid.Row="3" Text="{Binding Categorias}" FontSize="12.5" TextWrapping="Wrap"
                                        Foreground="{DynamicResource BrushMuted}" Margin="0,10,0,0" TextTrimming="CharacterEllipsis"/>
 
-                            <TextBlock Grid.Row="4" FontSize="13.5" FontWeight="Bold" Foreground="{DynamicResource BrushAccent}" Margin="0,8,0,0">
+                            <TextBlock Grid.Row="4" FontSize="13.5" FontWeight="Bold" Foreground="{DynamicResource BrushAccent}" Margin="0,8,0,0"
+                                       Visibility="{Binding VisibilidadDisponible}">
                                 <Run Text="{Binding CantidadSenas, Mode=OneWay}"/><Run Text=" señas  →"/>
+                            </TextBlock>
+                            <TextBlock Grid.Row="4" FontSize="13.5" FontWeight="Bold" Margin="0,8,0,0" TextWrapping="Wrap"
+                                       Visibility="{Binding VisibilidadBloqueado}">
+                                <Run Text="{Binding CantidadSenas, Mode=OneWay}"/><Run Text=" señas · aprobá "/><Run Text="{Binding NivelAnterior, Mode=OneWay}"/><Run Text=" para desbloquear"/>
                             </TextBlock>
                         </Grid>
                     </Button>
@@ -51,7 +92,7 @@
         </ItemsControl>
 
         <!-- Si la base no responde, se muestra esto en lugar de la grilla -->
-        <TextBlock x:Name="lblError" Visibility="Collapsed" FontSize="14" TextWrapping="Wrap"
+        <TextBlock Grid.Row="1" x:Name="lblError" Visibility="Collapsed" FontSize="14" TextWrapping="Wrap"
                    Foreground="{DynamicResource BrushError}" VerticalAlignment="Top"/>
     </Grid>
 </UserControl>
