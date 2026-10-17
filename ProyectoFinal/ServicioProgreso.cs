@@ -2,13 +2,16 @@ using System;
 
 namespace ProyectoFinal
 {
-    // Servicio central que gestiona el progreso del usuario y notifica cambios a la UI
+    // Servicio central que gestiona el progreso del usuario (y su cuenta, desde Mi perfil) y notifica cambios a la UI
     public class ServicioProgreso
     {
         private readonly Perfil _perfil;
         private readonly RepositorioPerfiles _repositorio;
 
         public event EventHandler<ProgresoEventArgs>? ProgresoActualizado;
+
+        // Después de eliminar el perfil ya no hay nada que guardar (ej. al cerrar el menú)
+        public bool PerfilEliminado { get; private set; }
 
         public ServicioProgreso(Perfil perfil, RepositorioPerfiles repositorio)
         {
@@ -27,8 +30,13 @@ namespace ProyectoFinal
                 _perfil.MejorRacha = _perfil.Racha;
             }
 
-            // TODO: Podríamos marcar la seña como dominada si alcanza X aciertos consecutivos,
-            // registrándola en ProgresoSenas (Story 19).
+            // Registramos el acierto en ProgresoSenas y actualizamos el total de señas dominadas
+            if (senaId > 0)
+            {
+                int dominadasEnBase = _repositorio.RegistrarResultadoSena(_perfil.Id, senaId, correcto: true);
+                _perfil.SenasDominadas = Math.Max(_perfil.SenasDominadas, dominadasEnBase);
+                RecalcularNivel();
+            }
 
             GuardarProgreso("Acierto");
         }
@@ -38,26 +46,120 @@ namespace ProyectoFinal
             _perfil.FallosTotales++;
             _perfil.Racha = 0; // Se pierde la racha actual
 
+            if (senaId > 0)
+            {
+                _repositorio.RegistrarResultadoSena(_perfil.Id, senaId, correcto: false);
+            }
+
             GuardarProgreso("Fallo");
         }
 
         public void MarcarSenaDominada(int senaId)
         {
-            // En una implementación real (Story 19) acá se guardaría en ProgresoSenas
-            _perfil.SenasDominadas++;
+            if (senaId > 0)
+            {
+                int dominadasEnBase = _repositorio.RegistrarResultadoSena(_perfil.Id, senaId, correcto: true);
+                _perfil.SenasDominadas = Math.Max(_perfil.SenasDominadas, dominadasEnBase);
+            }
+            else
+            {
+                _perfil.SenasDominadas++;
+            }
             RecalcularNivel();
             
             GuardarProgreso("SenasDominadas");
         }
 
+        // Cambia el nombre visible del perfil (Mi perfil). El menú se entera por ProgresoActualizado y actualiza el saludo.
+        public void CambiarNombre(string nuevoNombre)
+        {
+            string nombre = (nuevoNombre ?? string.Empty).Trim();
+            if (nombre.Length == 0)
+                throw new InvalidInputException("El nombre no puede quedar vacío.");
+
+            string anterior = _perfil.Nombre;
+            _perfil.Nombre = nombre;
+            try
+            {
+                GuardarProgreso("Nombre");
+            }
+            catch (Exception ex) when (ex is DatabaseException or UserNotFoundException)
+            {
+                _perfil.Nombre = anterior; // si no se pudo guardar, en pantalla queda el nombre de antes
+                throw;
+            }
+        }
+
+        // Para avisar enseguida si la contraseña actual está mal (antes de apretar Guardar)
+        public bool VerificarPassword(string password) =>
+            PasswordHasher.Verificar(password ?? string.Empty, _perfil.PasswordHash, _perfil.PasswordSalt);
+
+        // Cambiar la contraseña: pide la actual, valida la nueva con PoliticaPassword y la guarda hasheada.
+        // Cualquier dato incorrecto lanza InvalidInputException con un mensaje para mostrar.
+        public void CambiarPassword(string actual, string nueva, string confirmacion)
+        {
+            if (!PasswordHasher.Verificar(actual ?? string.Empty, _perfil.PasswordHash, _perfil.PasswordSalt))
+                throw new InvalidInputException("La contraseña actual no es correcta.");
+
+            if (nueva != confirmacion)
+                throw new InvalidInputException("La contraseña nueva y su confirmación no coinciden.");
+
+            PoliticaPassword.Validar(nueva);
+
+            if (PasswordHasher.Verificar(nueva, _perfil.PasswordHash, _perfil.PasswordSalt))
+                throw new InvalidInputException("La contraseña nueva tiene que ser distinta de la actual.");
+
+            (string hashAnterior, string salAnterior) = (_perfil.PasswordHash, _perfil.PasswordSalt);
+            (_perfil.PasswordHash, _perfil.PasswordSalt) = PasswordHasher.Hashear(nueva);
+            try
+            {
+                GuardarProgreso("Contraseña");
+            }
+            catch (Exception ex) when (ex is DatabaseException or UserNotFoundException)
+            {
+                (_perfil.PasswordHash, _perfil.PasswordSalt) = (hashAnterior, salAnterior);
+                throw;
+            }
+        }
+
+        // Pone en cero el nivel, las señas dominadas, los puntos, los aciertos, los fallos y las rachas.
+        // No toca el usuario, la contraseña ni las preferencias.
+        public void ReiniciarProgreso()
+        {
+            _repositorio.BorrarProgresoSenas(_perfil.Id);
+
+            _perfil.Nivel = Niveles.Todos[0].Nombre;
+            _perfil.SenasDominadas = 0;
+            _perfil.Puntos = 0;
+            _perfil.AciertosTotales = 0;
+            _perfil.FallosTotales = 0;
+            _perfil.Racha = 0;
+            _perfil.MejorRacha = 0;
+
+            GuardarProgreso("Reinicio");
+        }
+
+        // Elimina el perfil (con su progreso y sus preferencias) si la contraseña es correcta
+        public void EliminarPerfil(string password)
+        {
+            if (!PasswordHasher.Verificar(password ?? string.Empty, _perfil.PasswordHash, _perfil.PasswordSalt))
+                throw new InvalidInputException("La contraseña no es correcta.");
+
+            _repositorio.Eliminar(_perfil.Id);
+            PerfilEliminado = true;
+        }
+
         private void RecalcularNivel()
         {
-            _perfil.Nivel = Niveles.SegunSenasDominadas(_perfil.SenasDominadas);
+            _perfil.Nivel = Niveles.Actualizar(_perfil.Nivel, _perfil.SenasDominadas);
         }
 
         // Guarda automáticamente en la base y notifica a la UI
         public void GuardarProgreso(string campoContexto = "General")
         {
+            if (PerfilEliminado)
+                return;
+
             _repositorio.Actualizar(_perfil);
             OnProgresoActualizado(campoContexto);
         }

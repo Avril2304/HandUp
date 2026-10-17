@@ -72,17 +72,17 @@ Desafío:
 
 ## Stack y estado actual del código
 
-**Stack actual: WPF con .NET 8 (C#).** El proyecto se pensó primero en Win32/C++ y después se habló de WinForms, pero la base de código que existe hoy es **WPF**. Para timers usar `DispatcherTimer`; para mostrar señas estáticas, `Image`/`BitmapImage`, y para las animadas, `MediaElement` (video `.mp4`, sin audio necesario). Ya no se usan animaciones cuadro a cuadro.
+**Stack actual: WPF con .NET 8 (C#).** El proyecto se pensó primero en Win32/C++ y después se habló de WinForms, pero la base de código que existe hoy es **WPF**. Para timers usar `DispatcherTimer`; para mostrar señas estáticas, `Image`/`BitmapImage`, y para las animadas, `MediaElement` (video `.mp4`, sin audio necesario). Ya no se usan animaciones cuadro a cuadro. Para exportar la traducción como video se usa el editor de video que trae Windows (`Windows.Media.Editing`), sin programas externos.
 
 **Ubicación:** `ProyectoFinal\` (dentro de esta carpeta).
-Solución: `ProyectoFinal.sln`, proyecto `ProyectoFinal.csproj` (net8.0-windows, UseWPF, Nullable enable). Namespace: `ProyectoFinal`.
+Solución: `ProyectoFinal.sln`, proyecto `ProyectoFinal.csproj` (`net8.0-windows10.0.19041.0`, UseWPF, Nullable enable; requiere Windows 10 2004 o superior). Namespace: `ProyectoFinal`. La app compila en `bin\Debug\net8.0-windows10.0.19041.0\` (ahí quedan el `.exe`, `handup.db` y los assets).
 
 **Archivos existentes:**
 - `App.xaml`: recursos globales de estilo. Fuente `FontHeading`. Brushes `BrushBackground`, `BrushCard`, `BrushBorder`, `BrushBorderAccent`, `BrushInk`, `BrushMuted`, `BrushAccent`, `BrushAccentDark`, `BrushAccentSoft`, `BrushError`, `BrushErrorBg`, `BrushSuccess` y `BrushSuccessBg`. Efecto `CardShadow`. Estilos `FieldLabel`, `RoundedTextBox`, `RoundedPasswordBox`, `PrimaryButton`, `SecondaryButton`, `LinkButton` y `ProfileChipItem`. La paleta es verde azulado sobre fondo claro.
 - `LoginWindow.xaml(.cs)`: ventana de 940x600 con dos columnas. A la izquierda, un panel de marca con fondo `#14332B`, el logo (`Assets/logo.jpg`, una mano verde) y el título "HandUp". A la derecha, el formulario: perfiles existentes como chips en un ListBox, usuario, contraseña, un botón Iniciar sesión y el link "Creala acá" hacia el registro.
 - `RegisterWindow.xaml(.cs)`: el mismo panel de marca a la izquierda y el formulario de registro a la derecha.
-- `MainMenuWindow.xaml(.cs)`: recibe un `Perfil`. Muestra el saludo, el nivel, la racha, las señas dominadas y una barra de progreso (100 señas por nivel). Tiene 4 tiles (Aprender, Desafío, Traductor, Diccionario), por ahora solo con un MessageBox de "módulo no implementado".
-- `Perfil.cs`: Id, Nombre, Usuario, PasswordHash, PasswordSalt, Nivel, Racha, SenasDominadas, Puntos y FechaRegistro.
+- `MainMenuWindow.xaml(.cs)`: recibe un `Perfil`. En el inicio muestra el saludo, el nivel, la racha y el progreso dentro del nivel (con las cantidades reales de cada nivel, ver `Niveles.cs`), y los tiles de las secciones. Al entrar a una sección aparece la barra lateral. Teclas: 1-6 desde el inicio, Ctrl+1..6 dentro de una sección, Esc vuelve un paso. Desafío todavía muestra "Próximamente".
+- `Perfil.cs`: Id, Nombre, Usuario, PasswordHash, PasswordSalt, Nivel, Racha, MejorRacha, SenasDominadas, Puntos, AciertosTotales, FallosTotales y FechaRegistro.
 - **Persistencia en SQLite** (paquete NuGet `Microsoft.Data.Sqlite`, sin Entity Framework). La base es `handup.db`, junto al ejecutable.
   - `Database.cs` (estática): `Inicializar()` se llama en `App.Application_Startup`. Crea las tablas si no existen. Si el archivo está corrupto, lo renombra a `handup.corrupto-<fecha>.db` y crea uno nuevo. Si la tabla Perfiles está vacía, migra el viejo `perfiles.json` (y lo renombra a `.migrado`) o siembra 3 perfiles de ejemplo (usuarios avril, juan y lucia; sus contraseñas están en `PerfilesDeEjemplo()` de `Database.cs` y cumplen `PoliticaPassword`). También expone `Ejecutar<T>(Func<SqliteConnection, T>)`, que abre la conexión y convierte cada `SqliteException` en `DatabaseException`.
   - `IRepositorio<T>`: interfaz genérica con `ObtenerTodos`, `BuscarPorId`, `Agregar` y `Actualizar`. Los repositorios de los demás módulos (por ejemplo, señas) tienen que implementarla.
@@ -91,28 +91,42 @@ Solución: `ProyectoFinal.sln`, proyecto `ProyectoFinal.csproj` (net8.0-windows,
   - `ImportadorSenas.cs` (estática): `Sincronizar()` se llama en `App.Application_Startup` después de `Database.Inicializar()`. Lee `signs_database.json` y, si su huella SHA-256 difiere de la guardada en `Metadatos` (o no hay señas), recarga Categorias y Senas en una transacción. Así, cuando se corrige el JSON, se actualiza solo sin tocar los perfiles. Descarta las señas inválidas (sin palabra, con una categoría inexistente, dificultad fuera de 1-4 o sin imagen). Si el JSON falta con la base vacía, está corrupto o no tiene señas válidas, lanza `BancoSenasException`: la app muestra un aviso y sigue funcionando (si ya había señas, se conservan).
   - `PasswordHasher.cs`: hashea las contraseñas con PBKDF2-SHA256 y sal. Nunca se guardan en texto plano.
 - `InvalidInputException.cs`, `UserNotFoundException.cs`, `DatabaseException.cs` y `BancoSenasException.cs`: excepciones propias.
-- Para inspeccionar la base a mano: `C:\sqlite\sqlite3.exe bin\Debug\net8.0-windows\handup.db` (también sirve DB Browser for SQLite).
+- Para inspeccionar la base a mano: `C:\sqlite\sqlite3.exe bin\Debug\net8.0-windows10.0.19041.0\handup.db` (también sirve DB Browser for SQLite).
 - `Assets/logo.jpg`: el logo, incluido en el csproj como `Resource`.
 
 ### Banco multimedia LSA
 
-- **Archivos:** `Assets/signs/<categoria>/` (1.174 archivos: 611 imágenes + 563 videos, ~139 MB; versión corregida recibida el 2026-09-29) y `signs_database.json` en la raíz del proyecto. En el csproj van como `Content` con `CopyToOutputDirectory=PreserveNewest` (no como `Resource`), así que quedan junto al .exe en `bin\...\Assets\signs\` y `bin\...\signs_database.json`. Las rutas del JSON son relativas al ejecutable (`assets/signs/...`; Windows no distingue mayúsculas).
+- **Archivos:** `Assets/signs/<categoria>/` (1.328 archivos: 688 imágenes + 640 videos, ~182 MB) y `signs_database.json` en la raíz del proyecto. En el csproj van como `Content` con `CopyToOutputDirectory=PreserveNewest` (no como `Resource`), así que quedan junto al .exe en `bin\...\Assets\signs\` y `bin\...\signs_database.json`. Las rutas del JSON son relativas al ejecutable (`assets/signs/...`; Windows no distingue mayúsculas).
 - **Nombres:** dentro de cada categoría, la imagen (`.png` o `.jpeg`) y el video (`.mp4`) tienen el mismo nombre (minúsculas, sin tildes, guiones bajos). Ej.: `alimentos/dulce_de_leche.png` + `.mp4`.
-- **JSON:** `categories` (22 entradas, todas con señas: `id`, `name`, `emoji`, `description`, `color`) y `signs` (563: `id` "sign_001"…, `word`, `category`, `difficulty` 1-4, `description`, `media.image_static`, `media.video`; además traen `instructions` (lista de pasos), `tags`, `handshape`, `movement`, `location`, `related_signs` y `examples`). Las 563 señas tienen video y ninguna ruta está rota (`media.thumbnail` = `media.image_static`).
-- **Niveles:** 1 Principiante (117 señas): abecedario, numeros, saludos, colores, familia. 2 Básico (185): alimentos, ropa, clima, deportes. 3 Intermedio (154): tiempo, escuela, verbos_cotidianos, juegos, emociones, lugares, transporte. 4 Avanzado (107): paises, provincias, profesiones, medios_comunicacion, avanzado, frases_comunes. Cada categoría tiene un único nivel.
+- **Videos:** tienen que ser MP4 "normales". El 2026-10-16 se encontró que 521 venían como MP4 fragmentados (DASH), que el `MediaElement` de WPF no reproduce (los da por terminados al instante), y se convirtieron sin recodificar con `ffmpeg -i entrada.mp4 -c copy -movflags +faststart salida.mp4`. Si se suman videos nuevos, revisar que no vengan fragmentados.
+- **JSON:** `categories` (24 entradas, todas con señas: `id`, `name`, `emoji`, `description`, `color`) y `signs` (640: `id` "sign_001"…, `word`, `category`, `difficulty` 1-4, `description`, `media.image_static`, `media.video`; además traen `instructions` (lista de pasos), `tags`, `handshape`, `movement`, `location`, `related_signs` y `examples`). Las 640 señas tienen video y ninguna ruta está rota (`media.thumbnail` = `media.image_static`).
+- **Niveles:** 1 Principiante (145 señas): primeras_frases, abecedario, numeros, saludos, colores, familia. 2 Básico (211): acciones_tiempo, alimentos, ropa, clima, deportes. 3 Intermedio (174): tiempo, escuela, verbos_cotidianos, juegos, emociones, lugares, transporte. 4 Avanzado (110): paises, provincias, profesiones, medios_comunicacion, avanzado, frases_comunes. Cada categoría tiene un único nivel. Las cantidades no están fijas en el código: `Niveles.cs` las cuenta desde la base.
 - **Abecedario:** A-Z + CH + Ñ (28 letras justas; no hay LL ni RR, así que para el deletreo hay que partir LL/RR en letras sueltas). La entrada "ABECEDARIO" se movió a `escuela`. Hay además 48 imágenes `handshape_XX_*.png` (dataset LSA16) que no están en el JSON.
-- **Descripciones:** las 563 tienen una `description` real del movimiento de manos (story 13), todas revisadas por el equipo (el 2026-10-01 se sacaron las 14 marcas "(revisar)" que quedaban).
+- **Descripciones:** las señas tienen una `description` real del movimiento de manos (story 13), todas revisadas por el equipo (el 2026-10-01 se sacaron las 14 marcas "(revisar)" que quedaban).
 - **Detalles a tener en cuenta:**
   - En 375 señas, `handshape`/`movement`/`location` son texto de relleno ("Ver imagen oficial CAS"), así que no conviene mostrarlos. 56 señas no tienen `instructions`: mostrarlas solo si existen.
-  - Hay homónimos en distintas categorías: NARANJA (alimentos/colores), PAPA (alimentos/familia), UNO (juegos/numeros) y MERIENDA (alimentos/tiempo). El traductor tiene que decidir cuál mostrar.
+  - Hay homónimos: NARANJA (alimentos/colores), PAPA/PAPÁ (alimentos/familia), UNO (juegos/numeros), MERIENDA (alimentos/tiempo) y MAÑANA (día siguiente/parte del día). El Traductor muestra primero la que coincide con las tildes escritas ("papá" → familia, "papa" → comida) y, si no, la del nivel más básico; el usuario puede cambiarla.
   - `numeros` incluye una entrada "NUMEROS".
   - Las mayúsculas de `word` son inconsistentes ("MIL", "Cinco"): normalizar al mostrar y al comparar (también las tildes).
   - Las fuentes (Señario V2, LSA16) se citan más adelante en el informe.
 
-**Qué está hecho:** en gran parte, las stories 1 a 3 (registro, login, carga segura), ya migradas a SQLite. El banco multimedia ya está integrado al proyecto (archivos + csproj) e importado a SQLite (22 categorías, 563 señas).
-**Qué falta:** la story 4 (el progreso todavía no se actualiza durante el uso), el `RepositorioSenas : IRepositorio<Seña>` que lea las tablas y los módulos 2 a 5 completos. Las clases Seña y Pregunta con su polimorfismo todavía no existen. La barra de progreso del menú asume "100 señas por nivel" y hay que adaptarla a los 4 niveles reales.
+### Qué está hecho
 
-> Nota: esta sección refleja el estado al 2026-09-29. Actualizala a medida que se avance.
+- **Usuarios (stories 1 a 4):** registro, login, carga segura y progreso automático. `ServicioProgreso` guarda cada acierto o fallo (dispara el evento `ProgresoActualizado`) y registra cada seña en la tabla `ProgresoSenas`. El nivel puede subir pero nunca bajar (`Niveles.Actualizar`).
+- **Mi perfil** (`PerfilView`): datos, avance en el nivel, estadísticas y estadísticas por categoría (`EstadisticaCategoria`, con "Practicar" para las más flojas). En "Cuenta": editar el nombre, cambiar la contraseña, cerrar sesión, reiniciar el progreso y eliminar el perfil (las dos últimas con `DialogoConfirmacion`).
+- **Aprender** (`AprenderView` → `ElegirNivelView` → `ElegirCategoriaView` → `RecorrerSenasView` → `PracticaView`): stories 5 a 10. Polimorfismo: `Sena` (`SenaEstatica` / `SenaAnimada`) y `Pregunta` (`PreguntaOpcionMultiple` / `PreguntaTipeo`). `RepositorioSenas : IRepositorio<Sena>` lee el banco; `GeneradorPreguntas` arma las preguntas.
+- **Visor de señas** (`VisorSena`): imagen o video con Pausar, Repetir y Más lento, y pantalla completa (`VisorPantallaCompletaWindow`).
+- **Diccionario** (`DiccionarioView`): stories 11, 12 y 13.
+- **Traductor** (`Traductor`, `TraductorView`): stories 14 y 15. Usa un índice genérico `IndiceDeBusqueda<T>`, deletrea con `DispatcherTimer`, tiene pantalla completa (`TraductorPantallaCompletaWindow`) y exporta la traducción como MP4 (`ExportadorVideo`, `PanelVideoTraduccion`, `ExportacionException`).
+- **Configuración** (`ConfiguracionView`): alto contraste, tamaño del texto (Normal / Grande / Muy grande, `TamanoTexto`) y reasignación de atajos, guardados por perfil (`RepositorioPreferencias`).
+- **Barra lateral achicable:** con la flecha de arriba o Ctrl+B queda solo con íconos, y se recuerda por perfil.
+
+### Qué falta
+
+- **Desafío** (stories 16 a 19): contrarreloj con vidas, botón Empezar deshabilitado, racha en pantalla y repetición espaciada.
+- **Sistema de niveles:** niveles bloqueados, prueba final con 80% para desbloquear, nivelación al registrarse y banco de frases. El plan está en `PLAN_NIVELES.md`.
+
+> Nota: esta sección refleja el estado al 2026-10-17. Actualizala a medida que se avance.
 
 ## Pendientes del equipo
 

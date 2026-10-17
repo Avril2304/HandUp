@@ -1,0 +1,75 @@
+<Window x:Class="ProyectoFinal.DialogoConfirmacion"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Width="470" SizeToContent="Height" ResizeMode="NoResize" WindowStartupLocation="CenterOwner"
+        ShowInTaskbar="False" Icon="Assets/logo.ico" Background="{DynamicResource BrushCard}" Loaded="Window_Loaded">
+    <!-- Confirmación de una acción que no se puede deshacer (reiniciar el progreso, eliminar el perfil).
+         El foco arranca en Cancelar y Escape cancela. Puede pedir la contraseña y/o escribir una palabra. -->
+    <Window.Resources>
+        <!-- Botón de acción peligrosa: rojo, con el mismo formato que PrimaryButton -->
+        <Style x:Key="BotonPeligro" TargetType="Button">
+            <Setter Property="Foreground" Value="{DynamicResource BrushOnAccent}"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Height" Value="44"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="bg" Background="{DynamicResource BrushError}" CornerRadius="10"
+                                BorderBrush="Transparent" BorderThickness="2.5">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="bg" Property="BorderBrush" Value="{DynamicResource BrushInk}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="bg" Property="Opacity" Value="0.45"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <StackPanel Margin="28,24">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="&#xE7BA;" FontFamily="{StaticResource FontIconos}" FontSize="22" Foreground="{DynamicResource BrushError}"
+                       VerticalAlignment="Center"/>
+            <TextBlock x:Name="lblTitulo" FontFamily="{StaticResource FontHeading}" FontSize="20" FontWeight="Bold"
+                       Foreground="{DynamicResource BrushInk}" Margin="10,0,0,0" VerticalAlignment="Center" TextWrapping="Wrap"/>
+        </StackPanel>
+        <TextBlock x:Name="lblMensaje" FontSize="14" Foreground="{DynamicResource BrushInk}" TextWrapping="Wrap" Margin="0,12,0,0"
+                   LineHeight="20"/>
+
+        <!-- Contraseña (si la acción la pide) -->
+        <StackPanel x:Name="pnlPassword" Visibility="Collapsed" Margin="0,16,0,0">
+            <TextBlock Text="Tu contraseña" Style="{StaticResource FieldLabel}"/>
+            <PasswordBox x:Name="txtPassword" Style="{StaticResource RoundedPasswordBox}" PasswordChanged="Campo_Cambio"
+                         AutomationProperties.Name="Tu contraseña, para confirmar"/>
+        </StackPanel>
+
+        <!-- Palabra de confirmación (ej. REINICIAR) -->
+        <StackPanel x:Name="pnlPalabra" Visibility="Collapsed" Margin="0,14,0,0">
+            <TextBlock x:Name="lblPalabra" Style="{StaticResource FieldLabel}"/>
+            <TextBox x:Name="txtPalabra" Style="{StaticResource RoundedTextBox}" TextChanged="Campo_Cambio"/>
+        </StackPanel>
+
+        <TextBlock x:Name="lblError" FontSize="13" Foreground="{DynamicResource BrushError}" TextWrapping="Wrap" Margin="2,10,0,0"
+                   Visibility="Collapsed" AutomationProperties.LiveSetting="Assertive"/>
+
+        <Grid Margin="0,22,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <!-- IsCancel: Escape lo activa y cierra el diálogo sin hacer nada -->
+            <Button x:Name="btnCancelar" Style="{StaticResource SecondaryButton}" Content="Cancelar" IsCancel="True"/>
+            <Button Grid.Column="2" x:Name="btnConfirmar" Style="{StaticResource BotonPeligro}" IsEnabled="False"
+                    Click="BtnConfirmar_Click"/>
+        </Grid>
+    </StackPanel>
+</Window>

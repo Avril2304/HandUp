@@ -48,6 +48,7 @@ namespace ProyectoFinal
             InitializeComponent();
             _preferencias = preferencias;
             chkAltoContraste.IsChecked = _preferencias.AltoContraste;
+            ArmarOpcionesTamano();
 
             foreach (var accion in Acciones)
                 pnlAtajos.Children.Add(CrearFila(accion));
@@ -62,6 +63,54 @@ namespace ProyectoFinal
             TemaVisual.Aplicar(_preferencias.AltoContraste);
 
             string? error = Guardar();
+            lblError.Text = error ?? string.Empty;
+            lblError.Visibility = error is null ? Visibility.Collapsed : Visibility.Visible;
+        }
+
+        // ===== Tamaño del texto =====
+
+        // Una opción por tamaño (Normal / Grande / Muy grande), con un "Aa" de muestra del tamaño que se ve
+        private void ArmarOpcionesTamano()
+        {
+            double actual = TamanoTexto.Normalizar(_preferencias.TamanoFuente);
+            foreach (var (nombre, escala) in TamanoTexto.Opciones)
+            {
+                var contenido = new StackPanel();
+                contenido.Children.Add(new TextBlock
+                {
+                    Text = "Aa",
+                    FontSize = 18 * escala,
+                    FontWeight = FontWeights.Bold,
+                    HorizontalAlignment = HorizontalAlignment.Center
+                });
+                contenido.Children.Add(new TextBlock { Text = nombre, FontSize = 13, HorizontalAlignment = HorizontalAlignment.Center });
+
+                var opcion = new RadioButton
+                {
+                    Style = (Style)FindResource("OpcionTamano"),
+                    Content = contenido,
+                    IsChecked = escala == actual,
+                    Tag = escala
+                };
+                AutomationProperties.SetName(opcion, $"Tamaño del texto: {nombre}");
+                opcion.Checked += OpcionTamano_Checked;
+                pnlTamanos.Children.Add(opcion);
+            }
+        }
+
+        // Se aplica al instante en toda la ventana y se guarda en el perfil
+        private void OpcionTamano_Checked(object sender, RoutedEventArgs e)
+        {
+            if (sender is not RadioButton { Tag: double escala } || escala == _preferencias.TamanoFuente)
+                return;
+
+            double anterior = _preferencias.TamanoFuente;
+            _preferencias.TamanoFuente = escala;
+            TamanoTexto.Establecer(escala);
+
+            string? error = Guardar();
+            if (error is not null)
+                _preferencias.TamanoFuente = anterior; // queda aplicado solo en esta sesión
             lblError.Text = error ?? string.Empty;
             lblError.Visibility = error is null ? Visibility.Collapsed : Visibility.Visible;
         }

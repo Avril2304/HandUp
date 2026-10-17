@@ -68,6 +68,14 @@ namespace ProyectoFinal
             return Todos[Todos.Count - 1].Nombre;
         }
 
+        // Nivel nuevo del perfil después de dominar más señas: puede subir, pero nunca bajar.
+        // Así se conserva el nivel que ya tenía (el que eligió al registrarse o el de una versión anterior).
+        public static string Actualizar(string nivelActual, int dominadas)
+        {
+            int indice = Math.Max(IndiceDe(nivelActual), IndiceDe(SegunSenasDominadas(dominadas)));
+            return Todos[indice].Nombre;
+        }
+
         // Si el nivel guardado no existe (un dato viejo o editado a mano), se toma Principiante
         private static int IndiceDe(string nivel)
         {

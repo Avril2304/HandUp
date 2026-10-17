@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
+using System.Windows.Automation;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
@@ -47,6 +49,89 @@ namespace ProyectoFinal
 
             lblCantidadSenas.Text = TextoCantidadSenas();
             ActualizarUI();
+
+            // Tamaño del texto del perfil (accesibilidad). Si se cambia en Configuración, se aplica al instante.
+            _anchoBase = Width;
+            _altoBase = Height;
+            TamanoTexto.Establecer(_preferencias.TamanoFuente);
+            AplicarTamanoTexto();
+            TamanoTexto.Cambio += TamanoTexto_Cambio;
+            Closed += (s, e) => TamanoTexto.Cambio -= TamanoTexto_Cambio;
+
+            // Barra lateral: cada ítem muestra su nombre y atajo al pasar el mouse (útil con la barra achicada)
+            foreach (Button item in ItemsBarra())
+                item.ToolTip = TextoDeItem(item);
+            AplicarBarra(_preferencias.BarraColapsada);
+        }
+
+        // ===== Barra lateral achicable =====
+
+        private const double AnchoBarra = 220;
+        private const double AnchoBarraColapsada = 72;
+
+        private IEnumerable<Button> ItemsBarra() => _itemsNav.Values.Append(navSalir);
+
+        // "Aprender (Ctrl+1)": el nombre y, si tiene, el atajo que se ve a la derecha del ítem
+        private static string TextoDeItem(Button item)
+        {
+            var textos = ((Grid)item.Content).Children.OfType<TextBlock>().Where(t => Grid.GetColumn(t) >= 1).Select(t => t.Text).ToList();
+            return textos.Count > 1 ? $"{textos[0]} ({textos[1]})" : textos.FirstOrDefault() ?? string.Empty;
+        }
+
+        private void BtnColapsarBarra_Click(object sender, RoutedEventArgs e) => AlternarBarra();
+
+        private void AlternarBarra()
+        {
+            AplicarBarra(!_preferencias.BarraColapsada); // el foco queda donde estaba (con Ctrl+B no se pierde lo que se escribía)
+
+            // Se recuerda en el perfil; si la base falla, vale solo para esta sesión
+            try
+            {
+                new RepositorioPreferencias().Guardar(_preferencias);
+            }
+            catch (Exception ex) when (ex is DatabaseException or InvalidInputException)
+            {
+            }
+        }
+
+        // Achicada: solo los íconos (los nombres quedan en el tooltip y en el lector de pantalla)
+        private void AplicarBarra(bool colapsada)
+        {
+            _preferencias.BarraColapsada = colapsada;
+            barraLateral.Width = colapsada ? AnchoBarraColapsada : AnchoBarra;
+            barraLateral.Padding = colapsada ? new Thickness(10, 20, 10, 20) : new Thickness(14, 20, 14, 20);
+            pnlMarca.Visibility = colapsada ? Visibility.Collapsed : Visibility.Visible;
+            pnlUsuarioLateral.Visibility = colapsada ? Visibility.Hidden : Visibility.Visible; // Hidden: los ítems no se mueven de altura
+
+            // El botón queda centrado cuando no está la marca al lado
+            Grid.SetColumn(btnColapsarBarra, colapsada ? 0 : 1);
+            Grid.SetColumnSpan(btnColapsarBarra, colapsada ? 2 : 1);
+            btnColapsarBarra.HorizontalAlignment = colapsada ? HorizontalAlignment.Center : HorizontalAlignment.Right;
+            icoColapsarBarra.Text = colapsada ? "" : ""; // flecha a la derecha / a la izquierda
+            string accion = colapsada ? "Mostrar la barra lateral (Ctrl+B)" : "Achicar la barra lateral (Ctrl+B)";
+            btnColapsarBarra.ToolTip = accion;
+            AutomationProperties.SetName(btnColapsarBarra, accion);
+
+            foreach (Button item in ItemsBarra())
+            {
+                var contenido = (Grid)item.Content;
+                contenido.ColumnDefinitions[0].Width = colapsada ? GridLength.Auto : new GridLength(28);
+                foreach (TextBlock texto in contenido.Children.OfType<TextBlock>().Where(t => Grid.GetColumn(t) >= 1))
+                    texto.Visibility = colapsada ? Visibility.Collapsed : Visibility.Visible;
+                item.HorizontalContentAlignment = colapsada ? HorizontalAlignment.Center : HorizontalAlignment.Stretch;
+            }
+        }
+
+        // Tamaño de la ventana con el texto normal (la del XAML): con texto más grande, crece en la misma proporción
+        private readonly double _anchoBase;
+        private readonly double _altoBase;
+
+        private void TamanoTexto_Cambio(object? sender, EventArgs e) => AplicarTamanoTexto();
+
+        private void AplicarTamanoTexto()
+        {
+            TamanoTexto.AplicarA(this);
+            TamanoTexto.AjustarTamanoVentana(this, _anchoBase, _altoBase);
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -185,7 +270,39 @@ namespace ProyectoFinal
                 var miPerfil = new PerfilView(_perfil, _servicio);
                 miPerfil.VolverSolicitado += (s, e) => MostrarInicio();
                 miPerfil.NavegacionSolicitada += (s, seccion) => Navegar(seccion);
+                miPerfil.CerrarSesionSolicitado += (s, e) => CerrarSesion();
+                miPerfil.PerfilEliminado += (s, e) => CerrarSesion(); // ya no hay nada que guardar: ServicioProgreso lo sabe
+                miPerfil.PracticarCategoriaSolicitada += (s, categoriaId) =>
+                {
+                    // Al volver de la práctica, Mi perfil queda donde estaba (mismo scroll, foco en esa categoría)
+                    double posicion = miPerfil.PosicionScroll;
+                    Navegar(Seccion.Aprender);
+                    if (contenidoSeccion.Content is AprenderView aprender)
+                    {
+                        aprender.VolverAPerfilSolicitado += (s2, e2) =>
+                        {
+                            Navegar(Seccion.MiPerfil);
+                            if (contenidoSeccion.Content is PerfilView perfilNuevo)
+                                perfilNuevo.RestaurarPosicion(posicion, categoriaId);
+                        };
+                        aprender.PracticarCategoria(categoriaId);
+                    }
+                };
                 return miPerfil;
+            }
+
+            if (destino == Seccion.Diccionario)
+            {
+                var diccionario = new DiccionarioView();
+                diccionario.VolverSolicitado += (s, e) => MostrarInicio();
+                return diccionario;
+            }
+
+            if (destino == Seccion.Traductor)
+            {
+                var traductor = new TraductorView(_preferencias);
+                traductor.VolverSolicitado += (s, e) => MostrarInicio();
+                return traductor;
             }
 
             var proximamente = new ProximamenteView(Secciones.Info[destino]);
@@ -220,6 +337,16 @@ namespace ProyectoFinal
 
         private void Salir_Click(object sender, RoutedEventArgs e) => Salir();
 
+        // Vuelve al login sin cerrar la app (Closing guarda el progreso, como siempre).
+        // El tema vuelve al normal: si no, el próximo que inicie sesión heredaría el alto contraste de este perfil.
+        private void CerrarSesion()
+        {
+            TemaVisual.Aplicar(false);
+            new LoginWindow().Show(); // se abre antes de cerrar el menú, así la app no se queda sin ventanas
+            Close();
+            TamanoTexto.Establecer(1.0); // lo mismo con el tamaño del texto: el próximo perfil usa el suyo
+        }
+
         private void Salir()
         {
             var respuesta = MessageBox.Show("¿Querés salir de HandUp? Tu progreso ya está guardado.",
@@ -238,6 +365,14 @@ namespace ProyectoFinal
             // En Configuración, mientras se elige una tecla nueva, cualquier tecla (incluso Esc) es para esa pantalla
             if (contenidoSeccion.Content is ConfiguracionView { CapturandoTecla: true })
                 return;
+
+            // Ctrl+B: achicar o mostrar la barra lateral (solo se ve dentro de una sección)
+            if (e.Key == Key.B && Keyboard.Modifiers == ModifierKeys.Control && barraLateral.Visibility == Visibility.Visible)
+            {
+                AlternarBarra();
+                e.Handled = true;
+                return;
+            }
 
             if (e.Key == Key.Escape)
             {

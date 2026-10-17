@@ -2,13 +2,17 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net8.0-windows</TargetFramework>
+    <!-- windows10.0.19041.0: da acceso al editor de video de Windows (Windows.Media.Editing), que usa
+         el Traductor para exportar la traducción como MP4 sin programas externos. Requiere Windows 10 (2004) o 11. -->
+    <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>Assets\logo.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\logo.ico" />
     <Resource Include="Assets\logo.jpg" />
     <Resource Include="Assets\logo_alto_contraste.jpg" />
   </ItemGroup>

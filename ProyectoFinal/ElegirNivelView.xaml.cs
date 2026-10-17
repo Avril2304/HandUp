@@ -70,6 +70,9 @@ namespace ProyectoFinal
                 .ToList();
         }
 
+        // Para ir directo a un nivel (ej. desde "Practicar" en Mi perfil); null si no existe
+        public NivelAprendizaje? BuscarNivel(int numero) => _niveles.FirstOrDefault(n => n.Numero == numero);
+
         // Foco: el nivel indicado; si no se indica, el del perfil (o el primero)
         public void EnfocarNivel(int? numero = null)
         {

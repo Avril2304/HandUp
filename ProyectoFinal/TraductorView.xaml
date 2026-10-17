@@ -1,0 +1,279 @@
+<UserControl x:Class="ProyectoFinal.TraductorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:ProyectoFinal"
+             PreviewKeyDown="Vista_PreviewKeyDown">
+    <!-- Módulo Traductor (stories 14 y 15): se escribe una palabra o frase y se ven sus señas una tras otra.
+         Lo que no está en el banco se deletrea letra por letra con un intervalo fijo. -->
+    <UserControl.Resources>
+        <!-- Cada palabra de la traducción. Tag: "actual" = la que se está mostrando, "omitida" = artículo que no se seña -->
+        <Style x:Key="ChipElemento" TargetType="Button">
+            <Setter Property="Background" Value="{DynamicResource BrushCard}"/>
+            <Setter Property="Foreground" Value="{DynamicResource BrushInk}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource BrushBorder}"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="bg" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="1.5" CornerRadius="10" Padding="12,7">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="bg" Property="BorderBrush" Value="{DynamicResource BrushAccent}"/>
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="bg" Property="BorderBrush" Value="{DynamicResource BrushAccent}"/>
+                                <Setter TargetName="bg" Property="BorderThickness" Value="2.5"/>
+                            </Trigger>
+                            <Trigger Property="Tag" Value="actual">
+                                <Setter TargetName="bg" Property="Background" Value="{DynamicResource BrushAccentSoft}"/>
+                                <Setter TargetName="bg" Property="BorderBrush" Value="{DynamicResource BrushAccent}"/>
+                                <Setter TargetName="bg" Property="BorderThickness" Value="2.5"/>
+                            </Trigger>
+                            <Trigger Property="Tag" Value="omitida">
+                                <Setter TargetName="bg" Property="Opacity" Value="0.6"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="16"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="16"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Encabezado -->
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel>
+                <TextBlock Text="Traductor" FontFamily="{StaticResource FontHeading}" FontSize="26"
+                           FontWeight="Bold" Foreground="{DynamicResource BrushInk}"/>
+                <TextBlock Text="Escribí una palabra o frase y mirá cómo se dice en señas. Lo que no esté en el diccionario se deletrea."
+                           FontSize="13.5" Foreground="{DynamicResource BrushMuted}" Margin="0,3,0,0" TextWrapping="Wrap"/>
+            </StackPanel>
+            <Button Grid.Column="1" Style="{StaticResource SecondaryButton}" VerticalAlignment="Top"
+                    Click="BtnVolver_Click" AutomationProperties.Name="Volver al inicio" ToolTip="Volver al inicio (Esc)">
+                <StackPanel Orientation="Horizontal" Margin="16,0">
+                    <TextBlock Text="&#xE72B;" FontFamily="{StaticResource FontIconos}" FontSize="14" VerticalAlignment="Center"/>
+                    <TextBlock Text="Volver al inicio" Margin="8,0,0,0" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+        </Grid>
+
+        <!-- Texto a traducir -->
+        <Border Grid.Row="2" Background="{DynamicResource BrushCard}" BorderBrush="{DynamicResource BrushBorder}"
+                BorderThickness="1.5" CornerRadius="16" Padding="18,14">
+            <StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="12"/>
+                        <ColumnDefinition Width="170"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid>
+                        <TextBox x:Name="txtTexto" Style="{StaticResource RoundedTextBox}" Height="46" FontSize="16"
+                                 MaxLength="200" TextChanged="TxtTexto_TextChanged"
+                                 AutomationProperties.Name="Palabra o frase a traducir. Enter para traducir"/>
+                        <TextBlock x:Name="lblPlaceholder" Text="Ej.: Hola, me llamo Ana" FontSize="15" Margin="15,0,0,0"
+                                   VerticalAlignment="Center" Foreground="{DynamicResource BrushMuted}" IsHitTestVisible="False"/>
+                    </Grid>
+                    <Button Grid.Column="2" x:Name="btnTraducir" Style="{StaticResource PrimaryButton}" Height="46"
+                            IsEnabled="False" Click="BtnTraducir_Click" AutomationProperties.Name="Traducir a señas">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="&#xE8C1;" FontFamily="{StaticResource FontIconos}" FontSize="15" VerticalAlignment="Center"/>
+                            <TextBlock Text="Traducir (Enter)" Margin="8,0,0,0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                </Grid>
+                <TextBlock x:Name="lblAtajos" FontSize="12.5" Foreground="{DynamicResource BrushMuted}" Margin="2,8,0,0" TextWrapping="Wrap"/>
+                <!-- Avisos (caracteres sin seña, banco sin cargar...). Se anuncian en lectores de pantalla -->
+                <Border x:Name="pnlAviso" Visibility="Collapsed" Margin="0,10,0,0" CornerRadius="10" Padding="12,8"
+                        Background="{DynamicResource BrushErrorBg}" BorderBrush="{DynamicResource BrushError}" BorderThickness="1.5">
+                    <TextBlock x:Name="lblAviso" FontSize="13" TextWrapping="Wrap" Foreground="{DynamicResource BrushError}"
+                               AutomationProperties.LiveSetting="Polite"/>
+                </Border>
+                <!-- Homónimos: avisa que una palabra tiene más de un significado y cómo cambiarlo -->
+                <Border x:Name="pnlHomonimos" Visibility="Collapsed" Margin="0,10,0,0" CornerRadius="10" Padding="12,8"
+                        Background="{DynamicResource BrushAccentSoft}" BorderBrush="{DynamicResource BrushBorderAccent}" BorderThickness="1.5">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="&#xE946;" FontFamily="{StaticResource FontIconos}" FontSize="16" Margin="0,1,10,0"
+                                   Foreground="{DynamicResource BrushAccentDark}"/>
+                        <TextBlock Grid.Column="1" x:Name="lblHomonimos" FontSize="13" TextWrapping="Wrap"
+                                   Foreground="{DynamicResource BrushAccentDark}" AutomationProperties.LiveSetting="Polite"/>
+                    </Grid>
+                </Border>
+            </StackPanel>
+        </Border>
+
+        <!-- Cuerpo: seña actual a la izquierda, la traducción completa y los controles a la derecha -->
+        <Grid Grid.Row="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="22"/>
+                <ColumnDefinition Width="380"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Seña actual -->
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock x:Name="lblAhora" FontFamily="{StaticResource FontHeading}" FontSize="30" FontWeight="Bold"
+                           Foreground="{DynamicResource BrushInk}" TextTrimming="CharacterEllipsis"
+                           AutomationProperties.LiveSetting="Polite"/>
+                <TextBlock Grid.Row="1" x:Name="lblDetalleAhora" FontSize="13.5" Foreground="{DynamicResource BrushMuted}"
+                           Margin="0,2,0,10" TextWrapping="Wrap"/>
+                <local:VisorSena Grid.Row="2" x:Name="visor"/>
+
+                <!-- Estado inicial (todavía no se tradujo nada) -->
+                <Border Grid.Row="0" Grid.RowSpan="3" x:Name="pnlVacio" Background="{DynamicResource BrushCard}"
+                        BorderBrush="{DynamicResource BrushBorder}" BorderThickness="1.5" CornerRadius="16">
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" MaxWidth="400" Margin="24">
+                        <TextBlock Text="&#xE8C1;" FontFamily="{StaticResource FontIconos}" FontSize="40"
+                                   Foreground="{DynamicResource BrushAccent}" HorizontalAlignment="Center"/>
+                        <TextBlock Text="Escribí arriba lo que quieras traducir" FontFamily="{StaticResource FontHeading}"
+                                   FontSize="19" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,12,0,0"
+                                   Foreground="{DynamicResource BrushInk}" TextAlignment="Center" TextWrapping="Wrap"/>
+                        <TextBlock FontSize="13.5" Foreground="{DynamicResource BrushMuted}" TextWrapping="Wrap"
+                                   TextAlignment="Center" Margin="0,6,0,0"
+                                   Text="Probá con «Buenas noches», «Yo tengo hambre» o tu nombre: si una palabra no está en el diccionario, se deletrea letra por letra."/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Avance de la secuencia -->
+                <StackPanel Grid.Row="3" x:Name="pnlAvance" Margin="0,12,0,0" Visibility="Collapsed">
+                    <TextBlock x:Name="lblAvance" FontSize="12.5" FontWeight="Bold" Foreground="{DynamicResource BrushMuted}"/>
+                    <Border Height="6" CornerRadius="3" Margin="0,6,0,0" Background="{DynamicResource BrushTrack}" ClipToBounds="True">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition x:Name="colAvanceLleno" Width="0*"/>
+                                <ColumnDefinition x:Name="colAvanceVacio" Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <Border CornerRadius="3" Background="{DynamicResource BrushAccent}"/>
+                        </Grid>
+                    </Border>
+                </StackPanel>
+            </Grid>
+
+            <!-- Traducción y controles -->
+            <Border Grid.Column="2" Background="{DynamicResource BrushCard}" BorderBrush="{DynamicResource BrushBorder}"
+                    BorderThickness="1.5" CornerRadius="16" Padding="18">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="TRADUCCIÓN" FontSize="11.5" FontWeight="Bold" Foreground="{DynamicResource BrushMuted}"/>
+
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Focusable="False" Margin="0,8,0,0">
+                        <StackPanel>
+                            <TextBlock x:Name="lblSinTraduccion" Text="Acá vas a ver cada palabra y cómo se traduce. Hacé clic en una para verla de nuevo."
+                                       FontSize="13" Foreground="{DynamicResource BrushMuted}" TextWrapping="Wrap"/>
+                            <WrapPanel x:Name="pnlElementos"/>
+                        </StackPanel>
+                    </ScrollViewer>
+
+                    <StackPanel Grid.Row="2" Margin="0,12,0,0">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="8"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="8"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Button x:Name="btnPausar" Style="{StaticResource SecondaryButton}" Click="BtnPausar_Click" IsEnabled="False">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock x:Name="icoPausar" Text="&#xE769;" FontFamily="{StaticResource FontIconos}" FontSize="13" VerticalAlignment="Center"/>
+                                    <TextBlock x:Name="lblPausar" Text="Pausar" Margin="6,0,0,0" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                            <Button Grid.Column="2" x:Name="btnRepetir" Style="{StaticResource SecondaryButton}" Click="BtnRepetir_Click"
+                                    IsEnabled="False" AutomationProperties.Name="Repetir la traducción desde el principio" ToolTip="Repetir (R)">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="&#xE72C;" FontFamily="{StaticResource FontIconos}" FontSize="13" VerticalAlignment="Center"/>
+                                    <TextBlock Text="Repetir" Margin="6,0,0,0" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                            <Button Grid.Column="4" x:Name="btnDetener" Style="{StaticResource SecondaryButton}" Click="BtnDetener_Click"
+                                    IsEnabled="False" AutomationProperties.Name="Detener la traducción" ToolTip="Detener (Esc)">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="&#xE71A;" FontFamily="{StaticResource FontIconos}" FontSize="13" VerticalAlignment="Center"/>
+                                    <TextBlock Text="Detener" Margin="6,0,0,0" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                        </Grid>
+
+                        <TextBlock Text="Velocidad" Style="{StaticResource FieldLabel}" Margin="0,14,0,4"/>
+                        <ComboBox x:Name="cmbVelocidad" Height="38" FontSize="13" SelectionChanged="CmbVelocidad_SelectionChanged"
+                                  AutomationProperties.Name="Velocidad de las señas">
+                            <ComboBoxItem Content="Lenta (videos más lentos, 2 s por letra)"/>
+                            <ComboBoxItem Content="Normal (1,2 s por letra)" IsSelected="True"/>
+                            <ComboBoxItem Content="Rápida (0,7 s por letra)"/>
+                        </ComboBox>
+
+                        <!-- Exportar la traducción como video MP4 (seña a la izquierda, panel con la frase a la derecha) -->
+                        <Button x:Name="btnExportar" Style="{StaticResource SecondaryButton}" Margin="0,14,0,0" IsEnabled="False"
+                                Click="BtnExportar_Click" AutomationProperties.Name="Exportar la traducción como video"
+                                ToolTip="Guardar la traducción como video MP4 (E)">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="&#xE714;" FontFamily="{StaticResource FontIconos}" FontSize="14" VerticalAlignment="Center"/>
+                                <TextBlock Text="Exportar video" Margin="8,0,0,0" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+
+                        <!-- Avance de la exportación -->
+                        <Border x:Name="pnlExportando" Visibility="Collapsed" Margin="0,10,0,0" CornerRadius="10" Padding="12,8"
+                                Background="{DynamicResource BrushAccentSoft}" BorderBrush="{DynamicResource BrushBorderAccent}" BorderThickness="1.5">
+                            <StackPanel>
+                                <TextBlock x:Name="lblExportando" FontSize="13" Foreground="{DynamicResource BrushAccentDark}"
+                                           AutomationProperties.LiveSetting="Polite"/>
+                                <ProgressBar x:Name="barExportando" Height="6" Minimum="0" Maximum="100" Margin="0,6,0,0"
+                                             Foreground="{DynamicResource BrushAccent}" Background="{DynamicResource BrushTrack}" BorderThickness="0"
+                                             AutomationProperties.Name="Avance de la exportación"/>
+                                <Button x:Name="btnCancelarExportacion" Style="{StaticResource LinkButton}" Content="Cancelar"
+                                        HorizontalAlignment="Left" Margin="0,4,0,0" Click="BtnCancelarExportacion_Click"
+                                        AutomationProperties.Name="Cancelar la exportación del video"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Resultado de la exportación -->
+                        <Border x:Name="pnlExportado" Visibility="Collapsed" Margin="0,10,0,0" CornerRadius="10" Padding="12,8"
+                                Background="{DynamicResource BrushSuccessBg}" BorderBrush="{DynamicResource BrushSuccess}" BorderThickness="1.5">
+                            <StackPanel>
+                                <TextBlock x:Name="lblExportado" FontSize="13" TextWrapping="Wrap" Foreground="{DynamicResource BrushSuccess}"
+                                           AutomationProperties.LiveSetting="Polite"/>
+                                <Button x:Name="btnMostrarVideo" Style="{StaticResource LinkButton}" Content="Mostrar en la carpeta"
+                                        HorizontalAlignment="Left" Margin="0,4,0,0" Click="BtnMostrarVideo_Click"/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

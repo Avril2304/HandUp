@@ -156,11 +156,22 @@ namespace ProyectoFinal
                     TeclaOpcion3        TEXT    NOT NULL DEFAULT 'D3',
                     TeclaOpcion4        TEXT    NOT NULL DEFAULT 'D4',
                     TeclaConfirmar      TEXT    NOT NULL DEFAULT 'Return',
-                    TeclaPausar         TEXT    NOT NULL DEFAULT 'Space'
+                    TeclaPausar         TEXT    NOT NULL DEFAULT 'Space',
+                    BarraColapsada      INTEGER NOT NULL DEFAULT 0
                 );";
             comando.ExecuteNonQuery();
 
             MigrarEsquemaProgreso(conexion);
+            CorregirMejorRacha(conexion);
+        }
+
+        // La mejor racha nunca puede ser menor que la racha actual. Las bases creadas con versiones anteriores
+        // tienen perfiles de ejemplo con racha pero sin mejor racha: se corrigen al arrancar (no hace nada si ya están bien).
+        private static void CorregirMejorRacha(SqliteConnection conexion)
+        {
+            using var comando = conexion.CreateCommand();
+            comando.CommandText = "UPDATE Perfiles SET MejorRacha = Racha WHERE MejorRacha < Racha;";
+            comando.ExecuteNonQuery();
         }
 
         private static void MigrarEsquemaProgreso(SqliteConnection conexion)
@@ -168,7 +179,8 @@ namespace ProyectoFinal
             string[] columnasAAgregar = {
                 "ALTER TABLE Perfiles ADD COLUMN MejorRacha INTEGER NOT NULL DEFAULT 0;",
                 "ALTER TABLE Perfiles ADD COLUMN AciertosTotales INTEGER NOT NULL DEFAULT 0;",
-                "ALTER TABLE Perfiles ADD COLUMN FallosTotales INTEGER NOT NULL DEFAULT 0;"
+                "ALTER TABLE Perfiles ADD COLUMN FallosTotales INTEGER NOT NULL DEFAULT 0;",
+                "ALTER TABLE Preferencias ADD COLUMN BarraColapsada INTEGER NOT NULL DEFAULT 0;"
             };
 
             foreach (var alter in columnasAAgregar)
@@ -240,6 +252,7 @@ namespace ProyectoFinal
                     PasswordSalt = sal,
                     Nivel = string.IsNullOrWhiteSpace(viejo.Nivel) ? "Principiante" : viejo.Nivel,
                     Racha = viejo.Racha,
+                    MejorRacha = Math.Max(viejo.MejorRacha, viejo.Racha),
                     SenasDominadas = viejo.SenasDominadas,
                     Puntos = viejo.Puntos,
                     FechaRegistro = viejo.FechaRegistro
@@ -283,9 +296,9 @@ namespace ProyectoFinal
 
         private static List<PerfilJsonViejo> PerfilesDeEjemplo() => new()
         {
-            new PerfilJsonViejo { Nombre = "Avril Ogas",  Usuario = "avril", Password = "Avril2026!", Nivel = "Intermedio",   Racha = 12, SenasDominadas = 84, Puntos = 245, FechaRegistro = DateTime.Now.AddDays(-30) },
-            new PerfilJsonViejo { Nombre = "Juan Pérez",  Usuario = "juan",  Password = "Juan2026!",  Nivel = "Principiante", Racha = 3,  SenasDominadas = 10, Puntos = 40,  FechaRegistro = DateTime.Now.AddDays(-6) },
-            new PerfilJsonViejo { Nombre = "Lucía Gómez", Usuario = "lucia", Password = "Lucia2026!", Nivel = "Básico",       Racha = 7,  SenasDominadas = 32, Puntos = 120, FechaRegistro = DateTime.Now.AddDays(-14) },
+            new PerfilJsonViejo { Nombre = "Avril Ogas",  Usuario = "avril", Password = "Avril2026!", Nivel = "Intermedio",   Racha = 12, MejorRacha = 18, SenasDominadas = 84, Puntos = 245, FechaRegistro = DateTime.Now.AddDays(-30) },
+            new PerfilJsonViejo { Nombre = "Juan Pérez",  Usuario = "juan",  Password = "Juan2026!",  Nivel = "Principiante", Racha = 3,  MejorRacha = 5,  SenasDominadas = 10, Puntos = 40,  FechaRegistro = DateTime.Now.AddDays(-6) },
+            new PerfilJsonViejo { Nombre = "Lucía Gómez", Usuario = "lucia", Password = "Lucia2026!", Nivel = "Básico",       Racha = 7,  MejorRacha = 9,  SenasDominadas = 32, Puntos = 120, FechaRegistro = DateTime.Now.AddDays(-14) },
         };
 
         // Formato del perfiles.json de la versión anterior (con la contraseña en texto plano)
@@ -296,6 +309,7 @@ namespace ProyectoFinal
             public string Password { get; set; } = string.Empty;
             public string Nivel { get; set; } = "Principiante";
             public int Racha { get; set; }
+            public int MejorRacha { get; set; } // el JSON viejo no la tenía: si falta queda en 0 y se toma la racha
             public int SenasDominadas { get; set; }
             public int Puntos { get; set; }
             public DateTime FechaRegistro { get; set; } = DateTime.Now;
