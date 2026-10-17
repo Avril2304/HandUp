@@ -17,6 +17,8 @@ namespace ProyectoFinal
                                     string? palabraClave, bool pedirPassword, Action<string> accion)
         {
             InitializeComponent();
+            TamanoTexto.AplicarA(this);
+            Width *= TamanoTexto.Escala; // el alto se acomoda solo (SizeToContent)
             _palabraClave = palabraClave;
             _pedirPassword = pedirPassword;
             _accion = accion;

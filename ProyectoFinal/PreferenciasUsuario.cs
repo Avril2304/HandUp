@@ -13,6 +13,9 @@ namespace ProyectoFinal
         public bool AltoContraste { get; set; } = false;
         public double TamanoFuente { get; set; } = 1.0;  // Multiplicador: 1.0 = normal, 1.5 = grande
 
+        // Barra lateral del menú achicada a solo íconos (para dejar más lugar a la sección)
+        public bool BarraColapsada { get; set; } = false;
+
         // Atajos de teclado (almacenados como string del enum Key, parseados a Key al cargar)
         public Key TeclaOpcion1 { get; set; } = Key.D1;
         public Key TeclaOpcion2 { get; set; } = Key.D2;

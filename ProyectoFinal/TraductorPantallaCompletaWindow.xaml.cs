@@ -24,6 +24,7 @@ namespace ProyectoFinal
         public TraductorPantallaCompletaWindow(Key teclaPausar)
         {
             InitializeComponent();
+            TamanoTexto.AplicarA(this);
             _teclaPausar = teclaPausar;
 
             visor.ModoPantallaCompleta();

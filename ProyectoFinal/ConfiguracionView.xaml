@@ -3,6 +3,45 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              PreviewKeyDown="Vista_PreviewKeyDown">
     <!-- Preferencias del usuario. Cada cambio se aplica al instante y se guarda solo. -->
+    <UserControl.Resources>
+        <!-- Opción de tamaño del texto: tarjeta elegible (con flechas o clic). La elegida se marca con borde, fondo y "✓" -->
+        <Style x:Key="OpcionTamano" TargetType="RadioButton">
+            <Setter Property="Foreground" Value="{DynamicResource BrushInk}"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Margin" Value="0,0,10,0"/>
+            <Setter Property="GroupName" Value="TamanoTexto"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Border x:Name="bg" Background="{DynamicResource BrushCard}" BorderBrush="{DynamicResource BrushBorder}"
+                                BorderThickness="1.5" CornerRadius="12" Padding="16,10" MinWidth="128">
+                            <Grid>
+                                <ContentPresenter HorizontalAlignment="Center"/>
+                                <TextBlock x:Name="marca" Text="✓" FontWeight="Bold" FontSize="13" Foreground="{DynamicResource BrushAccent}"
+                                           HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-4,-8,0" Visibility="Collapsed"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="bg" Property="BorderBrush" Value="{DynamicResource BrushAccent}"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="bg" Property="Background" Value="{DynamicResource BrushAccentSoft}"/>
+                                <Setter TargetName="bg" Property="BorderBrush" Value="{DynamicResource BrushAccent}"/>
+                                <Setter TargetName="bg" Property="BorderThickness" Value="2.5"/>
+                                <Setter TargetName="marca" Property="Visibility" Value="Visible"/>
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="bg" Property="BorderBrush" Value="{DynamicResource BrushInk}"/>
+                                <Setter TargetName="bg" Property="BorderThickness" Value="2.5"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -49,6 +88,13 @@
                                            FontSize="13" Foreground="{DynamicResource BrushMuted}" TextWrapping="Wrap" Margin="0,3,0,0"/>
                             </StackPanel>
                         </CheckBox>
+
+                        <!-- Tamaño del texto: agranda toda la app (las opciones se arman desde el código) -->
+                        <TextBlock Text="Tamaño del texto" FontSize="16" FontWeight="Bold" Margin="0,22,0,0"
+                                   Foreground="{DynamicResource BrushInk}"/>
+                        <TextBlock Text="Agranda las letras, los botones y los íconos de toda la app. Usá las flechas para elegir."
+                                   FontSize="13" Foreground="{DynamicResource BrushMuted}" TextWrapping="Wrap" Margin="0,3,0,10"/>
+                        <WrapPanel x:Name="pnlTamanos"/>
 
                         <TextBlock x:Name="lblError" FontSize="12.5" Foreground="{DynamicResource BrushError}" TextWrapping="Wrap"
                                    Margin="0,12,0,0" Visibility="Collapsed"/>

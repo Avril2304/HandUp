@@ -118,13 +118,13 @@ Solución: `ProyectoFinal.sln`, proyecto `ProyectoFinal.csproj` (`net8.0-windows
 - **Visor de señas** (`VisorSena`): imagen o video con Pausar, Repetir y Más lento, y pantalla completa (`VisorPantallaCompletaWindow`).
 - **Diccionario** (`DiccionarioView`): stories 11, 12 y 13.
 - **Traductor** (`Traductor`, `TraductorView`): stories 14 y 15. Usa un índice genérico `IndiceDeBusqueda<T>`, deletrea con `DispatcherTimer`, tiene pantalla completa (`TraductorPantallaCompletaWindow`) y exporta la traducción como MP4 (`ExportadorVideo`, `PanelVideoTraduccion`, `ExportacionException`).
-- **Configuración** (`ConfiguracionView`): alto contraste y reasignación de atajos, guardados por perfil (`RepositorioPreferencias`).
+- **Configuración** (`ConfiguracionView`): alto contraste, tamaño del texto (Normal / Grande / Muy grande, `TamanoTexto`) y reasignación de atajos, guardados por perfil (`RepositorioPreferencias`).
+- **Barra lateral achicable:** con la flecha de arriba o Ctrl+B queda solo con íconos, y se recuerda por perfil.
 
 ### Qué falta
 
 - **Desafío** (stories 16 a 19): contrarreloj con vidas, botón Empezar deshabilitado, racha en pantalla y repetición espaciada.
 - **Sistema de niveles:** niveles bloqueados, prueba final con 80% para desbloquear, nivelación al registrarse y banco de frases. El plan está en `PLAN_NIVELES.md`.
-- **Accesibilidad:** agrandar el texto (la preferencia `TamanoFuente` ya existe en la base, falta el control).
 
 > Nota: esta sección refleja el estado al 2026-10-17. Actualizala a medida que se avance.
 

@@ -156,7 +156,8 @@ namespace ProyectoFinal
                     TeclaOpcion3        TEXT    NOT NULL DEFAULT 'D3',
                     TeclaOpcion4        TEXT    NOT NULL DEFAULT 'D4',
                     TeclaConfirmar      TEXT    NOT NULL DEFAULT 'Return',
-                    TeclaPausar         TEXT    NOT NULL DEFAULT 'Space'
+                    TeclaPausar         TEXT    NOT NULL DEFAULT 'Space',
+                    BarraColapsada      INTEGER NOT NULL DEFAULT 0
                 );";
             comando.ExecuteNonQuery();
 
@@ -178,7 +179,8 @@ namespace ProyectoFinal
             string[] columnasAAgregar = {
                 "ALTER TABLE Perfiles ADD COLUMN MejorRacha INTEGER NOT NULL DEFAULT 0;",
                 "ALTER TABLE Perfiles ADD COLUMN AciertosTotales INTEGER NOT NULL DEFAULT 0;",
-                "ALTER TABLE Perfiles ADD COLUMN FallosTotales INTEGER NOT NULL DEFAULT 0;"
+                "ALTER TABLE Perfiles ADD COLUMN FallosTotales INTEGER NOT NULL DEFAULT 0;",
+                "ALTER TABLE Preferencias ADD COLUMN BarraColapsada INTEGER NOT NULL DEFAULT 0;"
             };
 
             foreach (var alter in columnasAAgregar)

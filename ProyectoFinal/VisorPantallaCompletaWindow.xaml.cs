@@ -15,6 +15,7 @@ namespace ProyectoFinal
         public VisorPantallaCompletaWindow(Sena sena, bool lento, Key teclaPausar)
         {
             InitializeComponent();
+            TamanoTexto.AplicarA(this);
             _teclaPausar = teclaPausar;
 
             visor.ModoPantallaCompleta();
