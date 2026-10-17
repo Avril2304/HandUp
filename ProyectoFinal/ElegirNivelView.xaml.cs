@@ -21,11 +21,14 @@ namespace ProyectoFinal
         public string NivelAnterior => Niveles.NombreDe(Numero - 1);
 
         public string MensajeBloqueado =>
-            $"Aprobá la prueba final de {NivelAnterior} con 80% o más para desbloquear {Nombre}.";
+            $"Aprobá la prueba final de {NivelAnterior} con {PruebaFinal.PorcentajeParaAprobar}% o más para desbloquear {Nombre}.";
 
         public string NombreAccesible => Bloqueado
             ? $"{Nombre}, bloqueado. {MensajeBloqueado} Atajo: tecla {Numero}"
             : $"{Nombre}, {CantidadSenas} señas{(EsTuNivel ? ", tu nivel" : "")}. Atajo: tecla {Numero}";
+
+        // Accesibilidad: el lector de pantalla anuncia cada ítem de la lista con este texto
+        public override string ToString() => NombreAccesible;
     }
 
     public partial class ElegirNivelView : UserControl
@@ -33,11 +36,13 @@ namespace ProyectoFinal
         // Avisa qué nivel se eligió (1-4); AprenderView decide a qué paso ir. Nunca se dispara con un nivel bloqueado.
         public event EventHandler<NivelAprendizaje>? NivelElegido;
 
-        // Se quiere rendir la prueba final de este nivel (el actual del perfil, o el anterior al de su nivelación pendiente)
+        // Se quiere rendir la prueba final de este nivel (el actual del perfil, o el anterior al de su nivelación pendiente).
+        // Con la nivelación pendiente se ofrecen las dos.
         public event EventHandler<int>? PruebaFinalSolicitada;
 
         private readonly int _nivelPrueba;
         private readonly int? _nivelacionHacia;
+        private readonly int _nivelDesbloqueado;
 
         // Frase corta de cada nivel (texto de pantalla). Nombre, señas y categorías salen de la base.
         private static readonly Dictionary<int, string> Descripciones = new()
@@ -56,6 +61,7 @@ namespace ProyectoFinal
             InitializeComponent();
             _nivelPrueba = perfil.NivelDePruebaFinal;
             _nivelacionHacia = perfil.NivelacionPendiente;
+            _nivelDesbloqueado = perfil.NivelDesbloqueado;
             MostrarPruebaFinal(mejorPorcentaje);
 
             try
@@ -98,10 +104,31 @@ namespace ProyectoFinal
             }
             lblBotonPrueba.Text = "Rendir prueba (P)";
             AutomationProperties.SetName(btnPruebaFinal, $"{lblPruebaFinal.Text}. {lblPruebaDetalle.Text} Atajo: tecla P");
+
+            // Si la nivelación es de más de un nivel (ej. eligió Intermedio y está en Principiante), también puede
+            // rendir la prueba final de su nivel actual: así, si no aprueba la nivelación, igual avanza de a uno
+            if (HayPruebaNivelActual)
+            {
+                string actual = Niveles.NombreDe(_nivelDesbloqueado);
+                lblBotonPruebaNivelActual.Text = $"Prueba final de {actual}";
+                AutomationProperties.SetName(btnPruebaNivelActual,
+                    $"Rendir la prueba final de {actual}: con {PruebaFinal.PorcentajeParaAprobar}% o más " +
+                    $"desbloqueás {Niveles.NombreDe(_nivelDesbloqueado + 1)}");
+                btnPruebaNivelActual.Visibility = Visibility.Visible;
+            }
+
             pnlPruebaFinal.Visibility = Visibility.Visible;
         }
 
+        private bool HayPruebaNivelActual => _nivelPrueba != _nivelDesbloqueado && _nivelDesbloqueado < Niveles.Nombres.Count;
+
         private void BtnPruebaFinal_Click(object sender, RoutedEventArgs e) => RendirPruebaFinal();
+
+        private void BtnPruebaNivelActual_Click(object sender, RoutedEventArgs e)
+        {
+            if (HayPruebaNivelActual)
+                PruebaFinalSolicitada?.Invoke(this, _nivelDesbloqueado);
+        }
 
         private void RendirPruebaFinal()
         {
@@ -156,6 +183,7 @@ namespace ProyectoFinal
             }
 
             filaBloqueado.Visibility = Visibility.Collapsed;
+            lblPruebaDetalle.Visibility = Visibility.Visible;
             NivelElegido?.Invoke(this, nivel);
         }
 
@@ -165,6 +193,7 @@ namespace ProyectoFinal
         {
             lblBloqueado.Text = nivel.MensajeBloqueado;
             filaBloqueado.Visibility = Visibility.Visible;
+            lblPruebaDetalle.Visibility = Visibility.Collapsed; // el aviso ya dice qué aprobar: así las tarjetas no se achican
             pnlPruebaFinal.Visibility = Visibility.Visible;
 
             AutomationPeer? peer = UIElementAutomationPeer.FromElement(lblBloqueado)

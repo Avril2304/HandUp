@@ -20,8 +20,8 @@ namespace ProyectoFinal
         private readonly PreferenciasUsuario _preferencias;
         private readonly ServicioProgreso _servicio;
 
-        private readonly List<Button> _botonesNivel = new();
-        private readonly List<(Button Boton, Categoria Categoria)> _botonesCategoria = new();
+        private readonly List<(Button Boton, TextBlock Titulo, string Nombre)> _botonesNivel = new();
+        private readonly List<(Button Boton, TextBlock Titulo, Categoria Categoria, string Detalle)> _botonesCategoria = new();
         private int _nivelElegido;
         private Categoria? _categoriaElegida;
         private PartidaDesafioView? _partida;
@@ -60,7 +60,8 @@ namespace ProyectoFinal
                     candado.SetResourceReference(TextBlock.FontFamilyProperty, "FontIconos");
                     contenido.Children.Add(candado);
                 }
-                contenido.Children.Add(new TextBlock { Text = nombre, FontWeight = FontWeights.SemiBold, VerticalAlignment = VerticalAlignment.Center });
+                var titulo = new TextBlock { Text = nombre, FontWeight = FontWeights.SemiBold, VerticalAlignment = VerticalAlignment.Center };
+                contenido.Children.Add(titulo);
 
                 var boton = new Button
                 {
@@ -73,7 +74,7 @@ namespace ProyectoFinal
 
                 AutomationProperties.SetName(boton, bloqueado ? $"{nombre}, bloqueado. {MensajeBloqueado(nivel)}" : nombre);
                 boton.Click += (s, e) => ElegirNivel(nivel);
-                _botonesNivel.Add(boton);
+                _botonesNivel.Add((boton, titulo, nombre));
                 pnlNiveles.Children.Add(boton);
             }
         }
@@ -100,7 +101,12 @@ namespace ProyectoFinal
 
             _nivelElegido = nivel;
             for (int i = 0; i < _botonesNivel.Count; i++)
-                _botonesNivel[i].Tag = i + 1 == nivel ? "elegida" : null;
+            {
+                if (i + 1 > _perfil.NivelDesbloqueado)
+                    continue; // los bloqueados conservan su nombre con "bloqueado"
+                var (boton, titulo, nombre) = _botonesNivel[i];
+                MarcarElegido(boton, titulo, nombre, nombre, elegido: i + 1 == nivel);
+            }
 
             CargarCategorias(nivel);
         }
@@ -146,7 +152,7 @@ namespace ProyectoFinal
             AutomationProperties.SetName(boton, $"{categoria.Nombre}, {detalle.Text}");
             boton.Click += (s, e) => ElegirCategoria(categoria);
 
-            _botonesCategoria.Add((boton, categoria));
+            _botonesCategoria.Add((boton, titulo, categoria, detalle.Text));
             pnlCategorias.Children.Add(boton);
         }
 
@@ -154,13 +160,21 @@ namespace ProyectoFinal
         private void ElegirCategoria(Categoria categoria)
         {
             _categoriaElegida = _categoriaElegida?.Id == categoria.Id ? null : categoria;
-            foreach (var (boton, cat) in _botonesCategoria)
+            foreach (var (boton, titulo, cat, detalle) in _botonesCategoria)
             {
-                bool elegida = cat.Id == _categoriaElegida?.Id;
-                boton.Tag = elegida ? "elegida" : null;
-                AutomationProperties.SetItemStatus(boton, elegida ? "elegida" : string.Empty);
+                MarcarElegido(boton, titulo, $"{cat.Emoji} {cat.Nombre}", $"{cat.Nombre}, {detalle}",
+                              elegido: cat.Id == _categoriaElegida?.Id);
             }
             ActualizarEmpezar();
+        }
+
+        // Lo elegido se marca con el fondo, con "✓" delante del texto (no solo con color) y en lo que anuncia el lector
+        private static void MarcarElegido(Button boton, TextBlock titulo, string texto, string nombreAccesible, bool elegido)
+        {
+            boton.Tag = elegido ? "elegida" : null;
+            titulo.Text = elegido ? $"✓ {texto}" : texto;
+            AutomationProperties.SetName(boton, elegido ? $"{nombreAccesible}, elegido" : nombreAccesible);
+            AutomationProperties.SetItemStatus(boton, elegido ? "elegido" : string.Empty);
         }
 
         // Story: "Empezar partida" arranca deshabilitado, se habilita al elegir una categoría
@@ -248,7 +262,7 @@ namespace ProyectoFinal
             }
 
             Button? destino = _botonesCategoria.FirstOrDefault(b => b.Categoria.Id == _categoriaElegida?.Id).Boton
-                              ?? _botonesNivel.ElementAtOrDefault(_nivelElegido - 1);
+                              ?? _botonesNivel.ElementAtOrDefault(_nivelElegido - 1).Boton;
             if (destino is not null)
                 Dispatcher.BeginInvoke(DispatcherPriority.Input, () => destino.Focus());
         }

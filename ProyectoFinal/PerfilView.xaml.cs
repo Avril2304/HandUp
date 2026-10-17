@@ -20,7 +20,15 @@ namespace ProyectoFinal
         public event EventHandler? NivelacionSolicitada; // rendir la prueba de nivelación pendiente
 
         // Estado de una regla de PoliticaPassword para el checklist: "pendiente" (sin escribir), "ok" o "error"
-        private record EstadoRegla(string Descripcion, string Estado);
+        private record EstadoRegla(string Descripcion, string Estado)
+        {
+            public override string ToString() => Estado switch
+            {
+                "ok" => $"{Descripcion}: cumplida",
+                "error" => $"{Descripcion}: no se cumple",
+                _ => $"{Descripcion}: pendiente"
+            };
+        }
 
         // Una estadística: cómo se llama, su ícono y cómo sacar del perfil el valor y una aclaración corta
         private record Estadistica(string Nombre, string Glifo, Func<Perfil, (string Valor, string Detalle)> Calcular);
@@ -594,7 +602,10 @@ namespace ProyectoFinal
             lblNivelacion.Text = $"Nivelación pendiente: {elegido}";
             lblNivelacionDetalle.Text = $"Al registrarte elegiste {elegido}. Aprobá la prueba final de {prueba} " +
                                         $"con {PruebaFinal.PorcentajeParaAprobar}% o más para empezar ahí. " +
-                                        $"Mientras tanto seguís en {perfil.Nivel}.";
+                                        $"Mientras tanto seguís en {perfil.Nivel}" +
+                                        (objetivo - 1 > perfil.NivelDesbloqueado
+                                            ? $" y podés avanzar de a uno con la prueba final de {perfil.Nivel}, desde Aprender."
+                                            : ".");
             AutomationProperties.SetName(btnRendirNivelacion, $"Rendir la prueba de nivelación para {elegido}");
             pnlNivelacion.Visibility = Visibility.Visible;
         }

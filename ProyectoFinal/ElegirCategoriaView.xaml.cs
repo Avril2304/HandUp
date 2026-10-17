@@ -16,6 +16,9 @@ namespace ProyectoFinal
         public string TextoSenas => Cantidad == 1 ? " seña  →" : " señas  →";
 
         public string NombreAccesible => $"{Nombre}, {Cantidad} {(Cantidad == 1 ? "seña" : "señas")}. Atajo: tecla {Atajo}";
+
+        // Accesibilidad: el lector de pantalla anuncia cada ítem de la lista con este texto
+        public override string ToString() => NombreAccesible;
     }
 
     public partial class ElegirCategoriaView : UserControl

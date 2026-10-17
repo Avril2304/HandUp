@@ -22,7 +22,7 @@ namespace ProyectoFinal
         private static readonly TimeSpan PausaTrasFallo = TimeSpan.FromMilliseconds(1800); // más larga: para ver cuál era
 
         private readonly IReadOnlyList<Sena> _senas;
-        private readonly IReadOnlyDictionary<int, (int Aciertos, int Fallos)> _historial;
+        private IReadOnlyDictionary<int, (int Aciertos, int Fallos)> _historial;
         private readonly Perfil _perfil;
         private readonly PreferenciasUsuario _preferencias;
         private readonly ServicioProgreso _servicio;
@@ -296,7 +296,19 @@ namespace ProyectoFinal
             visor.Detener();
         }
 
-        private void BtnJugarDeNuevo_Click(object sender, RoutedEventArgs e) => Empezar();
+        // El historial se vuelve a leer: así las señas falladas en la partida anterior también salen más seguido
+        private void BtnJugarDeNuevo_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                _historial = new RepositorioPerfiles().ObtenerHistorialSenas(_perfil.Id);
+            }
+            catch (DatabaseException)
+            {
+                // Sin base se juega con el historial que ya teníamos
+            }
+            Empezar();
+        }
 
         private void BtnCambiarCategoria_Click(object sender, RoutedEventArgs e) =>
             CambiarCategoriaSolicitada?.Invoke(this, EventArgs.Empty);

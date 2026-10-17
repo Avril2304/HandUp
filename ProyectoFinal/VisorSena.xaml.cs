@@ -38,6 +38,15 @@ namespace ProyectoFinal
         // Botones Pausar / Repetir / Más lento debajo del video (el Traductor usa los suyos, que manejan toda la secuencia)
         public bool MostrarControles { get; set; } = true;
 
+        // En Práctica, la prueba final y el Desafío: el nombre accesible no dice qué seña es (sería decir la respuesta)
+        public bool OcultarPalabra { get; set; }
+
+        private string NombreAccesible(string tipo) =>
+            OcultarPalabra ? $"{tipo} de la seña a adivinar" : $"{tipo} de la seña {_sena?.Palabra}";
+
+        // Para los mensajes de error: con OcultarPalabra tampoco se nombra la seña
+        private string DeLaSena => OcultarPalabra ? "de esta seña" : $"de la seña «{_sena?.Palabra}»";
+
         // Si lo que se está mostrando es un video (false si es una imagen o un aviso de error)
         public bool MuestraVideo => _esVideo;
 
@@ -95,12 +104,12 @@ namespace ProyectoFinal
             }
             catch (AssetNotFoundException)
             {
-                MostrarError($"Falta el archivo de la seña «{sena.Palabra}». Probá con la siguiente.");
+                MostrarError($"Falta el archivo {DeLaSena}. Probá con la siguiente.");
                 return;
             }
             catch (ArgumentException)
             {
-                MostrarError($"La ruta del archivo de la seña «{sena.Palabra}» no es válida.");
+                MostrarError($"La ruta del archivo {DeLaSena} no es válida.");
                 return;
             }
 
@@ -124,7 +133,7 @@ namespace ProyectoFinal
 
             imgSena.Source = imagen;
             imgSena.Visibility = Visibility.Visible;
-            AutomationProperties.SetName(imgSena, $"Imagen de la seña {_sena?.Palabra}");
+            AutomationProperties.SetName(imgSena, NombreAccesible("Imagen"));
             pnlControles.Visibility = Visibility.Collapsed;
         }
 
@@ -135,7 +144,7 @@ namespace ProyectoFinal
             videoSena.Source = new Uri(ruta, UriKind.Absolute);
             videoSena.SpeedRatio = _lento ? VelocidadLenta : 1.0;
             videoSena.Visibility = Visibility.Visible;
-            AutomationProperties.SetName(videoSena, $"Video de la seña {_sena?.Palabra}");
+            AutomationProperties.SetName(videoSena, NombreAccesible("Video"));
             videoSena.Play();
 
             pnlControles.Visibility = MostrarControles ? Visibility.Visible : Visibility.Collapsed;
@@ -222,7 +231,7 @@ namespace ProyectoFinal
             if (estabaReproduciendo)
                 AlternarPausa();
 
-            var ventana = new VisorPantallaCompletaWindow(_sena, _lento, TeclaPausar)
+            var ventana = new VisorPantallaCompletaWindow(_sena, _lento, TeclaPausar, OcultarPalabra)
             {
                 Owner = Window.GetWindow(this)
             };
@@ -311,13 +320,13 @@ namespace ProyectoFinal
             }
             else
             {
-                MostrarError($"No se pudo reproducir la seña «{_sena?.Palabra}».");
+                MostrarError($"No se pudo reproducir el video {DeLaSena}.");
             }
         }
 
         private void ImgSena_ImageFailed(object? sender, ExceptionRoutedEventArgs e)
         {
-            MostrarError($"No se pudo abrir la imagen de la seña «{_sena?.Palabra}».");
+            MostrarError($"No se pudo abrir la imagen {DeLaSena}.");
         }
 
         private void Visor_Unloaded(object sender, RoutedEventArgs e) => Detener();
