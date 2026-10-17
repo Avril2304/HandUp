@@ -15,7 +15,10 @@ namespace ProyectoFinal
         // Se terminó de recorrer la categoría y se quiere practicar con sus señas
         public event EventHandler? PracticarSolicitado;
 
-        private record PasoInstruccion(int Numero, string Texto);
+        private record PasoInstruccion(int Numero, string Texto)
+        {
+            public override string ToString() => $"Paso {Numero}: {Texto}";
+        }
 
         private readonly IReadOnlyList<Sena> _senas;
         private readonly PreferenciasUsuario _preferencias;

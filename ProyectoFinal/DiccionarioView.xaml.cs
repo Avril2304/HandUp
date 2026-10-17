@@ -37,13 +37,22 @@ namespace ProyectoFinal
                 string nombreCat = categoria?.Nombre ?? sena.CategoriaId;
                 SubtituloCategoria = $"{emoji} {nombreCat} · Nivel {sena.Dificultad}";
                 BadgeTipo = sena is SenaAnimada ? "🎬 Video" : "📷 Imagen";
+                _nombreAccesible = $"{PalabraFormateada}. {nombreCat}, nivel {sena.Dificultad}, {(sena is SenaAnimada ? "video" : "imagen")}";
             }
+
+            private readonly string _nombreAccesible;
+
+            // Accesibilidad: el lector de pantalla anuncia cada ítem de la lista con este texto
+            // (sin esto lee "ProyectoFinal.DiccionarioView+SenaItem")
+            public override string ToString() => _nombreAccesible;
         }
 
         public class PasoInstruccion
         {
             public string Numero { get; set; } = string.Empty;
             public string Texto { get; set; } = string.Empty;
+
+            public override string ToString() => $"Paso {Numero}: {Texto}";
         }
 
         public DiccionarioView()
