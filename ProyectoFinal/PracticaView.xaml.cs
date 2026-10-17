@@ -12,7 +12,8 @@ namespace ProyectoFinal
 {
     // Práctica de una categoría (stories: responder por opción múltiple con atajos, responder tipeando,
     // y botón Confirmar deshabilitado hasta elegir). Cada respuesta suma al progreso del perfil.
-    // También es la pantalla de la prueba final de un nivel: mismas preguntas, otra ronda y otro resultado.
+    // También es la pantalla de la prueba final de un nivel: 8 palabras sueltas y 12 frases (las frases se reproducen
+    // seña por seña y se elige su traducción), otra ronda y otro resultado.
     public partial class PracticaView : UserControl
     {
         // Terminó la práctica y se quiere elegir otra categoría
@@ -25,6 +26,10 @@ namespace ProyectoFinal
         private const int MaximoPreguntas = 10;
         private const int PuntosOpcionMultiple = 10;
         private const int PuntosTipeo = 15;
+        private const int PuntosFrase = 20;
+
+        // Una pregunta de la ronda: una palabra suelta (Sena) o una frase (Frase)
+        private record ItemRonda(Sena? Sena, Frase? Frase);
 
         // Para tipeo solo se usan palabras simples: con "Tomar / Beber" o "Mañana (parte del día)"
         // no se puede esperar que el usuario escriba exactamente lo mismo
@@ -38,9 +43,13 @@ namespace ProyectoFinal
         private readonly GeneradorPreguntas _generador = new(new RepositorioSenas());
         private readonly Random _random = new();
 
-        private List<Sena> _ronda = new();
+        private List<ItemRonda> _ronda = new();
         private int _indice;
         private int _aciertos;
+        private int _aciertosFrases;
+        private int _totalFrases;
+        private string? _avisoFrases;                 // si no se pudo cargar el banco de frases, la prueba es solo de palabras
+        private readonly ReproductorSecuencia _reproductor;
         private Pregunta? _pregunta;
         private int? _opcionElegida;
         private readonly List<Button> _botonesOpcion = new();
@@ -64,6 +73,13 @@ namespace ProyectoFinal
             _preferencias = preferencias;
             _servicio = servicio;
             visor.TeclaPausar = _preferencias.TeclaPausar;
+
+            // Frases: muestra qué seña de la frase se está viendo; al terminar, cómo verla de nuevo
+            _reproductor = new ReproductorSecuencia(visor);
+            _reproductor.PasoMostrado += (s, paso) => lblSecuencia.Text = $"Seña {paso + 1} de {_reproductor.Cantidad}";
+            _reproductor.Terminado += (s, e) => lblSecuencia.Text = "Listo. Para verla de nuevo, apretá R o Repetir frase.";
+            Unloaded += (s, e) => _reproductor.Detener();
+
             EmpezarRonda();
         }
 
@@ -76,11 +92,11 @@ namespace ProyectoFinal
 
             try
             {
-                // Prueba final: 20 señas del nivel repartidas entre sus categorías.
+                // Prueba final: 12 frases y 8 palabras sueltas del nivel, mezcladas.
                 // Práctica: hasta 10 señas de la categoría, en orden al azar.
                 _ronda = _nivelPrueba is int nivel
-                    ? PruebaFinal.ElegirSenas(nivel, _random)
-                    : _senasCategoria.OrderBy(_ => _random.Next()).Take(MaximoPreguntas).ToList();
+                    ? ArmarRondaPrueba(nivel)
+                    : _senasCategoria.OrderBy(_ => _random.Next()).Take(MaximoPreguntas).Select(s => new ItemRonda(s, null)).ToList();
             }
             catch (DatabaseException ex)
             {
@@ -98,8 +114,33 @@ namespace ProyectoFinal
 
             _indice = 0;
             _aciertos = 0;
+            _aciertosFrases = 0;
+            _totalFrases = _ronda.Count(item => item.Frase is not null);
             pnlPregunta.Visibility = Visibility.Visible;
             MostrarPregunta();
+        }
+
+        // Las frases que haya (hasta 12) y el resto, palabras sueltas hasta completar 20. Si el banco de frases no se puede
+        // cargar, la prueba es solo de palabras y se avisa en el resultado.
+        private List<ItemRonda> ArmarRondaPrueba(int nivel)
+        {
+            List<Frase> frases;
+            _avisoFrases = null;
+            try
+            {
+                frases = PruebaFinal.ElegirFrases(nivel, _random);
+            }
+            catch (BancoFrasesException ex)
+            {
+                frases = new List<Frase>();
+                _avisoFrases = $"Esta vez la prueba fue solo de palabras: {ex.Message}";
+            }
+
+            List<Sena> palabras = PruebaFinal.ElegirSenas(nivel, _random, PruebaFinal.CantidadPreguntas - frases.Count);
+            return palabras.Select(s => new ItemRonda(s, null))
+                           .Concat(frases.Select(f => new ItemRonda(null, f)))
+                           .OrderBy(_ => _random.Next())
+                           .ToList();
         }
 
         private void MostrarMensaje(string mensaje)
@@ -111,8 +152,8 @@ namespace ProyectoFinal
 
         private void MostrarPregunta()
         {
-            Sena sena = _ronda[_indice];
-            visor.Mostrar(sena);
+            ItemRonda item = _ronda[_indice];
+            _reproductor.Detener();
 
             string prefijo = _nivelPrueba is not null ? "PRUEBA FINAL · " : string.Empty;
             lblAvance.Text = $"{prefijo}PREGUNTA {_indice + 1} DE {_ronda.Count}";
@@ -122,6 +163,19 @@ namespace ProyectoFinal
 
             pnlFeedback.Visibility = Visibility.Collapsed;
             _opcionElegida = null;
+
+            if (item.Frase is Frase frase)
+            {
+                MostrarPreguntaFrase(frase);
+                return;
+            }
+
+            // Palabra suelta: el visor con sus controles de siempre
+            Sena sena = item.Sena!;
+            pnlSecuencia.Visibility = Visibility.Collapsed;
+            visor.MostrarControles = true;
+            visor.PermitirPantallaCompleta = true;
+            visor.Mostrar(sena);
 
             // Una de cada tres preguntas es de tipeo (si la palabra se puede escribir sin ambigüedad)
             bool esTipeo = _indice % 3 == 2 && PalabraSimple.IsMatch(sena.Palabra.Trim());
@@ -143,6 +197,35 @@ namespace ProyectoFinal
             ActualizarConfirmar();
         }
 
+        // Frase: las señas se reproducen una tras otra (sin pantalla completa ni los controles de un solo video,
+        // porque la secuencia tiene los suyos: Repetir frase y la tecla de Pausar) y se elige la traducción
+        private void MostrarPreguntaFrase(Frase frase)
+        {
+            PreguntaFrase pregunta = _generador.CrearFrase(frase);
+            _pregunta = pregunta;
+
+            visor.MostrarControles = false;
+            visor.PermitirPantallaCompleta = false;
+            MostrarOpciones(pregunta);
+            lblEnunciado.Text = "¿Qué dice esta frase?";
+            pnlSecuencia.Visibility = Visibility.Visible;
+
+            _reproductor.Reproducir(frase.Senas);
+            ActualizarConfirmar();
+        }
+
+        private void BtnRepetirFrase_Click(object sender, RoutedEventArgs e) => RepetirFrase();
+
+        private void RepetirFrase()
+        {
+            if (_pregunta is PreguntaFrase)
+                _reproductor.Repetir();
+        }
+
+        // Las palabras del banco se emprolijan ("BUENAS NOCHES" -> "Buenas noches"); las frases ya vienen bien escritas
+        private static string TextoOpcion(PreguntaOpcionMultiple pregunta, int indice) =>
+            pregunta is PreguntaFrase ? pregunta.Opciones[indice] : TextoSena.Palabra(pregunta.Opciones[indice]);
+
         private void MostrarOpciones(PreguntaOpcionMultiple pregunta)
         {
             lblEnunciado.Text = "¿Qué seña es esta?";
@@ -154,7 +237,7 @@ namespace ProyectoFinal
             for (int i = 0; i < pregunta.Opciones.Count; i++)
             {
                 int indice = i;
-                string texto = TextoSena.Palabra(pregunta.Opciones[i]);
+                string texto = TextoOpcion(pregunta, i);
                 string tecla = TextoTecla.Nombre(_preferencias.ObtenerTeclaOpcion(i + 1));
 
                 var boton = new Button
@@ -287,7 +370,7 @@ namespace ProyectoFinal
 
             string respuesta = _pregunta is PreguntaOpcionMultiple ? _opcionElegida.ToString()! : txtRespuesta.Text;
             bool correcto = _pregunta.EvaluarRespuesta(respuesta);
-            string palabraCorrecta = TextoSena.Palabra(_pregunta.Sena);
+            string palabraCorrecta = _pregunta is PreguntaFrase frase ? frase.Frase.Texto : TextoSena.Palabra(_pregunta.Sena);
 
             if (_pregunta is PreguntaOpcionMultiple multiple)
                 MarcarOpciones(multiple);
@@ -296,7 +379,11 @@ namespace ProyectoFinal
 
             string? avisoGuardado = RegistrarProgreso(correcto);
             if (correcto)
+            {
                 _aciertos++;
+                if (_pregunta is PreguntaFrase)
+                    _aciertosFrases++;
+            }
 
             MostrarFeedback(correcto ? "✓ ¡Correcto!" : $"✗ Incorrecto. Era «{palabraCorrecta}».", correcto, avisoGuardado);
             ActualizarConfirmar();
@@ -308,7 +395,7 @@ namespace ProyectoFinal
         {
             for (int i = 0; i < _botonesOpcion.Count; i++)
             {
-                string texto = TextoSena.Palabra(pregunta.Opciones[i]);
+                string texto = TextoOpcion(pregunta, i);
                 string tecla = TextoTecla.Nombre(_preferencias.ObtenerTeclaOpcion(i + 1));
                 string? estado = null;
 
@@ -333,14 +420,23 @@ namespace ProyectoFinal
         }
 
         // Suma al progreso del perfil (puntos y racha). Si falla la base, la práctica sigue igual.
+        // Una frase suma puntos y racha, pero no cuenta como seña dominada (senaId 0): evalúa la frase entera, no una seña.
         private string? RegistrarProgreso(bool correcto)
         {
+            int senaId = _pregunta is PreguntaFrase ? 0 : _pregunta!.Sena.Id;
+            int puntos = _pregunta switch
+            {
+                PreguntaFrase => PuntosFrase,
+                PreguntaTipeo => PuntosTipeo,
+                _ => PuntosOpcionMultiple
+            };
+
             try
             {
                 if (correcto)
-                    _servicio.RegistrarAcierto(_pregunta!.Sena.Id, _pregunta is PreguntaTipeo ? PuntosTipeo : PuntosOpcionMultiple);
+                    _servicio.RegistrarAcierto(senaId, puntos);
                 else
-                    _servicio.RegistrarFallo(_pregunta!.Sena.Id);
+                    _servicio.RegistrarFallo(senaId);
                 return null;
             }
             catch (DatabaseException)
@@ -375,6 +471,7 @@ namespace ProyectoFinal
 
         private void MostrarResultado()
         {
+            _reproductor.Detener();
             visor.Detener();
             pnlPregunta.Visibility = Visibility.Collapsed;
             pnlResultado.Visibility = Visibility.Visible;
@@ -444,6 +541,14 @@ namespace ProyectoFinal
                 btnPracticarDeNuevo.Content = "Rendir de nuevo";
             }
 
+            // Cómo le fue en cada tipo de pregunta
+            if (_totalFrases > 0)
+            {
+                int totalPalabras = r.Total - _totalFrases;
+                lblResultadoDetalle.Text += $"\nPalabras: {r.Aciertos - _aciertosFrases} de {totalPalabras} · Frases: {_aciertosFrases} de {_totalFrases}.";
+            }
+            if (_avisoFrases is not null)
+                lblResultadoDetalle.Text += $"\n{_avisoFrases}";
             if (avisoGuardado is not null)
                 lblResultadoDetalle.Text += $"\n{avisoGuardado}";
             btnSecundario.Content = "Volver a los niveles";
@@ -459,6 +564,7 @@ namespace ProyectoFinal
 
         private void BtnOtraCategoria_Click(object sender, RoutedEventArgs e)
         {
+            _reproductor.Detener();
             visor.Detener();
             if (_nivelPrueba is null)
                 OtraCategoriaSolicitada?.Invoke(this, EventArgs.Empty);
@@ -514,7 +620,11 @@ namespace ProyectoFinal
             bool espacioSobreOpcion = e.Key == Key.Space && Keyboard.FocusedElement is Button b && _botonesOpcion.Contains(b);
             if (e.Key == _preferencias.TeclaPausar && !espacioSobreOpcion)
             {
-                visor.AlternarPausa();
+                // En una frase se pausa la secuencia entera (y no solo el video de la seña que se está viendo)
+                if (_pregunta is PreguntaFrase && _reproductor.Reproduciendo)
+                    _reproductor.AlternarPausa();
+                else
+                    visor.AlternarPausa();
                 e.Handled = true;
                 return;
             }
@@ -531,6 +641,13 @@ namespace ProyectoFinal
                         return;
                     }
                 }
+            }
+
+            // R: ver la frase de nuevo desde el principio (también después de responder)
+            if (e.Key == Key.R && _pregunta is PreguntaFrase)
+            {
+                RepetirFrase();
+                e.Handled = true;
             }
         }
 

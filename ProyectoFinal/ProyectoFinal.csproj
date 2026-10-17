@@ -25,6 +25,12 @@
     <Content Include="signs_database.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
+  <!-- Banco de frases de la prueba final (lo lee BancoFrases) -->
+  <ItemGroup>
+    <None Remove="frases.json" />
+    <Content Include="frases.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
   <!-- Guía de uso (botón "i"): el contenido, sus capturas y el PDF de la presentación, junto al .exe -->
   <ItemGroup>
     <None Remove="Guia\**\*" />

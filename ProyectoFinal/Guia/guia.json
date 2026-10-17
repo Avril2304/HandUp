@@ -9,7 +9,7 @@
       "resumen": "HandUp es una app para aprender Lengua de Señas Argentina (LSA) a tu ritmo. Tiene 640 señas en 24 categorías, ordenadas en 4 niveles: Principiante, Básico, Intermedio y Avanzado. Cada seña tiene un video (o una imagen, en el abecedario y los números) y la descripción del movimiento de las manos.",
       "pasos": [
         "Aprender: elegís un nivel y una categoría, mirás las señas de a una y después practicás con preguntas.",
-        "Prueba final: al aprobarla con 80% o más se desbloquea el nivel siguiente.",
+        "Prueba final: palabras y frases del nivel. Al aprobarla con 80% o más se desbloquea el nivel siguiente.",
         "Desafío: una partida contrarreloj con vidas, puntaje y racha, donde las señas que más fallás aparecen más seguido.",
         "Traductor: escribís una palabra o una frase y la ves en señas. Lo que no está en el banco se deletrea.",
         "Diccionario: un buscador de todas las señas, con filtros.",
@@ -92,15 +92,22 @@
       "resumen": "Cada nivel tiene una prueba final. Si la aprobás con 80% o más, se desbloquea el nivel siguiente.",
       "pasos": [
         "En Aprender, en la elección de nivel, tocá \"Rendir prueba\" (o la tecla P).",
-        "Son 20 señas del nivel, repartidas entre todas sus categorías.",
-        "Al terminar ves tu porcentaje. Si aprobaste, aparece el nivel nuevo y un botón para ir directo a él.",
+        "Son 20 preguntas: 8 palabras sueltas del nivel y 12 frases.",
+        "En las frases, las señas se muestran una detrás de otra y elegís qué dice la frase entre 4 opciones parecidas. Con \"Repetir frase\" (o la tecla R) la ves de nuevo desde el principio.",
+        "Al terminar ves tu porcentaje y cuántas palabras y frases acertaste. Si aprobaste, aparece el nivel nuevo y un botón para ir directo a él.",
         "Se guarda tu mejor resultado: un intento peor no lo pisa. Podés rendirla todas las veces que quieras.",
         "Si salís a la mitad (Esc), la prueba se abandona y no se guarda nada.",
         "Nivelación: si al registrarte elegiste un nivel más alto, la prueba de nivelación es la prueba final del nivel anterior. La podés rendir desde Aprender o desde Mi perfil, o dejarla de lado con \"Empezar como Principiante\"."
       ],
       "atajos": [
         { "teclas": "P", "accion": "Rendir la prueba final (en la elección de nivel)" },
+        { "teclas": "R", "accion": "Ver la frase de nuevo" },
+        { "teclas": "Espacio", "accion": "Pausar o reanudar la frase" },
         { "teclas": "Esc", "accion": "Abandonar la prueba" }
+      ],
+      "capturas": [
+        { "archivo": "prueba-frase.png", "pie": "Una pregunta de frase en la prueba final" },
+        { "archivo": "prueba-resultado.png", "pie": "El resultado, con las palabras y las frases por separado" }
       ]
     },
     {
@@ -216,6 +223,7 @@
         { "teclas": "Enter", "accion": "Confirmar, traducir o iniciar sesión" },
         { "teclas": "Espacio", "accion": "Pausar o reanudar el video" },
         { "teclas": "P", "accion": "Rendir la prueba final" },
+        { "teclas": "R", "accion": "Prueba final: ver la frase de nuevo" },
         { "teclas": "R / C / F / E", "accion": "Traductor: repetir, cambiar significado, pantalla completa, exportar" },
         { "teclas": "Tab", "accion": "Pasar al siguiente control" }
       ]

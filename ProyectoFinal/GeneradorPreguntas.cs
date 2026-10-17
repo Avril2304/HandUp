@@ -45,5 +45,34 @@ namespace ProyectoFinal
 
         // Genera una pregunta de tipeo para la seña dada
         public PreguntaTipeo CrearTipeo(Sena sena) => new(sena);
+
+        // Genera una pregunta de frase: la traducción correcta y 3 incorrectas de la misma plantilla.
+        // Se prefieren las que cambian menos palabras ("Mi mamá cocina pizza" / "Mi tía cocina pizza"): así hay que mirar
+        // bien cada seña. Entre las que cambian lo mismo, se elige al azar.
+        public PreguntaFrase CrearFrase(Frase frase)
+        {
+            var opciones = frase.Alternativas
+                .Where(a => a != frase.Texto)
+                .Distinct()
+                .OrderBy(a => PalabrasDistintas(frase.Texto, a))
+                .ThenBy(_ => _random.Next())
+                .Take(3)
+                .ToList();
+            if (opciones.Count < 3)
+                throw new ArgumentException("La frase necesita al menos 3 opciones incorrectas.", nameof(frase));
+
+            int posicionCorrecta = _random.Next(0, opciones.Count + 1);
+            opciones.Insert(posicionCorrecta, frase.Texto);
+            return new PreguntaFrase(frase, opciones.AsReadOnly(), posicionCorrecta);
+        }
+
+        // Cuántas palabras tiene una frase que la otra no (y viceversa): "Yo como pizza" / "Yo como pan" -> 2
+        private static int PalabrasDistintas(string a, string b)
+        {
+            var palabrasA = a.Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(p => p.Trim('.', ',', '¿', '?')).ToHashSet();
+            var palabrasB = b.Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(p => p.Trim('.', ',', '¿', '?')).ToHashSet();
+            palabrasA.SymmetricExceptWith(palabrasB);
+            return palabrasA.Count;
+        }
     }
 }

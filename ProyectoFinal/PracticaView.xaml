@@ -39,8 +39,27 @@
                     </Border>
                 </StackPanel>
 
-                <TextBlock Grid.Row="1" x:Name="lblEnunciado" FontFamily="{StaticResource FontHeading}" FontSize="22" FontWeight="Bold"
-                           TextWrapping="Wrap" Margin="0,14,0,10"/>
+                <StackPanel Grid.Row="1" Margin="0,14,0,10">
+                    <TextBlock x:Name="lblEnunciado" FontFamily="{StaticResource FontHeading}" FontSize="22" FontWeight="Bold"
+                               TextWrapping="Wrap"/>
+
+                    <!-- Solo en las preguntas de frase: qué seña de la frase se está viendo y el botón para verla de nuevo -->
+                    <Grid x:Name="pnlSecuencia" Visibility="Collapsed" Margin="0,8,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock x:Name="lblSecuencia" FontSize="13" Foreground="{DynamicResource BrushMuted}"
+                                   VerticalAlignment="Center" TextWrapping="Wrap"/>
+                        <Button Grid.Column="1" x:Name="btnRepetirFrase" Style="{StaticResource SecondaryButton}" Height="36"
+                                Click="BtnRepetirFrase_Click" AutomationProperties.Name="Repetir la frase desde el principio. Atajo: R">
+                            <StackPanel Orientation="Horizontal" Margin="14,0">
+                                <TextBlock Text="&#xE72C;" FontFamily="{StaticResource FontIconos}" FontSize="13" VerticalAlignment="Center"/>
+                                <TextBlock Text="Repetir frase (R)" Margin="8,0,0,0" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+                </StackPanel>
 
                 <!-- Respuesta: opciones (opción múltiple) o campo de texto (tipeo) -->
                 <Grid Grid.Row="2">

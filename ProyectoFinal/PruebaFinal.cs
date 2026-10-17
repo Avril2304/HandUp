@@ -4,17 +4,24 @@ using System.Linq;
 
 namespace ProyectoFinal
 {
-    // Reglas de la prueba final de un nivel (fase 2 del plan de niveles, por ahora solo con palabras).
-    // Con PorcentajeParaAprobar o más se desbloquea el nivel siguiente (ver ServicioProgreso.RegistrarPruebaFinal).
+    // Reglas de la prueba final de un nivel (fases 2 y 4 del plan de niveles): 20 preguntas, 12 de frases (60%)
+    // y 8 de palabras sueltas. Con PorcentajeParaAprobar o más se desbloquea el nivel siguiente
+    // (ver ServicioProgreso.RegistrarPruebaFinal).
     public static class PruebaFinal
     {
         public const int CantidadPreguntas = 20;
+        public const int CantidadFrases = 12;
         public const int PorcentajeParaAprobar = 80;
 
-        // Las señas de la prueba: CantidadPreguntas del nivel, repartidas parejo entre sus categorías.
+        // Las frases de la prueba: distintas entre sí y repartidas entre las plantillas del nivel
+        // (así no salen dos "Yo como…" si hay otras). Lanza BancoFrasesException si no se puede cargar el banco.
+        public static List<Frase> ElegirFrases(int nivel, Random random, int cantidad = CantidadFrases) =>
+            Seleccion.ElegirRepartido(BancoFrases.Cargar().ObtenerPorNivel(nivel), f => f.PlantillaId, cantidad, random);
+
+        // Las palabras sueltas de la prueba: 'cantidad' señas del nivel, repartidas parejo entre sus categorías.
         // Se dejan afuera los homónimos (NARANJA, PAPA/PAPÁ, UNO, MERIENDA, MAÑANA): con una sola palabra
         // como respuesta no se sabe de cuál de los significados se trata.
-        public static List<Sena> ElegirSenas(int nivel, Random random)
+        public static List<Sena> ElegirSenas(int nivel, Random random, int cantidad = CantidadPreguntas)
         {
             var repositorio = new RepositorioSenas();
 
@@ -27,7 +34,7 @@ namespace ProyectoFinal
             IEnumerable<Sena> candidatas = repositorio.BuscarPorDificultad(nivel)
                 .Where(s => !homonimos.Contains(s.PalabraNormalizada));
 
-            return Seleccion.ElegirRepartido(candidatas, s => s.CategoriaId, CantidadPreguntas, random);
+            return Seleccion.ElegirRepartido(candidatas, s => s.CategoriaId, cantidad, random);
         }
 
         // 17 de 20 -> 85
