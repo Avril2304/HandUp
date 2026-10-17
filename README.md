@@ -82,7 +82,7 @@ Solución: `ProyectoFinal.sln`, proyecto `ProyectoFinal.csproj` (`net8.0-windows
 - `LoginWindow.xaml(.cs)`: ventana de 940x600 con dos columnas. A la izquierda, un panel de marca con fondo `#14332B`, el logo (`Assets/logo.jpg`, una mano verde) y el título "HandUp". A la derecha, el formulario: perfiles existentes como chips en un ListBox, usuario, contraseña, un botón Iniciar sesión y el link "Creala acá" hacia el registro.
 - `RegisterWindow.xaml(.cs)`: el mismo panel de marca a la izquierda y el formulario de registro a la derecha.
 - `MainMenuWindow.xaml(.cs)`: recibe un `Perfil`. En el inicio muestra el saludo, el nivel, la racha y el progreso dentro del nivel (con las cantidades reales de cada nivel, ver `Niveles.cs`), y los tiles de las secciones. Al entrar a una sección aparece la barra lateral. Teclas: 1-6 desde el inicio, Ctrl+1..6 dentro de una sección, Esc vuelve un paso. Desafío todavía muestra "Próximamente".
-- `Perfil.cs`: Id, Nombre, Usuario, PasswordHash, PasswordSalt, Nivel, Racha, MejorRacha, SenasDominadas, Puntos, AciertosTotales, FallosTotales y FechaRegistro.
+- `Perfil.cs`: Id, Nombre, Usuario, PasswordHash, PasswordSalt, NivelDesbloqueado (1 a 4; `Nivel` es su nombre), Racha, MejorRacha, SenasDominadas, Puntos, AciertosTotales, FallosTotales y FechaRegistro.
 - **Persistencia en SQLite** (paquete NuGet `Microsoft.Data.Sqlite`, sin Entity Framework). La base es `handup.db`, junto al ejecutable.
   - `Database.cs` (estática): `Inicializar()` se llama en `App.Application_Startup`. Crea las tablas si no existen. Si el archivo está corrupto, lo renombra a `handup.corrupto-<fecha>.db` y crea uno nuevo. Si la tabla Perfiles está vacía, migra el viejo `perfiles.json` (y lo renombra a `.migrado`) o siembra 3 perfiles de ejemplo (usuarios avril, juan y lucia; sus contraseñas están en `PerfilesDeEjemplo()` de `Database.cs` y cumplen `PoliticaPassword`). También expone `Ejecutar<T>(Func<SqliteConnection, T>)`, que abre la conexión y convierte cada `SqliteException` en `DatabaseException`.
   - `IRepositorio<T>`: interfaz genérica con `ObtenerTodos`, `BuscarPorId`, `Agregar` y `Actualizar`. Los repositorios de los demás módulos (por ejemplo, señas) tienen que implementarla.
@@ -112,7 +112,7 @@ Solución: `ProyectoFinal.sln`, proyecto `ProyectoFinal.csproj` (`net8.0-windows
 
 ### Qué está hecho
 
-- **Usuarios (stories 1 a 4):** registro, login, carga segura y progreso automático. `ServicioProgreso` guarda cada acierto o fallo (dispara el evento `ProgresoActualizado`) y registra cada seña en la tabla `ProgresoSenas`. El nivel puede subir pero nunca bajar (`Niveles.Actualizar`).
+- **Usuarios (stories 1 a 4):** registro, login, carga segura y progreso automático. `ServicioProgreso` guarda cada acierto o fallo (dispara el evento `ProgresoActualizado`) y registra cada seña en la tabla `ProgresoSenas`. El nivel ya no sube por dominar señas: es el `NivelDesbloqueado` del perfil y solo va a subir aprobando la prueba final. La barra de progreso cuenta las señas dominadas del nivel actual desde `ProgresoSenas`.
 - **Mi perfil** (`PerfilView`): datos, avance en el nivel, estadísticas y estadísticas por categoría (`EstadisticaCategoria`, con "Practicar" para las más flojas). En "Cuenta": editar el nombre, cambiar la contraseña, cerrar sesión, reiniciar el progreso y eliminar el perfil (las dos últimas con `DialogoConfirmacion`).
 - **Aprender** (`AprenderView` → `ElegirNivelView` → `ElegirCategoriaView` → `RecorrerSenasView` → `PracticaView`): stories 5 a 10. Polimorfismo: `Sena` (`SenaEstatica` / `SenaAnimada`) y `Pregunta` (`PreguntaOpcionMultiple` / `PreguntaTipeo`). `RepositorioSenas : IRepositorio<Sena>` lee el banco; `GeneradorPreguntas` arma las preguntas.
 - **Visor de señas** (`VisorSena`): imagen o video con Pausar, Repetir y Más lento, y pantalla completa (`VisorPantallaCompletaWindow`).
@@ -124,7 +124,7 @@ Solución: `ProyectoFinal.sln`, proyecto `ProyectoFinal.csproj` (`net8.0-windows
 ### Qué falta
 
 - **Desafío** (stories 16 a 19): contrarreloj con vidas, botón Empezar deshabilitado, racha en pantalla y repetición espaciada.
-- **Sistema de niveles:** niveles bloqueados, prueba final con 80% para desbloquear, nivelación al registrarse y banco de frases. El plan está en `PLAN_NIVELES.md`.
+- **Sistema de niveles:** la fase 0 está hecha (nivel desbloqueado, tabla `PruebasFinales` y migración que conserva el nivel de cada perfil). Faltan niveles bloqueados, prueba final con 80% para desbloquear, nivelación al registrarse y banco de frases. El plan está en `PLAN_NIVELES.md`.
 
 > Nota: esta sección refleja el estado al 2026-10-17. Actualizala a medida que se avance.
 

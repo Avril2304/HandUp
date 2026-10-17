@@ -30,12 +30,12 @@ namespace ProyectoFinal
                 _perfil.MejorRacha = _perfil.Racha;
             }
 
-            // Registramos el acierto en ProgresoSenas y actualizamos el total de señas dominadas
+            // Registramos el acierto en ProgresoSenas y actualizamos el total de señas dominadas.
+            // El nivel no cambia por dominar señas: solo sube al aprobar la prueba final.
             if (senaId > 0)
             {
                 int dominadasEnBase = _repositorio.RegistrarResultadoSena(_perfil.Id, senaId, correcto: true);
                 _perfil.SenasDominadas = Math.Max(_perfil.SenasDominadas, dominadasEnBase);
-                RecalcularNivel();
             }
 
             GuardarProgreso("Acierto");
@@ -65,8 +65,7 @@ namespace ProyectoFinal
             {
                 _perfil.SenasDominadas++;
             }
-            RecalcularNivel();
-            
+
             GuardarProgreso("SenasDominadas");
         }
 
@@ -122,13 +121,13 @@ namespace ProyectoFinal
             }
         }
 
-        // Pone en cero el nivel, las señas dominadas, los puntos, los aciertos, los fallos y las rachas.
+        // Vuelve a Principiante y pone en cero las pruebas finales, las señas dominadas, los puntos, los aciertos, los fallos y las rachas.
         // No toca el usuario, la contraseña ni las preferencias.
         public void ReiniciarProgreso()
         {
             _repositorio.BorrarProgresoSenas(_perfil.Id);
 
-            _perfil.Nivel = Niveles.Todos[0].Nombre;
+            _perfil.NivelDesbloqueado = 1;
             _perfil.SenasDominadas = 0;
             _perfil.Puntos = 0;
             _perfil.AciertosTotales = 0;
@@ -147,11 +146,6 @@ namespace ProyectoFinal
 
             _repositorio.Eliminar(_perfil.Id);
             PerfilEliminado = true;
-        }
-
-        private void RecalcularNivel()
-        {
-            _perfil.Nivel = Niveles.Actualizar(_perfil.Nivel, _perfil.SenasDominadas);
         }
 
         // Guarda automáticamente en la base y notifica a la UI
