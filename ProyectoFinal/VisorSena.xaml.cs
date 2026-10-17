@@ -252,6 +252,52 @@ namespace ProyectoFinal
 
             lblVelocidad.Text = _lento ? "Normal" : "Más lento";
             AutomationProperties.SetName(btnVelocidad, _lento ? "Volver a la velocidad normal" : "Reproducir más lento");
+
+            // El tooltip dice lo mismo que el botón (sirve sobre todo en el modo compacto, cuando solo se ve el ícono)
+            btnPausa.ToolTip = AutomationProperties.GetName(btnPausa);
+            btnRepetir.ToolTip = AutomationProperties.GetName(btnRepetir);
+            btnVelocidad.ToolTip = AutomationProperties.GetName(btnVelocidad);
+
+            // "Reproducir" y "Normal" ocupan distinto que "Pausar" y "Más lento": se vuelve a ver si entran
+            AjustarControlesAlAncho(ActualWidth);
+        }
+
+        // En un lugar angosto (ej. la ficha del Diccionario o el Desafío) los botones muestran solo el ícono,
+        // para no quedar cortados. El nombre accesible y el tooltip siguen diciendo qué hace cada uno.
+        private void Visor_SizeChanged(object sender, SizeChangedEventArgs e) => AjustarControlesAlAncho(e.NewSize.Width);
+
+        private void AjustarControlesAlAncho(double disponible)
+        {
+            if (disponible <= 0)
+                return; // todavía no se dibujó
+
+            AplicarModoControles(compacto: false);
+            if (AnchoControles() > disponible)
+                AplicarModoControles(compacto: true);
+        }
+
+        // Lo que ocupan los tres botones con su texto (se mide cada uno, así funciona aunque el panel esté oculto)
+        private double AnchoControles()
+        {
+            double ancho = 0;
+            foreach (Button boton in new[] { btnPausa, btnRepetir, btnVelocidad })
+            {
+                boton.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
+                ancho += boton.DesiredSize.Width + boton.Margin.Left + boton.Margin.Right;
+            }
+            return ancho;
+        }
+
+        private void AplicarModoControles(bool compacto)
+        {
+            Visibility textos = compacto ? Visibility.Collapsed : Visibility.Visible;
+            lblPausa.Visibility = textos;
+            lblRepetir.Visibility = textos;
+            lblVelocidad.Visibility = textos;
+
+            btnPausa.MinWidth = compacto ? 56 : 96;
+            btnRepetir.MinWidth = compacto ? 56 : 96;
+            btnVelocidad.MinWidth = compacto ? 56 : 112;
         }
 
         // ===== Eventos =====

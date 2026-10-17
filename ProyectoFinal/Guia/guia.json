@@ -1,0 +1,224 @@
+{
+  "titulo": "Guía de uso de HandUp",
+  "subtitulo": "Todo lo que hace la app y cómo se maneja, sección por sección.",
+  "secciones": [
+    {
+      "id": "que-es",
+      "titulo": "¿Qué es HandUp?",
+      "glifo": "E946",
+      "resumen": "HandUp es una app para aprender Lengua de Señas Argentina (LSA) a tu ritmo. Tiene 640 señas en 24 categorías, ordenadas en 4 niveles: Principiante, Básico, Intermedio y Avanzado. Cada seña tiene un video (o una imagen, en el abecedario y los números) y la descripción del movimiento de las manos.",
+      "pasos": [
+        "Aprender: elegís un nivel y una categoría, mirás las señas de a una y después practicás con preguntas.",
+        "Prueba final: al aprobarla con 80% o más se desbloquea el nivel siguiente.",
+        "Desafío: una partida contrarreloj con vidas, puntaje y racha, donde las señas que más fallás aparecen más seguido.",
+        "Traductor: escribís una palabra o una frase y la ves en señas. Lo que no está en el banco se deletrea.",
+        "Diccionario: un buscador de todas las señas, con filtros.",
+        "Mi perfil y Configuración: tu progreso, tus estadísticas y las opciones de accesibilidad."
+      ],
+      "consejo": "Todo se puede usar solo con el teclado, con el Narrador de Windows, en alto contraste y con el texto más grande."
+    },
+    {
+      "id": "cuenta",
+      "titulo": "Tu cuenta",
+      "glifo": "E77B",
+      "resumen": "Cada persona tiene su propio perfil, con su progreso y sus preferencias. Todo se guarda solo, en la compu.",
+      "pasos": [
+        "En la pantalla de inicio de sesión, tocá \"Creala acá\" para registrarte.",
+        "Completá tu nombre, un usuario y una contraseña. La lista de requisitos de la contraseña se va marcando mientras escribís.",
+        "Elegí desde qué nivel querés empezar. Si elegís Básico o más, la cuenta arranca en Principiante y podés rendir una prueba de nivelación para pasar directo al nivel que elegiste.",
+        "Para entrar, elegí tu perfil de la lista (o escribí tu usuario), poné la contraseña y tocá Iniciar sesión.",
+        "Si necesitás alto contraste, lo podés activar desde el inicio de sesión y queda guardado en tu perfil."
+      ],
+      "atajos": [
+        { "teclas": "Enter", "accion": "Iniciar sesión o crear la cuenta" },
+        { "teclas": "Tab", "accion": "Pasar de un campo al siguiente" }
+      ],
+      "capturas": [
+        { "archivo": "login.png", "pie": "Inicio de sesión, con los perfiles guardados" }
+      ]
+    },
+    {
+      "id": "menu",
+      "titulo": "El menú principal",
+      "glifo": "E80F",
+      "resumen": "Es la pantalla de inicio. Arriba ves tu racha, tu nivel y cuánto avanzaste en él; abajo, una tarjeta por cada sección.",
+      "pasos": [
+        "La racha cuenta tus aciertos seguidos. La barra muestra cuántas señas de tu nivel ya dominás.",
+        "El botón \"i\", al lado de la racha, abre esta guía.",
+        "Al entrar a una sección aparece la barra lateral, para saltar de una sección a otra. Con la flecha de arriba (o Ctrl+B) se achica a solo íconos.",
+        "Salir te pide confirmación. Tu progreso ya está guardado."
+      ],
+      "atajos": [
+        { "teclas": "1 a 6", "accion": "Entrar a una sección desde el inicio" },
+        { "teclas": "Ctrl + 1 a 6", "accion": "Cambiar de sección desde cualquier lado" },
+        { "teclas": "Esc", "accion": "Volver un paso (o al inicio)" },
+        { "teclas": "Ctrl + B", "accion": "Achicar o mostrar la barra lateral" },
+        { "teclas": "F1", "accion": "Abrir esta guía" }
+      ],
+      "capturas": [
+        { "archivo": "menu.png", "pie": "Menú principal: el botón \"i\" está al lado de la racha" },
+        { "archivo": "guia.png", "pie": "La guía dentro de la app (botón \"i\" o F1)" }
+      ]
+    },
+    {
+      "id": "aprender",
+      "titulo": "Aprender",
+      "glifo": "E7BE",
+      "resumen": "Es el corazón de HandUp: vas de lo general a lo particular, en tres pasos, y al final practicás.",
+      "pasos": [
+        "Elegí un nivel. Los que todavía no desbloqueaste se ven con candado y te dicen qué prueba tenés que aprobar.",
+        "Elegí una categoría del nivel (por ejemplo Saludos, Familia o Alimentos).",
+        "Recorré las señas de a una: cada una tiene su video, la descripción del movimiento y los pasos. Debajo del video tenés Pausar, Repetir, Más lento y pantalla completa.",
+        "Al terminar, tocá Practicar: son hasta 10 preguntas de la categoría. Algunas se responden eligiendo entre 4 opciones y otras escribiendo la palabra.",
+        "El botón Confirmar se habilita recién cuando elegiste o escribiste una respuesta. Cada respuesta suma a tu progreso."
+      ],
+      "atajos": [
+        { "teclas": "1 a 4", "accion": "Elegir un nivel, o una opción al responder" },
+        { "teclas": "1 a 9, 0", "accion": "Elegir una categoría" },
+        { "teclas": "← / →", "accion": "Seña anterior / siguiente" },
+        { "teclas": "Espacio", "accion": "Pausar o reanudar el video" },
+        { "teclas": "Enter", "accion": "Confirmar la respuesta" }
+      ],
+      "capturas": [
+        { "archivo": "aprender-niveles.png", "pie": "Elegir nivel, con la prueba final arriba" },
+        { "archivo": "aprender-senas.png", "pie": "Recorrer las señas de una categoría" },
+        { "archivo": "practica.png", "pie": "Práctica con opción múltiple" }
+      ]
+    },
+    {
+      "id": "prueba-final",
+      "titulo": "Prueba final y niveles",
+      "glifo": "E7C1",
+      "resumen": "Cada nivel tiene una prueba final. Si la aprobás con 80% o más, se desbloquea el nivel siguiente.",
+      "pasos": [
+        "En Aprender, en la elección de nivel, tocá \"Rendir prueba\" (o la tecla P).",
+        "Son 20 señas del nivel, repartidas entre todas sus categorías.",
+        "Al terminar ves tu porcentaje. Si aprobaste, aparece el nivel nuevo y un botón para ir directo a él.",
+        "Se guarda tu mejor resultado: un intento peor no lo pisa. Podés rendirla todas las veces que quieras.",
+        "Si salís a la mitad (Esc), la prueba se abandona y no se guarda nada.",
+        "Nivelación: si al registrarte elegiste un nivel más alto, la prueba de nivelación es la prueba final del nivel anterior. La podés rendir desde Aprender o desde Mi perfil, o dejarla de lado con \"Empezar como Principiante\"."
+      ],
+      "atajos": [
+        { "teclas": "P", "accion": "Rendir la prueba final (en la elección de nivel)" },
+        { "teclas": "Esc", "accion": "Abandonar la prueba" }
+      ]
+    },
+    {
+      "id": "desafio",
+      "titulo": "Desafío",
+      "glifo": "E916",
+      "resumen": "Un juego contrarreloj para poner a prueba lo que aprendiste.",
+      "pasos": [
+        "Elegí el nivel y la categoría. El botón Empezar partida se habilita recién cuando elegiste una categoría.",
+        "Tenés 90 segundos y 3 vidas. Cada error te saca una vida. La partida termina cuando te quedás sin tiempo o sin vidas.",
+        "Se responde con un solo toque, sin Confirmar. Cada acierto suma 10 puntos, y 5 más si venís con una racha de 3 o más.",
+        "Las señas que fallás vuelven a aparecer enseguida, y las que más fallaste en general aparecen más seguido (repetición espaciada).",
+        "Al final ves tu puntaje, tus aciertos y fallos y tu mejor racha. Podés jugar de nuevo o cambiar de categoría."
+      ],
+      "atajos": [
+        { "teclas": "1 a 4", "accion": "Responder" },
+        { "teclas": "Espacio", "accion": "Pausar o reanudar el video" },
+        { "teclas": "Esc", "accion": "Abandonar la partida y volver a la configuración" }
+      ],
+      "capturas": [
+        { "archivo": "desafio-config.png", "pie": "Configurar la partida" },
+        { "archivo": "desafio-partida.png", "pie": "Partida en juego" }
+      ]
+    },
+    {
+      "id": "traductor",
+      "titulo": "Traductor",
+      "glifo": "E8C1",
+      "resumen": "Escribís una palabra o una frase en español y la ves en señas, una detrás de otra.",
+      "pasos": [
+        "Escribí el texto y apretá Enter (o Traducir).",
+        "Si una palabra no está en el banco (por ejemplo un nombre propio), se deletrea letra por letra.",
+        "Los números escritos con cifras usan su seña (\"5\" se muestra como Cinco). Los artículos (el, la, un…) se muestran pero no se señan.",
+        "Algunas palabras tienen más de un significado (naranja, papa/papá, uno…). Aparece un aviso y podés cambiar de significado con la tecla C. Si escribís con tilde, elige el que corresponde.",
+        "Podés ver la traducción en pantalla completa, o exportarla como video MP4 para compartirla."
+      ],
+      "atajos": [
+        { "teclas": "Enter", "accion": "Traducir" },
+        { "teclas": "Espacio", "accion": "Pausar o reanudar" },
+        { "teclas": "R", "accion": "Repetir desde el principio" },
+        { "teclas": "C", "accion": "Cambiar el significado de una palabra con varios" },
+        { "teclas": "F", "accion": "Pantalla completa" },
+        { "teclas": "E", "accion": "Exportar como video MP4" }
+      ],
+      "capturas": [
+        { "archivo": "traductor.png", "pie": "Traductor deletreando un nombre" }
+      ]
+    },
+    {
+      "id": "diccionario",
+      "titulo": "Diccionario",
+      "glifo": "E82D",
+      "resumen": "Un buscador con todas las señas de la app.",
+      "pasos": [
+        "Escribí en el buscador: los resultados se filtran mientras escribís.",
+        "Podés filtrar por categoría y por tipo de seña (con video o con imagen). Los filtros se pueden combinar.",
+        "Elegí una seña para ver su video, la descripción del movimiento y los pasos para hacerla.",
+        "El Diccionario no tiene niveles bloqueados: podés consultar cualquier seña."
+      ],
+      "atajos": [
+        { "teclas": "↓", "accion": "Pasar del buscador a los resultados" },
+        { "teclas": "Espacio", "accion": "Pausar o reanudar el video" }
+      ],
+      "capturas": [
+        { "archivo": "diccionario.png", "pie": "Diccionario con filtros" }
+      ]
+    },
+    {
+      "id": "perfil",
+      "titulo": "Mi perfil",
+      "glifo": "E77B",
+      "resumen": "Tus datos, tu avance y el manejo de tu cuenta.",
+      "pasos": [
+        "Arriba están tu nivel, cuántas señas del nivel dominás y qué nivel sigue.",
+        "Estadísticas: racha, mejor racha, puntos, aciertos y fallos.",
+        "Por categoría: ves en qué temas te va mejor, y con \"Practicar\" vas directo a practicar los más flojos.",
+        "Si tenés una nivelación pendiente, la podés rendir desde acá.",
+        "Cuenta: cambiar tu nombre o tu contraseña, cerrar sesión, reiniciar el progreso o eliminar el perfil. Las dos últimas piden confirmación."
+      ],
+      "capturas": [
+        { "archivo": "perfil.png", "pie": "Mi perfil" }
+      ]
+    },
+    {
+      "id": "configuracion",
+      "titulo": "Accesibilidad",
+      "glifo": "E713",
+      "resumen": "HandUp está pensada para que la pueda usar cualquier persona. Todo lo que cambies se aplica al instante y se guarda en tu perfil.",
+      "pasos": [
+        "Alto contraste: fondo negro, letras blancas y detalles en amarillo.",
+        "Tamaño del texto: Normal, Grande o Muy grande. Agranda letras, botones e íconos de toda la app.",
+        "Atajos de teclado: podés elegir qué teclas usar para responder (opciones 1 a 4), confirmar y pausar el video. \"Restaurar teclas originales\" las vuelve a como estaban.",
+        "Lector de pantalla: la app funciona con el Narrador de Windows (Ctrl + Win + Enter para encenderlo). En las preguntas no dice la respuesta.",
+        "Nada depende solo del color: lo correcto, lo incorrecto y lo elegido siempre llevan un símbolo o un texto."
+      ],
+      "capturas": [
+        { "archivo": "configuracion.png", "pie": "Configuración" }
+      ]
+    },
+    {
+      "id": "atajos",
+      "titulo": "Atajos de teclado",
+      "glifo": "E765",
+      "resumen": "Un resumen de las teclas para usar HandUp sin mouse. Las de responder, confirmar y pausar se pueden cambiar en Configuración.",
+      "atajos": [
+        { "teclas": "1 a 6", "accion": "Menú: entrar a una sección" },
+        { "teclas": "Ctrl + 1 a 6", "accion": "Cambiar de sección desde cualquier lado" },
+        { "teclas": "Esc", "accion": "Volver un paso" },
+        { "teclas": "Ctrl + B", "accion": "Achicar o mostrar la barra lateral" },
+        { "teclas": "F1", "accion": "Abrir esta guía" },
+        { "teclas": "1 a 4", "accion": "Elegir nivel u opción de respuesta" },
+        { "teclas": "← / →", "accion": "Seña anterior / siguiente" },
+        { "teclas": "Enter", "accion": "Confirmar, traducir o iniciar sesión" },
+        { "teclas": "Espacio", "accion": "Pausar o reanudar el video" },
+        { "teclas": "P", "accion": "Rendir la prueba final" },
+        { "teclas": "R / C / F / E", "accion": "Traductor: repetir, cambiar significado, pantalla completa, exportar" },
+        { "teclas": "Tab", "accion": "Pasar al siguiente control" }
+      ]
+    }
+  ]
+}

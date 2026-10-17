@@ -11,7 +11,8 @@ namespace ProyectoFinal
         Traductor,
         Diccionario,
         MiPerfil,
-        Configuracion
+        Configuracion,
+        Guia            // guía de uso: botón "i" del inicio, "Guía" en la barra lateral o F1
     }
 
     // Datos de presentación de cada sección: título, ícono (glifo de Segoe Fluent Icons) y descripción

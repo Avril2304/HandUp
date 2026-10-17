@@ -49,7 +49,8 @@ namespace ProyectoFinal
                 [Seccion.Traductor] = navTraductor,
                 [Seccion.Diccionario] = navDiccionario,
                 [Seccion.MiPerfil] = navPerfil,
-                [Seccion.Configuracion] = navConfiguracion
+                [Seccion.Configuracion] = navConfiguracion,
+                [Seccion.Guia] = navGuia
             };
 
             lblCantidadSenas.Text = TextoCantidadSenas();
@@ -334,6 +335,13 @@ namespace ProyectoFinal
                 return diccionario;
             }
 
+            if (destino == Seccion.Guia)
+            {
+                var guia = new GuiaView();
+                guia.VolverSolicitado += (s, e) => MostrarInicio();
+                return guia;
+            }
+
             if (destino == Seccion.Traductor)
             {
                 var traductor = new TraductorView(_preferencias);
@@ -373,6 +381,8 @@ namespace ProyectoFinal
 
         private void Salir_Click(object sender, RoutedEventArgs e) => Salir();
 
+        private void BtnInfo_Click(object sender, RoutedEventArgs e) => Navegar(Seccion.Guia);
+
         // Vuelve al login sin cerrar la app (Closing guarda el progreso, como siempre).
         // El tema vuelve al normal: si no, el próximo que inicie sesión heredaría el alto contraste de este perfil.
         private void CerrarSesion()
@@ -406,6 +416,15 @@ namespace ProyectoFinal
             if (e.Key == Key.B && Keyboard.Modifiers == ModifierKeys.Control && barraLateral.Visibility == Visibility.Visible)
             {
                 AlternarBarra();
+                e.Handled = true;
+                return;
+            }
+
+            // F1: la guía de uso, desde cualquier lado
+            if (e.Key == Key.F1 && Keyboard.Modifiers == ModifierKeys.None)
+            {
+                if (_seccionActual != Seccion.Guia)
+                    Navegar(Seccion.Guia);
                 e.Handled = true;
                 return;
             }

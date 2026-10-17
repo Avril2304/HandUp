@@ -1,0 +1,96 @@
+<UserControl x:Class="ProyectoFinal.GuiaView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             PreviewKeyDown="Vista_PreviewKeyDown">
+    <!-- Guía de uso (botón "i" del menú o F1): a la izquierda el índice de secciones y a la derecha la sección elegida,
+         con sus pasos, atajos y capturas. El contenido sale de Guia/guia.json (el mismo que usa el PDF). -->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel>
+                <TextBlock x:Name="lblTituloGuia" Text="Guía de uso" FontFamily="{StaticResource FontHeading}" FontSize="26"
+                           FontWeight="Bold" Foreground="{DynamicResource BrushInk}"/>
+                <TextBlock x:Name="lblSubtitulo" FontSize="13" Foreground="{DynamicResource BrushMuted}" Margin="0,2,0,0" TextWrapping="Wrap"/>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Top">
+                <Button x:Name="btnAbrirPdf" Style="{StaticResource SecondaryButton}" Margin="0,0,10,0" Click="BtnAbrirPdf_Click"
+                        AutomationProperties.Name="Abrir la guía en PDF" ToolTip="Abrir la guía en PDF">
+                    <StackPanel Orientation="Horizontal" Margin="16,0">
+                        <TextBlock Text="&#xEA90;" FontFamily="{StaticResource FontIconos}" FontSize="14" VerticalAlignment="Center"/>
+                        <TextBlock Text="Abrir PDF" Margin="8,0,0,0" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+                <Button Style="{StaticResource SecondaryButton}" Click="BtnVolver_Click"
+                        AutomationProperties.Name="Volver al inicio" ToolTip="Volver al inicio (Esc)">
+                    <StackPanel Orientation="Horizontal" Margin="16,0">
+                        <TextBlock Text="&#xE72B;" FontFamily="{StaticResource FontIconos}" FontSize="14" VerticalAlignment="Center"/>
+                        <TextBlock Text="Volver al inicio" Margin="8,0,0,0" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </Grid>
+
+        <!-- Si la guía no se puede cargar, se muestra esto en lugar del contenido -->
+        <TextBlock Grid.Row="2" x:Name="lblError" Visibility="Collapsed" FontSize="14" TextWrapping="Wrap"
+                   Foreground="{DynamicResource BrushError}" VerticalAlignment="Top"/>
+
+        <Grid Grid.Row="2" x:Name="pnlGuia">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="230"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Índice: un botón por sección (se arman desde el código) -->
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Focusable="False">
+                <StackPanel x:Name="pnlIndice" Margin="0,0,4,0" AutomationProperties.Name="Secciones de la guía"/>
+            </ScrollViewer>
+
+            <!-- Sección elegida y, abajo, anterior / siguiente -->
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <ScrollViewer x:Name="svContenido" VerticalScrollBarVisibility="Auto" Focusable="False">
+                    <Border Background="{DynamicResource BrushCard}" BorderBrush="{DynamicResource BrushBorder}" BorderThickness="1.5"
+                            CornerRadius="18" Padding="30,24" Margin="0,0,6,0">
+                        <StackPanel x:Name="pnlContenido"/>
+                    </Border>
+                </ScrollViewer>
+
+                <!-- Anterior / siguiente (también con las flechas ← y →) -->
+                <Grid Grid.Row="1" x:Name="pnlNavegacion" Margin="0,12,6,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="btnAnterior" Style="{StaticResource SecondaryButton}" Height="40" Click="BtnAnterior_Click">
+                        <StackPanel Orientation="Horizontal" Margin="14,0">
+                            <TextBlock Text="&#xE76B;" FontFamily="{StaticResource FontIconos}" FontSize="12" VerticalAlignment="Center"/>
+                            <TextBlock Text="Anterior" Margin="8,0,0,0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <TextBlock Grid.Column="1" x:Name="lblPosicion" FontSize="13" Foreground="{DynamicResource BrushMuted}"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Button Grid.Column="2" x:Name="btnSiguiente" Style="{StaticResource PrimaryButton}" Height="40" Click="BtnSiguiente_Click">
+                        <StackPanel Orientation="Horizontal" Margin="14,0">
+                            <TextBlock Text="Siguiente" VerticalAlignment="Center"/>
+                            <TextBlock Text="&#xE76C;" FontFamily="{StaticResource FontIconos}" FontSize="12" Margin="8,0,0,0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

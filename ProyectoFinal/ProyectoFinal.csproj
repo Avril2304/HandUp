@@ -25,6 +25,14 @@
     <Content Include="signs_database.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
+  <!-- Guía de uso (botón "i"): el contenido, sus capturas y el PDF de la presentación, junto al .exe -->
+  <ItemGroup>
+    <None Remove="Guia\**\*" />
+    <Content Include="Guia\guia.json" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="Guia\capturas\*.png" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\Presentacion\HandUp - Guia de uso.pdf" Link="Guia\HandUp - Guia de uso.pdf" CopyToOutputDirectory="PreserveNewest" Condition="Exists('..\Presentacion\HandUp - Guia de uso.pdf')" />
+  </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.12" />
   </ItemGroup>

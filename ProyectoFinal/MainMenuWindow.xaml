@@ -119,8 +119,19 @@
                     </Button>
                 </StackPanel>
 
-                <!-- Perfil y salir, abajo de todo -->
+                <!-- Guía, perfil y salir, abajo de todo -->
                 <StackPanel Grid.Row="4">
+                    <Button x:Name="navGuia" Style="{StaticResource NavItem}" Click="Nav_Click"
+                            CommandParameter="{x:Static local:Seccion.Guia}" AutomationProperties.Name="Guía de uso">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="28"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="&#xE946;" FontFamily="{StaticResource FontIconos}" FontSize="16" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="1" Text="Guía" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="2" Text="F1" FontSize="11" Foreground="{DynamicResource BrushSidebarMuted}" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Button>
                     <Button x:Name="navPerfil" Style="{StaticResource NavItem}" Click="Nav_Click"
                             CommandParameter="{x:Static local:Seccion.MiPerfil}" AutomationProperties.Name="Mi perfil">
                         <Grid>
@@ -178,6 +189,29 @@
                     <TextBlock x:Name="lblSaludo" Text="¡Hola!" FontFamily="{StaticResource FontHeading}"
                                FontSize="26" FontWeight="Bold" Foreground="{DynamicResource BrushInk}" VerticalAlignment="Center"/>
                     <StackPanel Grid.Column="1" Orientation="Horizontal">
+                        <!-- Botón "i": abre la guía de uso (también F1) -->
+                        <Button x:Name="btnInfo" Click="BtnInfo_Click" Margin="0,0,10,0" Cursor="Hand" FocusVisualStyle="{x:Null}"
+                                ToolTip="Guía de uso (F1)" AutomationProperties.Name="Guía de uso. Atajo: F1">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border x:Name="bg" Width="34" Height="34" CornerRadius="17" Background="{DynamicResource BrushCard}"
+                                            BorderBrush="{DynamicResource BrushBorder}" BorderThickness="1">
+                                        <TextBlock Text="&#xE946;" FontFamily="{StaticResource FontIconos}" FontSize="15"
+                                                   Foreground="{DynamicResource BrushAccent}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="bg" Property="BorderBrush" Value="{DynamicResource BrushAccent}"/>
+                                            <Setter TargetName="bg" Property="Background" Value="{DynamicResource BrushAccentSoft}"/>
+                                        </Trigger>
+                                        <Trigger Property="IsKeyboardFocused" Value="True">
+                                            <Setter TargetName="bg" Property="BorderBrush" Value="{DynamicResource BrushInk}"/>
+                                            <Setter TargetName="bg" Property="BorderThickness" Value="2.5"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
                         <Border x:Name="borderRacha" Background="{DynamicResource BrushCard}" BorderBrush="{DynamicResource BrushBorder}" BorderThickness="1"
                                 CornerRadius="20" Padding="14,7" Margin="0,0,10,0">
                             <StackPanel Orientation="Horizontal">
