@@ -115,6 +115,7 @@ namespace ProyectoFinal
                     PerfilId        INTEGER NOT NULL REFERENCES Perfiles(Id),
                     Nivel           INTEGER NOT NULL CHECK (Nivel BETWEEN 1 AND 4),
                     MejorPorcentaje INTEGER NOT NULL CHECK (MejorPorcentaje BETWEEN 0 AND 100),
+                    FechaAprobada   TEXT,   -- la primera vez que la aprobó (para el certificado del examen final)
                     PRIMARY KEY (PerfilId, Nivel)
                 );
 
@@ -242,7 +243,8 @@ namespace ProyectoFinal
                 "ALTER TABLE Perfiles ADD COLUMN FallosTotales INTEGER NOT NULL DEFAULT 0;",
                 "ALTER TABLE Preferencias ADD COLUMN BarraColapsada INTEGER NOT NULL DEFAULT 0;",
                 "ALTER TABLE Perfiles ADD COLUMN NivelDesbloqueado INTEGER NOT NULL DEFAULT 1 CHECK (NivelDesbloqueado BETWEEN 1 AND 4);",
-                "ALTER TABLE Perfiles ADD COLUMN NivelacionPendiente INTEGER CHECK (NivelacionPendiente BETWEEN 2 AND 4);"
+                "ALTER TABLE Perfiles ADD COLUMN NivelacionPendiente INTEGER CHECK (NivelacionPendiente BETWEEN 2 AND 4);",
+                "ALTER TABLE PruebasFinales ADD COLUMN FechaAprobada TEXT;"
             };
 
             foreach (var alter in columnasAAgregar)

@@ -39,6 +39,7 @@ namespace ProyectoFinal
 
             _servicio.ProgresoActualizado += Servicio_ProgresoActualizado;
             _servicio.NivelDesbloqueado += Servicio_NivelDesbloqueado;
+            _servicio.HandUpCompletado += Servicio_HandUpCompletado;
             Closing += MainMenuWindow_Closing;
 
             _itemsNav = new Dictionary<Seccion, Button>
@@ -215,6 +216,13 @@ namespace ProyectoFinal
         private void Servicio_NivelDesbloqueado(object? sender, NivelDesbloqueadoEventArgs e)
         {
             Dispatcher.Invoke(ActualizarUI);
+        }
+
+        // Aprobó el examen final por primera vez: felicitaciones y certificado.
+        // Se abre después de que se dibuje el resultado del examen (que queda atrás, con "Ver mi certificado").
+        private void Servicio_HandUpCompletado(object? sender, CertificadoHandUp certificado)
+        {
+            Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, () => FelicitacionesWindow.Mostrar(this, certificado));
         }
 
         private void MainMenuWindow_Closing(object? sender, System.ComponentModel.CancelEventArgs e)

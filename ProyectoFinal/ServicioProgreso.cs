@@ -13,6 +13,9 @@ namespace ProyectoFinal
         // Se dispara cuando el perfil aprueba la prueba final de su nivel y se le abre el siguiente (lo escucha el menú)
         public event EventHandler<NivelDesbloqueadoEventArgs>? NivelDesbloqueado;
 
+        // Se dispara la primera vez que el perfil aprueba el examen final de HandUp (lo escucha el menú, que felicita)
+        public event EventHandler<CertificadoHandUp>? HandUpCompletado;
+
         // Después de eliminar el perfil ya no hay nada que guardar (ej. al cerrar el menú)
         public bool PerfilEliminado { get; private set; }
 
@@ -76,11 +79,19 @@ namespace ProyectoFinal
         // si aprobó la prueba de su nivel actual, le desbloquea el siguiente y dispara NivelDesbloqueado.
         // Nivelación: si tiene una pendiente (eligió Intermedio al registrarse), aprobar la prueba final del nivel
         // anterior (Básico) lo lleva directo al nivel elegido, aunque todavía no lo tuviera desbloqueado.
+        // Examen final (la prueba de Avanzado): no desbloquea nada; aprobarlo por primera vez completa HandUp
+        // y dispara HandUpCompletado (el menú muestra las felicitaciones y el certificado).
         public ResultadoPruebaFinal RegistrarPruebaFinal(int nivel, int aciertos, int total)
         {
             int porcentaje = PruebaFinal.Porcentaje(aciertos, total);
             int? mejorAnterior = _repositorio.ObtenerMejorPorcentaje(_perfil.Id, nivel);
-            _repositorio.GuardarResultadoPrueba(_perfil.Id, nivel, porcentaje);
+            bool aprobada = PruebaFinal.Aprueba(porcentaje);
+            _repositorio.GuardarResultadoPrueba(_perfil.Id, nivel, porcentaje, aprobada);
+
+            bool completaHandUp = aprobada && PruebaFinal.EsExamenFinal(nivel)
+                                  && (mejorAnterior is null || !PruebaFinal.Aprueba(mejorAnterior.Value));
+            if (completaHandUp && ObtenerCertificado() is CertificadoHandUp certificado)
+                HandUpCompletado?.Invoke(this, certificado);
 
             bool esNivelacion = _perfil.NivelacionPendiente == nivel + 1;
             bool desbloquea = PruebaFinal.Aprueba(porcentaje)
@@ -98,7 +109,18 @@ namespace ProyectoFinal
                 OnNivelDesbloqueado(nivel);
             }
 
-            return new ResultadoPruebaFinal(nivel, aciertos, total, porcentaje, mejorAnterior, desbloquea);
+            return new ResultadoPruebaFinal(nivel, aciertos, total, porcentaje, mejorAnterior, desbloquea, completaHandUp);
+        }
+
+        // El certificado del perfil, si ya aprobó el examen final; null si todavía no
+        public CertificadoHandUp? ObtenerCertificado()
+        {
+            int examen = Niveles.Nombres.Count;
+            DateTime? fecha = _repositorio.ObtenerFechaAprobada(_perfil.Id, examen);
+            int? mejor = _repositorio.ObtenerMejorPorcentaje(_perfil.Id, examen);
+            return fecha is DateTime aprobada && mejor is int porcentaje
+                ? new CertificadoHandUp(_perfil.Nombre, porcentaje, aprobada, _perfil.Id)
+                : null;
         }
 
         // "Empezar como Principiante": deja de lado la nivelación pendiente y sigue avanzando de a un nivel

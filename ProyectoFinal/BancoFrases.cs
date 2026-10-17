@@ -90,8 +90,17 @@ namespace ProyectoFinal
             var frases = new List<Frase>();
             var avisos = new List<string>();
 
+            var ids = new HashSet<string>();
             foreach (PlantillaJson plantilla in archivo.Frases ?? new List<PlantillaJson>())
+            {
+                // El id agrupa las frases de una plantilla (la prueba no repite plantilla): tiene que ser único
+                if (!string.IsNullOrWhiteSpace(plantilla.Id) && !ids.Add(plantilla.Id))
+                {
+                    avisos.Add($"{plantilla.Id}: hay dos plantillas con el mismo id; se usa solo la primera.");
+                    continue;
+                }
                 frases.AddRange(ArmarPlantilla(plantilla, archivo.Listas ?? new(), resolvedor, avisos));
+            }
 
             if (frases.Count == 0)
                 throw new BancoFrasesException($"El banco de frases ({NombreArchivo}) no tiene ninguna frase válida.");

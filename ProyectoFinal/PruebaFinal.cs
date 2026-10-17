@@ -42,10 +42,19 @@ namespace ProyectoFinal
             total == 0 ? 0 : (int)Math.Round(100.0 * aciertos / total, MidpointRounding.AwayFromZero);
 
         public static bool Aprueba(int porcentaje) => porcentaje >= PorcentajeParaAprobar;
+
+        // La prueba del último nivel (Avanzado) es el examen final de HandUp: no desbloquea nada, da el certificado
+        public static bool EsExamenFinal(int nivel) => nivel == Niveles.Nombres.Count;
+
+        // "Prueba final de Básico" / "Examen final de HandUp"
+        public static string Nombre(int nivel) =>
+            EsExamenFinal(nivel) ? "Examen final de HandUp" : $"Prueba final de {Niveles.NombreDe(nivel)}";
     }
 
     // Cómo salió una prueba final. MejorAnterior es null si era la primera vez que la rendía.
-    public record ResultadoPruebaFinal(int Nivel, int Aciertos, int Total, int Porcentaje, int? MejorAnterior, bool Desbloqueo)
+    // CompletoHandUp: aprobó el examen final por primera vez.
+    public record ResultadoPruebaFinal(int Nivel, int Aciertos, int Total, int Porcentaje, int? MejorAnterior, bool Desbloqueo,
+                                       bool CompletoHandUp = false)
     {
         public bool Aprobada => PruebaFinal.Aprueba(Porcentaje);
         public int Mejor => Math.Max(Porcentaje, MejorAnterior ?? 0);

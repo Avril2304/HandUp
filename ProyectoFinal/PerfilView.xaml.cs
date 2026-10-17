@@ -155,6 +155,7 @@ namespace ProyectoFinal
                 $"{lblTituloProgreso.Text}: {lblCuentaProgreso.Text}, {Math.Round(progreso.Proporcion * 100)} por ciento. {lblSiguienteNivel.Text}");
 
             MostrarNivelacion(perfil);
+            MostrarCertificado();
 
             // Estadísticas, o la invitación a empezar si todavía no hay nada que mostrar
             pnlEstadisticas.Visibility = perfil.SinActividad ? Visibility.Collapsed : Visibility.Visible;
@@ -612,6 +613,46 @@ namespace ProyectoFinal
 
         private void BtnRendirNivelacion_Click(object sender, RoutedEventArgs e) =>
             NivelacionSolicitada?.Invoke(this, EventArgs.Empty);
+
+        // Si ya aprobó el examen final, su certificado (para verlo y descargarlo de nuevo cuando quiera)
+        private void MostrarCertificado()
+        {
+            CertificadoHandUp? certificado = null;
+            try
+            {
+                certificado = _servicio.ObtenerCertificado();
+            }
+            catch (DatabaseException)
+            {
+                // Sin base no se muestra; el resto de Mi perfil sigue funcionando
+            }
+
+            if (certificado is null)
+            {
+                pnlCertificado.Visibility = Visibility.Collapsed;
+                return;
+            }
+
+            lblCertificado.Text = $"Aprobaste el examen final con {certificado.Porcentaje}% el " +
+                                  $"{certificado.Fecha.ToString("d 'de' MMMM 'de' yyyy", new System.Globalization.CultureInfo("es-AR"))}. " +
+                                  $"Certificado N.º {certificado.Codigo}.";
+            AutomationProperties.SetName(btnCertificado, "Ver y descargar el certificado de HandUp");
+            pnlCertificado.Visibility = Visibility.Visible;
+        }
+
+        private void BtnCertificado_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (_servicio.ObtenerCertificado() is CertificadoHandUp certificado)
+                    FelicitacionesWindow.Mostrar(Window.GetWindow(this), certificado);
+            }
+            catch (DatabaseException ex)
+            {
+                MessageBox.Show(Window.GetWindow(this), $"No se pudo abrir el certificado.\n\nDetalle: {ex.Message}",
+                    "HandUp", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
 
         private void BtnDescartarNivelacion_Click(object sender, RoutedEventArgs e)
         {

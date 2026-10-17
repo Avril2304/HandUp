@@ -106,7 +106,7 @@ namespace ProyectoFinal
             contenidoPaso.Content = _vistaPrueba;
             lblPaso.Text = _perfil.NivelacionPendiente == nivel + 1
                 ? $"Prueba de nivelación para {Niveles.NombreDe(nivel + 1)} · aprobás con {PruebaFinal.PorcentajeParaAprobar}% o más"
-                : $"Prueba final de {Niveles.NombreDe(nivel)} · aprobás con {PruebaFinal.PorcentajeParaAprobar}% o más";
+                : $"{PruebaFinal.Nombre(nivel)} · aprobás con {PruebaFinal.PorcentajeParaAprobar}% o más";
             ActualizarBotonVolver("Volver a los niveles");
             _vistaPrueba.EnfocarInicio();
         }

@@ -155,7 +155,12 @@ namespace ProyectoFinal
             ItemRonda item = _ronda[_indice];
             _reproductor.Detener();
 
-            string prefijo = _nivelPrueba is not null ? "PRUEBA FINAL · " : string.Empty;
+            string prefijo = _nivelPrueba switch
+            {
+                int n when PruebaFinal.EsExamenFinal(n) => "EXAMEN FINAL · ",
+                not null => "PRUEBA FINAL · ",
+                _ => string.Empty
+            };
             lblAvance.Text = $"{prefijo}PREGUNTA {_indice + 1} DE {_ronda.Count}";
             double avance = (double)_indice / _ronda.Count;
             colAvanceLleno.Width = new GridLength(avance, GridUnitType.Star);
@@ -517,7 +522,9 @@ namespace ProyectoFinal
             ResultadoPruebaFinal r = _resultadoPrueba;
             string cuenta = $"{r.Porcentaje}% ({r.Aciertos} de {r.Total})";
 
-            if (r.Desbloqueo)
+            if (PruebaFinal.EsExamenFinal(nivel))
+                MostrarResultadoExamen(r, cuenta);
+            else if (r.Desbloqueo)
             {
                 lblResultadoIcono.Text = "\uE735"; // estrella
                 lblResultado.Text = $"¡Desbloqueaste {siguiente}!";
@@ -554,12 +561,52 @@ namespace ProyectoFinal
             btnSecundario.Content = "Volver a los niveles";
         }
 
+        // Examen final: si lo aprobó, completó HandUp (las felicitaciones las muestra el menú la primera vez)
+        // y el botón principal abre su certificado
+        private void MostrarResultadoExamen(ResultadoPruebaFinal r, string cuenta)
+        {
+            if (r.Aprobada)
+            {
+                lblResultadoIcono.Text = ""; // estrella
+                lblResultado.Text = r.CompletoHandUp ? "¡Completaste HandUp!" : $"Aprobaste con {cuenta}";
+                lblResultadoDetalle.Text = r.CompletoHandUp
+                    ? $"Sacaste {cuenta} en el examen final. Ya conocés las señas de los cuatro niveles."
+                    : $"Ya habías completado HandUp. Tu mejor resultado en el examen final: {r.Mejor}%.";
+                btnPracticarDeNuevo.Content = "Ver mi certificado";
+            }
+            else
+            {
+                lblResultadoIcono.Text = ""; // volver a intentar
+                lblResultado.Text = $"Sacaste {cuenta}";
+                string mejor = r.MejorAnterior is null ? string.Empty : $" Tu mejor resultado: {r.Mejor}%.";
+                lblResultadoDetalle.Text = $"Necesitás {PruebaFinal.PorcentajeParaAprobar}% o más para completar HandUp.{mejor} " +
+                                           "Repasá las señas de Avanzado y probá de nuevo.";
+                btnPracticarDeNuevo.Content = "Rendir de nuevo";
+            }
+        }
+
         private void BtnPracticarDeNuevo_Click(object sender, RoutedEventArgs e)
         {
             if (_resultadoPrueba is { Desbloqueo: true })
                 NivelSolicitado?.Invoke(this, _resultadoPrueba.Nivel + 1);
+            else if (_resultadoPrueba is { Aprobada: true } && PruebaFinal.EsExamenFinal(_resultadoPrueba.Nivel))
+                AbrirCertificado();
             else
                 EmpezarRonda();
+        }
+
+        private void AbrirCertificado()
+        {
+            try
+            {
+                if (_servicio.ObtenerCertificado() is CertificadoHandUp certificado)
+                    FelicitacionesWindow.Mostrar(Window.GetWindow(this), certificado);
+            }
+            catch (DatabaseException ex)
+            {
+                MessageBox.Show(Window.GetWindow(this), $"No se pudo abrir el certificado.\n\nDetalle: {ex.Message}",
+                    "HandUp", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
 
         private void BtnOtraCategoria_Click(object sender, RoutedEventArgs e)

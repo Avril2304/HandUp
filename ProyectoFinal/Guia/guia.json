@@ -9,7 +9,7 @@
       "resumen": "HandUp es una app para aprender Lengua de Señas Argentina (LSA) a tu ritmo. Tiene 640 señas en 24 categorías, ordenadas en 4 niveles: Principiante, Básico, Intermedio y Avanzado. Cada seña tiene un video (o una imagen, en el abecedario y los números) y la descripción del movimiento de las manos.",
       "pasos": [
         "Aprender: elegís un nivel y una categoría, mirás las señas de a una y después practicás con preguntas.",
-        "Prueba final: palabras y frases del nivel. Al aprobarla con 80% o más se desbloquea el nivel siguiente.",
+        "Prueba final: palabras y frases del nivel. Al aprobarla con 80% o más se desbloquea el nivel siguiente. La de Avanzado es el examen final: al aprobarlo obtenés tu certificado de HandUp.",
         "Desafío: una partida contrarreloj con vidas, puntaje y racha, donde las señas que más fallás aparecen más seguido.",
         "Traductor: escribís una palabra o una frase y la ves en señas. Lo que no está en el banco se deletrea.",
         "Diccionario: un buscador de todas las señas, con filtros.",
@@ -97,6 +97,7 @@
         "Al terminar ves tu porcentaje y cuántas palabras y frases acertaste. Si aprobaste, aparece el nivel nuevo y un botón para ir directo a él.",
         "Se guarda tu mejor resultado: un intento peor no lo pisa. Podés rendirla todas las veces que quieras.",
         "Si salís a la mitad (Esc), la prueba se abandona y no se guarda nada.",
+        "Examen final de HandUp: en Avanzado, la prueba es el examen final. Si lo aprobás con 80% o más, completás HandUp: aparecen las felicitaciones y podés descargar tu certificado (PDF o imagen) con tu nombre. Después lo encontrás siempre en Mi perfil.",
         "Nivelación: si al registrarte elegiste un nivel más alto, la prueba de nivelación es la prueba final del nivel anterior. La podés rendir desde Aprender o desde Mi perfil, o dejarla de lado con \"Empezar como Principiante\"."
       ],
       "atajos": [
@@ -107,7 +108,9 @@
       ],
       "capturas": [
         { "archivo": "prueba-frase.png", "pie": "Una pregunta de frase en la prueba final" },
-        { "archivo": "prueba-resultado.png", "pie": "El resultado, con las palabras y las frases por separado" }
+        { "archivo": "prueba-resultado.png", "pie": "El resultado, con las palabras y las frases por separado" },
+        { "archivo": "examen-final.png", "pie": "En Avanzado, el examen final de HandUp" },
+        { "archivo": "felicitaciones.png", "pie": "Al aprobarlo: felicitaciones y el certificado para descargar" }
       ]
     },
     {
@@ -185,6 +188,7 @@
         "Estadísticas: racha, mejor racha, puntos, aciertos y fallos.",
         "Por categoría: ves en qué temas te va mejor, y con \"Practicar\" vas directo a practicar los más flojos.",
         "Si tenés una nivelación pendiente, la podés rendir desde acá.",
+        "Si ya aprobaste el examen final, acá está tu certificado: tocá \"Ver certificado\" para verlo o descargarlo de nuevo.",
         "Cuenta: cambiar tu nombre o tu contraseña, cerrar sesión, reiniciar el progreso o eliminar el perfil. Las dos últimas piden confirmación."
       ],
       "capturas": [

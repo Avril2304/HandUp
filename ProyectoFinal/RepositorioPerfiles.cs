@@ -165,20 +165,42 @@ namespace ProyectoFinal
             });
         }
 
-        // Guarda el resultado de una prueba final sin pisar uno mejor que ya estuviera
-        public void GuardarResultadoPrueba(int perfilId, int nivel, int porcentaje)
+        // Guarda el resultado de una prueba final sin pisar uno mejor que ya estuviera.
+        // Si la aprobó, anota la fecha, pero solo la primera vez (es la que va en el certificado).
+        public void GuardarResultadoPrueba(int perfilId, int nivel, int porcentaje, bool aprobada = false)
         {
             Database.Ejecutar(conexion =>
             {
                 using var comando = conexion.CreateCommand();
                 comando.CommandText = @"
-                    INSERT INTO PruebasFinales (PerfilId, Nivel, MejorPorcentaje) VALUES ($id, $nivel, $porcentaje)
+                    INSERT INTO PruebasFinales (PerfilId, Nivel, MejorPorcentaje, FechaAprobada) VALUES ($id, $nivel, $porcentaje, $fecha)
                     ON CONFLICT(PerfilId, Nivel) DO UPDATE SET
-                        MejorPorcentaje = MAX(MejorPorcentaje, excluded.MejorPorcentaje);";
+                        MejorPorcentaje = MAX(MejorPorcentaje, excluded.MejorPorcentaje),
+                        FechaAprobada = COALESCE(FechaAprobada, excluded.FechaAprobada);";
                 comando.Parameters.AddWithValue("$id", perfilId);
                 comando.Parameters.AddWithValue("$nivel", nivel);
                 comando.Parameters.AddWithValue("$porcentaje", Math.Clamp(porcentaje, 0, 100));
+                comando.Parameters.AddWithValue("$fecha", aprobada
+                    ? DateTime.Now.ToString("o", System.Globalization.CultureInfo.InvariantCulture)
+                    : DBNull.Value);
                 comando.ExecuteNonQuery();
+            });
+        }
+
+        // Cuándo aprobó por primera vez la prueba final de un nivel; null si nunca la aprobó
+        public DateTime? ObtenerFechaAprobada(int perfilId, int nivel)
+        {
+            return Database.Ejecutar(conexion =>
+            {
+                using var comando = conexion.CreateCommand();
+                comando.CommandText = "SELECT FechaAprobada FROM PruebasFinales WHERE PerfilId = $id AND Nivel = $nivel;";
+                comando.Parameters.AddWithValue("$id", perfilId);
+                comando.Parameters.AddWithValue("$nivel", nivel);
+                return comando.ExecuteScalar() is string texto
+                       && DateTime.TryParse(texto, System.Globalization.CultureInfo.InvariantCulture,
+                                            System.Globalization.DateTimeStyles.RoundtripKind, out DateTime fecha)
+                    ? fecha
+                    : (DateTime?)null;
             });
         }
 

@@ -162,6 +162,29 @@
                                 </WrapPanel>
                             </StackPanel>
                         </Border>
+
+                        <!-- HandUp completado (aprobó el examen final): el certificado, para verlo o descargarlo cuando quiera -->
+                        <Border x:Name="pnlCertificado" Visibility="Collapsed" CornerRadius="12" Padding="16,12" Margin="0,12,0,0"
+                                Background="{DynamicResource BrushAccentSoft}" BorderBrush="{DynamicResource BrushAccent}" BorderThickness="1.5">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="&#xE735;" FontFamily="{StaticResource FontIconos}" FontSize="24"
+                                           Foreground="{DynamicResource BrushAccent}" VerticalAlignment="Center"/>
+                                <StackPanel Grid.Column="1" Margin="12,0,12,0" VerticalAlignment="Center">
+                                    <TextBlock Text="¡Completaste HandUp!" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource BrushInk}"/>
+                                    <TextBlock x:Name="lblCertificado" FontSize="13" TextWrapping="Wrap" Margin="0,2,0,0"
+                                               Foreground="{DynamicResource BrushMuted}"/>
+                                </StackPanel>
+                                <Button Grid.Column="2" x:Name="btnCertificado" Style="{StaticResource PrimaryButton}" Height="40"
+                                        Click="BtnCertificado_Click">
+                                    <TextBlock Text="Ver certificado" Margin="16,0"/>
+                                </Button>
+                            </Grid>
+                        </Border>
                     </StackPanel>
                 </Border>
 

@@ -77,8 +77,8 @@ namespace ProyectoFinal
             }
         }
 
-        // En el último nivel no hay prueba final: no queda nada por desbloquear
-        private bool HayPruebaFinal => _nivelPrueba < Niveles.Nombres.Count;
+        // Todos los niveles tienen su prueba: en Avanzado es el examen final de HandUp (da el certificado)
+        private bool HayPruebaFinal => _nivelPrueba is >= 1 && _nivelPrueba <= Niveles.Nombres.Count;
 
         private void MostrarPruebaFinal(int? mejorPorcentaje)
         {
@@ -89,7 +89,16 @@ namespace ProyectoFinal
             string siguiente = Niveles.NombreDe(_nivelPrueba + 1);
             string mejor = mejorPorcentaje is null ? string.Empty : $" Tu mejor resultado: {mejorPorcentaje}%.";
 
-            if (_nivelacionHacia is null)
+            if (PruebaFinal.EsExamenFinal(_nivelPrueba))
+            {
+                bool completado = mejorPorcentaje is int m && PruebaFinal.Aprueba(m);
+                lblPruebaFinal.Text = PruebaFinal.Nombre(_nivelPrueba);
+                lblPruebaDetalle.Text = completado
+                    ? $"¡Ya completaste HandUp!{mejor} Tu certificado está en Mi perfil."
+                    : $"{PruebaFinal.CantidadPreguntas} preguntas de Avanzado. Con {PruebaFinal.PorcentajeParaAprobar}% o más " +
+                      $"completás HandUp y obtenés tu certificado.{mejor}";
+            }
+            else if (_nivelacionHacia is null)
             {
                 lblPruebaFinal.Text = $"Prueba final de {nivel}";
                 lblPruebaDetalle.Text = $"{PruebaFinal.CantidadPreguntas} señas del nivel. " +
@@ -102,7 +111,7 @@ namespace ProyectoFinal
                 lblPruebaDetalle.Text = $"Es la prueba final de {nivel}: con {PruebaFinal.PorcentajeParaAprobar}% o más " +
                                         $"empezás directo en {siguiente}.{mejor}";
             }
-            lblBotonPrueba.Text = "Rendir prueba (P)";
+            lblBotonPrueba.Text = PruebaFinal.EsExamenFinal(_nivelPrueba) ? "Rendir examen (P)" : "Rendir prueba (P)";
             AutomationProperties.SetName(btnPruebaFinal, $"{lblPruebaFinal.Text}. {lblPruebaDetalle.Text} Atajo: tecla P");
 
             // Si la nivelación es de más de un nivel (ej. eligió Intermedio y está en Principiante), también puede
@@ -110,7 +119,7 @@ namespace ProyectoFinal
             if (HayPruebaNivelActual)
             {
                 string actual = Niveles.NombreDe(_nivelDesbloqueado);
-                lblBotonPruebaNivelActual.Text = $"Prueba final de {actual}";
+                lblBotonPruebaNivelActual.Text = PruebaFinal.Nombre(_nivelDesbloqueado);
                 AutomationProperties.SetName(btnPruebaNivelActual,
                     $"Rendir la prueba final de {actual}: con {PruebaFinal.PorcentajeParaAprobar}% o más " +
                     $"desbloqueás {Niveles.NombreDe(_nivelDesbloqueado + 1)}");
@@ -120,7 +129,7 @@ namespace ProyectoFinal
             pnlPruebaFinal.Visibility = Visibility.Visible;
         }
 
-        private bool HayPruebaNivelActual => _nivelPrueba != _nivelDesbloqueado && _nivelDesbloqueado < Niveles.Nombres.Count;
+        private bool HayPruebaNivelActual => _nivelPrueba != _nivelDesbloqueado;
 
         private void BtnPruebaFinal_Click(object sender, RoutedEventArgs e) => RendirPruebaFinal();
 
