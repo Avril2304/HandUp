@@ -135,7 +135,9 @@ namespace ProyectoFinal
                 && id > 0;
         }
 
-        // Reemplaza el contenido de las tablas dentro de una transacción: se carga todo o nada
+        // Reemplaza el contenido de las tablas dentro de una transacción: se carga todo o nada.
+        // ProgresoSenas apunta a Senas: las claves foráneas se controlan recién al confirmar, cuando las señas
+        // ya se volvieron a cargar con los mismos Id. Así el progreso de los perfiles se conserva.
         private static void Guardar(SqliteConnection conexion, List<CategoriaJson> categorias,
             List<(int Id, SenaJson Sena)> senas, string huella)
         {
@@ -144,7 +146,7 @@ namespace ProyectoFinal
             using (var borrar = conexion.CreateCommand())
             {
                 borrar.Transaction = transaccion;
-                borrar.CommandText = "DELETE FROM Senas; DELETE FROM Categorias;";
+                borrar.CommandText = "PRAGMA defer_foreign_keys = ON; DELETE FROM Senas; DELETE FROM Categorias;";
                 borrar.ExecuteNonQuery();
             }
 
@@ -206,6 +208,14 @@ namespace ProyectoFinal
                 guardarHuella.Parameters.AddWithValue("$clave", ClaveHuella);
                 guardarHuella.Parameters.AddWithValue("$valor", huella);
                 guardarHuella.ExecuteNonQuery();
+            }
+
+            // Si una seña se sacó del JSON, se borra también el progreso que los perfiles tenían en ella
+            using (var limpiarProgreso = conexion.CreateCommand())
+            {
+                limpiarProgreso.Transaction = transaccion;
+                limpiarProgreso.CommandText = "DELETE FROM ProgresoSenas WHERE SenaId NOT IN (SELECT Id FROM Senas);";
+                limpiarProgreso.ExecuteNonQuery();
             }
 
             transaccion.Commit();
