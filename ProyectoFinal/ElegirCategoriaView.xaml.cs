@@ -56,6 +56,10 @@ namespace ProyectoFinal
             lblMensaje.Visibility = Visibility.Visible;
         }
 
+        // Para ir directo a una categoría (ej. desde "Practicar" en Mi perfil); null si no es de este nivel
+        public CategoriaAprendizaje? BuscarCategoria(string categoriaId) =>
+            _categorias.FirstOrDefault(c => c.Categoria.Id.Equals(categoriaId, StringComparison.OrdinalIgnoreCase));
+
         // Foco inicial: la categoría indicada (por defecto, la primera)
         public void EnfocarCategoria(string? categoriaId = null)
         {

@@ -116,6 +116,75 @@ namespace ProyectoFinal
             });
         }
 
+        // Borra el progreso por seña de un perfil (al reiniciar el progreso desde Mi perfil)
+        public void BorrarProgresoSenas(int perfilId)
+        {
+            Database.Ejecutar(conexion =>
+            {
+                using var comando = conexion.CreateCommand();
+                comando.CommandText = "DELETE FROM ProgresoSenas WHERE PerfilId = $id;";
+                comando.Parameters.AddWithValue("$id", perfilId);
+                comando.ExecuteNonQuery();
+            });
+        }
+
+        // Elimina el perfil con su progreso y sus preferencias. Todo en una transacción: se borra todo o nada.
+        public void Eliminar(int perfilId)
+        {
+            int filasAfectadas = Database.Ejecutar(conexion =>
+            {
+                using var transaccion = conexion.BeginTransaction();
+                foreach (string tabla in new[] { "ProgresoSenas", "Preferencias" })
+                {
+                    using var borrarDatos = conexion.CreateCommand();
+                    borrarDatos.Transaction = transaccion;
+                    borrarDatos.CommandText = $"DELETE FROM {tabla} WHERE PerfilId = $id;";
+                    borrarDatos.Parameters.AddWithValue("$id", perfilId);
+                    borrarDatos.ExecuteNonQuery();
+                }
+
+                using var borrarPerfil = conexion.CreateCommand();
+                borrarPerfil.Transaction = transaccion;
+                borrarPerfil.CommandText = "DELETE FROM Perfiles WHERE Id = $id;";
+                borrarPerfil.Parameters.AddWithValue("$id", perfilId);
+                int filas = borrarPerfil.ExecuteNonQuery();
+
+                transaccion.Commit();
+                return filas;
+            });
+
+            if (filasAfectadas == 0)
+                throw new UserNotFoundException(perfilId);
+        }
+
+        // Aciertos, fallos y señas dominadas del perfil en cada categoría (también las que no practicó, con ceros)
+        public IReadOnlyList<EstadisticaCategoria> ObtenerEstadisticasPorCategoria(int perfilId)
+        {
+            return Database.Ejecutar(conexion =>
+            {
+                using var comando = conexion.CreateCommand();
+                comando.CommandText = @"
+                    SELECT c.Id, c.Nombre, c.Emoji, COUNT(s.Id),
+                           COALESCE(SUM(p.Aciertos), 0), COALESCE(SUM(p.Fallos), 0), COALESCE(SUM(p.Dominada), 0)
+                    FROM Categorias c
+                    JOIN Senas s ON s.CategoriaId = c.Id
+                    LEFT JOIN ProgresoSenas p ON p.SenaId = s.Id AND p.PerfilId = $id
+                    GROUP BY c.Id
+                    ORDER BY c.Orden;";
+                comando.Parameters.AddWithValue("$id", perfilId);
+
+                var lista = new List<EstadisticaCategoria>();
+                using SqliteDataReader lector = comando.ExecuteReader();
+                while (lector.Read())
+                {
+                    lista.Add(new EstadisticaCategoria(
+                        lector.GetString(0), lector.GetString(1), lector.IsDBNull(2) ? null : lector.GetString(2),
+                        lector.GetInt32(3), lector.GetInt32(4), lector.GetInt32(5), lector.GetInt32(6)));
+                }
+                return lista;
+            });
+        }
+
         // Valida y registra un perfil nuevo; lanza InvalidInputException si los datos no son válidos
         public Perfil Registrar(string nombre, string usuario, string password, string nivelInicial)
         {

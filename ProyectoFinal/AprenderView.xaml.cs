@@ -15,6 +15,10 @@ namespace ProyectoFinal
         // Pide volver al inicio del menú (desde el primer paso)
         public event EventHandler? VolverSolicitado;
 
+        // Se llegó desde "Practicar" en Mi perfil y se quiere volver ahí (Esc o el botón Volver)
+        public event EventHandler? VolverAPerfilSolicitado;
+        private bool _vinoDeMiPerfil;
+
         private readonly Perfil _perfil;
         private readonly PreferenciasUsuario _preferencias;
         private readonly ServicioProgreso _servicio;
@@ -130,9 +134,42 @@ namespace ProyectoFinal
 
             lblPaso.Text = $"Práctica · {_categoriaElegida.Nombre}";
             _vistaPractica = new PracticaView(_senasCategoria, _preferencias, _servicio);
-            _vistaPractica.OtraCategoriaSolicitada += (s, e) => VolverUnPaso();
+            _vistaPractica.OtraCategoriaSolicitada += (s, e) =>
+            {
+                _vinoDeMiPerfil = false; // "Elegir otra categoría" va a las categorías, aunque se haya llegado desde Mi perfil
+                VolverUnPaso();
+            };
             contenidoPaso.Content = _vistaPractica;
             EnfocarContenido();
+        }
+
+        // Desde "Practicar" en Mi perfil: va directo a la práctica de esa categoría.
+        // Esc (o el botón Volver) vuelve a Mi perfil; "Elegir otra categoría" va a las categorías de su nivel.
+        public void PracticarCategoria(string categoriaId)
+        {
+            Categoria? categoria;
+            try
+            {
+                categoria = new RepositorioCategorias().BuscarPorClave(categoriaId);
+            }
+            catch (DatabaseException)
+            {
+                return; // se queda en la elección de nivel
+            }
+
+            NivelAprendizaje? nivel = categoria is null ? null : _vistaNiveles?.BuscarNivel(categoria.Dificultad);
+            if (nivel is null)
+                return;
+
+            MostrarCategorias(nivel);
+            CategoriaAprendizaje? elegida = _vistaCategorias?.BuscarCategoria(categoriaId);
+            if (elegida is null)
+                return;
+
+            MostrarSenas(elegida);
+            MostrarPractica();
+            _vinoDeMiPerfil = true;
+            ActualizarBotonVolver("Volver a Mi perfil");
         }
 
         private void ActualizarBotonVolver(string texto)
@@ -158,6 +195,13 @@ namespace ProyectoFinal
 
         public bool VolverUnPaso()
         {
+            if (_vinoDeMiPerfil)
+            {
+                _vinoDeMiPerfil = false;
+                VolverAPerfilSolicitado?.Invoke(this, EventArgs.Empty);
+                return true;
+            }
+
             if (_categoriaElegida is not null && _nivelElegido is not null)
             {
                 string idAnterior = _categoriaElegida.Categoria.Id;

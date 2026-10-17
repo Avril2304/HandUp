@@ -186,6 +186,23 @@ namespace ProyectoFinal
                 miPerfil.VolverSolicitado += (s, e) => MostrarInicio();
                 miPerfil.NavegacionSolicitada += (s, seccion) => Navegar(seccion);
                 miPerfil.CerrarSesionSolicitado += (s, e) => CerrarSesion();
+                miPerfil.PerfilEliminado += (s, e) => CerrarSesion(); // ya no hay nada que guardar: ServicioProgreso lo sabe
+                miPerfil.PracticarCategoriaSolicitada += (s, categoriaId) =>
+                {
+                    // Al volver de la práctica, Mi perfil queda donde estaba (mismo scroll, foco en esa categoría)
+                    double posicion = miPerfil.PosicionScroll;
+                    Navegar(Seccion.Aprender);
+                    if (contenidoSeccion.Content is AprenderView aprender)
+                    {
+                        aprender.VolverAPerfilSolicitado += (s2, e2) =>
+                        {
+                            Navegar(Seccion.MiPerfil);
+                            if (contenidoSeccion.Content is PerfilView perfilNuevo)
+                                perfilNuevo.RestaurarPosicion(posicion, categoriaId);
+                        };
+                        aprender.PracticarCategoria(categoriaId);
+                    }
+                };
                 return miPerfil;
             }
 

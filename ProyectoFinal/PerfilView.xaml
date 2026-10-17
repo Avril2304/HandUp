@@ -66,7 +66,7 @@
             </Button>
         </Grid>
 
-        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" Focusable="False" Padding="0,0,6,0">
+        <ScrollViewer Grid.Row="2" x:Name="scroll" VerticalScrollBarVisibility="Auto" Focusable="False" Padding="0,0,6,0">
             <StackPanel>
 
                 <!-- Aviso si no se pudieron leer los datos guardados. Se anuncia en lectores de pantalla. -->
@@ -190,7 +190,39 @@
                     </StackPanel>
                 </Border>
 
-                <!-- Tarjeta: cuenta (story "gestionar mi cuenta": por ahora editar el nombre y cerrar sesión) -->
+                <!-- Tarjeta: estadísticas por categoría (se arman desde el código con ProgresoSenas) -->
+                <Border Background="{DynamicResource BrushCard}" BorderBrush="{DynamicResource BrushBorder}" BorderThickness="1.5"
+                        CornerRadius="18" Padding="26,18" Margin="0,12,0,0">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="&#xE8FD;" FontFamily="{StaticResource FontIconos}" FontSize="16"
+                                       Foreground="{DynamicResource BrushAccent}" VerticalAlignment="Center"/>
+                            <TextBlock Text="POR CATEGORÍA" FontSize="12" FontWeight="Bold" Foreground="{DynamicResource BrushMuted}"
+                                       Margin="8,0,0,0" VerticalAlignment="Center"/>
+                        </StackPanel>
+
+                        <!-- Sin datos (o si falla la base): un mensaje en lugar de la lista -->
+                        <TextBlock x:Name="lblCategoriasMensaje" FontSize="13.5" Foreground="{DynamicResource BrushMuted}"
+                                   TextWrapping="Wrap" Margin="0,12,0,0" Visibility="Collapsed"/>
+
+                        <!-- Las categorías con menor precisión, con un botón para practicarlas -->
+                        <StackPanel x:Name="pnlReforzar" Margin="0,14,0,0" Visibility="Collapsed">
+                            <TextBlock Text="Para practicar más" FontSize="13.5" FontWeight="Bold" Foreground="{DynamicResource BrushInk}"/>
+                            <StackPanel x:Name="lstReforzar" Margin="0,6,0,0"/>
+                        </StackPanel>
+
+                        <!-- Una fila por cada categoría practicada -->
+                        <StackPanel x:Name="pnlCategoriasPracticadas" Margin="0,14,0,0" Visibility="Collapsed">
+                            <TextBlock Text="Categorías que practicaste" FontSize="13.5" FontWeight="Bold" Foreground="{DynamicResource BrushInk}"/>
+                            <StackPanel x:Name="lstCategorias" Margin="-6,4,-6,0"/>
+                        </StackPanel>
+
+                        <TextBlock x:Name="lblSinPracticar" FontSize="12.5" Foreground="{DynamicResource BrushMuted}" TextWrapping="Wrap"
+                                   Margin="0,10,0,0" Visibility="Collapsed"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Tarjeta: cuenta (story "gestionar mi cuenta") -->
                 <Border Background="{DynamicResource BrushCard}" BorderBrush="{DynamicResource BrushBorder}" BorderThickness="1.5"
                         CornerRadius="18" Padding="26,18" Margin="0,12,0,0">
                     <StackPanel>
@@ -209,7 +241,14 @@
                                     <TextBlock Text="Editar nombre" Margin="8,0,0,0" VerticalAlignment="Center"/>
                                 </StackPanel>
                             </Button>
-                            <Button x:Name="btnCerrarSesion" Style="{StaticResource SecondaryButton}"
+                            <Button x:Name="btnCambiarPassword" Style="{StaticResource SecondaryButton}" Margin="0,0,10,0"
+                                    Click="BtnCambiarPassword_Click" AutomationProperties.Name="Cambiar tu contraseña">
+                                <StackPanel Orientation="Horizontal" Margin="16,0">
+                                    <TextBlock Text="&#xE72E;" FontFamily="{StaticResource FontIconos}" FontSize="14" VerticalAlignment="Center"/>
+                                    <TextBlock Text="Cambiar contraseña" Margin="8,0,0,0" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                            <Button x:Name="btnCerrarSesion" Style="{StaticResource SecondaryButton}" Margin="0,0,10,0"
                                     Click="BtnCerrarSesion_Click" AutomationProperties.Name="Cerrar sesión y volver al inicio de sesión">
                                 <StackPanel Orientation="Horizontal" Margin="16,0">
                                     <TextBlock Text="&#xE7E8;" FontFamily="{StaticResource FontIconos}" FontSize="14" VerticalAlignment="Center"/>
@@ -217,6 +256,85 @@
                                 </StackPanel>
                             </Button>
                         </WrapPanel>
+
+                        <!-- Acciones que no se pueden deshacer: piden confirmación en un diálogo -->
+                        <WrapPanel Margin="0,10,0,0">
+                            <Button x:Name="btnReiniciar" Style="{StaticResource SecondaryButton}" Margin="0,0,10,0"
+                                    Click="BtnReiniciar_Click" AutomationProperties.Name="Reiniciar tu progreso. Pide confirmación">
+                                <StackPanel Orientation="Horizontal" Margin="16,0">
+                                    <TextBlock Text="&#xE777;" FontFamily="{StaticResource FontIconos}" FontSize="14" VerticalAlignment="Center"
+                                               Foreground="{DynamicResource BrushError}"/>
+                                    <TextBlock Text="Reiniciar progreso" Margin="8,0,0,0" VerticalAlignment="Center"
+                                               Foreground="{DynamicResource BrushError}"/>
+                                </StackPanel>
+                            </Button>
+                            <Button x:Name="btnEliminarPerfil" Style="{StaticResource SecondaryButton}"
+                                    Click="BtnEliminarPerfil_Click" AutomationProperties.Name="Eliminar tu perfil. Pide tu contraseña y confirmación">
+                                <StackPanel Orientation="Horizontal" Margin="16,0">
+                                    <TextBlock Text="&#xE74D;" FontFamily="{StaticResource FontIconos}" FontSize="14" VerticalAlignment="Center"
+                                               Foreground="{DynamicResource BrushError}"/>
+                                    <TextBlock Text="Eliminar perfil" Margin="8,0,0,0" VerticalAlignment="Center"
+                                               Foreground="{DynamicResource BrushError}"/>
+                                </StackPanel>
+                            </Button>
+                        </WrapPanel>
+
+                        <!-- Cambio de contraseña: actual, nueva (con el checklist del registro) y confirmación -->
+                        <StackPanel x:Name="pnlPassword" Visibility="Collapsed" Margin="0,16,0,0" MaxWidth="420" HorizontalAlignment="Left">
+                            <TextBlock Text="Contraseña actual" Style="{StaticResource FieldLabel}"/>
+                            <PasswordBox x:Name="txtPasswordActual" Style="{StaticResource RoundedPasswordBox}" Width="420"
+                                         KeyDown="CampoPassword_KeyDown" LostFocus="TxtPasswordActual_LostFocus"
+                                         PasswordChanged="TxtPasswordActual_PasswordChanged" AutomationProperties.Name="Contraseña actual"/>
+                            <!-- Se verifica al salir del campo (o con Enter): avisa antes de Guardar -->
+                            <TextBlock x:Name="lblEstadoActual" FontSize="12.5" Margin="2,5,0,0" Visibility="Collapsed"
+                                       AutomationProperties.LiveSetting="Assertive"/>
+                            <TextBlock Text="Contraseña nueva" Style="{StaticResource FieldLabel}" Margin="0,12,0,4"/>
+                            <PasswordBox x:Name="txtPasswordNueva" Style="{StaticResource RoundedPasswordBox}" Width="420"
+                                         PasswordChanged="TxtPasswordNueva_PasswordChanged" KeyDown="CampoPassword_KeyDown"
+                                         AutomationProperties.Name="Contraseña nueva: 8 caracteres o más, al menos una mayúscula y sin espacios"/>
+                            <!-- Checklist en vivo de PoliticaPassword: "○" sin escribir; con texto, "✓" en verde si se cumple
+                                 y "✗" en rojo si no (el símbolo cambia además del color) -->
+                            <ItemsControl x:Name="lstReglas" Margin="2,6,0,0" Focusable="False">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Horizontal"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock x:Name="regla" FontSize="11.5" Margin="0,0,16,0" Foreground="{DynamicResource BrushMuted}">
+                                            <Run x:Name="icono" Text="○"/><Run Text=" "/><Run Text="{Binding Descripcion, Mode=OneWay}"/>
+                                        </TextBlock>
+                                        <DataTemplate.Triggers>
+                                            <DataTrigger Binding="{Binding Estado}" Value="ok">
+                                                <Setter TargetName="regla" Property="Foreground" Value="{DynamicResource BrushSuccess}"/>
+                                                <Setter TargetName="regla" Property="FontWeight" Value="SemiBold"/>
+                                                <Setter TargetName="icono" Property="Text" Value="✓"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Estado}" Value="error">
+                                                <Setter TargetName="regla" Property="Foreground" Value="{DynamicResource BrushError}"/>
+                                                <Setter TargetName="regla" Property="FontWeight" Value="SemiBold"/>
+                                                <Setter TargetName="icono" Property="Text" Value="✗"/>
+                                            </DataTrigger>
+                                        </DataTemplate.Triggers>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                            <TextBlock Text="Repetí la contraseña nueva" Style="{StaticResource FieldLabel}" Margin="0,12,0,4"/>
+                            <PasswordBox x:Name="txtPasswordConfirmar" Style="{StaticResource RoundedPasswordBox}" Width="420"
+                                         KeyDown="CampoPassword_KeyDown" PasswordChanged="TxtPasswordConfirmar_PasswordChanged"
+                                         AutomationProperties.Name="Repetí la contraseña nueva. Enter para guardar"/>
+                            <TextBlock x:Name="lblEstadoConfirmar" FontSize="12.5" Margin="2,5,0,0" Visibility="Collapsed"
+                                       AutomationProperties.LiveSetting="Polite"/>
+                            <StackPanel Orientation="Horizontal" Margin="0,14,0,0">
+                                <Button Style="{StaticResource PrimaryButton}" Height="40" Width="170" Content="Guardar contraseña"
+                                        Click="BtnGuardarPassword_Click" AutomationProperties.Name="Guardar la contraseña nueva"/>
+                                <Button Style="{StaticResource SecondaryButton}" Height="40" Width="110" Margin="8,0,0,0" Content="Cancelar"
+                                        Click="BtnCancelarPassword_Click" AutomationProperties.Name="Cancelar el cambio de contraseña"/>
+                            </StackPanel>
+                            <TextBlock x:Name="lblErrorPassword" FontSize="13" Foreground="{DynamicResource BrushError}" TextWrapping="Wrap"
+                                       Margin="2,8,0,0" Visibility="Collapsed" AutomationProperties.LiveSetting="Assertive"/>
+                        </StackPanel>
 
                         <!-- Edición del nombre: Enter guarda, Esc cancela -->
                         <StackPanel x:Name="pnlEditarNombre" Visibility="Collapsed" Margin="0,16,0,0">

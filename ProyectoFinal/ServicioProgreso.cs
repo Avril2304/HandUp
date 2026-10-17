@@ -2,13 +2,16 @@ using System;
 
 namespace ProyectoFinal
 {
-    // Servicio central que gestiona el progreso del usuario y notifica cambios a la UI
+    // Servicio central que gestiona el progreso del usuario (y su cuenta, desde Mi perfil) y notifica cambios a la UI
     public class ServicioProgreso
     {
         private readonly Perfil _perfil;
         private readonly RepositorioPerfiles _repositorio;
 
         public event EventHandler<ProgresoEventArgs>? ProgresoActualizado;
+
+        // Después de eliminar el perfil ya no hay nada que guardar (ej. al cerrar el menú)
+        public bool PerfilEliminado { get; private set; }
 
         public ServicioProgreso(Perfil perfil, RepositorioPerfiles repositorio)
         {
@@ -87,6 +90,65 @@ namespace ProyectoFinal
             }
         }
 
+        // Para avisar enseguida si la contraseña actual está mal (antes de apretar Guardar)
+        public bool VerificarPassword(string password) =>
+            PasswordHasher.Verificar(password ?? string.Empty, _perfil.PasswordHash, _perfil.PasswordSalt);
+
+        // Cambiar la contraseña: pide la actual, valida la nueva con PoliticaPassword y la guarda hasheada.
+        // Cualquier dato incorrecto lanza InvalidInputException con un mensaje para mostrar.
+        public void CambiarPassword(string actual, string nueva, string confirmacion)
+        {
+            if (!PasswordHasher.Verificar(actual ?? string.Empty, _perfil.PasswordHash, _perfil.PasswordSalt))
+                throw new InvalidInputException("La contraseña actual no es correcta.");
+
+            if (nueva != confirmacion)
+                throw new InvalidInputException("La contraseña nueva y su confirmación no coinciden.");
+
+            PoliticaPassword.Validar(nueva);
+
+            if (PasswordHasher.Verificar(nueva, _perfil.PasswordHash, _perfil.PasswordSalt))
+                throw new InvalidInputException("La contraseña nueva tiene que ser distinta de la actual.");
+
+            (string hashAnterior, string salAnterior) = (_perfil.PasswordHash, _perfil.PasswordSalt);
+            (_perfil.PasswordHash, _perfil.PasswordSalt) = PasswordHasher.Hashear(nueva);
+            try
+            {
+                GuardarProgreso("Contraseña");
+            }
+            catch (Exception ex) when (ex is DatabaseException or UserNotFoundException)
+            {
+                (_perfil.PasswordHash, _perfil.PasswordSalt) = (hashAnterior, salAnterior);
+                throw;
+            }
+        }
+
+        // Pone en cero el nivel, las señas dominadas, los puntos, los aciertos, los fallos y las rachas.
+        // No toca el usuario, la contraseña ni las preferencias.
+        public void ReiniciarProgreso()
+        {
+            _repositorio.BorrarProgresoSenas(_perfil.Id);
+
+            _perfil.Nivel = Niveles.Todos[0].Nombre;
+            _perfil.SenasDominadas = 0;
+            _perfil.Puntos = 0;
+            _perfil.AciertosTotales = 0;
+            _perfil.FallosTotales = 0;
+            _perfil.Racha = 0;
+            _perfil.MejorRacha = 0;
+
+            GuardarProgreso("Reinicio");
+        }
+
+        // Elimina el perfil (con su progreso y sus preferencias) si la contraseña es correcta
+        public void EliminarPerfil(string password)
+        {
+            if (!PasswordHasher.Verificar(password ?? string.Empty, _perfil.PasswordHash, _perfil.PasswordSalt))
+                throw new InvalidInputException("La contraseña no es correcta.");
+
+            _repositorio.Eliminar(_perfil.Id);
+            PerfilEliminado = true;
+        }
+
         private void RecalcularNivel()
         {
             _perfil.Nivel = Niveles.Actualizar(_perfil.Nivel, _perfil.SenasDominadas);
@@ -95,6 +157,9 @@ namespace ProyectoFinal
         // Guarda automáticamente en la base y notifica a la UI
         public void GuardarProgreso(string campoContexto = "General")
         {
+            if (PerfilEliminado)
+                return;
+
             _repositorio.Actualizar(_perfil);
             OnProgresoActualizado(campoContexto);
         }
