@@ -20,6 +20,13 @@ namespace ProyectoFinal
             set => _nivelDesbloqueado = Math.Clamp(value, 1, Niveles.Nombres.Count);
         }
 
+        // Nivel que eligió al registrarse (2 a 4) y todavía no validó con la prueba de nivelación; null si no hay ninguna.
+        // Mientras está pendiente, el perfil sigue en el nivel desbloqueado (Principiante al registrarse).
+        public int? NivelacionPendiente { get; set; }
+
+        // Qué prueba final se ofrece: la del nivel anterior al de la nivelación pendiente, o si no, la del nivel actual
+        public int NivelDePruebaFinal => NivelacionPendiente is int objetivo ? objetivo - 1 : NivelDesbloqueado;
+
         // Nombre del nivel desbloqueado ("Principiante", "Básico"...). Es otra forma de leer y escribir NivelDesbloqueado.
         public string Nivel
         {

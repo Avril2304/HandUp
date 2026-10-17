@@ -107,6 +107,22 @@
                 <StackPanel>
                     <TextBlock x:Name="lblFeedbackMensaje" TextWrapping="Wrap" FontSize="13" FontWeight="SemiBold"/>
                     <TextBlock x:Name="lblCountdown" FontSize="12" Margin="0,4,0,0" Visibility="Collapsed"/>
+
+                    <!-- Eligió un nivel mayor a Principiante: rendir la nivelación ahora o empezar de cero -->
+                    <StackPanel x:Name="pnlNivelacion" Visibility="Collapsed" Margin="0,8,0,0">
+                        <TextBlock x:Name="lblNivelacion" FontSize="12.5" TextWrapping="Wrap" Foreground="{DynamicResource BrushInk}"/>
+                        <Grid Margin="0,10,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Button x:Name="btnRendirAhora" Style="{StaticResource PrimaryButton}" Height="40"
+                                    Content="Rendir ahora" Click="BtnRendirAhora_Click"/>
+                            <Button Grid.Column="2" x:Name="btnEmpezarPrincipiante" Style="{StaticResource SecondaryButton}" Height="40"
+                                    Content="Empezar como Principiante" Click="BtnEmpezarPrincipiante_Click"/>
+                        </Grid>
+                    </StackPanel>
                 </StackPanel>
             </Border>
 

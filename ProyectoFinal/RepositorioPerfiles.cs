@@ -10,7 +10,7 @@ namespace ProyectoFinal
     public class RepositorioPerfiles : IRepositorio<Perfil>
     {
         private const string ColumnasPerfil =
-            "Id, Nombre, Usuario, PasswordHash, PasswordSalt, Nivel, Racha, MejorRacha, SenasDominadas, Puntos, AciertosTotales, FallosTotales, FechaRegistro, NivelDesbloqueado";
+            "Id, Nombre, Usuario, PasswordHash, PasswordSalt, Nivel, Racha, MejorRacha, SenasDominadas, Puntos, AciertosTotales, FallosTotales, FechaRegistro, NivelDesbloqueado, NivelacionPendiente";
 
         public IReadOnlyList<Perfil> ObtenerTodos()
         {
@@ -60,7 +60,7 @@ namespace ProyectoFinal
                 using var comando = conexion.CreateCommand();
                 comando.CommandText = @"
                     UPDATE Perfiles SET
-                        Nombre = $nombre, PasswordHash = $hash, PasswordSalt = $sal, Nivel = $nivel, NivelDesbloqueado = $desbloqueado,
+                        Nombre = $nombre, PasswordHash = $hash, PasswordSalt = $sal, Nivel = $nivel, NivelDesbloqueado = $desbloqueado, NivelacionPendiente = $nivelacion,
                         Racha = $racha, MejorRacha = $mejor, SenasDominadas = $senas, Puntos = $puntos,
                         AciertosTotales = $aciertos, FallosTotales = $fallos
                     WHERE Id = $id;";
@@ -69,6 +69,7 @@ namespace ProyectoFinal
                 comando.Parameters.AddWithValue("$sal", perfil.PasswordSalt);
                 comando.Parameters.AddWithValue("$nivel", perfil.Nivel);
                 comando.Parameters.AddWithValue("$desbloqueado", perfil.NivelDesbloqueado);
+                comando.Parameters.AddWithValue("$nivelacion", (object?)perfil.NivelacionPendiente ?? DBNull.Value);
                 comando.Parameters.AddWithValue("$racha", perfil.Racha);
                 comando.Parameters.AddWithValue("$mejor", perfil.MejorRacha);
                 comando.Parameters.AddWithValue("$senas", perfil.SenasDominadas);
@@ -253,13 +254,18 @@ namespace ProyectoFinal
 
             (string hash, string sal) = PasswordHasher.Hashear(password);
 
+            // Si eligió un nivel mayor a Principiante, arranca en Principiante con la nivelación pendiente:
+            // al aprobar la prueba final del nivel anterior al elegido, pasa directo a ese nivel
+            int nivelElegido = Niveles.NumeroDe(nivelInicial);
+
             var nuevoPerfil = new Perfil
             {
                 Nombre = nombre.Trim(),
                 Usuario = usuarioLimpio,
                 PasswordHash = hash,
                 PasswordSalt = sal,
-                Nivel = string.IsNullOrWhiteSpace(nivelInicial) ? "Principiante" : nivelInicial,
+                NivelDesbloqueado = 1,
+                NivelacionPendiente = nivelElegido > 1 ? nivelElegido : null,
                 Racha = 0,
                 SenasDominadas = 0,
                 Puntos = 0,
@@ -305,8 +311,8 @@ namespace ProyectoFinal
             using var comando = conexion.CreateCommand();
             comando.Transaction = transaccion;
             comando.CommandText = @"
-                INSERT INTO Perfiles (Nombre, Usuario, PasswordHash, PasswordSalt, Nivel, NivelDesbloqueado, Racha, MejorRacha, SenasDominadas, Puntos, AciertosTotales, FallosTotales, FechaRegistro)
-                VALUES ($nombre, $usuario, $hash, $sal, $nivel, $desbloqueado, $racha, $mejor, $senas, $puntos, $aciertos, $fallos, $fecha);
+                INSERT INTO Perfiles (Nombre, Usuario, PasswordHash, PasswordSalt, Nivel, NivelDesbloqueado, NivelacionPendiente, Racha, MejorRacha, SenasDominadas, Puntos, AciertosTotales, FallosTotales, FechaRegistro)
+                VALUES ($nombre, $usuario, $hash, $sal, $nivel, $desbloqueado, $nivelacion, $racha, $mejor, $senas, $puntos, $aciertos, $fallos, $fecha);
                 SELECT last_insert_rowid();";
             comando.Parameters.AddWithValue("$nombre", perfil.Nombre);
             comando.Parameters.AddWithValue("$usuario", perfil.Usuario);
@@ -314,6 +320,7 @@ namespace ProyectoFinal
             comando.Parameters.AddWithValue("$sal", perfil.PasswordSalt);
             comando.Parameters.AddWithValue("$nivel", perfil.Nivel);
             comando.Parameters.AddWithValue("$desbloqueado", perfil.NivelDesbloqueado);
+            comando.Parameters.AddWithValue("$nivelacion", (object?)perfil.NivelacionPendiente ?? DBNull.Value);
             comando.Parameters.AddWithValue("$racha", perfil.Racha);
             comando.Parameters.AddWithValue("$mejor", perfil.MejorRacha);
             comando.Parameters.AddWithValue("$senas", perfil.SenasDominadas);
@@ -341,6 +348,7 @@ namespace ProyectoFinal
                 PasswordSalt = lector.GetString(4),
                 // El nivel sale del número desbloqueado; la columna Nivel (texto) se sigue guardando para leer la base a mano
                 NivelDesbloqueado = lector.GetInt32(13),
+                NivelacionPendiente = lector.IsDBNull(14) ? null : lector.GetInt32(14),
                 Racha = lector.GetInt32(6),
                 MejorRacha = lector.GetInt32(7),
                 SenasDominadas = lector.GetInt32(8),

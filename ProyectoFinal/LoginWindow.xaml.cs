@@ -94,23 +94,7 @@ namespace ProyectoFinal
             {
                 // Verifico usuario y contraseña (hasheada) contra la base de datos
                 Perfil perfil = _repositorio.IniciarSesion(txtUsuario.Text, txtPassword.Password);
-
-                // Cargar preferencias del perfil
-                PreferenciasUsuario prefs = new RepositorioPreferencias().ObtenerPorPerfil(perfil.Id);
-
-                // Si prendió el alto contraste en el login, se respeta y queda guardado en su perfil
-                if (TemaVisual.AltoContrasteActivo && !prefs.AltoContraste)
-                {
-                    prefs.AltoContraste = true;
-                    GuardarPreferenciasSinInterrumpir(prefs);
-                }
-
-                // Aplicar tema visual según preferencias
-                TemaVisual.Aplicar(prefs.AltoContraste);
-
-                // Cargo el perfil seleccionado y navego al menú principal
-                var menuPrincipal = new MainMenuWindow(perfil, prefs);
-                menuPrincipal.Show();
+                AbrirMenu(perfil);
                 Close();
             }
             catch (Exception ex) when (ex is UserNotFoundException || ex is InvalidInputException || ex is DatabaseException)
@@ -118,6 +102,26 @@ namespace ProyectoFinal
                 lblInfo.Visibility = Visibility.Collapsed;
                 lblError.Text = ex.Message;
             }
+        }
+
+        // Carga las preferencias del perfil, aplica su tema y abre el menú principal.
+        // También lo usa el registro ("Rendir ahora" entra directo, sin volver a pedir la contraseña).
+        public static void AbrirMenu(Perfil perfil, bool rendirNivelacion = false)
+        {
+            PreferenciasUsuario prefs = new RepositorioPreferencias().ObtenerPorPerfil(perfil.Id);
+
+            // Si prendió el alto contraste en el login, se respeta y queda guardado en su perfil
+            if (TemaVisual.AltoContrasteActivo && !prefs.AltoContraste)
+            {
+                prefs.AltoContraste = true;
+                GuardarPreferenciasSinInterrumpir(prefs);
+            }
+
+            // Aplicar tema visual según preferencias
+            TemaVisual.Aplicar(prefs.AltoContraste);
+
+            var menuPrincipal = new MainMenuWindow(perfil, prefs, rendirNivelacion);
+            menuPrincipal.Show();
         }
 
         // Un error al guardar preferencias no tiene que impedir entrar: el tema igual se aplica en esta sesión

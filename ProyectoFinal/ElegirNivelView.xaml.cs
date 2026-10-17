@@ -33,10 +33,11 @@ namespace ProyectoFinal
         // Avisa qué nivel se eligió (1-4); AprenderView decide a qué paso ir. Nunca se dispara con un nivel bloqueado.
         public event EventHandler<NivelAprendizaje>? NivelElegido;
 
-        // Se quiere rendir la prueba final de este nivel (el nivel actual del perfil)
+        // Se quiere rendir la prueba final de este nivel (el actual del perfil, o el anterior al de su nivelación pendiente)
         public event EventHandler<int>? PruebaFinalSolicitada;
 
-        private readonly int _nivelDesbloqueado;
+        private readonly int _nivelPrueba;
+        private readonly int? _nivelacionHacia;
 
         // Frase corta de cada nivel (texto de pantalla). Nombre, señas y categorías salen de la base.
         private static readonly Dictionary<int, string> Descripciones = new()
@@ -49,16 +50,17 @@ namespace ProyectoFinal
 
         private IReadOnlyList<NivelAprendizaje> _niveles = Array.Empty<NivelAprendizaje>();
 
-        // mejorPorcentaje: el mejor resultado en la prueba final del nivel actual (null si nunca la rindió)
-        public ElegirNivelView(int nivelDesbloqueado, int? mejorPorcentaje)
+        // mejorPorcentaje: el mejor resultado en la prueba que se ofrece (null si nunca la rindió)
+        public ElegirNivelView(Perfil perfil, int? mejorPorcentaje)
         {
             InitializeComponent();
-            _nivelDesbloqueado = nivelDesbloqueado;
+            _nivelPrueba = perfil.NivelDePruebaFinal;
+            _nivelacionHacia = perfil.NivelacionPendiente;
             MostrarPruebaFinal(mejorPorcentaje);
 
             try
             {
-                _niveles = CargarNiveles(nivelDesbloqueado);
+                _niveles = CargarNiveles(perfil.NivelDesbloqueado);
                 lstNiveles.ItemsSource = _niveles;
             }
             catch (DatabaseException ex)
@@ -70,23 +72,32 @@ namespace ProyectoFinal
         }
 
         // En el último nivel no hay prueba final: no queda nada por desbloquear
-        private bool HayPruebaFinal => _nivelDesbloqueado < Niveles.Nombres.Count;
+        private bool HayPruebaFinal => _nivelPrueba < Niveles.Nombres.Count;
 
         private void MostrarPruebaFinal(int? mejorPorcentaje)
         {
             if (!HayPruebaFinal)
                 return;
 
-            string nivel = Niveles.NombreDe(_nivelDesbloqueado);
-            string siguiente = Niveles.NombreDe(_nivelDesbloqueado + 1);
+            string nivel = Niveles.NombreDe(_nivelPrueba);
+            string siguiente = Niveles.NombreDe(_nivelPrueba + 1);
             string mejor = mejorPorcentaje is null ? string.Empty : $" Tu mejor resultado: {mejorPorcentaje}%.";
 
-            lblPruebaFinal.Text = $"Prueba final de {nivel}";
-            lblPruebaDetalle.Text = $"{PruebaFinal.CantidadPreguntas} señas del nivel. " +
-                                    $"Con {PruebaFinal.PorcentajeParaAprobar}% o más desbloqueás {siguiente}.{mejor}";
+            if (_nivelacionHacia is null)
+            {
+                lblPruebaFinal.Text = $"Prueba final de {nivel}";
+                lblPruebaDetalle.Text = $"{PruebaFinal.CantidadPreguntas} señas del nivel. " +
+                                        $"Con {PruebaFinal.PorcentajeParaAprobar}% o más desbloqueás {siguiente}.{mejor}";
+            }
+            else
+            {
+                // Eligió un nivel más alto al registrarse: la nivelación es la prueba final del nivel anterior a ese
+                lblPruebaFinal.Text = $"Prueba de nivelación para {siguiente}";
+                lblPruebaDetalle.Text = $"Es la prueba final de {nivel}: con {PruebaFinal.PorcentajeParaAprobar}% o más " +
+                                        $"empezás directo en {siguiente}.{mejor}";
+            }
             lblBotonPrueba.Text = "Rendir prueba (P)";
-            AutomationProperties.SetName(btnPruebaFinal,
-                $"Rendir la prueba final de {nivel}. {lblPruebaDetalle.Text} Atajo: tecla P");
+            AutomationProperties.SetName(btnPruebaFinal, $"{lblPruebaFinal.Text}. {lblPruebaDetalle.Text} Atajo: tecla P");
             pnlPruebaFinal.Visibility = Visibility.Visible;
         }
 
@@ -95,7 +106,7 @@ namespace ProyectoFinal
         private void RendirPruebaFinal()
         {
             if (HayPruebaFinal)
-                PruebaFinalSolicitada?.Invoke(this, _nivelDesbloqueado);
+                PruebaFinalSolicitada?.Invoke(this, _nivelPrueba);
         }
 
         private static IReadOnlyList<NivelAprendizaje> CargarNiveles(int nivelDesbloqueado)

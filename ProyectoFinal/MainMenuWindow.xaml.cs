@@ -26,10 +26,14 @@ namespace ProyectoFinal
         // Tile desde el que se entró a una sección: al volver, el foco regresa ahí
         private Button? _tileOrigen;
 
-        public MainMenuWindow(Perfil perfil, PreferenciasUsuario preferencias)
+        // Recién registrado con "Rendir ahora": al abrir va directo a la prueba de nivelación
+        private readonly bool _rendirNivelacionAlAbrir;
+
+        public MainMenuWindow(Perfil perfil, PreferenciasUsuario preferencias, bool rendirNivelacion = false)
         {
             InitializeComponent();
             _perfil = perfil;
+            _rendirNivelacionAlAbrir = rendirNivelacion;
             _preferencias = preferencias;
             _servicio = new ServicioProgreso(_perfil, new RepositorioPerfiles());
 
@@ -137,6 +141,12 @@ namespace ProyectoFinal
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            if (_rendirNivelacionAlAbrir)
+            {
+                RendirNivelacion();
+                return;
+            }
+
             // Arranca con el foco en la opción principal: Enter entra directo a Aprender
             tileAprender.Focus();
         }
@@ -187,6 +197,17 @@ namespace ProyectoFinal
         {
             // Nos aseguramos de actualizar en el hilo de la UI
             Dispatcher.Invoke(ActualizarUI);
+        }
+
+        // Abre Aprender directo en la prueba de nivelación pendiente (desde el registro o desde Mi perfil)
+        private void RendirNivelacion()
+        {
+            if (_perfil.NivelacionPendiente is null)
+                return;
+
+            Navegar(Seccion.Aprender);
+            if (contenidoSeccion.Content is AprenderView aprender)
+                aprender.RendirNivelacion();
         }
 
         // Al aprobar una prueba final cambia el nivel: el encabezado y la barra pasan a mostrar el nivel nuevo
@@ -279,6 +300,7 @@ namespace ProyectoFinal
                 miPerfil.NavegacionSolicitada += (s, seccion) => Navegar(seccion);
                 miPerfil.CerrarSesionSolicitado += (s, e) => CerrarSesion();
                 miPerfil.PerfilEliminado += (s, e) => CerrarSesion(); // ya no hay nada que guardar: ServicioProgreso lo sabe
+                miPerfil.NivelacionSolicitada += (s, e) => RendirNivelacion();
                 miPerfil.PracticarCategoriaSolicitada += (s, categoriaId) =>
                 {
                     // Al volver de la práctica, Mi perfil queda donde estaba (mismo scroll, foco en esa categoría)
