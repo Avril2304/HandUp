@@ -3,6 +3,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
 namespace ProyectoFinal
@@ -18,15 +19,69 @@ namespace ProyectoFinal
         private bool _esVideo;
         private bool _pausado;
         private bool _lento;
+        private bool _mediaListo;
+        private bool _rebobinando;
+        private bool _enPantallaCompleta;
+
+        // Se terminó una vuelta del video (antes de volver a empezar). El Traductor lo usa para pasar a la seña siguiente.
+        public event EventHandler? VideoTerminado;
+
+        // Tecla que pausa el video dentro de la pantalla completa (la vista que usa el visor le pasa la del usuario)
+        public Key TeclaPausar { get; set; } = Key.Space;
+
+        // Si alguien escucha este evento, el botón de ampliar lo avisa en vez de abrir la pantalla completa común.
+        // El Traductor lo usa para abrir su propia pantalla completa, que sigue la secuencia de señas.
+        public event EventHandler? PantallaCompletaSolicitada;
+
+        public bool PermitirPantallaCompleta { get; set; } = true;
+
+        // Botones Pausar / Repetir / Más lento debajo del video (el Traductor usa los suyos, que manejan toda la secuencia)
+        public bool MostrarControles { get; set; } = true;
+
+        // Si lo que se está mostrando es un video (false si es una imagen o un aviso de error)
+        public bool MuestraVideo => _esVideo;
+
+        public bool EstaPausado => _pausado;
+
+        // Velocidad lenta activada o no (se conserva al entrar y salir de pantalla completa)
+        public bool Lento
+        {
+            get => _lento;
+            set
+            {
+                if (_lento == value)
+                    return;
+
+                _lento = value;
+                if (_esVideo)
+                {
+                    // Cambiar SpeedRatio hace que el video vuelva al principio: guardamos la posición y la restauramos
+                    TimeSpan posicion = videoSena.Position;
+                    videoSena.SpeedRatio = _lento ? VelocidadLenta : 1.0;
+                    videoSena.Position = posicion;
+                }
+                ActualizarControles();
+            }
+        }
 
         public VisorSena()
         {
             InitializeComponent();
         }
 
+        // Lo usa la ventana de pantalla completa: el botón de ampliar pasa a ser el de salir
+        public void ModoPantallaCompleta()
+        {
+            _enPantallaCompleta = true;
+            icoAmpliar.Text = ""; // BackToWindow
+            btnAmpliar.ToolTip = "Salir de pantalla completa (Esc)";
+            AutomationProperties.SetName(btnAmpliar, "Salir de pantalla completa");
+        }
+
         // Muestra una seña nueva (reemplaza la anterior)
         public void Mostrar(Sena sena)
         {
+            ArgumentNullException.ThrowIfNull(sena);
             Detener();
             _sena = sena;
             _pausado = false;
@@ -51,6 +106,7 @@ namespace ProyectoFinal
 
             _esVideo = Path.GetExtension(ruta).Equals(".mp4", StringComparison.OrdinalIgnoreCase);
             pnlError.Visibility = Visibility.Collapsed;
+            btnAmpliar.Visibility = PermitirPantallaCompleta ? Visibility.Visible : Visibility.Collapsed;
 
             if (_esVideo)
                 MostrarVideo(ruta);
@@ -74,13 +130,15 @@ namespace ProyectoFinal
 
         private void MostrarVideo(string ruta)
         {
+            _mediaListo = false;
+            _rebobinando = false;
             videoSena.Source = new Uri(ruta, UriKind.Absolute);
             videoSena.SpeedRatio = _lento ? VelocidadLenta : 1.0;
             videoSena.Visibility = Visibility.Visible;
             AutomationProperties.SetName(videoSena, $"Video de la seña {_sena?.Palabra}");
             videoSena.Play();
 
-            pnlControles.Visibility = Visibility.Visible;
+            pnlControles.Visibility = MostrarControles ? Visibility.Visible : Visibility.Collapsed;
             ActualizarControles();
         }
 
@@ -89,6 +147,7 @@ namespace ProyectoFinal
             imgSena.Visibility = Visibility.Collapsed;
             videoSena.Visibility = Visibility.Collapsed;
             pnlControles.Visibility = Visibility.Collapsed;
+            btnAmpliar.Visibility = _enPantallaCompleta ? Visibility.Visible : Visibility.Collapsed;
             lblError.Text = mensaje;
             pnlError.Visibility = Visibility.Visible;
             _esVideo = false;
@@ -97,11 +156,21 @@ namespace ProyectoFinal
         // Deja de reproducir y libera el archivo (al cambiar de seña o salir de la pantalla)
         public void Detener()
         {
-            videoSena.Stop();
+            _esVideo = false;
+            _mediaListo = false;
+            _rebobinando = false;
+            try
+            {
+                videoSena.Stop();
+            }
+            catch { }
+
             videoSena.Source = null;
             videoSena.Visibility = Visibility.Collapsed;
             imgSena.Source = null;
             imgSena.Visibility = Visibility.Collapsed;
+            if (!_enPantallaCompleta)
+                btnAmpliar.Visibility = Visibility.Collapsed;
         }
 
         // ===== Controles (también se llaman desde el teclado, ej. la tecla de Pausar del usuario) =====
@@ -124,18 +193,46 @@ namespace ProyectoFinal
             if (!_esVideo)
                 return;
 
+            _rebobinando = false;
             videoSena.Position = TimeSpan.Zero;
             videoSena.Play();
             _pausado = false;
             ActualizarControles();
         }
 
-        public void AlternarVelocidad()
+        public void AlternarVelocidad() => Lento = !_lento;
+
+        // Pone el foco en Pausar si es un video; si es una imagen, en el botón de ampliar / salir
+        public void EnfocarControles()
         {
-            _lento = !_lento;
-            if (_esVideo)
-                videoSena.SpeedRatio = _lento ? VelocidadLenta : 1.0;
-            ActualizarControles();
+            if (pnlControles.Visibility == Visibility.Visible)
+                btnPausa.Focus();
+            else
+                btnAmpliar.Focus();
+        }
+
+        // Abre la misma seña en una ventana a pantalla completa, con los mismos controles.
+        // Mientras tanto el video de acá queda en pausa, y al volver sigue donde estaba.
+        public void AbrirPantallaCompleta()
+        {
+            if (_sena is null)
+                return;
+
+            bool estabaReproduciendo = _esVideo && !_pausado;
+            if (estabaReproduciendo)
+                AlternarPausa();
+
+            var ventana = new VisorPantallaCompletaWindow(_sena, _lento, TeclaPausar)
+            {
+                Owner = Window.GetWindow(this)
+            };
+            ventana.ShowDialog();
+
+            // Si cambió la velocidad en pantalla completa, la mantenemos
+            Lento = ventana.Lento;
+            if (estabaReproduciendo && _pausado)
+                AlternarPausa();
+            btnAmpliar.Focus();
         }
 
         private void ActualizarControles()
@@ -154,16 +251,57 @@ namespace ProyectoFinal
         private void BtnRepetir_Click(object sender, RoutedEventArgs e) => Repetir();
         private void BtnVelocidad_Click(object sender, RoutedEventArgs e) => AlternarVelocidad();
 
+        private void BtnAmpliar_Click(object sender, RoutedEventArgs e)
+        {
+            if (_enPantallaCompleta)
+                Window.GetWindow(this)?.Close();
+            else if (PantallaCompletaSolicitada is not null)
+                PantallaCompletaSolicitada.Invoke(this, EventArgs.Empty);
+            else
+                AbrirPantallaCompleta();
+        }
+
+        private void VideoSena_MediaOpened(object sender, RoutedEventArgs e)
+        {
+            // Por las dudas arrancamos siempre desde el principio
+            videoSena.Position = TimeSpan.Zero;
+            _mediaListo = true;
+
+            if (_esVideo && !_pausado)
+            {
+                videoSena.SpeedRatio = _lento ? VelocidadLenta : 1.0;
+                videoSena.Play();
+            }
+        }
+
         // Loop: al terminar, vuelve a empezar
         private void VideoSena_MediaEnded(object sender, RoutedEventArgs e)
         {
-            videoSena.Position = TimeSpan.Zero;
-            videoSena.Play();
+            if (!_mediaListo || _rebobinando || !_esVideo || _pausado || videoSena.Source is null)
+                return;
+
+            // Evitamos falsos disparos al inicio de la carga: solo rebobinamos si el video realmente tiene duración y avanzó
+            if (videoSena.NaturalDuration.HasTimeSpan && videoSena.Position >= TimeSpan.FromMilliseconds(500))
+            {
+                _rebobinando = true;
+                videoSena.Position = TimeSpan.Zero;
+                videoSena.Play();
+
+                Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, async () =>
+                {
+                    await System.Threading.Tasks.Task.Delay(350);
+                    _rebobinando = false;
+                });
+
+                // Se avisa al final: quien escucha puede mostrar otra seña sin pisar el loop de esta
+                VideoTerminado?.Invoke(this, EventArgs.Empty);
+            }
         }
 
         // Si el video no se puede abrir, se intenta con la imagen fija de la seña
         private void VideoSena_MediaFailed(object? sender, ExceptionRoutedEventArgs e)
         {
+            System.Diagnostics.Debug.WriteLine($"VisorSena MediaFailed para '{_sena?.Palabra}': {e.ErrorException?.Message}");
             string? imagen = _sena?.RutaImagenAbsoluta;
             if (imagen is not null && File.Exists(imagen))
             {

@@ -1,0 +1,13 @@
+<Window x:Class="ProyectoFinal.VisorPantallaCompletaWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:ProyectoFinal"
+        Title="HandUp - Seña en pantalla completa"
+        WindowStyle="None" WindowState="Maximized" ResizeMode="NoResize" ShowInTaskbar="False"
+        Background="#101010" PreviewKeyDown="Window_PreviewKeyDown" Loaded="Window_Loaded">
+    <!-- La seña ocupa toda la pantalla, con los mismos controles del visor (pausar, repetir, velocidad).
+         Esc o el botón de arriba a la derecha vuelven a la pantalla anterior. -->
+    <Grid Margin="32,24">
+        <local:VisorSena x:Name="visor"/>
+    </Grid>
+</Window>

@@ -44,6 +44,7 @@ namespace ProyectoFinal
             _senasCategoria = senasCategoria;
             _preferencias = preferencias;
             _servicio = servicio;
+            visor.TeclaPausar = _preferencias.TeclaPausar;
             EmpezarRonda();
         }
 
@@ -387,6 +388,10 @@ namespace ProyectoFinal
                 }
                 return;
             }
+
+            // Con el foco en un botón del visor (pausar, repetir, pantalla completa...), Enter y Espacio son para ese botón
+            if (visor.IsKeyboardFocusWithin && e.Key is Key.Return or Key.Space)
+                return;
 
             if (e.Key == _preferencias.TeclaConfirmar)
             {

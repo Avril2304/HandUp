@@ -26,6 +26,7 @@ namespace ProyectoFinal
             InitializeComponent();
             _senas = senas;
             _preferencias = preferencias;
+            visor.TeclaPausar = _preferencias.TeclaPausar;
 
             if (_senas.Count == 0)
             {
@@ -120,7 +121,8 @@ namespace ProyectoFinal
                 Anterior();
                 e.Handled = true;
             }
-            else if (e.Key == _preferencias.TeclaPausar)
+            // Con el foco en un botón del visor, Espacio es para ese botón (ej. abrir la pantalla completa)
+            else if (e.Key == _preferencias.TeclaPausar && !(e.Key == Key.Space && visor.IsKeyboardFocusWithin))
             {
                 visor.AlternarPausa();
                 e.Handled = true;
