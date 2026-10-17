@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -186,6 +186,13 @@ namespace ProyectoFinal
                 miPerfil.VolverSolicitado += (s, e) => MostrarInicio();
                 miPerfil.NavegacionSolicitada += (s, seccion) => Navegar(seccion);
                 return miPerfil;
+            }
+
+            if (destino == Seccion.Diccionario)
+            {
+                var diccionario = new DiccionarioView();
+                diccionario.VolverSolicitado += (s, e) => MostrarInicio();
+                return diccionario;
             }
 
             var proximamente = new ProximamenteView(Secciones.Info[destino]);

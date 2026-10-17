@@ -1,0 +1,314 @@
+<UserControl x:Class="ProyectoFinal.DiccionarioView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:ProyectoFinal"
+             PreviewKeyDown="Vista_PreviewKeyDown">
+
+    <UserControl.Resources>
+        <!-- Estilo personalizado para el ListBox de señas para que encaje con la paleta -->
+        <Style x:Key="ItemSenaListBox" TargetType="ListBoxItem">
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Background" Value="{DynamicResource BrushCard}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource BrushBorder}"/>
+            <Setter Property="BorderThickness" Value="1.5"/>
+            <Setter Property="Margin" Value="0,0,0,8"/>
+            <Setter Property="Padding" Value="14,10"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBoxItem">
+                        <Border x:Name="bg" Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="12" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="bg" Property="Background" Value="{DynamicResource BrushAccentSoft}"/>
+                                <Setter TargetName="bg" Property="BorderBrush" Value="{DynamicResource BrushBorderAccent}"/>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="bg" Property="Background" Value="{DynamicResource BrushAccentSoft}"/>
+                                <Setter TargetName="bg" Property="BorderBrush" Value="{DynamicResource BrushAccent}"/>
+                                <Setter TargetName="bg" Property="BorderThickness" Value="2"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- ComboBox estilizado con la paleta de la app -->
+        <Style x:Key="FiltroComboBox" TargetType="ComboBox">
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Foreground" Value="{DynamicResource BrushInk}"/>
+            <Setter Property="Background" Value="{DynamicResource BrushCard}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource BrushBorder}"/>
+            <Setter Property="BorderThickness" Value="1.5"/>
+            <Setter Property="Padding" Value="10,0"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <!-- 0: Encabezado superior -->
+            <RowDefinition Height="Auto"/>
+            <!-- 1: Barra de búsqueda y filtros -->
+            <RowDefinition Height="Auto"/>
+            <!-- 2: Contenido (Lista a la izq, Detalle a la der) -->
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- 0: Encabezado -->
+        <Grid Grid.Row="0" Margin="0,0,0,16">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock Text="Diccionario visual" FontFamily="{StaticResource FontHeading}" FontSize="26"
+                           FontWeight="Bold" Foreground="{DynamicResource BrushInk}"/>
+                <TextBlock Text="Buscá cualquier seña y consultá la descripción detallada de su movimiento"
+                           FontSize="13.5" Foreground="{DynamicResource BrushMuted}" Margin="0,3,0,0"/>
+            </StackPanel>
+
+            <Button Grid.Column="1" Style="{StaticResource SecondaryButton}" Padding="16,0"
+                    Click="BtnVolver_Click" AutomationProperties.Name="Volver al inicio" ToolTip="Volver al inicio (Esc)">
+                <StackPanel Orientation="Horizontal" Margin="16,0">
+                    <TextBlock Text="&#xE72B;" FontFamily="{StaticResource FontIconos}" FontSize="14" VerticalAlignment="Center"/>
+                    <TextBlock Text="Volver al inicio" Margin="8,0,0,0" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+        </Grid>
+
+        <!-- 1: Barra de búsqueda y filtros combinables -->
+        <Border Grid.Row="1" Background="{DynamicResource BrushCard}" BorderBrush="{DynamicResource BrushBorder}"
+                BorderThickness="1.5" CornerRadius="16" Padding="18,14" Margin="0,0,0,18">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Fila de controles: Buscador + Filtro Categoría + Filtro Tipo -->
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <!-- Buscador -->
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="14"/>
+                        <!-- Filtro Categoría -->
+                        <ColumnDefinition Width="220"/>
+                        <ColumnDefinition Width="14"/>
+                        <!-- Filtro Tipo -->
+                        <ColumnDefinition Width="180"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Buscador en tiempo real (Story 11) -->
+                    <Border Grid.Column="0" Background="{DynamicResource BrushCard}"
+                            BorderBrush="{DynamicResource BrushBorder}" BorderThickness="1.5"
+                            CornerRadius="10" Height="42">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="34"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <!-- Ícono de lupa -->
+                            <TextBlock Grid.Column="0" Text="&#xE721;" FontFamily="{StaticResource FontIconos}"
+                                       FontSize="15" Foreground="{DynamicResource BrushMuted}"
+                                       VerticalAlignment="Center" HorizontalAlignment="Center"
+                                       IsHitTestVisible="False"/>
+                            <!-- Campo de texto (el texto empieza inmediatamente al lado de la lupa) -->
+                            <TextBox Grid.Column="1" x:Name="txtBuscar" Background="Transparent"
+                                     BorderThickness="0" VerticalContentAlignment="Center"
+                                     HorizontalContentAlignment="Left" FontSize="14"
+                                     Padding="0,0,10,0" Foreground="{DynamicResource BrushInk}"
+                                     CaretBrush="{DynamicResource BrushInk}"
+                                     TextChanged="TxtBuscar_TextChanged"
+                                     AutomationProperties.Name="Buscar seña en tiempo real"/>
+                            <!-- Placeholder alineado exactamente al inicio del texto -->
+                            <TextBlock Grid.Column="1" x:Name="lblPlaceholderBuscar"
+                                       Text="Escribí una palabra para buscar..." FontSize="13.5"
+                                       Foreground="{DynamicResource BrushMuted}" VerticalAlignment="Center"
+                                       Margin="2,0,0,0" IsHitTestVisible="False"/>
+                        </Grid>
+                    </Border>
+
+                    <!-- Filtro Categoría (Story 12) -->
+                    <ComboBox Grid.Column="2" x:Name="cmbCategoria" Style="{StaticResource FiltroComboBox}"
+                              Height="42" SelectionChanged="Filtro_SelectionChanged"
+                              AutomationProperties.Name="Filtrar por categoría"/>
+
+                    <!-- Filtro Tipo: Todas / Animadas / Estáticas (Story 12) -->
+                    <ComboBox Grid.Column="4" x:Name="cmbTipo" Style="{StaticResource FiltroComboBox}"
+                              Height="42" SelectionChanged="Filtro_SelectionChanged"
+                              AutomationProperties.Name="Filtrar por tipo de seña">
+                        <ComboBoxItem Content="Todos los tipos" IsSelected="True"/>
+                        <ComboBoxItem Content="🎬 Solo videos (animadas)"/>
+                        <ComboBoxItem Content="📷 Solo imágenes (estáticas)"/>
+                    </ComboBox>
+                </Grid>
+
+                <!-- Fila informativa: cantidad de señas encontradas -->
+                <Grid Grid.Row="1" Margin="2,10,2,0">
+                    <TextBlock x:Name="lblContador" Text="Mostrando señas..." FontSize="12.5"
+                               FontWeight="SemiBold" Foreground="{DynamicResource BrushMuted}"/>
+                </Grid>
+            </Grid>
+        </Border>
+
+        <!-- 2: Cuerpo principal: Lista a la izquierda (340px) y Detalle a la derecha (*) -->
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="340"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Columna izquierda: Lista de señas -->
+            <Grid Grid.Column="0">
+                <!-- ListBox con las señas filtradas -->
+                <ListBox x:Name="lstSenas" ItemContainerStyle="{StaticResource ItemSenaListBox}"
+                         Background="Transparent" BorderThickness="0" Padding="0,0,4,0"
+                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                         SelectionChanged="LstSenas_SelectionChanged"
+                         AutomationProperties.Name="Lista de señas encontradas">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding PalabraFormateada}" FontWeight="Bold" FontSize="14.5"
+                                               Foreground="{DynamicResource BrushInk}"/>
+                                    <TextBlock Text="{Binding SubtituloCategoria}" FontSize="12"
+                                               Foreground="{DynamicResource BrushMuted}" Margin="0,2,0,0"/>
+                                </StackPanel>
+
+                                <Border Grid.Column="1" Background="{DynamicResource BrushBackground}"
+                                        CornerRadius="6" Padding="6,3" VerticalAlignment="Center"
+                                        BorderBrush="{DynamicResource BrushBorder}" BorderThickness="1">
+                                    <TextBlock Text="{Binding BadgeTipo}" FontSize="11" FontWeight="SemiBold"
+                                               Foreground="{DynamicResource BrushMuted}"/>
+                                </Border>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <!-- Estado vacío si ningún resultado coincide con los filtros -->
+                <Border x:Name="pnlSinResultados" Background="{DynamicResource BrushCard}"
+                        BorderBrush="{DynamicResource BrushBorder}" BorderThickness="1.5"
+                        CornerRadius="16" Padding="24" Visibility="Collapsed" VerticalAlignment="Top">
+                    <StackPanel HorizontalAlignment="Center">
+                        <TextBlock Text="&#xE721;" FontFamily="{StaticResource FontIconos}" FontSize="32"
+                                   Foreground="{DynamicResource BrushMuted}" HorizontalAlignment="Center"/>
+                        <TextBlock Text="No se encontraron señas" FontSize="15" FontWeight="Bold"
+                                   Foreground="{DynamicResource BrushInk}" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+                        <TextBlock Text="Probá cambiando el texto o los filtros de arriba." FontSize="12.5"
+                                   Foreground="{DynamicResource BrushMuted}" TextWrapping="Wrap"
+                                   TextAlignment="Center" Margin="0,4,0,0"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <!-- Columna derecha: Visor multimedia y Detalle de la seña (Story 13) -->
+            <Border Grid.Column="2" Background="{DynamicResource BrushCard}" BorderBrush="{DynamicResource BrushBorder}"
+                    BorderThickness="1.5" CornerRadius="18" Padding="24">
+                <Grid>
+                    <!-- Estado cuando todavía no se seleccionó ninguna seña -->
+                    <StackPanel x:Name="pnlSeleccionarSena" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Collapsed">
+                        <TextBlock Text="&#xE8B7;" FontFamily="{StaticResource FontIconos}" FontSize="42"
+                                   Foreground="{DynamicResource BrushAccent}" HorizontalAlignment="Center"/>
+                        <TextBlock Text="Elegí una seña de la lista" FontFamily="{StaticResource FontHeading}"
+                                   FontSize="20" FontWeight="Bold" Foreground="{DynamicResource BrushInk}"
+                                   HorizontalAlignment="Center" Margin="0,12,0,0"/>
+                        <TextBlock Text="Hacé clic en cualquier seña o navegá con las flechas del teclado para ver su reproducción y cómo se hace."
+                                   FontSize="13.5" Foreground="{DynamicResource BrushMuted}" TextWrapping="Wrap"
+                                   TextAlignment="Center" MaxWidth="380" Margin="0,6,0,0"/>
+                    </StackPanel>
+
+                    <!-- Ficha completa de la seña seleccionada -->
+                    <Grid x:Name="pnlDetalleSena">
+                        <Grid.RowDefinitions>
+                            <!-- Reproductor de la seña -->
+                            <RowDefinition Height="310"/>
+                            <!-- Información y descripción -->
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Visor multimedia reutilizable (video .mp4 o imagen estática) -->
+                        <local:VisorSena x:Name="visor" Grid.Row="0"/>
+
+                        <!-- Ficha explicativa (Story 13) -->
+                        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Focusable="False" Margin="0,14,0,0">
+                            <StackPanel>
+                                <!-- Nombre de la seña -->
+                                <TextBlock x:Name="lblPalabraDetalle" FontFamily="{StaticResource FontHeading}"
+                                           FontSize="28" FontWeight="Bold" Foreground="{DynamicResource BrushInk}"/>
+
+                                <!-- Badges de metadatos (Categoría, Dificultad, Tipo) -->
+                                <WrapPanel Margin="0,8,0,14">
+                                    <Border Background="{DynamicResource BrushAccentSoft}" BorderBrush="{DynamicResource BrushBorderAccent}"
+                                            BorderThickness="1" CornerRadius="6" Padding="10,4" Margin="0,0,8,4">
+                                        <TextBlock x:Name="lblBadgeCategoria" Text="Categoría" FontSize="12"
+                                                   FontWeight="Bold" Foreground="{DynamicResource BrushAccentDark}"/>
+                                    </Border>
+
+                                    <Border Background="{DynamicResource BrushBackground}" BorderBrush="{DynamicResource BrushBorder}"
+                                            BorderThickness="1" CornerRadius="6" Padding="10,4" Margin="0,0,8,4">
+                                        <TextBlock x:Name="lblBadgeNivel" Text="Nivel" FontSize="12"
+                                                   FontWeight="SemiBold" Foreground="{DynamicResource BrushMuted}"/>
+                                    </Border>
+
+                                    <Border Background="{DynamicResource BrushBackground}" BorderBrush="{DynamicResource BrushBorder}"
+                                            BorderThickness="1" CornerRadius="6" Padding="10,4" Margin="0,0,8,4">
+                                        <TextBlock x:Name="lblBadgeTipo" Text="Tipo" FontSize="12"
+                                                   FontWeight="SemiBold" Foreground="{DynamicResource BrushMuted}"/>
+                                    </Border>
+                                </WrapPanel>
+
+                                <!-- Separador sutil -->
+                                <Border Height="1" Background="{DynamicResource BrushBorder}" Margin="0,0,0,14"/>
+
+                                <!-- Descripción del movimiento de manos (Story 13) -->
+                                <TextBlock Text="CÓMO SE HACE EL MOVIMIENTO" FontSize="11.5" FontWeight="Bold"
+                                           Foreground="{DynamicResource BrushMuted}"/>
+                                <TextBlock x:Name="lblDescripcion" FontSize="14" TextWrapping="Wrap"
+                                           Foreground="{DynamicResource BrushInk}" Margin="0,6,0,0" LineHeight="21"/>
+
+                                <!-- Paso a paso (Story 13): Solo visible si tiene instrucciones reales -->
+                                <StackPanel x:Name="pnlInstrucciones" Margin="0,18,0,0">
+                                    <TextBlock Text="PASO A PASO" FontSize="11.5" FontWeight="Bold"
+                                               Foreground="{DynamicResource BrushMuted}"/>
+                                    <ItemsControl x:Name="lstPasos" Focusable="False" Margin="0,6,0,0">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid Margin="0,4,0,2">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="26"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Text="{Binding Numero}" FontWeight="Bold" FontSize="14"
+                                                               Foreground="{DynamicResource BrushAccent}"/>
+                                                    <TextBlock Grid.Column="1" Text="{Binding Texto}" FontSize="14"
+                                                               Foreground="{DynamicResource BrushInk}" TextWrapping="Wrap"/>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </Grid>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>
