@@ -57,7 +57,7 @@ namespace ProyectoFinal
 
         private ElegirNivelView CrearVistaNiveles()
         {
-            var vista = new ElegirNivelView(_perfil.Nivel);
+            var vista = new ElegirNivelView(_perfil.NivelDesbloqueado);
             vista.NivelElegido += (s, nivel) =>
             {
                 MostrarCategorias(nivel);
@@ -160,6 +160,15 @@ namespace ProyectoFinal
             NivelAprendizaje? nivel = categoria is null ? null : _vistaNiveles?.BuscarNivel(categoria.Dificultad);
             if (nivel is null)
                 return;
+
+            // Una categoría de un nivel bloqueado (practicada antes de que existieran los bloqueos) no se abre:
+            // se queda en la elección de nivel con el aviso de qué hay que aprobar
+            if (nivel.Bloqueado)
+            {
+                _vistaNiveles!.AvisarBloqueado(nivel);
+                _vistaNiveles.EnfocarNivel(nivel.Numero);
+                return;
+            }
 
             MostrarCategorias(nivel);
             CategoriaAprendizaje? elegida = _vistaCategorias?.BuscarCategoria(categoriaId);

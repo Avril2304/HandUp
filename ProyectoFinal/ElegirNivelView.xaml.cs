@@ -2,24 +2,35 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using System.Windows.Automation;
+using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace ProyectoFinal
 {
-    // Datos de una tarjeta de nivel (lo que muestra la grilla)
+    // Datos de una tarjeta de nivel (lo que muestra la grilla).
+    // Bloqueado: está por encima del nivel desbloqueado del perfil; para abrirlo hay que aprobar la prueba final del anterior.
     public record NivelAprendizaje(int Numero, string Nombre, string Descripcion, string Categorias,
-                                   long CantidadSenas, bool EsTuNivel)
+                                   long CantidadSenas, bool EsTuNivel, bool Bloqueado)
     {
         public Visibility VisibilidadTuNivel => EsTuNivel ? Visibility.Visible : Visibility.Collapsed;
+        public Visibility VisibilidadBloqueado => Bloqueado ? Visibility.Visible : Visibility.Collapsed;
+        public Visibility VisibilidadDisponible => Bloqueado ? Visibility.Collapsed : Visibility.Visible;
 
-        public string NombreAccesible =>
-            $"{Nombre}, {CantidadSenas} señas{(EsTuNivel ? ", tu nivel" : "")}. Atajo: tecla {Numero}";
+        public string NivelAnterior => Niveles.NombreDe(Numero - 1);
+
+        public string MensajeBloqueado =>
+            $"Aprobá la prueba final de {NivelAnterior} con 80% o más para desbloquear {Nombre}.";
+
+        public string NombreAccesible => Bloqueado
+            ? $"{Nombre}, bloqueado. {MensajeBloqueado} Atajo: tecla {Numero}"
+            : $"{Nombre}, {CantidadSenas} señas{(EsTuNivel ? ", tu nivel" : "")}. Atajo: tecla {Numero}";
     }
 
     public partial class ElegirNivelView : UserControl
     {
-        // Avisa qué nivel se eligió (1-4); AprenderView decide a qué paso ir
+        // Avisa qué nivel se eligió (1-4); AprenderView decide a qué paso ir. Nunca se dispara con un nivel bloqueado.
         public event EventHandler<NivelAprendizaje>? NivelElegido;
 
         // Frase corta de cada nivel (texto de pantalla). Nombre, señas y categorías salen de la base.
@@ -33,13 +44,13 @@ namespace ProyectoFinal
 
         private IReadOnlyList<NivelAprendizaje> _niveles = Array.Empty<NivelAprendizaje>();
 
-        public ElegirNivelView(string nivelDelPerfil)
+        public ElegirNivelView(int nivelDesbloqueado)
         {
             InitializeComponent();
 
             try
             {
-                _niveles = CargarNiveles(nivelDelPerfil);
+                _niveles = CargarNiveles(nivelDesbloqueado);
                 lstNiveles.ItemsSource = _niveles;
             }
             catch (DatabaseException ex)
@@ -50,7 +61,7 @@ namespace ProyectoFinal
             }
         }
 
-        private static IReadOnlyList<NivelAprendizaje> CargarNiveles(string nivelDelPerfil)
+        private static IReadOnlyList<NivelAprendizaje> CargarNiveles(int nivelDesbloqueado)
         {
             // Nombres legibles de las categorías ("saludos" -> "Saludos y Cortesía"), en el orden del banco
             var categorias = new RepositorioCategorias().ObtenerTodos();
@@ -66,7 +77,8 @@ namespace ProyectoFinal
                         .OrderBy(id => orden.GetValueOrDefault(id, int.MaxValue))
                         .Select(id => nombres.GetValueOrDefault(id, id))),
                     nivel.CantidadSenas,
-                    EsTuNivel: nivel.Nombre.Equals(nivelDelPerfil, StringComparison.OrdinalIgnoreCase)))
+                    EsTuNivel: nivel.Numero == nivelDesbloqueado,
+                    Bloqueado: nivel.Numero > nivelDesbloqueado))
                 .ToList();
         }
 
@@ -83,7 +95,31 @@ namespace ProyectoFinal
         private void Nivel_Click(object sender, RoutedEventArgs e)
         {
             if (sender is FrameworkElement { DataContext: NivelAprendizaje nivel })
-                NivelElegido?.Invoke(this, nivel);
+                Elegir(nivel);
+        }
+
+        // Un nivel disponible avanza al paso siguiente; uno bloqueado muestra el aviso y se queda acá
+        private void Elegir(NivelAprendizaje nivel)
+        {
+            if (nivel.Bloqueado)
+            {
+                AvisarBloqueado(nivel);
+                return;
+            }
+
+            avisoBloqueado.Visibility = Visibility.Collapsed;
+            NivelElegido?.Invoke(this, nivel);
+        }
+
+        // Muestra arriba qué hay que aprobar para desbloquear el nivel y se lo anuncia al lector de pantalla
+        public void AvisarBloqueado(NivelAprendizaje nivel)
+        {
+            lblBloqueado.Text = nivel.MensajeBloqueado;
+            avisoBloqueado.Visibility = Visibility.Visible;
+
+            AutomationPeer? peer = UIElementAutomationPeer.FromElement(lblBloqueado)
+                                   ?? UIElementAutomationPeer.CreatePeerForElement(lblBloqueado);
+            peer?.RaiseAutomationEvent(AutomationEvents.LiveRegionChanged);
         }
 
         // Teclas 1-4 (fila de números o teclado numérico) eligen el nivel directamente
@@ -102,7 +138,7 @@ namespace ProyectoFinal
             NivelAprendizaje? nivel = _niveles.FirstOrDefault(n => n.Numero == numero);
             if (nivel is not null)
             {
-                NivelElegido?.Invoke(this, nivel);
+                Elegir(nivel);
                 e.Handled = true;
             }
         }

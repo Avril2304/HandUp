@@ -124,7 +124,7 @@ Solución: `ProyectoFinal.sln`, proyecto `ProyectoFinal.csproj` (`net8.0-windows
 ### Qué falta
 
 - **Desafío** (stories 16 a 19): contrarreloj con vidas, botón Empezar deshabilitado, racha en pantalla y repetición espaciada.
-- **Sistema de niveles:** la fase 0 está hecha (nivel desbloqueado, tabla `PruebasFinales` y migración que conserva el nivel de cada perfil). Faltan niveles bloqueados, prueba final con 80% para desbloquear, nivelación al registrarse y banco de frases. El plan está en `PLAN_NIVELES.md`.
+- **Sistema de niveles:** la fase 0 está hecha (nivel desbloqueado, tabla `PruebasFinales` y migración que conserva el nivel de cada perfil). La fase 1 también: en Elegir nivel, los niveles de arriba se ven con candado y al elegirlos se avisa qué hay que aprobar. Faltan la prueba final con 80% para desbloquear, la nivelación al registrarse y el banco de frases. El plan está en `PLAN_NIVELES.md`.
 
 > Nota: esta sección refleja el estado al 2026-10-17. Actualizala a medida que se avance.
 
