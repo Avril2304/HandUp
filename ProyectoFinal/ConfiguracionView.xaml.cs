@@ -10,7 +10,7 @@ namespace ProyectoFinal
 {
     public partial class ConfiguracionView : UserControl
     {
-        // Igual que ProximamenteView: la vista no navega, avisa y el menú principal decide
+        // Igual que las demás secciones: la vista no navega, avisa y el menú principal decide
         public event EventHandler? VolverSolicitado;
 
         // Una acción reasignable: cómo se llama, y cómo leer y cambiar su tecla en las preferencias

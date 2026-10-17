@@ -374,9 +374,8 @@ namespace ProyectoFinal
                 return traductor;
             }
 
-            var proximamente = new ProximamenteView(Secciones.Info[destino]);
-            proximamente.VolverSolicitado += (s, e) => MostrarInicio();
-            return proximamente;
+            // Todas las secciones tienen su vista: si se agrega una al enum, hay que sumarla acá
+            throw new ArgumentOutOfRangeException(nameof(destino), destino, "Sección sin vista.");
         }
 
         private void MostrarInicio()
