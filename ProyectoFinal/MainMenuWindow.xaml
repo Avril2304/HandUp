@@ -5,7 +5,7 @@
         Title="HandUp — Menú principal"
         Icon="Assets/logo.ico"
         Height="650" Width="1000"
-        ResizeMode="NoResize"
+        ResizeMode="CanResize"
         WindowStartupLocation="CenterScreen"
         Background="{DynamicResource BrushBackground}"
         Foreground="{DynamicResource BrushInk}"
@@ -218,6 +218,16 @@
                                 <TextBlock Text="&#xE945;" FontFamily="{StaticResource FontIconos}" FontSize="13"
                                            Foreground="{DynamicResource BrushAccent}" VerticalAlignment="Center"/>
                                 <TextBlock x:Name="lblRacha" Text="Racha 0" FontWeight="Bold" FontSize="13"
+                                           Foreground="{DynamicResource BrushInk}" Margin="6,0,0,0" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+                        <!-- Racha por días: cuántos días seguidos practicó -->
+                        <Border x:Name="borderRachaDias" Background="{DynamicResource BrushCard}" BorderBrush="{DynamicResource BrushBorder}" BorderThickness="1"
+                                CornerRadius="20" Padding="14,7" Margin="0,0,10,0">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="&#xE787;" FontFamily="{StaticResource FontIconos}" FontSize="13"
+                                           Foreground="{DynamicResource BrushAccent}" VerticalAlignment="Center"/>
+                                <TextBlock x:Name="lblRachaDias" Text="0 días" FontWeight="Bold" FontSize="13"
                                            Foreground="{DynamicResource BrushInk}" Margin="6,0,0,0" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Border>

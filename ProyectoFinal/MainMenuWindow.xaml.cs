@@ -149,6 +149,13 @@ namespace ProyectoFinal
                 return;
             }
 
+            // Primera vez que entra este perfil: se abre la guía de uso (después queda en el botón "i" y en F1)
+            if (!_preferencias.GuiaVista)
+            {
+                AbrirGuiaDeBienvenida();
+                return;
+            }
+
             // Arranca con el foco en la opción principal: Enter entra directo a Aprender
             tileAprender.Focus();
         }
@@ -162,6 +169,16 @@ namespace ProyectoFinal
             lblNivel.Text = _perfil.Nivel;
             lblRacha.Text = $"Racha {_perfil.Racha}";
             borderRacha.ToolTip = $"Aciertos seguidos. Mejor racha: {_perfil.MejorRacha}";
+            AutomationProperties.SetName(borderRacha, $"Racha de {_perfil.Racha} aciertos seguidos. Mejor racha: {_perfil.MejorRacha}");
+
+            // Racha por días: si no practicó ni hoy ni ayer, se cortó
+            int dias = _perfil.RachaDiasVigente(DateTime.Today);
+            lblRachaDias.Text = dias == 1 ? "1 día" : $"{dias} días";
+            string detalleDias = _perfil.UltimoDiaPractica?.Date == DateTime.Today
+                ? "Hoy ya practicaste."
+                : "Practicá hoy para sumar un día.";
+            borderRachaDias.ToolTip = $"Días seguidos practicando. Récord: {_perfil.MejorRachaDias}. {detalleDias}";
+            AutomationProperties.SetName(borderRachaDias, $"{lblRachaDias.Text} seguidos practicando. Récord: {_perfil.MejorRachaDias}. {detalleDias}");
             lblMejorRacha.Text = _perfil.MejorRacha > 0
                 ? $"Mejor racha: {_perfil.MejorRacha}"
                 : "Contrarreloj con vidas";
@@ -345,7 +362,7 @@ namespace ProyectoFinal
 
             if (destino == Seccion.Guia)
             {
-                var guia = new GuiaView();
+                var guia = new GuiaView(bienvenida: _guiaDeBienvenida);
                 guia.VolverSolicitado += (s, e) => MostrarInicio();
                 return guia;
             }
@@ -390,6 +407,26 @@ namespace ProyectoFinal
         private void Salir_Click(object sender, RoutedEventArgs e) => Salir();
 
         private void BtnInfo_Click(object sender, RoutedEventArgs e) => Navegar(Seccion.Guia);
+
+        // La guía con el mensaje de bienvenida. Se marca como vista enseguida: aunque la cierre, no vuelve a abrirse sola.
+        private bool _guiaDeBienvenida;
+
+        private void AbrirGuiaDeBienvenida()
+        {
+            _guiaDeBienvenida = true;
+            Navegar(Seccion.Guia);
+            _guiaDeBienvenida = false;
+
+            _preferencias.GuiaVista = true;
+            try
+            {
+                new RepositorioPreferencias().Guardar(_preferencias);
+            }
+            catch (Exception ex) when (ex is DatabaseException or InvalidInputException)
+            {
+                // Si no se pudo guardar, la guía se vuelve a abrir la próxima vez: no es grave
+            }
+        }
 
         // Vuelve al login sin cerrar la app (Closing guarda el progreso, como siempre).
         // El tema vuelve al normal: si no, el próximo que inicie sesión heredaría el alto contraste de este perfil.

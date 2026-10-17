@@ -10,7 +10,8 @@ namespace ProyectoFinal
     public class RepositorioPerfiles : IRepositorio<Perfil>
     {
         private const string ColumnasPerfil =
-            "Id, Nombre, Usuario, PasswordHash, PasswordSalt, Nivel, Racha, MejorRacha, SenasDominadas, Puntos, AciertosTotales, FallosTotales, FechaRegistro, NivelDesbloqueado, NivelacionPendiente";
+            "Id, Nombre, Usuario, PasswordHash, PasswordSalt, Nivel, Racha, MejorRacha, SenasDominadas, Puntos, AciertosTotales, FallosTotales, FechaRegistro, NivelDesbloqueado, NivelacionPendiente, " +
+            "RachaDias, MejorRachaDias, UltimoDiaPractica";
 
         public IReadOnlyList<Perfil> ObtenerTodos()
         {
@@ -62,8 +63,14 @@ namespace ProyectoFinal
                     UPDATE Perfiles SET
                         Nombre = $nombre, PasswordHash = $hash, PasswordSalt = $sal, Nivel = $nivel, NivelDesbloqueado = $desbloqueado, NivelacionPendiente = $nivelacion,
                         Racha = $racha, MejorRacha = $mejor, SenasDominadas = $senas, Puntos = $puntos,
-                        AciertosTotales = $aciertos, FallosTotales = $fallos
+                        AciertosTotales = $aciertos, FallosTotales = $fallos,
+                        RachaDias = $rachaDias, MejorRachaDias = $mejorDias, UltimoDiaPractica = $ultimoDia
                     WHERE Id = $id;";
+                comando.Parameters.AddWithValue("$rachaDias", perfil.RachaDias);
+                comando.Parameters.AddWithValue("$mejorDias", perfil.MejorRachaDias);
+                comando.Parameters.AddWithValue("$ultimoDia", perfil.UltimoDiaPractica is DateTime dia
+                    ? dia.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)
+                    : DBNull.Value);
                 comando.Parameters.AddWithValue("$nombre", perfil.Nombre);
                 comando.Parameters.AddWithValue("$hash", perfil.PasswordHash);
                 comando.Parameters.AddWithValue("$sal", perfil.PasswordSalt);
@@ -395,7 +402,14 @@ namespace ProyectoFinal
                 AciertosTotales = lector.GetInt32(10),
                 FallosTotales = lector.GetInt32(11),
                 // Si alguien editó la fecha a mano y quedó inválida, no rompemos la carga del perfil
-                FechaRegistro = fechaValida ? fecha : DateTime.Now
+                FechaRegistro = fechaValida ? fecha : DateTime.Now,
+                RachaDias = lector.GetInt32(15),
+                MejorRachaDias = lector.GetInt32(16),
+                UltimoDiaPractica = !lector.IsDBNull(17)
+                                    && DateTime.TryParseExact(lector.GetString(17), "yyyy-MM-dd", CultureInfo.InvariantCulture,
+                                                              DateTimeStyles.None, out DateTime ultimoDia)
+                    ? ultimoDia
+                    : null
             };
         }
     }

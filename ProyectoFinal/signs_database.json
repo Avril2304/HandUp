@@ -1408,7 +1408,7 @@
     },
     {
       "id": "sign_035",
-      "word": "ANANA",
+      "word": "ANANÁ",
       "category": "alimentos",
       "difficulty": 2,
       "description": "La mano base semicerrada con la palma hacia arriba forma la base frente al pecho, mientras la mano dominante en garra con palma hacia abajo sube desde allí abriendo los dedos hacia arriba.",
@@ -1568,7 +1568,7 @@
     },
     {
       "id": "sign_040",
-      "word": "ATUN EN LATA",
+      "word": "ATÚN EN LATA",
       "category": "alimentos",
       "difficulty": 2,
       "description": "Primero el índice dominante con palma hacia abajo se apoya sobre la mano base; luego la mano base en C sostiene una lata imaginaria mientras la dominante en pinza tira hacia arriba simulando abrirla.",
@@ -1600,7 +1600,7 @@
     },
     {
       "id": "sign_041",
-      "word": "Azucar",
+      "word": "Azúcar",
       "category": "alimentos",
       "difficulty": 2,
       "description": "La mano dominante, con las yemas de los dedos unidas en pinza y la palma hacia la izquierda, roza la mejilla cerca de la comisura de la boca con un movimiento corto hacia abajo.",
@@ -1760,7 +1760,7 @@
     },
     {
       "id": "sign_046",
-      "word": "Cafe",
+      "word": "Café",
       "category": "alimentos",
       "difficulty": 2,
       "description": "La mano dominante semicerrada en forma de C con la palma hacia la izquierda, simulando sostener una taza pequeña, sube desde el pecho hacia la boca y se inclina como al beber.",
@@ -2178,7 +2178,7 @@
     },
     {
       "id": "sign_059",
-      "word": "CHUPETIN",
+      "word": "CHUPETÍN",
       "category": "alimentos",
       "difficulty": 2,
       "description": "La mano dominante cerrada en pinza con la palma hacia adentro, simulando sostener un chupetín frente a la boca, realiza pequeños giros circulares con los labios fruncidos.",
@@ -2880,7 +2880,7 @@
     },
     {
       "id": "sign_083",
-      "word": "JAMON COCIDO",
+      "word": "JAMÓN COCIDO",
       "category": "alimentos",
       "difficulty": 2,
       "description": "La mano izquierda se ubica en L junto al hombro izquierdo y la derecha en L abajo en el pecho. Luego, la mano derecha plana con la palma hacia adentro baja por el pecho haciendo pequeños arcos como cortando fetas.",
@@ -3105,7 +3105,7 @@
     },
     {
       "id": "sign_090",
-      "word": "Limon",
+      "word": "Limón",
       "category": "alimentos",
       "difficulty": 2,
       "description": "La mano derecha abierta con los dedos separados frente al cuello y la palma hacia adentro desciende en diagonal hacia la derecha mientras se cierra en puño.",
@@ -3394,7 +3394,7 @@
     },
     {
       "id": "sign_099",
-      "word": "MORRON ROJO",
+      "word": "MORRÓN ROJO",
       "category": "alimentos",
       "difficulty": 2,
       "description": "Primero el índice derecho toca el labio inferior con un breve movimiento vertical para indicar el color rojo. Luego, ambas manos semicerradas y enfrentadas a la altura del pecho se separan horizontalmente hacia los lados.",
@@ -4102,7 +4102,7 @@
     },
     {
       "id": "sign_121",
-      "word": "QUESO DE MAQUINA",
+      "word": "QUESO DE MÁQUINA",
       "category": "alimentos",
       "difficulty": 2,
       "description": "Primero la mano derecha plana rebota sus dedos contra la palma izquierda vertical. Luego, ambas manos planas unen las palmas frente al pecho y la derecha gira en círculo rozando sobre la izquierda.",
@@ -4294,7 +4294,7 @@
     },
     {
       "id": "sign_127",
-      "word": "SANDIA",
+      "word": "SANDÍA",
       "category": "alimentos",
       "difficulty": 2,
       "description": "Ambas manos semicurvas con las palmas enfrentadas sostienen una porción imaginaria frente a la boca y se desplazan en arco de derecha a izquierda, acompañadas de gesto de masticar.",
@@ -4326,7 +4326,7 @@
     },
     {
       "id": "sign_128",
-      "word": "SANDWICH",
+      "word": "SÁNDWICH",
       "category": "alimentos",
       "difficulty": 2,
       "description": "Ambas manos horizontales con los dedos juntos y enfrentados al pulgar se ubican frente a la boca y se acercan y alejan brevemente, simulando sostener y comer un sándwich.",
@@ -4454,7 +4454,7 @@
     },
     {
       "id": "sign_132",
-      "word": "Te",
+      "word": "Té",
       "category": "alimentos",
       "difficulty": 2,
       "description": "La mano izquierda en configuración C sostiene una taza imaginaria frente al pecho, mientras la mano derecha une el índice y el pulgar con los demás dedos abiertos y sube y baja repetidamente.",
@@ -4933,7 +4933,7 @@
     },
     {
       "id": "sign_148",
-      "word": "Musica",
+      "word": "Música",
       "category": "avanzado",
       "difficulty": 4,
       "description": "Ambas manos con los dedos índices extendidos frente al pecho se mueven rítmicamente de un lado a otro en arcos, simulando acompañar el compás de la música.",
@@ -5042,7 +5042,7 @@
     },
     {
       "id": "sign_153",
-      "word": "FRIO",
+      "word": "FRÍO",
       "category": "clima",
       "difficulty": 2,
       "description": "Ambas manos cerradas en puño, con las palmas enfrentadas frente al pecho y los brazos pegados al torso, tiemblan con movimientos cortos y rápidos. Se acompaña encogiendo los hombros y con gesto facial de escalofrío.",
@@ -5074,7 +5074,7 @@
     },
     {
       "id": "sign_154",
-      "word": "INUNDACION",
+      "word": "INUNDACIÓN",
       "category": "clima",
       "difficulty": 2,
       "description": "Primero el pulgar derecho toca el mentón; luego ambas manos abiertas en garra con las palmas hacia abajo suben desde el abdomen hasta el pecho con movimiento ondulante, inflando las mejillas y frunciendo el ceño.",
@@ -5330,7 +5330,7 @@
     },
     {
       "id": "sign_162",
-      "word": "RIO",
+      "word": "RÍO",
       "category": "clima",
       "difficulty": 2,
       "description": "Con la mano izquierda en puño frente al abdomen, la mano derecha con el índice y el pulgar curvados en C y la palma hacia abajo avanza de izquierda a derecha frente al pecho con movimiento ondulante y labios fruncidos.",
@@ -5650,7 +5650,7 @@
     },
     {
       "id": "sign_172",
-      "word": "Marron",
+      "word": "Marrón",
       "category": "colores",
       "difficulty": 1,
       "description": "La mano derecha, con el dedo índice extendido, roza lateralmente la zona del mentón debajo del labio inferior.",
@@ -5938,7 +5938,7 @@
     },
     {
       "id": "sign_181",
-      "word": "BASQUETBOL",
+      "word": "BÁSQUETBOL",
       "category": "deportes",
       "difficulty": 2,
       "description": "Ambas manos abiertas con los dedos levemente curvados y las palmas hacia arriba y adelante a la altura de la cara realizan un movimiento de empuje hacia arriba flexionando las muñecas, simulando lanzar al aro.",
@@ -6066,7 +6066,7 @@
     },
     {
       "id": "sign_185",
-      "word": "FUTBOL",
+      "word": "FÚTBOL",
       "category": "deportes",
       "difficulty": 2,
       "description": "Ambas manos abiertas en garra esférica con las palmas enfrentadas frente al pecho sostienen una pelota imaginaria y realizan pequeños movimientos cortos de rebote hacia arriba y abajo con expresión neutra.",
@@ -6162,7 +6162,7 @@
     },
     {
       "id": "sign_188",
-      "word": "NATACION",
+      "word": "NATACIÓN",
       "category": "deportes",
       "difficulty": 2,
       "description": "Ambas manos planas con las palmas hacia abajo frente al pecho avanzan de forma alternada y circular hacia adelante y hacia abajo, simulando las brazadas al nadar estilo crol con expresión neutra.",
@@ -6290,7 +6290,7 @@
     },
     {
       "id": "sign_192",
-      "word": "VOLEIBOL",
+      "word": "VÓLEIBOL",
       "category": "deportes",
       "difficulty": 2,
       "description": "Ambas manos abiertas con los dedos separados y las palmas hacia adelante y arriba, ubicadas a la altura de la cara, realizan breves toques de empuje hacia arriba simulando el golpe de manos altas.",
@@ -6671,7 +6671,7 @@
     },
     {
       "id": "sign_206",
-      "word": "DIRECTOR RA",
+      "word": "DIRECTOR/A",
       "category": "escuela",
       "difficulty": 3,
       "description": "La mano dominante abierta apoya la palma sobre el pecho. Luego, cierra el puño con el índice extendido hacia arriba a la altura del hombro, con la palma hacia adentro, y realiza pequeños movimientos hacia adelante.",
@@ -6703,7 +6703,7 @@
     },
     {
       "id": "sign_207",
-      "word": "ESCANER",
+      "word": "ESCÁNER",
       "category": "escuela",
       "difficulty": 3,
       "description": "La mano no dominante se ubica horizontal frente al pecho con la palma hacia abajo. La mano dominante plana, también con la palma hacia abajo, se desplaza y desciende sobre el antebrazo de base imitando un escáner.",
@@ -6799,7 +6799,7 @@
     },
     {
       "id": "sign_210",
-      "word": "FIBRA PARA PIZARRON",
+      "word": "FIBRA PARA PIZARRÓN",
       "category": "escuela",
       "difficulty": 3,
       "description": "Ambas manos frente al pecho simulan destapar un marcador separándose hacia los lados. Luego, la mano dominante en pinza se eleva a la altura de la cabeza con la palma hacia adelante y realiza trazos cortos.",
@@ -7119,7 +7119,7 @@
     },
     {
       "id": "sign_220",
-      "word": "LAPICES DE COLORES",
+      "word": "LÁPICES DE COLORES",
       "category": "escuela",
       "difficulty": 3,
       "description": "La mano base permanece abierta con la palma hacia arriba frente al abdomen, mientras la mano dominante acerca el índice al mentón y luego baja deslizando los dedos sobre la palma base.",
@@ -7151,7 +7151,7 @@
     },
     {
       "id": "sign_221",
-      "word": "Lapiz",
+      "word": "Lápiz",
       "category": "escuela",
       "difficulty": 3,
       "description": "La mano dominante, con los dedos índice y pulgar unidos en pinza y los demás cerrados, se apoya cerca de la comisura de la boca y realiza un corto movimiento hacia abajo y adelante.",
@@ -7215,7 +7215,7 @@
     },
     {
       "id": "sign_223",
-      "word": "MAESTRO A",
+      "word": "MAESTRO/A",
       "category": "escuela",
       "difficulty": 3,
       "description": "La mano dominante plana apoya la palma sobre el pecho. Luego, ambas manos frente al torso extienden los dedos índices hacia adelante con las palmas enfrentadas y avanzan en breves movimientos.",
@@ -7375,7 +7375,7 @@
     },
     {
       "id": "sign_228",
-      "word": "PIZARRON",
+      "word": "PIZARRÓN",
       "category": "escuela",
       "difficulty": 3,
       "description": "Ambas manos con los índices extendidos y palmas al frente trazan un rectángulo en el aire. Luego, las manos planas se enfrentan y la mano dominante en puño simula escribir a la altura del hombro.",
@@ -7407,7 +7407,7 @@
     },
     {
       "id": "sign_229",
-      "word": "PROFESOR RA",
+      "word": "PROFESOR/A",
       "category": "escuela",
       "difficulty": 3,
       "description": "Ambas manos con los dedos índice y mayor extendidos y juntos, con las palmas hacia el cuerpo frente al pecho, se ubican una sobre otra y realizan pequeños toques alternados entre sí.",
@@ -7791,7 +7791,7 @@
     },
     {
       "id": "sign_241",
-      "word": "TOBOGAN",
+      "word": "TOBOGÁN",
       "category": "escuela",
       "difficulty": 3,
       "description": "La mano no dominante se mantiene plana frente al pecho con la palma hacia abajo. La mano dominante abierta, también con la palma hacia abajo, desciende en curva desde arriba y se desliza sobre el dorso de la otra mano.",
@@ -7823,7 +7823,7 @@
     },
     {
       "id": "sign_242",
-      "word": "ABUELO A",
+      "word": "ABUELO/A",
       "category": "familia",
       "difficulty": 1,
       "description": "La mano activa abierta, con los dedos separados y levemente curvados y la palma hacia la mejilla, apoya las yemas sobre el pómulo y realiza un leve movimiento en el lugar.",
@@ -7855,7 +7855,7 @@
     },
     {
       "id": "sign_243",
-      "word": "BISABUELO A",
+      "word": "BISABUELO/A",
       "category": "familia",
       "difficulty": 1,
       "description": "Seña compuesta: primero la mano abierta con dedos separados toca la mejilla; luego extiende el índice y el mayor en 'V' junto a la sien y finalmente lleva la mano abierta hacia atrás sobre el hombro.",
@@ -7887,7 +7887,7 @@
     },
     {
       "id": "sign_244",
-      "word": "CUÑADO A",
+      "word": "CUÑADO/A",
       "category": "familia",
       "difficulty": 1,
       "description": "Ambas manos frente al pecho juntan las puntas de los dedos índices extendidos en diagonal con las palmas enfrentadas; luego la mano activa desciende formando una 'C' con los dedos curvados.",
@@ -7919,7 +7919,7 @@
     },
     {
       "id": "sign_245",
-      "word": "ESPOSO A",
+      "word": "ESPOSO/A",
       "category": "familia",
       "difficulty": 1,
       "description": "Ambas manos frente al pecho, con los dedos índices curvados en forma de gancho y orientaciones opuestas, se acercan y enganchan los índices entre sí.",
@@ -7983,7 +7983,7 @@
     },
     {
       "id": "sign_247",
-      "word": "HERMANO A",
+      "word": "HERMANO/A",
       "category": "familia",
       "difficulty": 1,
       "description": "Ambas manos frente al pecho, con los dedos índices extendidos hacia adelante y las palmas hacia abajo, se colocan en paralelo tocándose de costado y se frotan alternadamente hacia adelante y atrás.",
@@ -8015,7 +8015,7 @@
     },
     {
       "id": "sign_248",
-      "word": "HIJASTRO A",
+      "word": "HIJASTRO/A",
       "category": "familia",
       "difficulty": 1,
       "description": "Con los dedos índice y mayor extendidos, la mano activa parte desde debajo del mentón y luego separa ambos dedos en 'V' frente al rostro, desplazándose hacia adelante con la palma hacia abajo.",
@@ -8079,7 +8079,7 @@
     },
     {
       "id": "sign_250",
-      "word": "HIJO A",
+      "word": "HIJO/A",
       "category": "familia",
       "difficulty": 1,
       "description": "La mano activa, con los dedos índice y mayor extendidos y unidos y la palma hacia adentro, apoya las puntas bajo el mentón y se desplaza hacia adelante y arriba.",
@@ -8271,7 +8271,7 @@
     },
     {
       "id": "sign_256",
-      "word": "NIETO A",
+      "word": "NIETO/A",
       "category": "familia",
       "difficulty": 1,
       "description": "La mano activa toca el costado de la frente con las puntas de los dedos juntos y luego desciende hacia adelante, terminando plana con la palma hacia abajo frente al torso.",
@@ -8303,7 +8303,7 @@
     },
     {
       "id": "sign_257",
-      "word": "NOVIO A",
+      "word": "NOVIO/A",
       "category": "familia",
       "difficulty": 1,
       "description": "Frente al pecho, la mano activa con la palma hacia adentro y el pulgar hacia arriba se apoya sobre la mano base y flexiona repetidamente los cuatro dedos juntos hacia la palma.",
@@ -8463,7 +8463,7 @@
     },
     {
       "id": "sign_262",
-      "word": "PRIMO A",
+      "word": "PRIMO/A",
       "category": "familia",
       "difficulty": 1,
       "description": "Ambas manos frente al pecho, con los dedos índices extendidos apuntando hacia arriba en diagonal y las palmas enfrentadas, acercan y chocan suavemente las puntas de los índices.",
@@ -8495,7 +8495,7 @@
     },
     {
       "id": "sign_263",
-      "word": "SOBRINO A",
+      "word": "SOBRINO/A",
       "category": "familia",
       "difficulty": 1,
       "description": "Primero ambas manos frente al pecho juntan las puntas de los dedos índices extendidos en diagonal; luego la mano activa desciende y se coloca plana con la palma hacia abajo frente al torso.",
@@ -8527,7 +8527,7 @@
     },
     {
       "id": "sign_264",
-      "word": "Tia",
+      "word": "Tía",
       "category": "familia",
       "difficulty": 1,
       "description": "La mano activa toca primero el mentón con la punta del dedo índice extendido y la palma de perfil, y luego se desplaza hacia el costado cerrándose en puño para formar la letra 'A'.",
@@ -8559,7 +8559,7 @@
     },
     {
       "id": "sign_265",
-      "word": "Tio",
+      "word": "Tío",
       "category": "familia",
       "difficulty": 1,
       "description": "La mano activa toca primero el mentón con la punta del dedo índice extendido y la palma de perfil, y luego se desplaza hacia el costado uniendo índice y pulgar en círculo para formar la letra 'O'.",
@@ -8591,7 +8591,7 @@
     },
     {
       "id": "sign_266",
-      "word": "VIEJO A",
+      "word": "VIEJO/A",
       "category": "familia",
       "difficulty": 1,
       "description": "La mano activa, con el dedo índice curvado en gancho, los demás dedos cerrados y la palma hacia adentro, apoya el índice sobre el mentón realizando un leve movimiento hacia abajo.",
@@ -8623,7 +8623,7 @@
     },
     {
       "id": "sign_267",
-      "word": "Donde",
+      "word": "Dónde",
       "category": "primeras_frases",
       "difficulty": 1,
       "description": "La mano dominante o ambas manos frente al pecho, con el índice y el pulgar o las palmas hacia arriba, realizan un corto movimiento lateral interrogativo.",
@@ -8781,7 +8781,7 @@
     },
     {
       "id": "sign_273",
-      "word": "CHINCHON",
+      "word": "CHINCHÓN",
       "category": "juegos",
       "difficulty": 3,
       "description": "La mano base permanece semicerrada frente al pecho sosteniendo cartas imaginarias, mientras la mano dominante en pinza toma e intercala cartas repetidamente.",
@@ -8877,7 +8877,7 @@
     },
     {
       "id": "sign_276",
-      "word": "DOMINO",
+      "word": "DOMINÓ",
       "category": "juegos",
       "difficulty": 3,
       "description": "Ambas manos frente al torso con los índices extendidos apuntando entre sí y los pulgares abiertos acercan y tocan las puntas de los dedos como uniendo fichas de dominó.",
@@ -9133,7 +9133,7 @@
     },
     {
       "id": "sign_284",
-      "word": "Cajon",
+      "word": "Cajón",
       "category": "lugares",
       "difficulty": 3,
       "description": "Ambas manos o la mano dominante cerrada en puño con la palma hacia arriba se ubica frente al abdomen y tira hacia el cuerpo, imitando el movimiento de abrir un cajón.",
@@ -9195,7 +9195,7 @@
     },
     {
       "id": "sign_287",
-      "word": "CABINA TELEFONICA",
+      "word": "CABINA TELEFÓNICA",
       "category": "medios_comunicacion",
       "difficulty": 4,
       "description": "Primero ambas manos abiertas frente al rostro se separan hacia los lados y bajan verticalmente dibujando una cabina; luego la mano dominante en configuración Y (pulgar y meñique extendidos) se acerca a la mejilla.",
@@ -9417,7 +9417,7 @@
     },
     {
       "id": "sign_295",
-      "word": "MEDIOS DE COMUNICACION",
+      "word": "MEDIOS DE COMUNICACIÓN",
       "category": "medios_comunicacion",
       "difficulty": 4,
       "description": "Primero la mano dominante en pinza da pequeños toques sobre la palma base y ambos índices bajan hacia los lados en ondas; luego ambas manos en configuración C frente al pecho suben y bajan alternadamente.",
@@ -9449,7 +9449,7 @@
     },
     {
       "id": "sign_296",
-      "word": "MICROFONO",
+      "word": "MICRÓFONO",
       "category": "medios_comunicacion",
       "difficulty": 4,
       "description": "La mano dominante cerrada en puño frente al mentón sostiene un micrófono imaginario a pocos centímetros de la boca.",
@@ -9962,7 +9962,7 @@
     },
     {
       "id": "sign_312",
-      "word": "Dieciseis",
+      "word": "Dieciséis",
       "category": "numeros",
       "difficulty": 1,
       "description": "La mano derecha plana, con los dedos juntos y extendidos hacia arriba, apoya las yemas en el lado derecho del cuello realizando un leve roce mientras la cabeza se inclina ligeramente.",
@@ -10217,7 +10217,7 @@
     },
     {
       "id": "sign_320",
-      "word": "NUMEROS",
+      "word": "NÚMEROS",
       "category": "numeros",
       "difficulty": 1,
       "description": "Ambas manos se ubican frente al pecho enfrentadas, con el pulgar y el índice extendidos en forma de L y los demás dedos cerrados, realizando pequeños movimientos alternados.",
@@ -10602,7 +10602,7 @@
     },
     {
       "id": "sign_332",
-      "word": "UN MILLON",
+      "word": "UN MILLÓN",
       "category": "numeros",
       "difficulty": 1,
       "description": "La mano izquierda se coloca abierta con la palma hacia arriba a la altura del abdomen, mientras la mano derecha apoya verticalmente las puntas de los cuatro dedos juntos sobre la palma izquierda un par de veces.",
@@ -10859,7 +10859,7 @@
     },
     {
       "id": "sign_340",
-      "word": "CANADA",
+      "word": "CANADÁ",
       "category": "paises",
       "difficulty": 4,
       "description": "La mano dominante cerrada en puño con el pulgar extendido hacia arriba y la palma hacia la izquierda golpea dos veces sobre el costado derecho del pecho.",
@@ -11179,7 +11179,7 @@
     },
     {
       "id": "sign_350",
-      "word": "HAITI",
+      "word": "HAITÍ",
       "category": "paises",
       "difficulty": 4,
       "description": "La mano dominante con los dedos índice y mayor extendidos y juntos toca el puente de la nariz y baja describiendo un pequeño bucle circular.",
@@ -11403,7 +11403,7 @@
     },
     {
       "id": "sign_357",
-      "word": "JAPON",
+      "word": "JAPÓN",
       "category": "paises",
       "difficulty": 4,
       "description": "Ambas manos frente al pecho unen las puntas de los índices y pulgares formando un triángulo y luego se separan horizontalmente hacia los costados cerrándose.",
@@ -11435,7 +11435,7 @@
     },
     {
       "id": "sign_358",
-      "word": "MEXICO",
+      "word": "MÉXICO",
       "category": "paises",
       "difficulty": 4,
       "description": "La mano dominante plana con los dedos juntos y la palma hacia abajo se ubica horizontalmente debajo del mentón y realiza un par de toques cortos.",
@@ -11467,7 +11467,7 @@
     },
     {
       "id": "sign_359",
-      "word": "PAIS",
+      "word": "PAÍS",
       "category": "paises",
       "difficulty": 4,
       "description": "La mano de base permanece abierta con la palma hacia arriba frente al pecho, mientras la mano dominante en puño con el índice apuntando hacia abajo apoya la punta en el centro de la palma base.",
@@ -11499,7 +11499,7 @@
     },
     {
       "id": "sign_360",
-      "word": "PAISES BAJOS HOLANDA",
+      "word": "PAÍSES BAJOS HOLANDA",
       "category": "paises",
       "difficulty": 4,
       "description": "Ambas manos comienzan con las yemas de los dedos apoyadas en las sienes y se separan horizontalmente hacia los costados cerrándose a la altura de la cabeza.",
@@ -11531,7 +11531,7 @@
     },
     {
       "id": "sign_361",
-      "word": "PAISES PLURAL",
+      "word": "PAÍSES PLURAL",
       "category": "paises",
       "difficulty": 4,
       "description": "La mano de base se coloca abierta con la palma hacia arriba frente al pecho, mientras la mano dominante con el índice apuntando hacia abajo da varios toques en distintos puntos de la palma base.",
@@ -11563,7 +11563,7 @@
     },
     {
       "id": "sign_362",
-      "word": "PANAMA",
+      "word": "PANAMÁ",
       "category": "paises",
       "difficulty": 4,
       "description": "Ambas manos abiertas y verticales frente al pecho, con las palmas enfrentadas, giran las muñecas alternadamente hacia adelante y hacia adentro.",
@@ -11627,7 +11627,7 @@
     },
     {
       "id": "sign_364",
-      "word": "PERU",
+      "word": "PERÚ",
       "category": "paises",
       "difficulty": 4,
       "description": "La mano dominante con los dedos índice y mayor extendidos en V y la palma hacia adelante apoya la base sobre la frente.",
@@ -11866,7 +11866,7 @@
     },
     {
       "id": "sign_372",
-      "word": "BASURERO A",
+      "word": "BASURERO/A",
       "category": "profesiones",
       "difficulty": 4,
       "description": "Ambas manos comienzan cerradas en puño al costado derecho de la cintura. Luego realizan un movimiento conjunto en arco hacia arriba y a la izquierda, abriendo los dedos al final como arrojando una bolsa.",
@@ -12052,7 +12052,7 @@
     },
     {
       "id": "sign_381",
-      "word": "Fotografo/a",
+      "word": "Fotógrafo/a",
       "category": "profesiones",
       "difficulty": 4,
       "description": "Ambas manos con el pulgar y el índice extendidos se ubican a los lados de los ojos, simulando sostener una cámara. Mientras se desplazan levemente hacia el costado, los dedos índices se flexionan como disparando fotos.",
@@ -12067,7 +12067,7 @@
     },
     {
       "id": "sign_382",
-      "word": "JUEZ A",
+      "word": "JUEZ/A",
       "category": "profesiones",
       "difficulty": 4,
       "description": "Primero la mano activa curvada se apoya sobre el costado de la cabeza. Luego baja frente al pecho cerrada en puño y realiza un movimiento corto hacia arriba y abajo, como golpeando con un martillo de juez.",
@@ -12131,7 +12131,7 @@
     },
     {
       "id": "sign_384",
-      "word": "Musico/a",
+      "word": "Músico/a",
       "category": "profesiones",
       "difficulty": 4,
       "description": "Ambas manos con el dedo índice extendido se ubican a la altura de los hombros. Desde allí realizan un movimiento simétrico en arco hacia afuera y adentro con giro de muñeca, como dirigiendo una orquesta.",
@@ -12206,7 +12206,7 @@
     },
     {
       "id": "sign_389",
-      "word": "Policia",
+      "word": "Policía",
       "category": "profesiones",
       "difficulty": 4,
       "description": "La mano activa en configuración L, con el índice apuntando hacia arriba y la palma hacia el costado, apoya la punta del pulgar en el centro de la frente.",
@@ -12285,7 +12285,7 @@
     },
     {
       "id": "sign_392",
-      "word": "ANTARTIDA",
+      "word": "ANTÁRTIDA",
       "category": "provincias",
       "difficulty": 4,
       "description": "La mano derecha comienza a la altura del hombro con el índice y el pulgar extendidos en forma de 'L' y la palma hacia adelante. Luego desciende hacia abajo mientras cierra los dedos en puño.",
@@ -12445,7 +12445,7 @@
     },
     {
       "id": "sign_397",
-      "word": "CORDOBA",
+      "word": "CÓRDOBA",
       "category": "provincias",
       "difficulty": 4,
       "description": "La mano derecha plana con los dedos juntos y la palma orientada hacia el rostro se ubica sobre la nariz y la boca, desplazándose suavemente hacia un lado y abajo.",
@@ -12509,7 +12509,7 @@
     },
     {
       "id": "sign_399",
-      "word": "ENTRE RIOS",
+      "word": "ENTRE RÍOS",
       "category": "provincias",
       "difficulty": 4,
       "description": "La mano derecha con el dedo índice extendido y la palma hacia abajo apoya la yema en la comisura derecha de los labios y se desliza hacia atrás por la mejilla.",
@@ -12765,7 +12765,7 @@
     },
     {
       "id": "sign_407",
-      "word": "NEUQUEN",
+      "word": "NEUQUÉN",
       "category": "provincias",
       "difficulty": 4,
       "description": "La mano derecha se ubica frente al torso con la palma hacia adentro y los dedos índice y medio extendidos apuntando hacia abajo en forma de 'V' invertida, realizando un movimiento descendente.",
@@ -12829,7 +12829,7 @@
     },
     {
       "id": "sign_409",
-      "word": "RIO NEGRO",
+      "word": "RÍO NEGRO",
       "category": "provincias",
       "difficulty": 4,
       "description": "Seña compuesta con la mano derecha: primero se mueve abierta con la palma hacia abajo frente al torso y luego sube con los dedos juntos para rozar el puente de la nariz hacia abajo.",
@@ -13085,7 +13085,7 @@
     },
     {
       "id": "sign_417",
-      "word": "TUCUMAN",
+      "word": "TUCUMÁN",
       "category": "provincias",
       "difficulty": 4,
       "description": "La mano derecha extiende el dedo índice verticalmente con la palma orientada hacia la izquierda y lo apoya sobre el centro de los labios y el mentón.",
@@ -13885,7 +13885,7 @@
     },
     {
       "id": "sign_442",
-      "word": "Pantalon",
+      "word": "Pantalón",
       "category": "ropa",
       "difficulty": 2,
       "description": "Ambas manos planas o semicerradas, con las palmas hacia adentro, parten de los costados de los muslos y suben simultáneamente en línea recta hasta la cintura, simulando subirse un pantalón.",
@@ -14476,7 +14476,7 @@
     },
     {
       "id": "sign_461",
-      "word": "Buenos dias",
+      "word": "Buenos días",
       "category": "saludos",
       "difficulty": 1,
       "description": "Ambas manos con los dedos abiertos y las palmas hacia el cuerpo se ubican frente al pecho y se abren hacia los costados a la altura de los hombros con expresión sonriente.",
@@ -14636,7 +14636,7 @@
     },
     {
       "id": "sign_466",
-      "word": "INTERPETE",
+      "word": "INTÉRPRETE",
       "category": "saludos",
       "difficulty": 1,
       "description": "Ambas manos frente al pecho, con los dedos índice y pulgar extendidos en L y las palmas hacia adentro, enfrentan las puntas de los índices y realizan un giro alternado de muñeca.",
@@ -14843,7 +14843,7 @@
     },
     {
       "id": "sign_473",
-      "word": "SORDO A",
+      "word": "SORDO/A",
       "category": "saludos",
       "difficulty": 1,
       "description": "La mano derecha lleva el dedo índice hacia la zona del mentón y la oreja, abriendo el pulgar y el índice en forma de L al costado del rostro.",
@@ -15287,7 +15287,7 @@
     },
     {
       "id": "sign_490",
-      "word": "DESPUES 1",
+      "word": "DESPUÉS 1",
       "category": "tiempo",
       "difficulty": 3,
       "description": "La mano dominante abierta con los dedos juntos se ubica frente al pecho con la palma hacia el cuerpo, y gira la muñeca volcando la mano en arco hacia adelante y abajo hasta que la palma queda hacia arriba.",
@@ -15319,7 +15319,7 @@
     },
     {
       "id": "sign_491",
-      "word": "DESPUES 2",
+      "word": "DESPUÉS 2",
       "category": "tiempo",
       "difficulty": 3,
       "description": "La mano dominante abierta con los dedos juntos se coloca frente a la cara con la palma hacia la izquierda, y desciende en arco hacia adelante hasta la altura del pecho terminando con la palma hacia abajo.",
@@ -15383,7 +15383,7 @@
     },
     {
       "id": "sign_493",
-      "word": "DIA DE LA SEMANA",
+      "word": "DÍA DE LA SEMANA",
       "category": "tiempo",
       "difficulty": 3,
       "description": "Primero el índice dominante baja desde debajo del ojo (día); luego, con el índice apuntando hacia la izquierda y la palma hacia el cuerpo, la mano se desplaza horizontalmente frente al pecho.",
@@ -15575,7 +15575,7 @@
     },
     {
       "id": "sign_499",
-      "word": "EPOCA PERIODO",
+      "word": "ÉPOCA PERÍODO",
       "category": "tiempo",
       "difficulty": 3,
       "description": "Ambas manos abiertas se ubican frente al pecho con las palmas enfrentadas entre sí y se mueven de forma alternada hacia arriba y hacia abajo, marcando un período.",
@@ -16233,7 +16233,7 @@
     },
     {
       "id": "sign_520",
-      "word": "MEDIODIA",
+      "word": "MEDIODÍA",
       "category": "tiempo",
       "difficulty": 3,
       "description": "La mano de base sostiene el índice extendido verticalmente frente al pecho. La mano dominante apoya su índice horizontalmente sobre la punta del índice base, formando una T, y lo desliza de lado a lado.",
@@ -16361,7 +16361,7 @@
     },
     {
       "id": "sign_524",
-      "word": "Miercoles",
+      "word": "Miércoles",
       "category": "tiempo",
       "difficulty": 3,
       "description": "La mano dominante abierta con los cinco dedos separados frente al hombro derecho, con la palma hacia adelante, sacude brevemente la muñeca hacia los lados.",
@@ -16745,7 +16745,7 @@
     },
     {
       "id": "sign_536",
-      "word": "Sabado",
+      "word": "Sábado",
       "category": "tiempo",
       "difficulty": 3,
       "description": "La mano dominante frente al pecho, con los dedos juntos y curvados hacia arriba y la palma hacia adentro, se desplaza brevemente de lado a lado.",
@@ -16937,7 +16937,7 @@
     },
     {
       "id": "sign_542",
-      "word": "TIEMPO CRONOLOGICO",
+      "word": "TIEMPO CRONOLÓGICO",
       "category": "tiempo",
       "difficulty": 3,
       "description": "Primero el índice dominante toca la muñeca de la mano de base; luego ambas manos planas y verticales con las palmas enfrentadas se desplazan paralelamente hacia la derecha frente al pecho.",
@@ -16969,7 +16969,7 @@
     },
     {
       "id": "sign_543",
-      "word": "TODOS LOS DIAS",
+      "word": "TODOS LOS DÍAS",
       "category": "tiempo",
       "difficulty": 3,
       "description": "La mano dominante comienza abierta a la altura del hombro y desciende en arco hacia la izquierda mientras une el índice y el pulgar repetidamente a lo largo del recorrido.",

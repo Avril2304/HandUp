@@ -27,6 +27,7 @@ namespace ProyectoFinal
 
         public void RegistrarAcierto(int senaId, int puntosGanados)
         {
+            _perfil.RegistrarDiaDePractica(DateTime.Today); // racha por días: hoy practicó
             _perfil.AciertosTotales++;
             _perfil.Puntos += puntosGanados;
             
@@ -49,6 +50,7 @@ namespace ProyectoFinal
 
         public void RegistrarFallo(int senaId)
         {
+            _perfil.RegistrarDiaDePractica(DateTime.Today); // equivocarse también es practicar
             _perfil.FallosTotales++;
             _perfil.Racha = 0; // Se pierde la racha actual
 
@@ -199,6 +201,9 @@ namespace ProyectoFinal
             _perfil.FallosTotales = 0;
             _perfil.Racha = 0;
             _perfil.MejorRacha = 0;
+            _perfil.RachaDias = 0;
+            _perfil.MejorRachaDias = 0;
+            _perfil.UltimoDiaPractica = null;
 
             GuardarProgreso("Reinicio");
         }

@@ -45,16 +45,23 @@ namespace ProyectoFinal
                 raiz.LayoutTransform = Escala == 1.0 ? Transform.Identity : new ScaleTransform(Escala, Escala);
         }
 
-        // Agranda (o achica) la ventana en la misma proporción que el texto, sin pasarse de la pantalla.
-        // Si está maximizada no hace falta: el contenido se acomoda solo.
+        // El tamaño base agrandado en la misma proporción que el texto es el mínimo de la ventana (así nada queda cortado),
+        // sin pasarse de la pantalla. En una ventana que se puede agrandar, si el usuario ya la hizo más grande se respeta.
+        // Si está maximizada no hace falta ajustar el tamaño: el contenido se acomoda solo.
         public static void AjustarTamanoVentana(Window ventana, double anchoBase, double altoBase)
         {
+            Rect pantalla = SystemParameters.WorkArea;
+            double anchoMinimo = Math.Min(anchoBase * Escala, pantalla.Width);
+            double altoMinimo = Math.Min(altoBase * Escala, pantalla.Height);
+            ventana.MinWidth = anchoMinimo;
+            ventana.MinHeight = altoMinimo;
+
             if (ventana.WindowState != WindowState.Normal)
                 return;
 
-            Rect pantalla = SystemParameters.WorkArea;
-            ventana.Width = Math.Min(anchoBase * Escala, pantalla.Width);
-            ventana.Height = Math.Min(altoBase * Escala, pantalla.Height);
+            bool redimensionable = ventana.ResizeMode is ResizeMode.CanResize or ResizeMode.CanResizeWithGrip;
+            ventana.Width = redimensionable ? Math.Min(Math.Max(ventana.Width, anchoMinimo), pantalla.Width) : anchoMinimo;
+            ventana.Height = redimensionable ? Math.Min(Math.Max(ventana.Height, altoMinimo), pantalla.Height) : altoMinimo;
 
             // Que no quede cortada fuera de la pantalla (antes de mostrarse todavía no tiene posición: la centra Windows)
             if (!double.IsNaN(ventana.Left) && !double.IsNaN(ventana.Top))

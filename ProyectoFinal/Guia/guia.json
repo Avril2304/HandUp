@@ -43,8 +43,9 @@
       "glifo": "E80F",
       "resumen": "Es la pantalla de inicio. Arriba ves tu racha, tu nivel y cuánto avanzaste en él; abajo, una tarjeta por cada sección.",
       "pasos": [
-        "La racha cuenta tus aciertos seguidos. La barra muestra cuántas señas de tu nivel ya dominás.",
-        "El botón \"i\", al lado de la racha, abre esta guía.",
+        "Arriba tenés dos rachas: los aciertos seguidos (se corta al equivocarte) y los días seguidos que practicaste (se corta si pasás un día sin practicar). La barra muestra cuántas señas de tu nivel ya dominás.",
+        "El botón \"i\", al lado de la racha, abre esta guía. La primera vez que entrás, se abre sola.",
+        "La ventana se puede agrandar o maximizar, y el contenido se acomoda.",
         "Al entrar a una sección aparece la barra lateral, para saltar de una sección a otra. Con la flecha de arriba (o Ctrl+B) se achica a solo íconos.",
         "Salir te pide confirmación. Tu progreso ya está guardado."
       ],
@@ -185,7 +186,7 @@
       "resumen": "Tus datos, tu avance y el manejo de tu cuenta.",
       "pasos": [
         "Arriba están tu nivel, cuántas señas del nivel dominás y qué nivel sigue.",
-        "Estadísticas: racha, mejor racha, puntos, aciertos y fallos.",
+        "Estadísticas: racha, mejor racha, días seguidos practicando (y tu récord), puntos, aciertos y fallos.",
         "Por categoría: ves en qué temas te va mejor, y con \"Practicar\" vas directo a practicar los más flojos.",
         "Si tenés una nivelación pendiente, la podés rendir desde acá.",
         "Si ya aprobaste el examen final, acá está tu certificado: tocá \"Ver certificado\" para verlo o descargarlo de nuevo.",

@@ -24,9 +24,17 @@ namespace ProyectoFinal
         private int _actual;
         private TextBlock? _lblTituloSeccion;
 
-        public GuiaView()
+        // bienvenida: la guía se abrió sola porque es la primera vez que entra el perfil
+        public GuiaView(bool bienvenida = false)
         {
             InitializeComponent();
+
+            if (bienvenida)
+            {
+                lblBienvenida.Text = "¡Te damos la bienvenida a HandUp! Esta guía se abre sola la primera vez. " +
+                                     "Después la encontrás en el botón \"i\", al lado de la racha, o con F1.";
+                pnlBienvenida.Visibility = Visibility.Visible;
+            }
 
             try
             {

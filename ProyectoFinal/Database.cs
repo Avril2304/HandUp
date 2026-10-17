@@ -107,7 +107,10 @@ namespace ProyectoFinal
                     FallosTotales  INTEGER NOT NULL DEFAULT 0,
                     FechaRegistro  TEXT    NOT NULL,
                     NivelDesbloqueado INTEGER NOT NULL DEFAULT 1 CHECK (NivelDesbloqueado BETWEEN 1 AND 4),
-                    NivelacionPendiente INTEGER CHECK (NivelacionPendiente BETWEEN 2 AND 4)
+                    NivelacionPendiente INTEGER CHECK (NivelacionPendiente BETWEEN 2 AND 4),
+                    RachaDias      INTEGER NOT NULL DEFAULT 0,
+                    MejorRachaDias INTEGER NOT NULL DEFAULT 0,
+                    UltimoDiaPractica TEXT
                 );
 
                 -- Mejor resultado de cada perfil en la prueba final de cada nivel (con 80% o más se desbloquea el siguiente)
@@ -168,7 +171,8 @@ namespace ProyectoFinal
                     TeclaOpcion4        TEXT    NOT NULL DEFAULT 'D4',
                     TeclaConfirmar      TEXT    NOT NULL DEFAULT 'Return',
                     TeclaPausar         TEXT    NOT NULL DEFAULT 'Space',
-                    BarraColapsada      INTEGER NOT NULL DEFAULT 0
+                    BarraColapsada      INTEGER NOT NULL DEFAULT 0,
+                    GuiaVista           INTEGER NOT NULL DEFAULT 0   -- la guía de uso se abre sola hasta que se vio una vez
                 );";
             comando.ExecuteNonQuery();
 
@@ -244,7 +248,11 @@ namespace ProyectoFinal
                 "ALTER TABLE Preferencias ADD COLUMN BarraColapsada INTEGER NOT NULL DEFAULT 0;",
                 "ALTER TABLE Perfiles ADD COLUMN NivelDesbloqueado INTEGER NOT NULL DEFAULT 1 CHECK (NivelDesbloqueado BETWEEN 1 AND 4);",
                 "ALTER TABLE Perfiles ADD COLUMN NivelacionPendiente INTEGER CHECK (NivelacionPendiente BETWEEN 2 AND 4);",
-                "ALTER TABLE PruebasFinales ADD COLUMN FechaAprobada TEXT;"
+                "ALTER TABLE PruebasFinales ADD COLUMN FechaAprobada TEXT;",
+                "ALTER TABLE Preferencias ADD COLUMN GuiaVista INTEGER NOT NULL DEFAULT 0;",
+                "ALTER TABLE Perfiles ADD COLUMN RachaDias INTEGER NOT NULL DEFAULT 0;",
+                "ALTER TABLE Perfiles ADD COLUMN MejorRachaDias INTEGER NOT NULL DEFAULT 0;",
+                "ALTER TABLE Perfiles ADD COLUMN UltimoDiaPractica TEXT;"
             };
 
             foreach (var alter in columnasAAgregar)

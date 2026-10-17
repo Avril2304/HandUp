@@ -41,6 +41,29 @@ namespace ProyectoFinal
         public int FallosTotales { get; set; } = 0;
         public DateTime FechaRegistro { get; set; } = DateTime.Now;
 
+        // Racha por días: cuántos días seguidos practicó (respondió al menos una pregunta), su récord y el último día
+        public int RachaDias { get; set; } = 0;
+        public int MejorRachaDias { get; set; } = 0;
+        public DateTime? UltimoDiaPractica { get; set; }
+
+        // Anota que hoy practicó: si ayer también, la racha sigue; si pasó más de un día, vuelve a empezar.
+        // Devuelve true si es la primera práctica del día (la racha cambió).
+        public bool RegistrarDiaDePractica(DateTime hoy)
+        {
+            DateTime dia = hoy.Date;
+            if (UltimoDiaPractica?.Date == dia)
+                return false;
+
+            RachaDias = UltimoDiaPractica?.Date == dia.AddDays(-1) ? RachaDias + 1 : 1;
+            MejorRachaDias = Math.Max(MejorRachaDias, RachaDias);
+            UltimoDiaPractica = dia;
+            return true;
+        }
+
+        // La racha que vale hoy: si no practicó ni hoy ni ayer, ya se cortó (aunque en la base siga el número viejo)
+        public int RachaDiasVigente(DateTime hoy) =>
+            UltimoDiaPractica is DateTime ultimo && (hoy.Date - ultimo.Date).TotalDays <= 1 ? RachaDias : 0;
+
         // Propiedad calculada para mostrar en UI
         public double Precision => (AciertosTotales + FallosTotales) == 0 
             ? 0 
@@ -48,7 +71,7 @@ namespace ProyectoFinal
 
         // Sin ninguna respuesta ni progreso todavía (Mi perfil muestra una invitación a empezar en vez de ceros)
         public bool SinActividad => AciertosTotales + FallosTotales == 0
-            && SenasDominadas == 0 && Puntos == 0 && Racha == 0 && MejorRacha == 0;
+            && SenasDominadas == 0 && Puntos == 0 && Racha == 0 && MejorRacha == 0 && MejorRachaDias == 0;
 
         // Primera letra del nombre, para el avatar del listado de perfiles (no se guarda en la base)
         public string Inicial => string.IsNullOrWhiteSpace(Nombre) ? "?" : Nombre.Trim()[0].ToString().ToUpper();

@@ -58,7 +58,14 @@ namespace ProyectoFinal
                     ? ("Sin datos", "todavía no respondiste")
                     : ($"{Math.Round(p.Precision * 100)} %", $"de {Numero(respondidas)} respuestas");
             }),
+            new("Días seguidos", "", p =>
+            {
+                int dias = p.RachaDiasVigente(DateTime.Today);
+                return (Numero(dias), p.MejorRachaDias > 0 ? $"récord: {Dias(p.MejorRachaDias)}" : "practicando");
+            }),
         };
+
+        private static string Dias(int dias) => dias == 1 ? "1 día" : $"{Numero(dias)} días";
 
         private readonly ServicioProgreso _servicio;
         private readonly Dictionary<Estadistica, (Label Tarjeta, TextBlock Valor, TextBlock Detalle)> _tarjetas = new();

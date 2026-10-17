@@ -202,7 +202,7 @@
                         <!-- Con actividad: una tarjeta por estadística (se arman desde el código) -->
                         <StackPanel x:Name="pnlEstadisticas" Margin="0,6,0,0">
                             <UniformGrid x:Name="gridAvance" Columns="4" Margin="-6,0"/>
-                            <UniformGrid x:Name="gridRespuestas" Columns="3" Margin="-6,0"/>
+                            <UniformGrid x:Name="gridRespuestas" Columns="4" Margin="-6,0"/>
                         </StackPanel>
 
                         <!-- Sin actividad: invitación a empezar en vez de ceros sueltos -->

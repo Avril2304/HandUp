@@ -18,7 +18,7 @@
     "familia_plural": ["hermano|hermanos", "primo|primos", "hijo|hijos", "sobrino|sobrinos", "tío|tíos", "nieto|nietos"],
     "estado": ["bien", "mal", "más o menos"],
     "nombre_m": ["#Juan", "#Leo", "#Iván", "#Tomás"],
-    "condicion": ["sordo", "oyente", "INTERPETE|intérprete"],
+    "condicion": ["sordo", "oyente", "intérprete"],
     "numero_plural": ["dos", "tres", "cuatro", "cinco", "seis"],
 
     "comida": ["pizza", "empanada|empanadas", "helado", "asado", "fideos", "pan", "queso", "manzana|manzanas", "banana|bananas", "hamburguesa|hamburguesas", "sopa", "torta", "choclo", "pollo", "pescado", "ensalada de frutas"],

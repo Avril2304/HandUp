@@ -16,7 +16,7 @@ namespace ProyectoFinal
                 using var comando = conexion.CreateCommand();
                 comando.CommandText = @"
                     SELECT AltoContraste, TamanoFuente, TeclaOpcion1, TeclaOpcion2,
-                           TeclaOpcion3, TeclaOpcion4, TeclaConfirmar, TeclaPausar, BarraColapsada
+                           TeclaOpcion3, TeclaOpcion4, TeclaConfirmar, TeclaPausar, BarraColapsada, GuiaVista
                     FROM Preferencias
                     WHERE PerfilId = $id;";
                 comando.Parameters.AddWithValue("$id", perfilId);
@@ -35,7 +35,8 @@ namespace ProyectoFinal
                         TeclaOpcion4 = ParsearTecla(lector.GetString(5), Key.D4),
                         TeclaConfirmar = ParsearTecla(lector.GetString(6), Key.Return),
                         TeclaPausar = ParsearTecla(lector.GetString(7), Key.Space),
-                        BarraColapsada = lector.GetInt32(8) == 1
+                        BarraColapsada = lector.GetInt32(8) == 1,
+                        GuiaVista = lector.GetInt32(9) == 1
                     };
                 }
 
@@ -55,10 +56,11 @@ namespace ProyectoFinal
                 using var comando = conexion.CreateCommand();
                 comando.CommandText = @"
                     INSERT INTO Preferencias (PerfilId, AltoContraste, TamanoFuente, TeclaOpcion1,
-                                              TeclaOpcion2, TeclaOpcion3, TeclaOpcion4, TeclaConfirmar, TeclaPausar, BarraColapsada)
-                    VALUES ($id, $contraste, $fuente, $t1, $t2, $t3, $t4, $tconf, $tpausa, $barra)
+                                              TeclaOpcion2, TeclaOpcion3, TeclaOpcion4, TeclaConfirmar, TeclaPausar, BarraColapsada, GuiaVista)
+                    VALUES ($id, $contraste, $fuente, $t1, $t2, $t3, $t4, $tconf, $tpausa, $barra, $guia)
                     ON CONFLICT(PerfilId) DO UPDATE SET
                         BarraColapsada = excluded.BarraColapsada,
+                        GuiaVista = excluded.GuiaVista,
                         AltoContraste = excluded.AltoContraste,
                         TamanoFuente = excluded.TamanoFuente,
                         TeclaOpcion1 = excluded.TeclaOpcion1,
@@ -78,6 +80,7 @@ namespace ProyectoFinal
                 comando.Parameters.AddWithValue("$tconf", prefs.TeclaConfirmar.ToString());
                 comando.Parameters.AddWithValue("$tpausa", prefs.TeclaPausar.ToString());
                 comando.Parameters.AddWithValue("$barra", prefs.BarraColapsada ? 1 : 0);
+                comando.Parameters.AddWithValue("$guia", prefs.GuiaVista ? 1 : 0);
 
                 comando.ExecuteNonQuery();
             });

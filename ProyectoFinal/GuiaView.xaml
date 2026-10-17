@@ -16,11 +16,31 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
             <StackPanel>
                 <TextBlock x:Name="lblTituloGuia" Text="Guía de uso" FontFamily="{StaticResource FontHeading}" FontSize="26"
                            FontWeight="Bold" Foreground="{DynamicResource BrushInk}"/>
                 <TextBlock x:Name="lblSubtitulo" FontSize="13" Foreground="{DynamicResource BrushMuted}" Margin="0,2,0,0" TextWrapping="Wrap"/>
             </StackPanel>
+
+            <!-- Solo la primera vez que entra el perfil (la guía se abre sola): a todo el ancho, debajo del título -->
+            <Border Grid.Row="1" Grid.ColumnSpan="2" x:Name="pnlBienvenida" Visibility="Collapsed" CornerRadius="10" Padding="12,8"
+                    Margin="0,12,0,0" Background="{DynamicResource BrushAccentSoft}" BorderBrush="{DynamicResource BrushBorderAccent}"
+                    BorderThickness="1.5">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="&#xE735;" FontFamily="{StaticResource FontIconos}" FontSize="14" VerticalAlignment="Center"
+                               Foreground="{DynamicResource BrushAccent}"/>
+                    <TextBlock Grid.Column="1" x:Name="lblBienvenida" FontSize="13" TextWrapping="Wrap" Margin="8,0,0,0"
+                               VerticalAlignment="Center" Foreground="{DynamicResource BrushInk}" AutomationProperties.LiveSetting="Polite"/>
+                </Grid>
+            </Border>
             <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Top">
                 <Button x:Name="btnAbrirPdf" Style="{StaticResource SecondaryButton}" Margin="0,0,10,0" Click="BtnAbrirPdf_Click"
                         AutomationProperties.Name="Abrir la guía en PDF" ToolTip="Abrir la guía en PDF">
