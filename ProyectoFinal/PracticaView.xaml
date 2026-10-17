@@ -14,7 +14,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <local:VisorSena x:Name="visor" Grid.Column="0"/>
+            <local:VisorSena x:Name="visor" Grid.Column="0" OcultarPalabra="True"/>
 
             <Grid Grid.Column="2">
                 <Grid.RowDefinitions>

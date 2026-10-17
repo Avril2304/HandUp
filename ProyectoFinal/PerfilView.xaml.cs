@@ -20,7 +20,15 @@ namespace ProyectoFinal
         public event EventHandler? NivelacionSolicitada; // rendir la prueba de nivelación pendiente
 
         // Estado de una regla de PoliticaPassword para el checklist: "pendiente" (sin escribir), "ok" o "error"
-        private record EstadoRegla(string Descripcion, string Estado);
+        private record EstadoRegla(string Descripcion, string Estado)
+        {
+            public override string ToString() => Estado switch
+            {
+                "ok" => $"{Descripcion}: cumplida",
+                "error" => $"{Descripcion}: no se cumple",
+                _ => $"{Descripcion}: pendiente"
+            };
+        }
 
         // Una estadística: cómo se llama, su ícono y cómo sacar del perfil el valor y una aclaración corta
         private record Estadistica(string Nombre, string Glifo, Func<Perfil, (string Valor, string Detalle)> Calcular);

@@ -66,13 +66,17 @@
                 <UniformGrid x:Name="pnlNiveles" Rows="1" Columns="4" Margin="0,0,-8,0"/>
 
                 <!-- Aviso de nivel bloqueado. LiveSetting: el lector de pantalla lo lee apenas aparece. -->
-                <StackPanel x:Name="avisoBloqueado" Orientation="Horizontal" Visibility="Collapsed" Margin="2,4,0,0">
-                    <TextBlock Text="&#xE72E;" FontFamily="{StaticResource FontIconos}" FontSize="14" VerticalAlignment="Center"
+                <Grid x:Name="avisoBloqueado" Visibility="Collapsed" Margin="2,6,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="&#xE72E;" FontFamily="{StaticResource FontIconos}" FontSize="14" VerticalAlignment="Top" Margin="0,2,0,0"
                                Foreground="{DynamicResource BrushAccentDark}"/>
-                    <TextBlock x:Name="lblBloqueado" FontSize="13.5" FontWeight="SemiBold" TextWrapping="Wrap" Margin="8,0,0,0"
+                    <TextBlock Grid.Column="1" x:Name="lblBloqueado" FontSize="13.5" FontWeight="SemiBold" TextWrapping="Wrap" Margin="8,0,0,0"
                                VerticalAlignment="Center" Foreground="{DynamicResource BrushInk}"
                                AutomationProperties.LiveSetting="Assertive"/>
-                </StackPanel>
+                </Grid>
 
                 <TextBlock x:Name="lblTituloCategorias" Text="2. Elegí la categoría" FontSize="15" FontWeight="Bold"
                            Foreground="{DynamicResource BrushInk}" Margin="0,18,0,8"/>

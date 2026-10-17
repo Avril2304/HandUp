@@ -12,11 +12,12 @@ namespace ProyectoFinal
         // Velocidad con la que quedó el video al cerrar (el visor de origen la conserva)
         public bool Lento => visor.Lento;
 
-        public VisorPantallaCompletaWindow(Sena sena, bool lento, Key teclaPausar)
+        public VisorPantallaCompletaWindow(Sena sena, bool lento, Key teclaPausar, bool ocultarPalabra = false)
         {
             InitializeComponent();
             TamanoTexto.AplicarA(this);
             _teclaPausar = teclaPausar;
+            visor.OcultarPalabra = ocultarPalabra;
 
             visor.ModoPantallaCompleta();
             visor.Lento = lento;
