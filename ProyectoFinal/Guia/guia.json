@@ -240,8 +240,8 @@
       "resumen": "Los videos, las imágenes y las descripciones de las señas salen de diccionarios y videos de Lengua de Señas Argentina hechos por docentes, intérpretes y la comunidad sorda. Los clips se recortaron y se les tapó el texto sobreimpreso para poder usarlos en las preguntas.",
       "tituloPasos": "Fuentes",
       "pasos": [
-        "Señario, diccionario de LSA (versiones 1 y 2): 375 señas. Es la base del banco.",
-        "LSA Database: 132 señas.",
+        "Señario, diccionario de LSA (versiones 1 y 2): 399 señas. Es la base del banco.",
+        "LSA Database: 164 señas. Parte de ellas son del dataset LSA64 de la Universidad Nacional de La Plata.",
         "LSA Oficial (YouTube): 40 señas.",
         "Signs of Love (YouTube): Vocabulario de los saludos, de los verbos, de los lugares, del hogar y del transporte, y Categorías de verbos. 15 señas.",
         "Dirección de Documentación (YouTube): Verbos en LSA y Pronombres en LSA. 4 señas.",

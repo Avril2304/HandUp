@@ -108,7 +108,7 @@ Solución: `ProyectoFinal.sln`, proyecto `ProyectoFinal.csproj` (`net8.0-windows
   - Hay homónimos: NARANJA (alimentos/colores), PAPA/PAPÁ (alimentos/familia), UNO (juegos/numeros), MERIENDA (alimentos/tiempo) y MAÑANA (día siguiente/parte del día). El Traductor muestra primero la que coincide con las tildes escritas ("papá" → familia, "papa" → comida) y, si no, la del nivel más básico; el usuario puede cambiarla.
   - `numeros` incluye una entrada "NUMEROS".
   - Las mayúsculas de `word` son inconsistentes ("MIL", "Cinco"): normalizar al mostrar y al comparar (también las tildes).
-  - Cada seña guarda de dónde salió en `source`. Las fuentes están en la sección "Fuentes" de este README y en la guía de uso. 56 señas no tienen `source`.
+  - Cada seña guarda de dónde salió en `source`. Las fuentes están en la sección "Fuentes" de este README y en la guía de uso. Las 640 tienen `source`.
 
 ### Qué está hecho
 
@@ -139,10 +139,10 @@ Solución: `ProyectoFinal.sln`, proyecto `ProyectoFinal.csproj` (`net8.0-windows
 
 ## Fuentes
 
-Sale del campo `source` de `signs_database.json` (contado el 2026-10-20). Es la misma lista que la sección "Fuentes del material" de la guía; acá van además los ids de YouTube de los clips, para el informe.
+Sale del campo `source` de `signs_database.json` (contado el 2026-10-20). Las 640 señas tienen fuente. Es la misma lista que la sección "Fuentes del material" de la guía; acá van además los ids de YouTube de los clips, para el informe.
 
-- **Señario, diccionario de LSA:** 375 señas (226 de la versión 2 y 149 de la versión 1). Es la base del banco: videos, imágenes y descripciones.
-- **LSA Database:** 132 señas.
+- **Señario, diccionario de LSA:** 399 señas (249 de la versión 2 y 150 de la versión 1). Es la base del banco: videos, imágenes y descripciones.
+- **LSA Database:** 164 señas, grabadas en Full HD frente a una pared blanca. Parte son del dataset LSA64: Ronchetti, F., Quiroga, F., Estrebou, C., Lanzarini, L. y Rosete, A. (2016). *LSA64: An Argentinian Sign Language Dataset*. III-LIDI, Facultad de Informática, UNLP. LSA64 tiene 64 señas, así que no todas las de LSA Database pueden venir de ahí.
 - **LSA Oficial (YouTube):** 40 señas.
 - **Clips de YouTube** (recortados y con el texto sobreimpreso tapado para las preguntas):
   - Signs of Love: Vocabulario de los saludos (`_muAHDVEItk`), de los verbos (`SHB1Rlg6uvM`), Categorías de verbos (`1ICc2IZuy6A`), de los lugares (`BD7h2yxvKwo`), del hogar (`WIV9V42FeQg`) y del transporte (`gPXlc7IaYYM`). 15 señas.
@@ -154,16 +154,16 @@ Sale del campo `source` de `signs_database.json` (contado el 2026-10-20). Es la 
   - LSA con Tere: Adjetivos en LSA (`RH0ndn0_DMA`). 2 señas.
   - Fundación Effata: Medios de transporte en LSA (`IiJmufvvX-c`). 1 seña.
   - Capacitación en LSA: Clase 4, Familia (`feV-ra7rvPA`). 1 seña.
-- **Sin fuente registrada:** 56 señas (profesiones 14, verbos_cotidianos 12, alimentos 5, avanzado 5, tiempo 4 y otras).
 
-Los ids de YouTube salen de `fix_clips.py`, el script que recortó y tapó los clips (no está en el repo).
+Los ids de YouTube salen de `fix_clips.py`, el script que recortó y tapó los clips (lo tiene Lorenzo; falta subirlo al repo).
 
 ## Pendientes del equipo
 
 - Definir la fecha límite real (Sprint 0 sigue sin fecha).
 - Repartir los 5 módulos entre los 2 o 3 integrantes.
 - Citar las fuentes en el informe (la lista está en "Fuentes").
-- Averiguar de dónde salen las 56 señas sin `source`.
+- Subir `fix_clips.py` al repo.
+- Confirmar qué señas de LSA Database son del dataset LSA64.
 
 ## Cómo trabajar
 

@@ -1404,7 +1404,8 @@
         "gif_animated": null,
         "image": "assets/signs/alimentos/amargo.png",
         "thumbnail": "assets/signs/alimentos/amargo.png"
-      }
+      },
+      "source": "LSA Database"
     },
     {
       "id": "sign_035",
@@ -2478,7 +2479,8 @@
         "gif_animated": null,
         "image": "assets/signs/alimentos/empanada.png",
         "thumbnail": "assets/signs/alimentos/empanada.png"
-      }
+      },
+      "source": "señario_v2"
     },
     {
       "id": "sign_069",
@@ -2525,7 +2527,8 @@
         "gif_animated": null,
         "image": "assets/signs/alimentos/espumadera.png",
         "thumbnail": "assets/signs/alimentos/espumadera.png"
-      }
+      },
+      "source": "LSA Database"
     },
     {
       "id": "sign_071",
@@ -2540,7 +2543,8 @@
         "gif_animated": null,
         "image": "assets/signs/alimentos/facturas.png",
         "thumbnail": "assets/signs/alimentos/facturas.png"
-      }
+      },
+      "source": "señario_v2"
     },
     {
       "id": "sign_072",
@@ -2555,7 +2559,8 @@
         "gif_animated": null,
         "image": "assets/signs/alimentos/fiambre.png",
         "thumbnail": "assets/signs/alimentos/fiambre.png"
-      }
+      },
+      "source": "señario_v2"
     },
     {
       "id": "sign_073",
@@ -4914,7 +4919,8 @@
         "gif_animated": null,
         "image": "assets/signs/avanzado/brillante.png",
         "thumbnail": "assets/signs/avanzado/brillante.png"
-      }
+      },
+      "source": "LSA Database"
     },
     {
       "id": "sign_147",
@@ -4929,7 +4935,8 @@
         "gif_animated": null,
         "image": "assets/signs/avanzado/moneda.png",
         "thumbnail": "assets/signs/avanzado/moneda.png"
-      }
+      },
+      "source": "LSA Database"
     },
     {
       "id": "sign_148",
@@ -4944,7 +4951,8 @@
         "gif_animated": null,
         "image": "assets/signs/avanzado/musica.png",
         "thumbnail": "assets/signs/avanzado/musica.png"
-      }
+      },
+      "source": "LSA Database"
     },
     {
       "id": "sign_149",
@@ -4959,7 +4967,8 @@
         "gif_animated": null,
         "image": "assets/signs/avanzado/opaco.png",
         "thumbnail": "assets/signs/avanzado/opaco.png"
-      }
+      },
+      "source": "LSA Database"
     },
     {
       "id": "sign_150",
@@ -4974,7 +4983,8 @@
         "gif_animated": null,
         "image": "assets/signs/avanzado/trampa.png",
         "thumbnail": "assets/signs/avanzado/trampa.png"
-      }
+      },
+      "source": "LSA Database"
     },
     {
       "id": "sign_151",
@@ -6333,7 +6343,8 @@
         "gif_animated": null,
         "image": "assets/signs/emociones/burlar.png",
         "thumbnail": "assets/signs/emociones/burlar.png"
-      }
+      },
+      "source": "LSA Database"
     },
     {
       "id": "sign_194",
@@ -6348,7 +6359,8 @@
         "gif_animated": null,
         "image": "assets/signs/emociones/enemigo.png",
         "thumbnail": "assets/signs/emociones/enemigo.png"
-      }
+      },
+      "source": "LSA Database"
     },
     {
       "id": "sign_195",
@@ -6364,7 +6376,8 @@
         "image": "assets/signs/acciones_tiempo/hambre.png",
         "thumbnail": "assets/signs/acciones_tiempo/hambre.png"
       },
-      "tags": []
+      "tags": [],
+      "source": "LSA Database"
     },
     {
       "id": "sign_196",
@@ -6379,7 +6392,8 @@
         "gif_animated": null,
         "image": "assets/signs/emociones/paciencia.png",
         "thumbnail": "assets/signs/emociones/paciencia.png"
-      }
+      },
+      "source": "LSA Database"
     },
     {
       "id": "sign_197",
@@ -8634,7 +8648,8 @@
         "gif_animated": null,
         "image": "assets/signs/primeras_frases/donde.png",
         "thumbnail": "assets/signs/primeras_frases/donde.png"
-      }
+      },
+      "source": "LSA Database"
     },
     {
       "id": "sign_268",
@@ -8649,7 +8664,8 @@
         "gif_animated": null,
         "image": "assets/signs/frases_comunes/ninguno.png",
         "thumbnail": "assets/signs/frases_comunes/ninguno.png"
-      }
+      },
+      "source": "LSA Database"
     },
     {
       "id": "sign_269",
@@ -9144,7 +9160,8 @@
         "gif_animated": null,
         "image": "assets/signs/lugares/cajon.png",
         "thumbnail": "assets/signs/lugares/cajon.png"
-      }
+      },
+      "source": "LSA Database"
     },
     {
       "id": "sign_285",
@@ -9159,7 +9176,8 @@
         "gif_animated": null,
         "image": "assets/signs/lugares/lejos.png",
         "thumbnail": "assets/signs/lugares/lejos.png"
-      }
+      },
+      "source": "LSA Database"
     },
     {
       "id": "sign_286",
@@ -9270,7 +9288,8 @@
         "gif_animated": null,
         "image": "assets/signs/medios_comunicacion/cartel.png",
         "thumbnail": "assets/signs/medios_comunicacion/cartel.png"
-      }
+      },
+      "source": "señario_v2"
     },
     {
       "id": "sign_290",
@@ -9413,7 +9432,8 @@
         "gif_animated": null,
         "image": "assets/signs/medios_comunicacion/foto.png",
         "thumbnail": "assets/signs/medios_comunicacion/foto.png"
-      }
+      },
+      "source": "LSA Database"
     },
     {
       "id": "sign_295",
@@ -11862,7 +11882,8 @@
         "gif_animated": null,
         "image": "assets/signs/profesiones/abogado_a.png",
         "thumbnail": "assets/signs/profesiones/abogado_a.png"
-      }
+      },
+      "source": "señario_v2"
     },
     {
       "id": "sign_372",
@@ -11909,7 +11930,8 @@
         "gif_animated": null,
         "image": "assets/signs/profesiones/bombero_a.png",
         "thumbnail": "assets/signs/profesiones/bombero_a.png"
-      }
+      },
+      "source": "señario_v2"
     },
     {
       "id": "sign_374",
@@ -11924,7 +11946,8 @@
         "gif_animated": null,
         "image": "assets/signs/profesiones/camarero_a.png",
         "thumbnail": "assets/signs/profesiones/camarero_a.png"
-      }
+      },
+      "source": "señario_v2"
     },
     {
       "id": "sign_375",
@@ -11939,7 +11962,8 @@
         "gif_animated": null,
         "image": "assets/signs/profesiones/carnicero_a.png",
         "thumbnail": "assets/signs/profesiones/carnicero_a.png"
-      }
+      },
+      "source": "señario_v2"
     },
     {
       "id": "sign_376",
@@ -11954,7 +11978,8 @@
         "gif_animated": null,
         "image": "assets/signs/profesiones/carpintero_a.png",
         "thumbnail": "assets/signs/profesiones/carpintero_a.png"
-      }
+      },
+      "source": "señario_v2"
     },
     {
       "id": "sign_377",
@@ -11969,7 +11994,8 @@
         "gif_animated": null,
         "image": "assets/signs/profesiones/cartero_a.png",
         "thumbnail": "assets/signs/profesiones/cartero_a.png"
-      }
+      },
+      "source": "señario_v2"
     },
     {
       "id": "sign_378",
@@ -12048,7 +12074,8 @@
         "gif_animated": null,
         "image": "assets/signs/profesiones/cocinero_a.png",
         "thumbnail": "assets/signs/profesiones/cocinero_a.png"
-      }
+      },
+      "source": "señario_v2"
     },
     {
       "id": "sign_381",
@@ -12063,7 +12090,8 @@
         "gif_animated": null,
         "image": "assets/signs/profesiones/fotografo_a.png",
         "thumbnail": "assets/signs/profesiones/fotografo_a.png"
-      }
+      },
+      "source": "señario_v2"
     },
     {
       "id": "sign_382",
@@ -12142,7 +12170,8 @@
         "gif_animated": null,
         "image": "assets/signs/profesiones/musico_a.png",
         "thumbnail": "assets/signs/profesiones/musico_a.png"
-      }
+      },
+      "source": "señario_v2"
     },
     {
       "id": "sign_385",
@@ -12157,7 +12186,8 @@
         "gif_animated": null,
         "image": "assets/signs/profesiones/panadero_a.png",
         "thumbnail": "assets/signs/profesiones/panadero_a.png"
-      }
+      },
+      "source": "señario_v2"
     },
     {
       "id": "sign_386",
@@ -12172,7 +12202,8 @@
         "gif_animated": null,
         "image": "assets/signs/profesiones/pescador_a.png",
         "thumbnail": "assets/signs/profesiones/pescador_a.png"
-      }
+      },
+      "source": "señario_v2"
     },
     {
       "id": "sign_387",
@@ -12187,7 +12218,8 @@
         "gif_animated": null,
         "image": "assets/signs/profesiones/pintor_a.png",
         "thumbnail": "assets/signs/profesiones/pintor_a.png"
-      }
+      },
+      "source": "señario_v2"
     },
     {
       "id": "sign_388",
@@ -12202,7 +12234,8 @@
         "gif_animated": null,
         "image": "assets/signs/profesiones/plomero_a.png",
         "thumbnail": "assets/signs/profesiones/plomero_a.png"
-      }
+      },
+      "source": "señario_v2"
     },
     {
       "id": "sign_389",
@@ -12281,7 +12314,8 @@
         "gif_animated": null,
         "image": "assets/signs/profesiones/secretario_a.png",
         "thumbnail": "assets/signs/profesiones/secretario_a.png"
-      }
+      },
+      "source": "señario_v2"
     },
     {
       "id": "sign_392",
@@ -13992,7 +14026,8 @@
         "gif_animated": null,
         "image": "assets/signs/ropa/perfume.png",
         "thumbnail": "assets/signs/ropa/perfume.png"
-      }
+      },
+      "source": "LSA Database"
     },
     {
       "id": "sign_446",
@@ -14839,7 +14874,8 @@
         "gif_animated": null,
         "image": "assets/signs/saludos/sordo.png",
         "thumbnail": "assets/signs/saludos/sordo.png"
-      }
+      },
+      "source": "LSA Database"
     },
     {
       "id": "sign_473",
@@ -14918,7 +14954,8 @@
         "gif_animated": null,
         "image": "assets/signs/saludos/te_quiero.jpeg",
         "thumbnail": "assets/signs/saludos/te_quiero.jpeg"
-      }
+      },
+      "source": "señario_v1"
     },
     {
       "id": "sign_476",
@@ -15062,7 +15099,8 @@
         "image": "assets/signs/acciones_tiempo/ahora.png",
         "thumbnail": "assets/signs/acciones_tiempo/ahora.png"
       },
-      "tags": []
+      "tags": [],
+      "source": "señario_v2"
     },
     {
       "id": "sign_481",
@@ -15141,7 +15179,8 @@
         "gif_animated": null,
         "image": "assets/signs/tiempo/anual.png",
         "thumbnail": "assets/signs/tiempo/anual.png"
-      }
+      },
+      "source": "señario_v2"
     },
     {
       "id": "sign_484",
@@ -15253,7 +15292,8 @@
         "gif_animated": null,
         "image": "assets/signs/tiempo/cena.png",
         "thumbnail": "assets/signs/tiempo/cena.png"
-      }
+      },
+      "source": "señario_v2"
     },
     {
       "id": "sign_488",
@@ -15268,7 +15308,8 @@
         "gif_animated": null,
         "image": "assets/signs/tiempo/cumpleaños.png",
         "thumbnail": "assets/signs/tiempo/cumpleaños.png"
-      }
+      },
+      "source": "LSA Database"
     },
     {
       "id": "sign_489",
@@ -15283,7 +15324,8 @@
         "gif_animated": null,
         "image": "assets/signs/tiempo/desayuno.png",
         "thumbnail": "assets/signs/tiempo/desayuno.png"
-      }
+      },
+      "source": "señario_v2"
     },
     {
       "id": "sign_490",
@@ -16229,7 +16271,8 @@
         "image": "assets/signs/acciones_tiempo/mañana_v2.png",
         "thumbnail": "assets/signs/acciones_tiempo/mañana_v2.png"
       },
-      "tags": []
+      "tags": [],
+      "source": "señario_v2"
     },
     {
       "id": "sign_520",
@@ -17076,7 +17119,8 @@
         "gif_animated": null,
         "image": "assets/signs/transporte/aterrizar.png",
         "thumbnail": "assets/signs/transporte/aterrizar.png"
-      }
+      },
+      "source": "LSA Database"
     },
     {
       "id": "sign_547",
@@ -17124,7 +17168,8 @@
         "gif_animated": null,
         "image": "assets/signs/verbos_cotidianos/aceptar.png",
         "thumbnail": "assets/signs/verbos_cotidianos/aceptar.png"
-      }
+      },
+      "source": "LSA Database"
     },
     {
       "id": "sign_549",
@@ -17139,7 +17184,8 @@
         "gif_animated": null,
         "image": "assets/signs/verbos_cotidianos/apagar.png",
         "thumbnail": "assets/signs/verbos_cotidianos/apagar.png"
-      }
+      },
+      "source": "LSA Database"
     },
     {
       "id": "sign_550",
@@ -17154,7 +17200,8 @@
         "gif_animated": null,
         "image": "assets/signs/verbos_cotidianos/aparecer.png",
         "thumbnail": "assets/signs/verbos_cotidianos/aparecer.png"
-      }
+      },
+      "source": "LSA Database"
     },
     {
       "id": "sign_551",
@@ -17202,7 +17249,8 @@
         "gif_animated": null,
         "image": "assets/signs/verbos_cotidianos/atrapar.png",
         "thumbnail": "assets/signs/verbos_cotidianos/atrapar.png"
-      }
+      },
+      "source": "LSA Database"
     },
     {
       "id": "sign_553",
@@ -17249,7 +17297,8 @@
         "gif_animated": null,
         "image": "assets/signs/verbos_cotidianos/bailar.png",
         "thumbnail": "assets/signs/verbos_cotidianos/bailar.png"
-      }
+      },
+      "source": "LSA Database"
     },
     {
       "id": "sign_555",
@@ -17264,7 +17313,8 @@
         "gif_animated": null,
         "image": "assets/signs/verbos_cotidianos/bañarse.png",
         "thumbnail": "assets/signs/verbos_cotidianos/bañarse.png"
-      }
+      },
+      "source": "LSA Database"
     },
     {
       "id": "sign_556",
@@ -17311,7 +17361,8 @@
         "gif_animated": null,
         "image": "assets/signs/verbos_cotidianos/copiar.png",
         "thumbnail": "assets/signs/verbos_cotidianos/copiar.png"
-      }
+      },
+      "source": "LSA Database"
     },
     {
       "id": "sign_558",
@@ -17326,7 +17377,8 @@
         "gif_animated": null,
         "image": "assets/signs/verbos_cotidianos/correr.png",
         "thumbnail": "assets/signs/verbos_cotidianos/correr.png"
-      }
+      },
+      "source": "LSA Database"
     },
     {
       "id": "sign_559",
@@ -17373,7 +17425,8 @@
         "gif_animated": null,
         "image": "assets/signs/verbos_cotidianos/darse_cuenta.png",
         "thumbnail": "assets/signs/verbos_cotidianos/darse_cuenta.png"
-      }
+      },
+      "source": "LSA Database"
     },
     {
       "id": "sign_561",
@@ -17388,7 +17441,8 @@
         "gif_animated": null,
         "image": "assets/signs/verbos_cotidianos/encontrar.png",
         "thumbnail": "assets/signs/verbos_cotidianos/encontrar.png"
-      }
+      },
+      "source": "LSA Database"
     },
     {
       "id": "sign_562",
@@ -17403,7 +17457,8 @@
         "gif_animated": null,
         "image": "assets/signs/verbos_cotidianos/llamar.png",
         "thumbnail": "assets/signs/verbos_cotidianos/llamar.png"
-      }
+      },
+      "source": "LSA Database"
     },
     {
       "id": "sign_563",
@@ -17418,7 +17473,8 @@
         "gif_animated": null,
         "image": "assets/signs/verbos_cotidianos/nacer.png",
         "thumbnail": "assets/signs/verbos_cotidianos/nacer.png"
-      }
+      },
+      "source": "LSA Database"
     },
     {
       "id": "sign_565",
