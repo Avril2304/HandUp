@@ -102,14 +102,14 @@ Solución: `ProyectoFinal.sln`, proyecto `ProyectoFinal.csproj` (`net8.0-windows
 - **Videos:** tienen que ser MP4 "normales". El 2026-10-16 se encontró que 521 venían como MP4 fragmentados (DASH), que el `MediaElement` de WPF no reproduce (los da por terminados al instante), y se convirtieron sin recodificar con `ffmpeg -i entrada.mp4 -c copy -movflags +faststart salida.mp4`. Si se suman videos nuevos, revisar que no vengan fragmentados.
 - **JSON:** `categories` (24 entradas, todas con señas: `id`, `name`, `emoji`, `description`, `color`) y `signs` (640: `id` "sign_001"…, `word`, `category`, `difficulty` 1-4, `description`, `media.image_static`, `media.video`; además traen `instructions` (lista de pasos), `tags`, `handshape`, `movement`, `location`, `related_signs` y `examples`). Las 640 señas tienen video y ninguna ruta está rota (`media.thumbnail` = `media.image_static`).
 - **Niveles:** 1 Principiante (145 señas): primeras_frases, abecedario, numeros, saludos, colores, familia. 2 Básico (211): acciones_tiempo, alimentos, ropa, clima, deportes. 3 Intermedio (174): tiempo, escuela, verbos_cotidianos, juegos, emociones, lugares, transporte. 4 Avanzado (110): paises, provincias, profesiones, medios_comunicacion, avanzado, frases_comunes. Cada categoría tiene un único nivel. Las cantidades no están fijas en el código: `Niveles.cs` las cuenta desde la base.
-- **Abecedario:** A-Z + CH + Ñ (28 letras justas; no hay LL ni RR, así que para el deletreo hay que partir LL/RR en letras sueltas). La entrada "ABECEDARIO" se movió a `escuela`. Hay además 48 imágenes `handshape_XX_*.png` (dataset LSA16) que no están en el JSON.
+- **Abecedario:** A-Z + CH + Ñ (28 letras justas; no hay LL ni RR, así que para el deletreo hay que partir LL/RR en letras sueltas). La entrada "ABECEDARIO" se movió a `escuela`. Las 48 imágenes `handshape_XX_*.png` del dataset LSA16 se borraron el 2026-10-17 porque la app no las usaba.
 - **Descripciones:** las señas tienen una `description` real del movimiento de manos (story 13), todas revisadas por el equipo (el 2026-10-01 se sacaron las 14 marcas "(revisar)" que quedaban).
 - **Detalles a tener en cuenta:**
   - En 375 señas, `handshape`/`movement`/`location` son texto de relleno ("Ver imagen oficial CAS"), así que no conviene mostrarlos. 56 señas no tienen `instructions`: mostrarlas solo si existen.
   - Hay homónimos: NARANJA (alimentos/colores), PAPA/PAPÁ (alimentos/familia), UNO (juegos/numeros), MERIENDA (alimentos/tiempo) y MAÑANA (día siguiente/parte del día). El Traductor muestra primero la que coincide con las tildes escritas ("papá" → familia, "papa" → comida) y, si no, la del nivel más básico; el usuario puede cambiarla.
   - `numeros` incluye una entrada "NUMEROS".
   - Las mayúsculas de `word` son inconsistentes ("MIL", "Cinco"): normalizar al mostrar y al comparar (también las tildes).
-  - Las fuentes (Señario V2, LSA16) se citan más adelante en el informe.
+  - Cada seña guarda de dónde salió en `source`. Las fuentes están en la sección "Fuentes" de este README y en la guía de uso. Las 640 tienen `source`.
 
 ### Qué está hecho
 
@@ -121,7 +121,7 @@ Solución: `ProyectoFinal.sln`, proyecto `ProyectoFinal.csproj` (`net8.0-windows
 - **Traductor** (`Traductor`, `TraductorView`): stories 14 y 15. Usa un índice genérico `IndiceDeBusqueda<T>`, deletrea con `DispatcherTimer`, tiene pantalla completa (`TraductorPantallaCompletaWindow`) y exporta la traducción como MP4 (`ExportadorVideo`, `PanelVideoTraduccion`, `ExportacionException`).
 - **Configuración** (`ConfiguracionView`): alto contraste, tamaño del texto (Normal / Grande / Muy grande, `TamanoTexto`) y reasignación de atajos, guardados por perfil (`RepositorioPreferencias`).
 - **Barra lateral achicable:** con la flecha de arriba o Ctrl+B queda solo con íconos, y se recuerda por perfil.
-- **Guía de uso** (`GuiaView`, `GuiaUso`, `GuiaException`): se abre con el botón "i" del inicio, con "Guía" en la barra lateral o con F1. Tiene un índice de secciones, y cada una muestra cómo se usa, sus atajos y capturas de la app. El contenido está en `ProyectoFinal/Guia/guia.json` y las capturas en `ProyectoFinal/Guia/capturas/`. El botón "Abrir PDF" abre `Presentacion/HandUp - Guia de uso.pdf`, el PDF para la presentación, que se arma desde el mismo JSON con `Presentacion/generar-guia.ps1` (lo imprime Edge). Si se cambia la guía, hay que volver a correr ese script.
+- **Guía de uso** (`GuiaView`, `GuiaUso`, `GuiaException`): se abre con el botón "i" del inicio, con "Guía" en la barra lateral o con F1. Tiene un índice de secciones, y cada una muestra cómo se usa, sus atajos y capturas de la app. El contenido está en `ProyectoFinal/Guia/guia.json` y las capturas en `ProyectoFinal/Guia/capturas/`. El botón "Abrir PDF" abre `Presentacion/HandUp - Guia de uso.pdf`, el PDF para la presentación, que se arma desde el mismo JSON con `Presentacion/generar-guia.ps1` (lo imprime Edge). Si se cambia la guía, hay que volver a correr ese script. La última sección, "Fuentes del material", lista de dónde sale el material; usa `tituloPasos` para que la lista se titule "Fuentes" en vez de "Cómo se usa".
 - **Banco de frases** (`frases.json`, `BancoFrases`, `Frase`, `BancoFrasesException`): plantillas con huecos (`yo comer {comida}` → "Yo como {comida}.") y listas para completarlos. 96 plantillas (entre 22 y 26 por nivel) arman 1933 frases. Como cada prueba usa 12 plantillas, los tipos de frase cambian de un intento a otro. Al cargarse, cada frase se valida contra el banco de señas: todas sus señas existen (o se deletrean, si llevan `#`), ninguna es de un nivel mayor y al menos una es del nivel de la frase. Las inválidas se descartan y quedan en `BancoFrases.Avisos`.
 - **Prueba final con frases:** 12 frases y 8 palabras (`PruebaFinal.ElegirFrases`, repartidas entre plantillas). La frase se reproduce seña por seña con `ReproductorSecuencia` (la misma lógica que el Traductor), con "Repetir frase" (R) y pausa. Se responde con `PreguntaFrase` entre 4 traducciones: las incorrectas son de la misma plantilla y cambian la menor cantidad de palabras posible (`GeneradorPreguntas.CrearFrase`). El resultado muestra palabras y frases por separado. Si el banco de frases no se puede cargar, la prueba sale solo con palabras y lo avisa.
 - **Examen final y certificado:** la prueba de Avanzado es el examen final de HandUp (`PruebaFinal.EsExamenFinal`). No desbloquea nada: aprobarlo con 80% o más por primera vez completa HandUp. `ServicioProgreso` dispara el evento `HandUpCompletado`, y el menú abre `FelicitacionesWindow`, con la vista previa del certificado y "Descargar certificado". El certificado (`CertificadoVisual`, `CertificadoHandUp`) es un A4 horizontal con la estética de la app: nombre, porcentaje, fecha en que lo aprobó (columna `FechaAprobada` de `PruebasFinales`) y número (`HU-AAAAMMDD-perfil`). `CertificadoExportador` lo guarda como PDF (escrito a mano, sin librerías) o PNG. Después queda en Mi perfil, con "Ver certificado".
@@ -138,11 +138,33 @@ Solución: `ProyectoFinal.sln`, proyecto `ProyectoFinal.csproj` (`net8.0-windows
 
 > Nota: esta sección refleja el estado al 2026-10-17. Actualizala a medida que se avance.
 
+## Fuentes
+
+Sale del campo `source` de `signs_database.json` (contado el 2026-10-20). Las 640 señas tienen fuente. Es la misma lista que la sección "Fuentes del material" de la guía; acá van además los ids de YouTube de los clips, para el informe.
+
+- **Señario, diccionario de LSA:** 399 señas (249 de la versión 2 y 150 de la versión 1). Es la base del banco: videos, imágenes y descripciones.
+- **LSA Database:** 164 señas, grabadas en Full HD frente a una pared blanca. Parte son del dataset LSA64: Ronchetti, F., Quiroga, F., Estrebou, C., Lanzarini, L. y Rosete, A. (2016). *LSA64: An Argentinian Sign Language Dataset*. III-LIDI, Facultad de Informática, UNLP. LSA64 tiene 64 señas, así que no todas las de LSA Database pueden venir de ahí.
+- **LSA Oficial (YouTube):** 40 señas.
+- **Clips de YouTube** (recortados y con el texto sobreimpreso tapado para las preguntas):
+  - Signs of Love: Vocabulario de los saludos (`_muAHDVEItk`), de los verbos (`SHB1Rlg6uvM`), Categorías de verbos (`1ICc2IZuy6A`), de los lugares (`BD7h2yxvKwo`), del hogar (`WIV9V42FeQg`) y del transporte (`gPXlc7IaYYM`). 15 señas.
+  - Dirección de Documentación: Pronombres en LSA (`iPKG67lXuoc`) y Verbos en LSA (`qo-uIEi3ko8`). 4 señas.
+  - Prof. Fabián Gervasoni: LSA preguntas y pronombres (`3dtU2H8X_lA`) y Adverbios de cantidad (`xxZXycZMkyk`). 4 señas.
+  - Adjetivos en LSA Parte I (`vBSQD1A3OIg`). 4 señas.
+  - ULSA: Listado de verbos en LSA (12) (`1XW6tOX3Y1Y`) y Preguntas en LSA (`W0M9GY_1EgI`). 3 señas.
+  - Maxi Villarruel: LSA Lugares (`W18Q4ZqWBbo`), Palabras varias 4 (`9FbH1aIYMoc`) y Palabras varias 9 (`SJrDqJA5E_E`). 3 señas.
+  - LSA con Tere: Adjetivos en LSA (`RH0ndn0_DMA`). 2 señas.
+  - Fundación Effata: Medios de transporte en LSA (`IiJmufvvX-c`). 1 seña.
+  - Capacitación en LSA: Clase 4, Familia (`feV-ra7rvPA`). 1 seña.
+
+Los ids de YouTube salen de `fix_clips.py`, el script que recortó y tapó los clips (lo tiene Lorenzo; falta subirlo al repo).
+
 ## Pendientes del equipo
 
 - Definir la fecha límite real (Sprint 0 sigue sin fecha).
 - Repartir los 5 módulos entre los 2 o 3 integrantes.
-- Citar las fuentes del material (Señario V2, LSA16) en el informe.
+- Citar las fuentes en el informe (la lista está en "Fuentes").
+- Subir `fix_clips.py` al repo.
+- Confirmar qué señas de LSA Database son del dataset LSA64.
 
 ## Cómo trabajar
 

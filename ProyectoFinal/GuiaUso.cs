@@ -54,6 +54,7 @@ namespace ProyectoFinal
         public string Glifo { get; set; } = "E946";     // código del ícono en Segoe Fluent Icons (por defecto, "información")
         public string Resumen { get; set; } = string.Empty;
         public List<string> Pasos { get; set; } = new();
+        public string TituloPasos { get; set; } = "Cómo se usa";  // título de la lista de pasos (en Fuentes es "Fuentes")
         public List<AtajoGuia> Atajos { get; set; } = new();
         public string? Consejo { get; set; }
         public List<CapturaGuia> Capturas { get; set; } = new();

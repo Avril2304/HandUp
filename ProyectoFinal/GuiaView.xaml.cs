@@ -158,7 +158,7 @@ namespace ProyectoFinal
             if (seccion.Pasos.Count == 0)
                 return;
 
-            pnlContenido.Children.Add(Subtitulo("CÓMO SE USA", ""));
+            pnlContenido.Children.Add(Subtitulo(seccion.TituloPasos.ToUpperInvariant(), ""));
             for (int i = 0; i < seccion.Pasos.Count; i++)
             {
                 var numero = new Border { Width = 24, Height = 24, CornerRadius = new CornerRadius(12), Margin = new Thickness(0, 1, 12, 0),

@@ -232,6 +232,28 @@
         { "teclas": "R / C / F / E", "accion": "Traductor: repetir, cambiar significado, pantalla completa, exportar" },
         { "teclas": "Tab", "accion": "Pasar al siguiente control" }
       ]
+    },
+    {
+      "id": "fuentes",
+      "titulo": "Fuentes del material",
+      "glifo": "E8F1",
+      "resumen": "Los videos, las imágenes y las descripciones de las señas salen de diccionarios y videos de Lengua de Señas Argentina hechos por docentes, intérpretes y la comunidad sorda. Los clips se recortaron y se les tapó el texto sobreimpreso para poder usarlos en las preguntas.",
+      "tituloPasos": "Fuentes",
+      "pasos": [
+        "Señario, diccionario de LSA (versiones 1 y 2): 399 señas. Es la base del banco.",
+        "LSA Database: 164 señas. Parte de ellas son del dataset LSA64 de la Universidad Nacional de La Plata.",
+        "LSA Oficial (YouTube): 40 señas.",
+        "Signs of Love (YouTube): Vocabulario de los saludos, de los verbos, de los lugares, del hogar y del transporte, y Categorías de verbos. 15 señas.",
+        "Dirección de Documentación (YouTube): Verbos en LSA y Pronombres en LSA. 4 señas.",
+        "Prof. Fabián Gervasoni (YouTube): LSA preguntas y pronombres, y Adverbios de cantidad. 4 señas.",
+        "Adjetivos en LSA Parte I (YouTube): 4 señas.",
+        "ULSA (YouTube): Listado de verbos en LSA (12) y Preguntas en LSA. 3 señas.",
+        "Maxi Villarruel (YouTube): LSA Lugares, y Palabras varias 4 y 9. 3 señas.",
+        "LSA con Tere (YouTube): Adjetivos en LSA. 2 señas.",
+        "Fundación Effata (YouTube): Medios de transporte en LSA. 1 seña.",
+        "Capacitación en LSA (YouTube): Clase 4, Familia. 1 seña."
+      ],
+      "consejo": "El material es de sus autores. HandUp lo usa solo con fines educativos, como proyecto final de la materia Programación Genérica y Eventos."
     }
   ]
 }
