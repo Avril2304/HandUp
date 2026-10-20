@@ -54,6 +54,9 @@ namespace ProyectoFinal
         private int? _opcionElegida;
         private readonly List<Button> _botonesOpcion = new();
 
+        // Tabla de eventos del teclado: tecla → función que la atiende (ver ArmarTablaDeTeclas)
+        private readonly Dictionary<Key, Func<bool>> _accionesPorTecla = new();
+
         public PracticaView(IReadOnlyList<Sena> senasCategoria, PreferenciasUsuario preferencias, ServicioProgreso servicio)
             : this(senasCategoria, null, preferencias, servicio)
         {
@@ -73,6 +76,7 @@ namespace ProyectoFinal
             _preferencias = preferencias;
             _servicio = servicio;
             visor.TeclaPausar = _preferencias.TeclaPausar;
+            ArmarTablaDeTeclas();
 
             // Frases: muestra qué seña de la frase se está viendo; al terminar, cómo verla de nuevo
             _reproductor = new ReproductorSecuencia(visor);
@@ -633,6 +637,71 @@ namespace ProyectoFinal
         // ===== Teclado =====
         // Opciones: las teclas que el usuario eligió en Configuración (1-4 por defecto).
         // Confirmar / Siguiente: su tecla de Confirmar (Enter por defecto). Pausar: su tecla de Pausar.
+        //
+        // Es la "tabla de eventos" del bucle despachador: el KeyDown no pregunta tecla por tecla,
+        // busca la tecla en la tabla y llama a su función. Cada función devuelve si atendió la tecla;
+        // si devuelve false, la tecla sigue su camino (como los mensajes que van a DefWindowProc en Win32).
+
+        // Se arma una sola vez con las teclas del usuario. Se carga de menor a mayor prioridad,
+        // en el orden inverso al que se revisaban con if: Confirmar, Pausar, opciones y R.
+        private void ArmarTablaDeTeclas()
+        {
+            // R: ver la frase de nuevo desde el principio (también después de responder)
+            AgregarAccion(Key.R, () =>
+            {
+                if (_pregunta is not PreguntaFrase)
+                    return false;
+                RepetirFrase();
+                return true;
+            });
+
+            for (int numero = 1; numero <= 4; numero++)
+            {
+                int indice = numero - 1; // cada función se queda con su propia copia del índice
+                AgregarAccion(_preferencias.ObtenerTeclaOpcion(numero), () => ElegirOpcionPorTecla(indice));
+            }
+
+            AgregarAccion(_preferencias.TeclaPausar, AlternarPausaPorTecla);
+            AgregarAccion(_preferencias.TeclaConfirmar, () =>
+            {
+                ConfirmarOAvanzar();
+                return true;
+            });
+        }
+
+        // Si la tecla ya tenía una función (ej. R asignada también a una opción), la nueva se prueba primero
+        // y, si no la atiende, se prueba la anterior
+        private void AgregarAccion(Key tecla, Func<bool> accion)
+        {
+            _accionesPorTecla[tecla] = _accionesPorTecla.TryGetValue(tecla, out Func<bool>? anterior)
+                ? () => accion() || anterior()
+                : accion;
+        }
+
+        private bool ElegirOpcionPorTecla(int indice)
+        {
+            if (_pregunta is not PreguntaOpcionMultiple || _pregunta.FueRespondida || indice >= _botonesOpcion.Count)
+                return false;
+
+            ElegirOpcion(indice);
+            _botonesOpcion[indice].Focus();
+            return true;
+        }
+
+        private bool AlternarPausaPorTecla()
+        {
+            // Con el foco sobre una opción, Espacio la elige (como en cualquier botón) en vez de pausar
+            if (_preferencias.TeclaPausar == Key.Space && Keyboard.FocusedElement is Button b && _botonesOpcion.Contains(b))
+                return false;
+
+            // En una frase se pausa la secuencia entera (y no solo el video de la seña que se está viendo)
+            if (_pregunta is PreguntaFrase && _reproductor.Reproduciendo)
+                _reproductor.AlternarPausa();
+            else
+                visor.AlternarPausa();
+            return true;
+        }
+
         private void Vista_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (pnlPregunta.Visibility != Visibility.Visible || _pregunta is null || Keyboard.Modifiers != ModifierKeys.None)
@@ -656,46 +725,9 @@ namespace ProyectoFinal
             if (visor.IsKeyboardFocusWithin && e.Key is Key.Return or Key.Space)
                 return;
 
-            if (e.Key == _preferencias.TeclaConfirmar)
-            {
-                ConfirmarOAvanzar();
+            // Despacho: se busca la tecla en la tabla y se llama a su función
+            if (_accionesPorTecla.TryGetValue(e.Key, out Func<bool>? accion) && accion())
                 e.Handled = true;
-                return;
-            }
-
-            // Con el foco sobre una opción, Espacio la elige (como en cualquier botón) en vez de pausar
-            bool espacioSobreOpcion = e.Key == Key.Space && Keyboard.FocusedElement is Button b && _botonesOpcion.Contains(b);
-            if (e.Key == _preferencias.TeclaPausar && !espacioSobreOpcion)
-            {
-                // En una frase se pausa la secuencia entera (y no solo el video de la seña que se está viendo)
-                if (_pregunta is PreguntaFrase && _reproductor.Reproduciendo)
-                    _reproductor.AlternarPausa();
-                else
-                    visor.AlternarPausa();
-                e.Handled = true;
-                return;
-            }
-
-            if (_pregunta is PreguntaOpcionMultiple && !_pregunta.FueRespondida)
-            {
-                for (int numero = 1; numero <= _botonesOpcion.Count; numero++)
-                {
-                    if (e.Key == _preferencias.ObtenerTeclaOpcion(numero))
-                    {
-                        ElegirOpcion(numero - 1);
-                        _botonesOpcion[numero - 1].Focus();
-                        e.Handled = true;
-                        return;
-                    }
-                }
-            }
-
-            // R: ver la frase de nuevo desde el principio (también después de responder)
-            if (e.Key == Key.R && _pregunta is PreguntaFrase)
-            {
-                RepetirFrase();
-                e.Handled = true;
-            }
         }
 
         private static bool EsTeclaDeTexto(Key tecla) =>
