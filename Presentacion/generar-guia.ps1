@@ -40,7 +40,8 @@ foreach ($s in $guia.secciones) {
     $cuerpo = "<p class='resumen'>$(Html $s.resumen)</p>"
 
     if ($s.pasos) {
-        $cuerpo += "<h3><span class='ico'>&#xE8FD;</span>Cómo se usa</h3><ol class='pasos'>"
+        $tituloPasos = if ($s.tituloPasos) { $s.tituloPasos } else { 'Cómo se usa' }
+        $cuerpo += "<h3><span class='ico'>&#xE8FD;</span>$(Html $tituloPasos)</h3><ol class='pasos'>"
         foreach ($p in $s.pasos) { $cuerpo += "<li>$(Html $p)</li>" }
         $cuerpo += '</ol>'
     }
