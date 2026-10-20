@@ -241,10 +241,8 @@ namespace ProyectoFinal
             bool apurado = s <= 10;
             lblTiempo.SetResourceReference(TextBlock.ForegroundProperty, apurado ? "BrushError" : "BrushInk");
             icoTiempo.SetResourceReference(TextBlock.ForegroundProperty, apurado ? "BrushError" : "BrushAccentDark");
-            barraTiempo.SetResourceReference(Border.BackgroundProperty, apurado ? "BrushError" : "BrushAccent");
-            double proporcion = (double)s / PartidaDesafio.SegundosIniciales;
-            colTiempoLleno.Width = new GridLength(proporcion, GridUnitType.Star);
-            colTiempoVacio.Width = new GridLength(1 - proporcion, GridUnitType.Star);
+            barraTiempo.SetResourceReference(BarraTiempo.RellenoProperty, apurado ? "BrushError" : "BrushAccent");
+            barraTiempo.Proporcion = (double)s / PartidaDesafio.SegundosIniciales; // al cambiar, la barra se redibuja sola
 
             // Corazones llenos por las vidas que quedan y vacíos por las perdidas, más el número en texto
             lblCorazones.Text = new string('', _partida.Vidas) + new string('', PartidaDesafio.VidasIniciales - _partida.Vidas);

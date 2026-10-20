@@ -17,7 +17,12 @@ namespace ProyectoFinal
 
         // Se llegó desde "Practicar" en Mi perfil y se quiere volver ahí (Esc o el botón Volver)
         public event EventHandler? VolverAPerfilSolicitado;
-        private bool _vinoDeMiPerfil;
+
+        // Un paso al que se puede volver: el texto del botón Volver y cómo restaurar esa pantalla
+        private record PasoAnterior(string TextoVolver, Action Restaurar);
+
+        // Esc y el botón Volver sacan el último paso de acá. Vacío: se está en el primer paso (elegir nivel).
+        private readonly HistorialNavegacion<PasoAnterior> _historial = new();
 
         private readonly Perfil _perfil;
         private readonly PreferenciasUsuario _preferencias;
@@ -44,9 +49,13 @@ namespace ProyectoFinal
 
         // ===== Pasos =====
 
-        // Paso 1 (story "elegir un nivel de dificultad")
+        // Los Mostrar... solo arman la pantalla. El historial lo cargan los que avanzan (elegir nivel, categoría, etc.),
+        // así volver a un paso no lo vuelve a guardar.
+
+        // Paso 1 (story "elegir un nivel de dificultad"): es el primero, no hay a dónde volver
         private void MostrarNiveles()
         {
+            _historial.Reiniciar();
             _nivelElegido = null;
             _categoriaElegida = null;
             _vistaPrueba = null;
@@ -54,8 +63,23 @@ namespace ProyectoFinal
             contenidoPaso.Content = _vistaNiveles;
 
             lblPaso.Text = "Paso 1 de 3 · Elegí tu nivel (teclas 1 a 4)";
-            ActualizarBotonVolver("Volver al inicio");
+            ActualizarBotonVolver();
         }
+
+        // Pasos a los que se vuelve, con el foco en lo que se había elegido
+        private PasoAnterior PasoNiveles(NivelAprendizaje nivel) =>
+            new("Volver a los niveles", () =>
+            {
+                MostrarNiveles();
+                _vistaNiveles?.EnfocarNivel(nivel.Numero);
+            });
+
+        private PasoAnterior PasoCategorias(NivelAprendizaje nivel, CategoriaAprendizaje categoria) =>
+            new("Volver a las categorías", () =>
+            {
+                MostrarCategorias(nivel);
+                _vistaCategorias?.EnfocarCategoria(categoria.Categoria.Id);
+            });
 
         private ElegirNivelView CrearVistaNiveles()
         {
@@ -73,10 +97,11 @@ namespace ProyectoFinal
             var vista = new ElegirNivelView(_perfil, mejorPorcentaje);
             vista.NivelElegido += (s, nivel) =>
             {
+                _historial.Avanzar(PasoNiveles(nivel));
                 MostrarCategorias(nivel);
                 EnfocarContenido();
             };
-            vista.PruebaFinalSolicitada += (s, nivel) => MostrarPruebaFinal(nivel);
+            vista.PruebaFinalSolicitada += (s, nivel) => AvanzarAPruebaFinal(nivel);
             return vista;
         }
 
@@ -84,7 +109,14 @@ namespace ProyectoFinal
         public void RendirNivelacion()
         {
             if (_perfil.NivelacionPendiente is not null)
-                MostrarPruebaFinal(_perfil.NivelDePruebaFinal);
+                AvanzarAPruebaFinal(_perfil.NivelDePruebaFinal);
+        }
+
+        // Salir a mitad de la prueba final la abandona (no se guarda ningún resultado)
+        private void AvanzarAPruebaFinal(int nivel)
+        {
+            _historial.Avanzar(new PasoAnterior("Volver a los niveles", SalirDePrueba));
+            MostrarPruebaFinal(nivel);
         }
 
         // Prueba final del nivel: reutiliza la pantalla de Práctica en modo prueba.
@@ -99,6 +131,7 @@ namespace ProyectoFinal
                 NivelAprendizaje? desbloqueado = _vistaNiveles?.BuscarNivel(numero);
                 if (desbloqueado is not null && !desbloqueado.Bloqueado)
                 {
+                    _historial.Avanzar(PasoNiveles(desbloqueado));
                     MostrarCategorias(desbloqueado);
                     EnfocarContenido();
                 }
@@ -108,7 +141,7 @@ namespace ProyectoFinal
             lblPaso.Text = _perfil.NivelacionPendiente == nivel + 1
                 ? $"Prueba de nivelación para {Niveles.NombreDe(nivel + 1)} · aprobás con {PruebaFinal.PorcentajeParaAprobar}% o más"
                 : $"{PruebaFinal.Nombre(nivel)} · aprobás con {PruebaFinal.PorcentajeParaAprobar}% o más";
-            ActualizarBotonVolver("Volver a los niveles");
+            ActualizarBotonVolver();
             _vistaPrueba.EnfocarInicio();
         }
 
@@ -135,7 +168,7 @@ namespace ProyectoFinal
             contenidoPaso.Content = _vistaCategorias;
 
             lblPaso.Text = $"Paso 2 de 3 · {nivel.Nombre}: elegí una categoría";
-            ActualizarBotonVolver("Volver a los niveles");
+            ActualizarBotonVolver();
         }
 
         private ElegirCategoriaView CrearVistaCategorias(NivelAprendizaje nivel)
@@ -143,6 +176,7 @@ namespace ProyectoFinal
             var vista = new ElegirCategoriaView(nivel.Numero);
             vista.CategoriaElegida += (s, categoria) =>
             {
+                _historial.Avanzar(PasoCategorias(nivel, categoria));
                 MostrarSenas(categoria);
                 EnfocarContenido();
             };
@@ -154,7 +188,7 @@ namespace ProyectoFinal
         {
             _categoriaElegida = categoria;
             lblPaso.Text = $"Paso 3 de 3 · {categoria.Nombre}";
-            ActualizarBotonVolver("Volver a las categorías");
+            ActualizarBotonVolver();
 
             IReadOnlyList<Sena> senas;
             try
@@ -179,7 +213,8 @@ namespace ProyectoFinal
             contenidoPaso.Content = _vistaRecorrido;
         }
 
-        // Práctica (stories de opción múltiple, tipeo y Confirmar deshabilitado) con las señas de la categoría
+        // Práctica (stories de opción múltiple, tipeo y Confirmar deshabilitado) con las señas de la categoría.
+        // Es parte del paso 3, así que no se guarda en el historial: volver desde la práctica va a las categorías.
         private void MostrarPractica()
         {
             if (_categoriaElegida is null)
@@ -187,13 +222,24 @@ namespace ProyectoFinal
 
             lblPaso.Text = $"Práctica · {_categoriaElegida.Nombre}";
             _vistaPractica = new PracticaView(_senasCategoria, _preferencias, _servicio);
-            _vistaPractica.OtraCategoriaSolicitada += (s, e) =>
-            {
-                _vinoDeMiPerfil = false; // "Elegir otra categoría" va a las categorías, aunque se haya llegado desde Mi perfil
-                VolverUnPaso();
-            };
+            _vistaPractica.OtraCategoriaSolicitada += (s, e) => IrAOtraCategoria();
             contenidoPaso.Content = _vistaPractica;
             EnfocarContenido();
+        }
+
+        // "Elegir otra categoría" va a las categorías del nivel aunque se haya llegado desde Mi perfil,
+        // y desde ahí se vuelve a los niveles
+        private void IrAOtraCategoria()
+        {
+            if (_nivelElegido is null || _categoriaElegida is null)
+                return;
+
+            NivelAprendizaje nivel = _nivelElegido;
+            string categoriaAnterior = _categoriaElegida.Categoria.Id;
+            _historial.Reiniciar();
+            _historial.Avanzar(PasoNiveles(nivel));
+            MostrarCategorias(nivel);
+            _vistaCategorias?.EnfocarCategoria(categoriaAnterior);
         }
 
         // Desde "Practicar" en Mi perfil: va directo a la práctica de esa categoría.
@@ -230,12 +276,17 @@ namespace ProyectoFinal
 
             MostrarSenas(elegida);
             MostrarPractica();
-            _vinoDeMiPerfil = true;
-            ActualizarBotonVolver("Volver a Mi perfil");
+
+            // El único paso al que se vuelve es Mi perfil
+            _historial.Reiniciar();
+            _historial.Avanzar(new PasoAnterior("Volver a Mi perfil", () => VolverAPerfilSolicitado?.Invoke(this, EventArgs.Empty)));
+            ActualizarBotonVolver();
         }
 
-        private void ActualizarBotonVolver(string texto)
+        // El botón Volver dice a dónde lleva: el último paso del historial, o el inicio si no hay ninguno
+        private void ActualizarBotonVolver()
         {
+            string texto = _historial.TryVerAnterior(out PasoAnterior? anterior) ? anterior.TextoVolver : "Volver al inicio";
             lblVolver.Text = texto;
             btnVolver.ToolTip = $"{texto} (Esc)";
             AutomationProperties.SetName(btnVolver, texto);
@@ -259,37 +310,11 @@ namespace ProyectoFinal
 
         public bool VolverUnPaso()
         {
-            if (_vinoDeMiPerfil)
-            {
-                _vinoDeMiPerfil = false;
-                VolverAPerfilSolicitado?.Invoke(this, EventArgs.Empty);
-                return true;
-            }
+            if (!_historial.TryVolver(out PasoAnterior? anterior))
+                return false; // ya está en el primer paso: que el menú vuelva al inicio
 
-            // Salir a mitad de la prueba final la abandona (no se guarda ningún resultado)
-            if (_vistaPrueba is not null)
-            {
-                SalirDePrueba();
-                return true;
-            }
-
-            if (_categoriaElegida is not null && _nivelElegido is not null)
-            {
-                string idAnterior = _categoriaElegida.Categoria.Id;
-                MostrarCategorias(_nivelElegido);
-                _vistaCategorias?.EnfocarCategoria(idAnterior);
-                return true;
-            }
-
-            if (_nivelElegido is not null)
-            {
-                int numeroAnterior = _nivelElegido.Numero;
-                MostrarNiveles();
-                _vistaNiveles?.EnfocarNivel(numeroAnterior);
-                return true;
-            }
-
-            return false; // ya está en el primer paso: que el menú vuelva al inicio
+            anterior.Restaurar();
+            return true;
         }
 
         private void BtnVolver_Click(object sender, RoutedEventArgs e)
