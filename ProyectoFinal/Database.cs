@@ -340,9 +340,10 @@ namespace ProyectoFinal
                 {
                     File.Move(rutaJson, rutaJson + ".migrado", overwrite: true);
                 }
-                catch (IOException)
+                catch (IOException ex)
                 {
                     // No es grave: la migración ya quedó guardada en la base
+                    RegistroErrores.Registrar(ex, "Renombrar perfiles.json después de migrarlo");
                 }
             }
         }

@@ -131,8 +131,9 @@ namespace ProyectoFinal
             {
                 new RepositorioPreferencias().Guardar(prefs);
             }
-            catch (HandUpException)
+            catch (HandUpException ex)
             {
+                RegistroErrores.Registrar(ex, "Guardar las preferencias al iniciar sesión");
             }
         }
 

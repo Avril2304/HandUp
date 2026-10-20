@@ -64,9 +64,10 @@ namespace ProyectoFinal
             {
                 mejorPorcentaje = new RepositorioPerfiles().ObtenerMejorPorcentaje(_perfil.Id, _perfil.NivelDePruebaFinal);
             }
-            catch (DatabaseException)
+            catch (DatabaseException ex)
             {
                 // Sin base no mostramos el mejor resultado; la prueba igual se puede rendir
+                RegistroErrores.Registrar(ex, "Leer el mejor resultado de la prueba final");
             }
 
             var vista = new ElegirNivelView(_perfil, mejorPorcentaje);

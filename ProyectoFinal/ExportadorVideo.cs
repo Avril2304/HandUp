@@ -161,6 +161,7 @@ namespace ProyectoFinal
                 catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
                 {
                     // No es grave: es una carpeta temporal
+                    RegistroErrores.Registrar(ex, "Borrar la carpeta temporal del video exportado");
                 }
             }
         }
@@ -236,6 +237,7 @@ namespace ProyectoFinal
             catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
             {
                 // Si no se puede borrar el archivo a medio hacer, se deja
+                RegistroErrores.Registrar(ex, "Borrar el video a medio exportar");
             }
         }
     }

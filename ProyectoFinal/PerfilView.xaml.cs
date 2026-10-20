@@ -629,9 +629,10 @@ namespace ProyectoFinal
             {
                 certificado = _servicio.ObtenerCertificado();
             }
-            catch (DatabaseException)
+            catch (DatabaseException ex)
             {
                 // Sin base no se muestra; el resto de Mi perfil sigue funcionando
+                RegistroErrores.Registrar(ex, "Leer el certificado en Mi perfil");
             }
 
             if (certificado is null)

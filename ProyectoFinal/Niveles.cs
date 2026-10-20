@@ -33,9 +33,10 @@ namespace ProyectoFinal
                 if (niveles.Count == Respaldo.Length)
                     return niveles.Select(n => (n.Nombre, n.CantidadSenas)).ToList();
             }
-            catch (DatabaseException)
+            catch (DatabaseException ex)
             {
                 // Sin base usamos el respaldo; la app sigue funcionando
+                RegistroErrores.Registrar(ex, "Contar las señas de cada nivel");
             }
             return Respaldo;
         }
@@ -69,9 +70,10 @@ namespace ProyectoFinal
             {
                 dominadas = new RepositorioPerfiles().ContarDominadasDelNivel(perfil.Id, perfil.NivelDesbloqueado);
             }
-            catch (DatabaseException)
+            catch (DatabaseException ex)
             {
                 // Sin base mostramos la barra vacía; la app sigue funcionando
+                RegistroErrores.Registrar(ex, "Contar las señas dominadas del nivel");
             }
 
             string? siguiente = indice + 1 < Todos.Count ? Todos[indice + 1].Nombre : null;

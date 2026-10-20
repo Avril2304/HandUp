@@ -96,8 +96,9 @@ namespace ProyectoFinal
             {
                 new RepositorioPreferencias().Guardar(_preferencias);
             }
-            catch (HandUpException)
+            catch (HandUpException ex)
             {
+                RegistroErrores.Registrar(ex, "Guardar la barra lateral achicada o mostrada");
             }
         }
 
@@ -421,9 +422,10 @@ namespace ProyectoFinal
             {
                 new RepositorioPreferencias().Guardar(_preferencias);
             }
-            catch (HandUpException)
+            catch (HandUpException ex)
             {
                 // Si no se pudo guardar, la guía se vuelve a abrir la próxima vez: no es grave
+                RegistroErrores.Registrar(ex, "Guardar que la guía de bienvenida ya se vio");
             }
         }
 

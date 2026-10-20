@@ -303,9 +303,10 @@ namespace ProyectoFinal
             {
                 _historial = new RepositorioPerfiles().ObtenerHistorialSenas(_perfil.Id);
             }
-            catch (DatabaseException)
+            catch (DatabaseException ex)
             {
                 // Sin base se juega con el historial que ya teníamos
+                RegistroErrores.Registrar(ex, "Leer el historial de señas para jugar de nuevo");
             }
             Empezar();
         }
