@@ -148,7 +148,7 @@ namespace ProyectoFinal
             {
                 GuardarProgreso("Nombre");
             }
-            catch (Exception ex) when (ex is DatabaseException or UserNotFoundException)
+            catch (HandUpException)
             {
                 _perfil.Nombre = anterior; // si no se pudo guardar, en pantalla queda el nombre de antes
                 throw;
@@ -180,7 +180,7 @@ namespace ProyectoFinal
             {
                 GuardarProgreso("Contraseña");
             }
-            catch (Exception ex) when (ex is DatabaseException or UserNotFoundException)
+            catch (HandUpException)
             {
                 (_perfil.PasswordHash, _perfil.PasswordSalt) = (hashAnterior, salAnterior);
                 throw;

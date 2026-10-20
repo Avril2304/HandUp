@@ -275,7 +275,7 @@ namespace ProyectoFinal
                 new RepositorioPreferencias().Guardar(_preferencias);
                 return null;
             }
-            catch (Exception ex) when (ex is DatabaseException || ex is InvalidInputException)
+            catch (HandUpException ex)
             {
                 return $"No se pudo guardar el cambio: {ex.Message}";
             }

@@ -3,7 +3,7 @@ using System;
 namespace ProyectoFinal
 {
     // Envuelve cualquier error de SQLite para que las ventanas solo tengan que conocer excepciones propias
-    public class DatabaseException : Exception
+    public class DatabaseException : HandUpException
     {
         public DatabaseException(string message) : base(message)
         {

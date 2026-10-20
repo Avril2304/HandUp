@@ -512,7 +512,7 @@ namespace ProyectoFinal
             {
                 _resultadoPrueba = _servicio.RegistrarPruebaFinal(nivel, _aciertos, _ronda.Count);
             }
-            catch (Exception ex) when (ex is DatabaseException or UserNotFoundException)
+            catch (HandUpException)
             {
                 int porcentajeSinGuardar = PruebaFinal.Porcentaje(_aciertos, _ronda.Count);
                 _resultadoPrueba = new ResultadoPruebaFinal(nivel, _aciertos, _ronda.Count, porcentajeSinGuardar, null, Desbloqueo: false);

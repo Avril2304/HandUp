@@ -97,7 +97,7 @@ namespace ProyectoFinal
                 AbrirMenu(perfil);
                 Close();
             }
-            catch (Exception ex) when (ex is UserNotFoundException || ex is InvalidInputException || ex is DatabaseException)
+            catch (HandUpException ex)
             {
                 lblInfo.Visibility = Visibility.Collapsed;
                 lblError.Text = ex.Message;
@@ -131,7 +131,7 @@ namespace ProyectoFinal
             {
                 new RepositorioPreferencias().Guardar(prefs);
             }
-            catch (Exception ex) when (ex is DatabaseException || ex is InvalidInputException)
+            catch (HandUpException)
             {
             }
         }

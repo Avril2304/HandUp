@@ -3,7 +3,7 @@ using System;
 namespace ProyectoFinal
 {
     // No se pudo generar el video de una traducción (archivo en uso, sin permisos, falta una seña, etc.)
-    public class ExportacionException : Exception
+    public class ExportacionException : HandUpException
     {
         public ExportacionException() { }
 

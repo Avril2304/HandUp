@@ -94,7 +94,7 @@ namespace ProyectoFinal
                 sena = _partida.SiguienteSena();
                 _pregunta = _generador.CrearOpcionMultiple(sena);
             }
-            catch (Exception ex) when (ex is MazoVacioException or DatabaseException)
+            catch (HandUpException ex)
             {
                 MostrarMensaje(ex.Message);
                 return false;
@@ -172,7 +172,7 @@ namespace ProyectoFinal
             {
                 guardar();
             }
-            catch (Exception ex) when (ex is DatabaseException or UserNotFoundException)
+            catch (HandUpException)
             {
                 _avisoGuardado = true;
             }

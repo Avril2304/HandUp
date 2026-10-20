@@ -71,7 +71,7 @@ namespace ProyectoFinal
                 _accion(txtPassword.Password);
                 DialogResult = true;
             }
-            catch (Exception ex) when (ex is InvalidInputException or DatabaseException or UserNotFoundException)
+            catch (HandUpException ex)
             {
                 txtPassword.Clear(); // primero se limpia: al cambiar el campo se oculta el error anterior
                 lblError.Text = $"✗ {ex.Message}";

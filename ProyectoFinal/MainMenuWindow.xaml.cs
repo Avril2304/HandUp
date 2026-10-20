@@ -96,7 +96,7 @@ namespace ProyectoFinal
             {
                 new RepositorioPreferencias().Guardar(_preferencias);
             }
-            catch (Exception ex) when (ex is DatabaseException or InvalidInputException)
+            catch (HandUpException)
             {
             }
         }
@@ -421,7 +421,7 @@ namespace ProyectoFinal
             {
                 new RepositorioPreferencias().Guardar(_preferencias);
             }
-            catch (Exception ex) when (ex is DatabaseException or InvalidInputException)
+            catch (HandUpException)
             {
                 // Si no se pudo guardar, la guía se vuelve a abrir la próxima vez: no es grave
             }

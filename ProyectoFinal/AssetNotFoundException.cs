@@ -2,7 +2,7 @@ using System;
 
 namespace ProyectoFinal
 {
-    public class AssetNotFoundException : Exception
+    public class AssetNotFoundException : HandUpException
     {
         public AssetNotFoundException() { }
         

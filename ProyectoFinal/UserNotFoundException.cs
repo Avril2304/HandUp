@@ -2,7 +2,7 @@ using System;
 
 namespace ProyectoFinal
 {
-    public class UserNotFoundException : Exception
+    public class UserNotFoundException : HandUpException
     {
         public UserNotFoundException(string usuario)
             : base($"No existe un perfil registrado para el usuario '{usuario}'.")

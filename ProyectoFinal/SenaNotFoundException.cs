@@ -2,7 +2,7 @@ using System;
 
 namespace ProyectoFinal
 {
-    public class SenaNotFoundException : Exception
+    public class SenaNotFoundException : HandUpException
     {
         public SenaNotFoundException(int id)
             : base($"No se encontró la seña con Id {id}.") { }

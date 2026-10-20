@@ -435,7 +435,7 @@ namespace ProyectoFinal
             {
                 MostrarErrorNombre(ex.Message);
             }
-            catch (Exception ex) when (ex is DatabaseException or UserNotFoundException)
+            catch (HandUpException ex)
             {
                 MostrarErrorNombre($"No se pudo guardar el nombre. {ex.Message}");
             }
@@ -575,7 +575,7 @@ namespace ProyectoFinal
                 lblCuentaOk.Visibility = Visibility.Visible;
                 btnCambiarPassword.Focus();
             }
-            catch (Exception ex) when (ex is InvalidInputException or DatabaseException or UserNotFoundException)
+            catch (HandUpException ex)
             {
                 lblErrorPassword.Text = $"✗ {ex.Message}";
                 lblErrorPassword.Visibility = Visibility.Visible;

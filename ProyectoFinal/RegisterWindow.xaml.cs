@@ -57,7 +57,7 @@ namespace ProyectoFinal
                 else
                     IniciarRegresoAutomatico();
             }
-            catch (Exception ex) when (ex is InvalidInputException || ex is DatabaseException)
+            catch (HandUpException ex)
             {
                 MostrarError(ex.Message);
             }
@@ -117,7 +117,7 @@ namespace ProyectoFinal
                 new ServicioProgreso(_perfilRegistrado, _repositorio).DescartarNivelacion();
                 IrALogin();
             }
-            catch (Exception ex) when (ex is DatabaseException or UserNotFoundException)
+            catch (HandUpException ex)
             {
                 MostrarError(ex.Message);
             }
