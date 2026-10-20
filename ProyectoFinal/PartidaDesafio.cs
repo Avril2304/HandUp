@@ -28,10 +28,15 @@ namespace ProyectoFinal
         public bool SinTiempo => SegundosRestantes <= 0;
         public bool Terminada => SinVidas || SinTiempo;
 
-        // historial: aciertos y fallos guardados de cada seña (ProgresoSenas); las que más se fallaron salen más seguido
+        // historial: aciertos y fallos guardados de cada seña (ProgresoSenas); las que más se fallaron salen más seguido.
+        // Lanza MazoVacioException si no hay señas: se valida acá, antes de empezar, y no al pedir la primera.
         public PartidaDesafio(IEnumerable<Sena> senas, IReadOnlyDictionary<int, (int Aciertos, int Fallos)> historial, Random random)
         {
-            _mazo = new ColaRepeticionEspaciada<Sena>(senas, s => PesoSegunHistorial(s, historial), random);
+            List<Sena> mazo = senas.ToList();
+            if (mazo.Count == 0)
+                throw new MazoVacioException();
+
+            _mazo = new ColaRepeticionEspaciada<Sena>(mazo, s => PesoSegunHistorial(s, historial), random);
         }
 
         // Peso 1 si nunca la falló; sube con los fallos que superan a los aciertos (máximo 4)
@@ -44,7 +49,7 @@ namespace ProyectoFinal
 
         public int CantidadSenas => _mazo.Cantidad;
 
-        // Lanza MazoVacioException si no hay señas
+        // No se queda sin señas mientras se registre cada respuesta: RegistrarAcierto y RegistrarFallo la vuelven a la cola
         public Sena SiguienteSena() => _mazo.Siguiente();
 
         // Devuelve los puntos que sumó el acierto

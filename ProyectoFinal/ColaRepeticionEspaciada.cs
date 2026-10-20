@@ -37,10 +37,12 @@ namespace ProyectoFinal
             Math.Max(1, _pesoHistorico(elemento)) + _fallosEnPartida.GetValueOrDefault(elemento);
 
         // Saca el próximo elemento. Después hay que avisar si se acertó o se falló, para volver a ponerlo en la cola.
+        // Con la cola vacía lanza InvalidOperationException (igual que Queue<T>.Dequeue): quien la usa tiene que
+        // validar antes que haya elementos, porque la cola es genérica y no sabe qué significa quedarse sin ellos.
         public T Siguiente()
         {
             if (_cola.Count == 0)
-                throw new MazoVacioException();
+                throw new InvalidOperationException("La cola de repetición espaciada está vacía.");
 
             T elemento = _cola[0];
             _cola.RemoveAt(0);

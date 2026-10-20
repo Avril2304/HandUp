@@ -70,7 +70,15 @@ namespace ProyectoFinal
 
         private void Empezar()
         {
-            _partida = new PartidaDesafio(_senas, _historial, _random);
+            try
+            {
+                _partida = new PartidaDesafio(_senas, _historial, _random);
+            }
+            catch (MazoVacioException ex)
+            {
+                MostrarMensaje(ex.Message);
+                return;
+            }
             _mejorRachaAntes = _perfil.MejorRacha;
             _avisoGuardado = false;
 
