@@ -39,6 +39,12 @@
     <Content Include="..\Presentacion\HandUp - Guia de uso.pdf" Link="Guia\HandUp - Guia de uso.pdf" CopyToOutputDirectory="PreserveNewest" Condition="Exists('..\Presentacion\HandUp - Guia de uso.pdf')" />
   </ItemGroup>
 
+  <!-- Al publicar como un solo .exe (Presentacion\publicar.ps1), todo lo anterior tiene que quedar suelto
+       junto al ejecutable: si se mete adentro del .exe, la app no lo encuentra al buscarlo en disco -->
+  <ItemGroup>
+    <Content Update="@(Content)" ExcludeFromSingleFile="true" />
+  </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.12" />
   </ItemGroup>
