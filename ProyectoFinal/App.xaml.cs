@@ -54,6 +54,17 @@ namespace ProyectoFinal
                 return;
             }
 
+            try
+            {
+                // Perfil "prueba" con todo desbloqueado, para recorrer la app completa (ver PerfilDePrueba)
+                PerfilDePrueba.CrearSiFalta();
+            }
+            catch (DatabaseException ex)
+            {
+                // Sin el perfil de prueba la app funciona igual: solo queda anotado
+                RegistroErrores.Registrar(ex, "Crear el perfil de prueba");
+            }
+
             var login = new LoginWindow();
             login.Show();
         }

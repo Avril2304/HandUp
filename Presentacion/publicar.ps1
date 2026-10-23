@@ -53,7 +53,11 @@ CÓMO ABRIR HANDUP
    Es porque el programa es nuevo, no porque tenga algo malo.
    Tocá "Más información" y después "Ejecutar de todas formas".
 
-5. Creá tu perfil con un nombre de usuario y una contraseña, y listo.
+5. Para ver todo el programa, entrá con el perfil de prueba:
+      Usuario:     prueba
+      Contraseña:  1234
+   Tiene todos los niveles desbloqueados (solo le falta rendir el examen final).
+   Si preferís empezar de cero, creá tu propio perfil con "Creala acá" (abajo de "Iniciar sesión").
    Dentro de la app, el botón "i" (o la tecla F1) abre una guía de uso.
 
 No hace falta instalar nada. No borres ni muevas las otras carpetas y archivos:
