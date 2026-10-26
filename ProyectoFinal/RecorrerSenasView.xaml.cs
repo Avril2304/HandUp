@@ -56,6 +56,11 @@ namespace ProyectoFinal
             colAvanceLleno.Width = new GridLength(avance, GridUnitType.Star);
             colAvanceVacio.Width = new GridLength(1 - avance, GridUnitType.Star);
 
+            // Primero la sistematización LSA y abajo nuestra descripción del movimiento
+            var parametros = sena.ParametrosLsa;
+            lstParametros.ItemsSource = parametros;
+            pnlSistematizacion.Visibility = parametros.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
+
             lblDescripcion.Text = string.IsNullOrWhiteSpace(sena.Descripcion)
                 ? "Todavía no hay una descripción para esta seña."
                 : sena.Descripcion;

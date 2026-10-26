@@ -6,12 +6,12 @@
       "id": "que-es",
       "titulo": "¿Qué es HandUp?",
       "glifo": "E946",
-      "resumen": "HandUp es una app para aprender Lengua de Señas Argentina (LSA) a tu ritmo. Tiene 640 señas en 24 categorías, ordenadas en 4 niveles: Principiante, Básico, Intermedio y Avanzado. Cada seña tiene un video (o una imagen, en el abecedario y los números) y la descripción del movimiento de las manos.",
+      "resumen": "HandUp es una app para aprender Lengua de Señas Argentina (LSA) a tu ritmo. Tiene 640 señas en 24 categorías, ordenadas en 4 niveles: Principiante, Básico, Intermedio y Avanzado. Cada seña tiene un video (o una imagen, en el abecedario y los números), su sistematización en LSA (configuración, ubicación, orientación, movimiento...) y la descripción del movimiento de las manos.",
       "pasos": [
         "Aprender: elegís un nivel y una categoría, mirás las señas de a una y después practicás con preguntas.",
         "Prueba final: palabras y frases del nivel. Al aprobarla con 80% o más se desbloquea el nivel siguiente. La de Avanzado es el examen final: al aprobarlo obtenés tu certificado de HandUp.",
         "Desafío: una partida contrarreloj con vidas, puntaje y racha, donde las señas que más fallás aparecen más seguido.",
-        "Traductor: escribís una palabra o una frase y la ves en señas. Lo que no está en el banco se deletrea.",
+        "Intérprete: escribís una palabra o una frase y la ves en señas. Lo que no está en el banco se deletrea.",
         "Diccionario: un buscador de todas las señas, con filtros.",
         "Mi perfil y Configuración: tu progreso, tus estadísticas y las opciones de accesibilidad."
       ],
@@ -69,7 +69,7 @@
       "pasos": [
         "Elegí un nivel. Los que todavía no desbloqueaste se ven con candado y te dicen qué prueba tenés que aprobar.",
         "Elegí una categoría del nivel (por ejemplo Saludos, Familia o Alimentos).",
-        "Recorré las señas de a una: cada una tiene su video, la descripción del movimiento y los pasos. Debajo del video tenés Pausar, Repetir, Más lento y pantalla completa.",
+        "Recorré las señas de a una: cada una tiene su video, la sistematización LSA (configuración, ubicación, orientación, movimiento), la descripción del movimiento y los pasos. Debajo del video tenés Pausar, Repetir, Más lento y pantalla completa.",
         "Al terminar, tocá Practicar: son hasta 10 preguntas de la categoría. Algunas se responden eligiendo entre 4 opciones y otras escribiendo la palabra.",
         "El botón Confirmar se habilita recién cuando elegiste o escribiste una respuesta. Cada respuesta suma a tu progreso."
       ],
@@ -138,18 +138,18 @@
     },
     {
       "id": "traductor",
-      "titulo": "Traductor",
+      "titulo": "Intérprete",
       "glifo": "E8C1",
       "resumen": "Escribís una palabra o una frase en español y la ves en señas, una detrás de otra.",
       "pasos": [
-        "Escribí el texto y apretá Enter (o Traducir).",
+        "Escribí el texto y apretá Enter (o Interpretar).",
         "Si una palabra no está en el banco (por ejemplo un nombre propio), se deletrea letra por letra.",
         "Los números escritos con cifras usan su seña (\"5\" se muestra como Cinco). Los artículos (el, la, un…) se muestran pero no se señan.",
         "Algunas palabras tienen más de un significado (naranja, papa/papá, uno…). Aparece un aviso y podés cambiar de significado con la tecla C. Si escribís con tilde, elige el que corresponde.",
-        "Podés ver la traducción en pantalla completa, o exportarla como video MP4 para compartirla."
+        "Podés ver la interpretación en pantalla completa, o exportarla como video MP4 para compartirla."
       ],
       "atajos": [
-        { "teclas": "Enter", "accion": "Traducir" },
+        { "teclas": "Enter", "accion": "Interpretar" },
         { "teclas": "Espacio", "accion": "Pausar o reanudar" },
         { "teclas": "R", "accion": "Repetir desde el principio" },
         { "teclas": "C", "accion": "Cambiar el significado de una palabra con varios" },
@@ -157,7 +157,7 @@
         { "teclas": "E", "accion": "Exportar como video MP4" }
       ],
       "capturas": [
-        { "archivo": "traductor.png", "pie": "Traductor deletreando un nombre" }
+        { "archivo": "traductor.png", "pie": "Intérprete deletreando un nombre" }
       ]
     },
     {
@@ -168,7 +168,7 @@
       "pasos": [
         "Escribí en el buscador: los resultados se filtran mientras escribís.",
         "Podés filtrar por categoría y por tipo de seña (con video o con imagen). Los filtros se pueden combinar.",
-        "Elegí una seña para ver su video, la descripción del movimiento y los pasos para hacerla.",
+        "Elegí una seña para ver su video, la sistematización LSA, la descripción del movimiento y los pasos para hacerla.",
         "El Diccionario no tiene niveles bloqueados: podés consultar cualquier seña."
       ],
       "atajos": [
@@ -225,11 +225,11 @@
         { "teclas": "F1", "accion": "Abrir esta guía" },
         { "teclas": "1 a 4", "accion": "Elegir nivel u opción de respuesta" },
         { "teclas": "← / →", "accion": "Seña anterior / siguiente" },
-        { "teclas": "Enter", "accion": "Confirmar, traducir o iniciar sesión" },
+        { "teclas": "Enter", "accion": "Confirmar, interpretar o iniciar sesión" },
         { "teclas": "Espacio", "accion": "Pausar o reanudar el video" },
         { "teclas": "P", "accion": "Rendir la prueba final" },
         { "teclas": "R", "accion": "Prueba final: ver la frase de nuevo" },
-        { "teclas": "R / C / F / E", "accion": "Traductor: repetir, cambiar significado, pantalla completa, exportar" },
+        { "teclas": "R / C / F / E", "accion": "Intérprete: repetir, cambiar significado, pantalla completa, exportar" },
         { "teclas": "Tab", "accion": "Pasar al siguiente control" }
       ]
     },

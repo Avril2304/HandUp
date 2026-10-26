@@ -151,7 +151,8 @@ namespace ProyectoFinal
                     Descripcion   TEXT    NOT NULL,
                     Instrucciones TEXT,
                     RutaImagen    TEXT    NOT NULL,
-                    RutaVideo     TEXT
+                    RutaVideo     TEXT,
+                    Sistematizacion TEXT     -- parámetros LSA (Parámetro: valor), uno por línea
                 );
                 CREATE INDEX IF NOT EXISTS IX_Senas_CategoriaId ON Senas(CategoriaId);
 
@@ -252,7 +253,8 @@ namespace ProyectoFinal
                 "ALTER TABLE Preferencias ADD COLUMN GuiaVista INTEGER NOT NULL DEFAULT 0;",
                 "ALTER TABLE Perfiles ADD COLUMN RachaDias INTEGER NOT NULL DEFAULT 0;",
                 "ALTER TABLE Perfiles ADD COLUMN MejorRachaDias INTEGER NOT NULL DEFAULT 0;",
-                "ALTER TABLE Perfiles ADD COLUMN UltimoDiaPractica TEXT;"
+                "ALTER TABLE Perfiles ADD COLUMN UltimoDiaPractica TEXT;",
+                "ALTER TABLE Senas ADD COLUMN Sistematizacion TEXT;"
             };
 
             foreach (var alter in columnasAAgregar)

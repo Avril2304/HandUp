@@ -96,13 +96,13 @@
                         </Grid>
                     </Button>
                     <Button x:Name="navTraductor" Style="{StaticResource NavItem}" Click="Nav_Click"
-                            CommandParameter="{x:Static local:Seccion.Traductor}" AutomationProperties.Name="Traductor">
+                            CommandParameter="{x:Static local:Seccion.Traductor}" AutomationProperties.Name="Intérprete">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="28"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="&#xE8C1;" FontFamily="{StaticResource FontIconos}" FontSize="16" VerticalAlignment="Center"/>
-                            <TextBlock Grid.Column="1" Text="Traductor" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="1" Text="Intérprete" VerticalAlignment="Center"/>
                             <TextBlock Grid.Column="2" Text="Ctrl+3" FontSize="11" Foreground="{DynamicResource BrushSidebarMuted}" VerticalAlignment="Center"/>
                         </Grid>
                     </Button>
@@ -318,7 +318,7 @@
                     <!-- 3. Traductor -->
                     <Button Grid.Column="4" Grid.Row="0" x:Name="tileTraductor" Style="{StaticResource MenuTile}"
                             Click="Nav_Click" CommandParameter="{x:Static local:Seccion.Traductor}"
-                            AutomationProperties.Name="Traductor. Atajo: tecla 3">
+                            AutomationProperties.Name="Intérprete. Atajo: tecla 3">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/>
@@ -330,7 +330,7 @@
                             <Border Style="{StaticResource AtajoBadge}">
                                 <TextBlock Text="3" FontSize="12" FontWeight="Bold" Foreground="{DynamicResource BrushAccentDark}"/>
                             </Border>
-                            <TextBlock Grid.Row="1" Text="Traductor" FontFamily="{StaticResource FontHeading}" FontSize="20" FontWeight="Bold" Margin="0,12,0,0"/>
+                            <TextBlock Grid.Row="1" Text="Intérprete" FontFamily="{StaticResource FontHeading}" FontSize="20" FontWeight="Bold" Margin="0,12,0,0"/>
                             <TextBlock Grid.Row="2" Text="De texto a señas" FontSize="12.5"
                                        Foreground="{DynamicResource BrushMuted}" TextWrapping="Wrap" Margin="0,4,0,0"/>
                         </Grid>

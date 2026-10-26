@@ -175,8 +175,8 @@ namespace ProyectoFinal
             {
                 insertarSena.Transaction = transaccion;
                 insertarSena.CommandText = @"
-                    INSERT INTO Senas (Id, Codigo, Palabra, CategoriaId, Dificultad, Descripcion, Instrucciones, RutaImagen, RutaVideo)
-                    VALUES ($id, $codigo, $palabra, $categoria, $dificultad, $descripcion, $instrucciones, $imagen, $video);";
+                    INSERT INTO Senas (Id, Codigo, Palabra, CategoriaId, Dificultad, Descripcion, Instrucciones, RutaImagen, RutaVideo, Sistematizacion)
+                    VALUES ($id, $codigo, $palabra, $categoria, $dificultad, $descripcion, $instrucciones, $imagen, $video, $sistematizacion);";
 
                 foreach ((int id, SenaJson sena) in senas)
                 {
@@ -195,6 +195,7 @@ namespace ProyectoFinal
                     insertarSena.Parameters.AddWithValue("$instrucciones", ValorONull(instrucciones));
                     insertarSena.Parameters.AddWithValue("$imagen", sena.Media!.ImagenEstatica!.Trim());
                     insertarSena.Parameters.AddWithValue("$video", ValorONull(sena.Media.Video));
+                    insertarSena.Parameters.AddWithValue("$sistematizacion", ValorONull(sena.Sistematizacion?.ComoLineas()));
                     insertarSena.ExecuteNonQuery();
                 }
             }
@@ -266,6 +267,35 @@ namespace ProyectoFinal
             [JsonPropertyName("description")] public string? Descripcion { get; set; }
             [JsonPropertyName("instructions")] public List<string>? Instrucciones { get; set; }
             [JsonPropertyName("media")] public MediaJson? Media { get; set; }
+            [JsonPropertyName("sistematizacion")] public SistematizacionJson? Sistematizacion { get; set; }
+        }
+
+        // Parámetros con los que se sistematiza una seña en LSA
+        private class SistematizacionJson
+        {
+            [JsonPropertyName("configuracion")] public string? Configuracion { get; set; }
+            [JsonPropertyName("ubicacion")] public string? Ubicacion { get; set; }
+            [JsonPropertyName("orientacion")] public string? Orientacion { get; set; }
+            [JsonPropertyName("movimiento")] public string? Movimiento { get; set; }
+            [JsonPropertyName("direccion")] public string? Direccion { get; set; }
+            [JsonPropertyName("rasgo_no_manual")] public string? RasgoNoManual { get; set; }
+
+            // Se guarda en la base como "Parámetro: valor", uno por línea y en este orden (los vacíos no van)
+            public string ComoLineas()
+            {
+                var parametros = new (string Nombre, string? Valor)[]
+                {
+                    ("Configuración", Configuracion),
+                    ("Ubicación", Ubicacion),
+                    ("Orientación", Orientacion),
+                    ("Movimiento", Movimiento),
+                    ("Dirección", Direccion),
+                    ("Rasgo no manual", RasgoNoManual)
+                };
+                return string.Join("\n", parametros
+                    .Where(p => !string.IsNullOrWhiteSpace(p.Valor))
+                    .Select(p => $"{p.Nombre}: {p.Valor!.Trim()}"));
+            }
         }
 
         private class MediaJson

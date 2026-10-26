@@ -228,12 +228,17 @@ namespace ProyectoFinal
             lblBadgeNivel.Text = $"Nivel {sena.Dificultad}";
             lblBadgeTipo.Text = sena is SenaAnimada ? "🎬 Animada (Video)" : "📷 Estática (Imagen)";
 
-            // 4. Descripción del movimiento (Story 13)
+            // 4. Sistematización LSA (configuración, ubicación, orientación...) arriba de nuestra descripción
+            var parametros = sena.ParametrosLsa;
+            lstParametros.ItemsSource = parametros;
+            pnlSistematizacion.Visibility = parametros.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
+
+            // 5. Descripción del movimiento (Story 13)
             lblDescripcion.Text = string.IsNullOrWhiteSpace(sena.Descripcion)
                 ? "Sin descripción disponible para esta seña."
                 : sena.Descripcion;
 
-            // 5. Paso a paso de instrucciones (Story 13: solo se muestra si existen)
+            // 6. Paso a paso de instrucciones (Story 13: solo se muestra si existen)
             var instrucciones = sena.ListaInstrucciones;
             if (instrucciones.Count > 0)
             {

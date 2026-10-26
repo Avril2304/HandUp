@@ -61,7 +61,7 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <StackPanel>
-                <TextBlock Text="Traductor" FontFamily="{StaticResource FontHeading}" FontSize="26"
+                <TextBlock Text="Intérprete" FontFamily="{StaticResource FontHeading}" FontSize="26"
                            FontWeight="Bold" Foreground="{DynamicResource BrushInk}"/>
                 <TextBlock Text="Escribí una palabra o frase y mirá cómo se dice en señas. Lo que no esté en el diccionario se deletrea."
                            FontSize="13.5" Foreground="{DynamicResource BrushMuted}" Margin="0,3,0,0" TextWrapping="Wrap"/>
@@ -88,15 +88,15 @@
                     <Grid>
                         <TextBox x:Name="txtTexto" Style="{StaticResource RoundedTextBox}" Height="46" FontSize="16"
                                  MaxLength="200" TextChanged="TxtTexto_TextChanged"
-                                 AutomationProperties.Name="Palabra o frase a traducir. Enter para traducir"/>
+                                 AutomationProperties.Name="Palabra o frase a interpretar. Enter para interpretar"/>
                         <TextBlock x:Name="lblPlaceholder" Text="Ej.: Hola, me llamo Ana" FontSize="15" Margin="15,0,0,0"
                                    VerticalAlignment="Center" Foreground="{DynamicResource BrushMuted}" IsHitTestVisible="False"/>
                     </Grid>
                     <Button Grid.Column="2" x:Name="btnTraducir" Style="{StaticResource PrimaryButton}" Height="46"
-                            IsEnabled="False" Click="BtnTraducir_Click" AutomationProperties.Name="Traducir a señas">
+                            IsEnabled="False" Click="BtnTraducir_Click" AutomationProperties.Name="Interpretar en señas">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="&#xE8C1;" FontFamily="{StaticResource FontIconos}" FontSize="15" VerticalAlignment="Center"/>
-                            <TextBlock Text="Traducir (Enter)" Margin="8,0,0,0" VerticalAlignment="Center"/>
+                            <TextBlock Text="Interpretar (Enter)" Margin="8,0,0,0" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
                 </Grid>
@@ -153,7 +153,7 @@
                     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" MaxWidth="400" Margin="24">
                         <TextBlock Text="&#xE8C1;" FontFamily="{StaticResource FontIconos}" FontSize="40"
                                    Foreground="{DynamicResource BrushAccent}" HorizontalAlignment="Center"/>
-                        <TextBlock Text="Escribí arriba lo que quieras traducir" FontFamily="{StaticResource FontHeading}"
+                        <TextBlock Text="Escribí arriba lo que quieras interpretar" FontFamily="{StaticResource FontHeading}"
                                    FontSize="19" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,12,0,0"
                                    Foreground="{DynamicResource BrushInk}" TextAlignment="Center" TextWrapping="Wrap"/>
                         <TextBlock FontSize="13.5" Foreground="{DynamicResource BrushMuted}" TextWrapping="Wrap"
@@ -187,11 +187,17 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Text="TRADUCCIÓN" FontSize="11.5" FontWeight="Bold" Foreground="{DynamicResource BrushMuted}"/>
+                    <StackPanel>
+                        <TextBlock Text="INTERPRETACIÓN" FontSize="11.5" FontWeight="Bold" Foreground="{DynamicResource BrushMuted}"/>
+                        <!-- Aviso: la interpretación es seña por seña y no sigue toda la gramática de la LSA -->
+                        <TextBlock Text="* Esta interpretación es aproximada y no es 100% verídica."
+                                   FontSize="10.5" FontStyle="Italic" Foreground="{DynamicResource BrushMuted}"
+                                   TextWrapping="Wrap" Margin="0,2,0,0"/>
+                    </StackPanel>
 
                     <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Focusable="False" Margin="0,8,0,0">
                         <StackPanel>
-                            <TextBlock x:Name="lblSinTraduccion" Text="Acá vas a ver cada palabra y cómo se traduce. Hacé clic en una para verla de nuevo."
+                            <TextBlock x:Name="lblSinTraduccion" Text="Acá vas a ver cada palabra y cómo se interpreta. Hacé clic en una para verla de nuevo."
                                        FontSize="13" Foreground="{DynamicResource BrushMuted}" TextWrapping="Wrap"/>
                             <WrapPanel x:Name="pnlElementos"/>
                         </StackPanel>
@@ -213,14 +219,14 @@
                                 </StackPanel>
                             </Button>
                             <Button Grid.Column="2" x:Name="btnRepetir" Style="{StaticResource SecondaryButton}" Click="BtnRepetir_Click"
-                                    IsEnabled="False" AutomationProperties.Name="Repetir la traducción desde el principio" ToolTip="Repetir (R)">
+                                    IsEnabled="False" AutomationProperties.Name="Repetir la interpretación desde el principio" ToolTip="Repetir (R)">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="&#xE72C;" FontFamily="{StaticResource FontIconos}" FontSize="13" VerticalAlignment="Center"/>
                                     <TextBlock Text="Repetir" Margin="6,0,0,0" VerticalAlignment="Center"/>
                                 </StackPanel>
                             </Button>
                             <Button Grid.Column="4" x:Name="btnDetener" Style="{StaticResource SecondaryButton}" Click="BtnDetener_Click"
-                                    IsEnabled="False" AutomationProperties.Name="Detener la traducción" ToolTip="Detener (Esc)">
+                                    IsEnabled="False" AutomationProperties.Name="Detener la interpretación" ToolTip="Detener (Esc)">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="&#xE71A;" FontFamily="{StaticResource FontIconos}" FontSize="13" VerticalAlignment="Center"/>
                                     <TextBlock Text="Detener" Margin="6,0,0,0" VerticalAlignment="Center"/>
@@ -238,8 +244,8 @@
 
                         <!-- Exportar la traducción como video MP4 (seña a la izquierda, panel con la frase a la derecha) -->
                         <Button x:Name="btnExportar" Style="{StaticResource SecondaryButton}" Margin="0,14,0,0" IsEnabled="False"
-                                Click="BtnExportar_Click" AutomationProperties.Name="Exportar la traducción como video"
-                                ToolTip="Guardar la traducción como video MP4 (E)">
+                                Click="BtnExportar_Click" AutomationProperties.Name="Exportar la interpretación como video"
+                                ToolTip="Guardar la interpretación como video MP4 (E)">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="&#xE714;" FontFamily="{StaticResource FontIconos}" FontSize="14" VerticalAlignment="Center"/>
                                 <TextBlock Text="Exportar video" Margin="8,0,0,0" VerticalAlignment="Center"/>

@@ -16,6 +16,7 @@ namespace ProyectoFinal
         public string? Instrucciones { get; set; }                  // Pasos separados por \n
         public string RutaImagen { get; set; } = string.Empty;     // Relativa al .exe
         public string? RutaVideo { get; set; }                      // Relativa al .exe, null si no tiene
+        public string? Sistematizacion { get; set; }                // "Parámetro: valor", uno por línea (null si no tiene)
 
         // Devuelve la ruta absoluta de la imagen (resolviendo contra el directorio del .exe)
         public string RutaImagenAbsoluta =>
@@ -30,6 +31,26 @@ namespace ProyectoFinal
             string.IsNullOrWhiteSpace(Instrucciones)
                 ? Array.Empty<string>()
                 : Instrucciones.Split('\n', StringSplitOptions.RemoveEmptyEntries);
+
+        // Sistematización de la seña según la LSA (configuración, ubicación, orientación, movimiento...).
+        // Cada línea "Configuración: B (mano plana)" se separa en el parámetro y su valor.
+        public IReadOnlyList<ParametroLsa> ParametrosLsa
+        {
+            get
+            {
+                var parametros = new List<ParametroLsa>();
+                if (string.IsNullOrWhiteSpace(Sistematizacion))
+                    return parametros;
+
+                foreach (string linea in Sistematizacion.Split('\n', StringSplitOptions.RemoveEmptyEntries))
+                {
+                    int separador = linea.IndexOf(':');
+                    if (separador > 0)
+                        parametros.Add(new ParametroLsa(linea[..separador].Trim(), linea[(separador + 1)..].Trim()));
+                }
+                return parametros;
+            }
+        }
 
         // Método polimórfico: cada subclase decide cómo se "reproduce"
         // Devuelve la ruta absoluta del medio a mostrar (imagen o video)
