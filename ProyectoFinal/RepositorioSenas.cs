@@ -10,7 +10,7 @@ namespace ProyectoFinal
     // Instancia clases concretas (SenaEstatica o SenaAnimada) según la categoría
     public class RepositorioSenas : IRepositorio<Sena>
     {
-        private const string ColumnasSena = "Id, Codigo, Palabra, CategoriaId, Dificultad, Descripcion, Instrucciones, RutaImagen, RutaVideo";
+        private const string ColumnasSena = "Id, Codigo, Palabra, CategoriaId, Dificultad, Descripcion, Instrucciones, RutaImagen, RutaVideo, Sistematizacion";
 
         private static readonly HashSet<string> CategoriasEstaticas = new(StringComparer.OrdinalIgnoreCase)
         { 
@@ -264,6 +264,7 @@ namespace ProyectoFinal
             sena.Instrucciones = lector.IsDBNull(6) ? null : lector.GetString(6);
             sena.RutaImagen = lector.GetString(7);
             sena.RutaVideo = lector.IsDBNull(8) ? null : lector.GetString(8);
+            sena.Sistematizacion = lector.IsDBNull(9) ? null : lector.GetString(9);
 
             return sena;
         }

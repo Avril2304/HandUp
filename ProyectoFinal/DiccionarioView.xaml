@@ -277,6 +277,21 @@
                                 <!-- Separador sutil -->
                                 <Border Height="1" Background="{DynamicResource BrushBorder}" Margin="0,0,0,14"/>
 
+                                <!-- Sistematización LSA (configuración, ubicación, orientación...): solo si la seña la tiene -->
+                                <StackPanel x:Name="pnlSistematizacion" Margin="0,0,0,18">
+                                    <TextBlock Text="SISTEMATIZACIÓN LSA" FontSize="11.5" FontWeight="Bold"
+                                               Foreground="{DynamicResource BrushMuted}"/>
+                                    <ItemsControl x:Name="lstParametros" Focusable="False" Margin="0,6,0,0">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock FontSize="14" TextWrapping="Wrap" Margin="0,3,0,0" Foreground="{DynamicResource BrushInk}">
+                                                    <Run Text="{Binding Nombre, Mode=OneWay}" FontWeight="Bold" Foreground="{DynamicResource BrushAccentDark}"/><Run Text=": "/><Run Text="{Binding Valor, Mode=OneWay}"/>
+                                                </TextBlock>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+
                                 <!-- Descripción del movimiento de manos (Story 13) -->
                                 <TextBlock Text="CÓMO SE HACE EL MOVIMIENTO" FontSize="11.5" FontWeight="Bold"
                                            Foreground="{DynamicResource BrushMuted}"/>
