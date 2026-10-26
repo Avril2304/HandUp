@@ -8,9 +8,13 @@
         <!-- Encabezado -->
         <StackPanel Orientation="Horizontal" Margin="32,26,0,0" VerticalAlignment="Top">
             <TextBlock Text="HandUp" FontFamily="{StaticResource FontHeading}" FontSize="26" FontWeight="Bold" Foreground="#F1EFE8"/>
-            <TextBlock Text="Traducción a Lengua de Señas Argentina" FontSize="17" Foreground="#888780"
+            <TextBlock Text="Interpretación en Lengua de Señas Argentina" FontSize="17" Foreground="#888780"
                        VerticalAlignment="Bottom" Margin="14,0,0,3"/>
         </StackPanel>
+
+        <!-- Aviso: la interpretación es seña por seña y no sigue toda la gramática de la LSA -->
+        <TextBlock Text="* Esta interpretación es aproximada y no es 100% verídica." FontSize="13" FontStyle="Italic"
+                   Foreground="#6E6D67" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,38,32,0"/>
 
         <!-- Lugar de la seña (ZonaSena en el código): el video o la imagen se superponen acá -->
         <Border Margin="32,90,0,0" Width="820" Height="540" HorizontalAlignment="Left" VerticalAlignment="Top"

@@ -77,7 +77,7 @@ namespace ProyectoFinal
                 visor.Detener();
             };
 
-            lblAtajos.Text = $"Enter: traducir · {TextoTecla.Nombre(preferencias.TeclaPausar)}: pausar · R: repetir · " +
+            lblAtajos.Text = $"Enter: interpretar · {TextoTecla.Nombre(preferencias.TeclaPausar)}: pausar · R: repetir · " +
                              "C: cambiar significado · F: pantalla completa · E: exportar video · Esc: detener";
 
             try
@@ -91,7 +91,7 @@ namespace ProyectoFinal
             }
             catch (DatabaseException ex)
             {
-                MostrarAviso($"No se pudo cargar el banco de señas, así que el traductor no está disponible. {ex.Message}");
+                MostrarAviso($"No se pudo cargar el banco de señas, así que el intérprete no está disponible. {ex.Message}");
                 txtTexto.IsEnabled = false;
             }
 
@@ -125,7 +125,7 @@ namespace ProyectoFinal
 
             if (_pasos.Count == 0)
             {
-                MostrarAviso("No hay palabras ni letras para traducir en lo que escribiste.");
+                MostrarAviso("No hay palabras ni letras para interpretar en lo que escribiste.");
                 MostrarEstadoVacio(true);
                 ActualizarControles();
                 return;
@@ -317,7 +317,7 @@ namespace ProyectoFinal
 
             if (_pasos.Count > 0 && _estado != Estado.Detenida)
             {
-                lblAhora.Text = "Traducción detenida";
+                lblAhora.Text = "Interpretación detenida";
                 lblDetalleAhora.Text = "Apretá R para verla desde el principio, o hacé clic en una palabra.";
             }
 
@@ -532,7 +532,7 @@ namespace ProyectoFinal
 
             var dialogo = new Microsoft.Win32.SaveFileDialog
             {
-                Title = "Guardar la traducción como video",
+                Title = "Guardar la interpretación como video",
                 Filter = "Video MP4 (*.mp4)|*.mp4",
                 DefaultExt = ".mp4",
                 AddExtension = true,
@@ -611,7 +611,7 @@ namespace ProyectoFinal
             string limpio = new string(_textoTraducido.Where(c => !Path.GetInvalidFileNameChars().Contains(c)).ToArray()).Trim();
             if (limpio.Length > 40)
                 limpio = limpio[..40].Trim();
-            return limpio.Length == 0 ? "HandUp - Traducción.mp4" : $"HandUp - {limpio}.mp4";
+            return limpio.Length == 0 ? "HandUp - Interpretación.mp4" : $"HandUp - {limpio}.mp4";
         }
 
         // ===== Estado de la pantalla =====
@@ -629,7 +629,7 @@ namespace ProyectoFinal
             bool enPausa = _estado == Estado.Pausada || (_estado == Estado.Terminada && VisorActivo.EstaPausado);
             lblPausar.Text = enPausa ? "Reanudar" : "Pausar";
             icoPausar.Text = enPausa ? "" : ""; // Play / Pause
-            AutomationProperties.SetName(btnPausar, enPausa ? "Reanudar la traducción" : "Pausar la traducción");
+            AutomationProperties.SetName(btnPausar, enPausa ? "Reanudar la interpretación" : "Pausar la interpretación");
             btnPausar.ToolTip = $"{lblPausar.Text} ({TextoTecla.Nombre(_preferencias.TeclaPausar)})";
 
             _pantallaCompleta?.ActualizarBotones(enPausa, btnPausar.IsEnabled, VisorActivo.Lento);

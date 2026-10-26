@@ -55,7 +55,7 @@ namespace ProyectoFinal
             btnPausar.IsEnabled = pausaHabilitada;
             lblPausar.Text = enPausa ? "Reanudar" : "Pausar";
             icoPausar.Text = enPausa ? "" : ""; // Play / Pause
-            AutomationProperties.SetName(btnPausar, enPausa ? "Reanudar la traducción" : "Pausar la traducción");
+            AutomationProperties.SetName(btnPausar, enPausa ? "Reanudar la interpretación" : "Pausar la interpretación");
             btnPausar.ToolTip = $"{lblPausar.Text} ({TextoTecla.Nombre(_teclaPausar)})";
 
             lblLento.Text = lento ? "Normal" : "Más lento";
