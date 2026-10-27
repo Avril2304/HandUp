@@ -65,6 +65,16 @@ namespace ProyectoFinal
                 RegistroErrores.Registrar(ex, "Crear el perfil de prueba");
             }
 
+            try
+            {
+                // Perfiles "nuevo" y "avanzado" para la presentación (ver PerfilesDeDemostracion)
+                PerfilesDeDemostracion.CrearSiFaltan();
+            }
+            catch (DatabaseException ex)
+            {
+                RegistroErrores.Registrar(ex, "Crear los perfiles de demostración");
+            }
+
             var login = new LoginWindow();
             login.Show();
         }

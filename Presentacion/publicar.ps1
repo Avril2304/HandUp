@@ -57,6 +57,9 @@ CÓMO ABRIR HANDUP
       Usuario:     prueba
       Contraseña:  1234
    Tiene todos los niveles desbloqueados (solo le falta rendir el examen final).
+   También hay dos perfiles con historia, los dos con la contraseña 1234:
+      nuevo      Ana, que recién empieza en Principiante
+      avanzado   Tomás, que ya llegó a Avanzado y tiene estadísticas y rachas
    Si preferís empezar de cero, creá tu propio perfil con "Creala acá" (abajo de "Iniciar sesión").
    Dentro de la app, el botón "i" (o la tecla F1) abre una guía de uso.
 
